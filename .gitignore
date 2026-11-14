@@ -1,0 +1,31 @@
+# Gradle and build output
+.gradle/
+build/
+out/
+
+# Run folders for dev clients, servers and GameTests
+run/
+runs/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# Logs
+logs/
+*.log
+
+# Salty's Realistic Forging jars and decompiled copies are reference only: never commit them
+libs/
+reference/
+
+# Operating system files
+.DS_Store
+Thumbs.db

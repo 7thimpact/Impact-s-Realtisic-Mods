@@ -1,0 +1,112 @@
+# Roadmap
+
+Steps are ordered from least to most effort. The one exception is Impact's Lib, which comes first because every mod requires it. After the core, each Lib system arrives with the first mod that needs it (Lib's versioning lets minor versions add API).
+
+| # | Step | Effort | Status |
+| --- | --- | --- | --- |
+| 0 | Workspace setup | S | Done |
+| 1 | Impact's Lib core | M | In progress (M1 done) |
+| 2 | Impact's Realistic Inventory (IRI) | M | Planned |
+| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
+| 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
+| 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
+| 6 | Salty's Realistic Forging pass for all four mods (needs the SRF 4.1.6 copy) | M | Waiting for SRF copy |
+| 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
+| 8 | NeoForge 1.20.1 | S | Planned |
+| 9 | Forge and NeoForge, Minecraft 1.20.2 up to 1.21, one version at a time | L | Planned |
+
+Why this order:
+
+- **IRI** has the least content (3 packs, 1 block, 12 achievements) and needs only Lib's core. Its risk sits in the inventory mixins.
+- **IRF** has about 150 items, but about 90 of them are generated from one table.
+- **IRV** has three linked simulations, 4 block entities and a new HUD.
+- **IRC** has about 120 items, worldgen, timed and tiered crafting in every grid, and hundreds of generated recipes that replace vanilla ones.
+
+## 0. Workspace setup
+
+- [x] Specs saved as `SPEC.md`, the coding rules saved in `.claude/skills/`, `CLAUDE.md`, this roadmap
+- [x] AI notice: `NOTICE`, README notice, `LICENSE` and `NOTICE` packed into every jar
+- [x] Gradle workspace: `common` (VanillaGradle) and `forge` (ForgeGradle 6, Parchment) modules, Java 17
+
+## 1. Impact's Lib core
+
+- [x] **M1 Skeleton:**
+  - the mod loads
+  - `ImpactsLib.isLoaded`, `registerImpactMod`, `ImpactsModsReadyEvent`
+  - `ImpactsLog`, with the rolling `logs/impacts-debug.log` and folding of repeated lines
+  - `ImpactsConfig`, with the `impactslib/` folders
+  - Lib's own config files
+  - the startup log line
+- [ ] **M2 Commands and the lone-Lib achievement:**
+  - `/impacts debug`, `/impacts config`, `/impacts dump player`
+  - "Why am I here?" (the `impactslib:no_impact_mods` condition and the `impactslib:joined_alone` trigger)
+- [ ] **M3 Providers:**
+  - `ImpactsItems.giveOrDrop`
+  - `BackSlot`, plus the `#impactslib:back_slot_items` tag
+  - `HudLayout`
+  - `CraftingProgress` API and renderer
+  - the `impactslib:main` network channel
+- [ ] **M4 Achievement pieces:**
+  - `ImpactsCounters` and the `impactslib:count` trigger
+  - datagen helpers (recipe pairs, advancement builder)
+- [ ] **M5 Test-setup harness:** "Lib alone" first, then each mod's setups as the mods land
+
+## 2. Impact's Realistic Inventory
+
+These are the milestones from `impacts-inventory/SPEC.md`.
+
+- [ ] 1 Skeleton
+- [ ] 2 Two-slot hotbar
+- [ ] 3 Locked slots and pockets
+- [ ] 4 Inventory screen
+- [ ] 5 First-join migration and creative mode
+- [ ] 6 Packs
+- [ ] 7 Placed packs
+- [ ] 8 Integration: IRV parts in step 4, IRC parts in step 5
+- [ ] 9 SRF pass: step 6
+- [ ] 10 Achievements
+- [ ] 11 Polish and compatibility
+
+## 3. Impact's Realistic Food, plus Lib's food systems
+
+- [ ] **Lib systems for this step:**
+  - `tool_crafting`, with the `impactslib:tool_crafted` trigger and `ToolCrafting.damageTools`
+  - uses-based durability
+  - fuel and compost registries
+  - hold-to-use, with the `impactslib:hold_action` trigger
+  - grinding and the four grinder items
+  - heat and cold source tags, plus `isHeated`
+  - boiling provider
+  - the `impactslib:water_bottle` ingredient
+  - the water-filled event
+  - recipe audit and conflict checker (`/impacts audit`, `/impacts conflicts`)
+  - JEI base plugin
+- [ ] IRF milestones 1 to 12 from `impacts-food/SPEC.md`. Milestone 10 (IRC) moves to step 5, and the SRF part of milestone 11 moves to step 6.
+
+## 4. Impact's Realistic Vitality
+
+- [ ] IRV milestones 1 to 12 from `impacts-vitality/SPEC.md`. The IRF and IRI parts of milestone 10 happen here, the IRC parts in step 5 and the SRF part in step 6.
+
+## 5. Impact's Realistic Crafting, plus Lib's crafting systems
+
+- [ ] **Lib systems for this step:** `WoodData`, and `/impacts dump held` and `/impacts dump block`
+- [ ] IRC milestones 1 to 13 from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
+- [ ] **"With IRC" features:**
+  - IRI milestone 8: pack recipes with IRC parts, IRC's crafting arrow in IRI's screen
+  - IRF milestone 10: recipe switching, stone boiling
+  - IRV: gear recipes, linings sewn with the Bone Needle, drinking from the Wooden Bucket, the loose Air Tank
+
+## 6. Salty's Realistic Forging pass
+
+- [ ] One read of SRF 4.1.6's source, covering the checklist in each spec
+- [ ] `docs/srf-notes.md` in each mod, optional tag entries, a GameTest for each case
+- [ ] Add SRF detection to every startup log line (its mod ID becomes known here)
+
+## 7. Family test setups
+
+- [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools")
+
+## Open items
+
+- Lib's `FuelHelper` is planned as `FuelRegistry` plus `CompostRegistry` (clean-naming rule 6). Needs confirmation before step 3.
+- A dedicated-server start (as opposed to the GameTest server) needs `eula=true` in the git-ignored run folder. Needs confirmation before the first such run.

@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name = 'ParchmentMC'
+            url = 'https://maven.parchmentmc.org'
+        }
+        maven {
+            name = 'SpongePowered'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+    }
+    plugins {
+        id 'org.spongepowered.gradle.vanilla' version '0.2.2'
+    }
+}
+
+rootProject.name = 'impacts-dev'
+
+include 'impacts-lib:common'
+include 'impacts-lib:forge'

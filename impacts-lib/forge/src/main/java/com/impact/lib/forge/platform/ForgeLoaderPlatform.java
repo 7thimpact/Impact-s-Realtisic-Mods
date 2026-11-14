@@ -1,0 +1,48 @@
+package com.impact.lib.forge.platform;
+
+import com.impact.lib.config.ConfigSpecBuilder;
+import com.impact.lib.config.ConfigType;
+import com.impact.lib.forge.config.ForgeConfigSpecBuilder;
+import com.impact.lib.platform.LoaderPlatform;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.loading.FMLPaths;
+
+import java.nio.file.Path;
+import java.util.Optional;
+
+/** Forge's answers to {@link LoaderPlatform}. Found through {@code META-INF/services}. */
+public final class ForgeLoaderPlatform implements LoaderPlatform {
+    private static final String LOADER_NAME = "forge";
+
+    @Override
+    public String loaderName() {
+        return LOADER_NAME;
+    }
+
+    @Override
+    public String loaderVersion() {
+        return FMLLoader.versionInfo().forgeVersion();
+    }
+
+    @Override
+    public boolean isModLoaded(String modId) {
+        return ModList.get().isLoaded(modId);
+    }
+
+    @Override
+    public Optional<String> modVersion(String modId) {
+        return ModList.get().getModContainerById(modId)
+                .map(container -> container.getModInfo().getVersion().toString());
+    }
+
+    @Override
+    public Path gameDirectory() {
+        return FMLPaths.GAMEDIR.get();
+    }
+
+    @Override
+    public ConfigSpecBuilder configBuilder(String modId, ConfigType type) {
+        return new ForgeConfigSpecBuilder(modId, type);
+    }
+}
