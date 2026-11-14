@@ -2,6 +2,8 @@
 
 Steps are ordered from least to most effort. The one exception is Impact's Lib, which comes first because every mod requires it. After the core, each Lib system arrives with the first mod that needs it (Lib's versioning lets minor versions add API).
 
+**Platform plan:** every mod is built and established on Minecraft 1.20.1 Forge first (steps 1 to 7). Only after that do we cover Minecraft 1.20.1 through 1.21 on both Forge and NeoForge (steps 8 and 9). **There is no Fabric port.**
+
 | # | Step | Effort | Status |
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |

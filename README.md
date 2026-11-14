@@ -20,6 +20,8 @@ The build order and progress are in [ROADMAP.md](ROADMAP.md).
 2. Minecraft 1.20.1 on NeoForge.
 3. Forge and NeoForge for each Minecraft version from 1.20.2 up to 1.21.
 
+There is no Fabric version.
+
 ## Building
 
 You need JDK 17 installed. Gradle finds it through toolchains.
