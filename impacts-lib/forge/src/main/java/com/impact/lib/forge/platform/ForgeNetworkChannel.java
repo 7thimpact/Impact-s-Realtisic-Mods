@@ -6,6 +6,7 @@ import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.network.ServerboundHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -55,6 +56,11 @@ final class ForgeNetworkChannel implements NetworkChannel {
     @Override
     public <M> void sendToAllPlayers(M message) {
         channel.send(PacketDistributor.ALL.noArg(), message);
+    }
+
+    @Override
+    public <M> void sendToTrackingAndSelf(Entity entity, M message) {
+        channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), message);
     }
 
     @Override

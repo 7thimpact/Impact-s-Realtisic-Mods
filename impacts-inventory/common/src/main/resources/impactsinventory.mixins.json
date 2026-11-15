@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.impact.realisticinventory.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "impactsinventory.refmap.json",
+  "mixins": [
+    "InventorySelectedSlotMixin",
+    "ServerGamePacketListenerImplMixin"
+  ],
+  "client": [
+    "client.InventoryScrollMixin",
+    "client.MinecraftHotbarKeysMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

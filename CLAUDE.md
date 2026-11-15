@@ -31,7 +31,7 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 - `./gradlew :<mod>:forge:runData` whenever generated data changes. Never hand-edit files under `src/generated/`.
 - `./gradlew :<mod>:forge:runGameTestServer`, which must exit with code 0.
 - `./gradlew runFamilyTestSetups` before finishing a mod: every family setup in `test-setups/` must pass. Setups with SRF need `libs/realisticforgingores-4.1.6.jar`.
-- HUD and screen work: take screenshots with `runClient` under `xvfb-run`, using software rendering.
+- HUD and screen work: take screenshots with `tools/client-screenshot.sh <mod folder> <output.png> [steps]`. It starts the mod's Quick Play client on a virtual display in a copy of the GameTest world with cheats on, then runs the steps: chat commands, `key:<name>` presses, `shot:<file>` extra screenshots. It needs `xdotool` and ImageMagick (`apt-get install -y xdotool imagemagick`).
 
 ## Code rules
 

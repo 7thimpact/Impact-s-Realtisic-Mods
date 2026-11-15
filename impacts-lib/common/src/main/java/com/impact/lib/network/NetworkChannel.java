@@ -1,6 +1,7 @@
 package com.impact.lib.network;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 
 /**
  * A mod's own network channel with a protocol version; a client and server with different versions refuse to
@@ -15,6 +16,9 @@ public interface NetworkChannel {
     <M> void sendToPlayer(ServerPlayer player, M message);
 
     <M> void sendToAllPlayers(M message);
+
+    /** Sends to every player who can see the entity, and to the entity itself when it is a player. */
+    <M> void sendToTrackingAndSelf(Entity entity, M message);
 
     <M> void sendToServer(M message);
 }

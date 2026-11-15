@@ -1,0 +1,24 @@
+package com.impact.realisticinventory.mixin.client;
+
+import com.impact.realisticinventory.client.ClientHotbar;
+import com.impact.realisticinventory.inventory.InventoryLocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Inventory;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.objectweb.asm.Opcodes;
+
+/** Turns the hotbar number keys into slot switches: 1 and 2 pick a slot, 3 to 9 do nothing. */
+@Mixin(Minecraft.class)
+public abstract class MinecraftHotbarKeysMixin {
+    @Redirect(method = "handleKeybinds", at = @At(value = "FIELD", opcode = Opcodes.PUTFIELD,
+            target = "Lnet/minecraft/world/entity/player/Inventory;selected:I"))
+    private void impactsinventory$selectHotbarSlot(Inventory inventory, int keyIndex) {
+        if (!InventoryLocks.isActiveFor(inventory.player)) {
+            inventory.selected = keyIndex;
+            return;
+        }
+        ClientHotbar.onNumberKey(keyIndex);
+    }
+}

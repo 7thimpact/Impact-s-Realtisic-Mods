@@ -30,6 +30,8 @@ repositories {
 
 dependencies {
     compileOnly "org.spongepowered:mixin:${mixin_version}"
+    // Mixin's field and opcode targets use ASM's constants; Forge provides ASM at runtime.
+    compileOnly "org.ow2.asm:asm:${asm_version}"
     dependencyModNames.each { dependencyName -> compileOnly project(":${dependencyName}:common") }
 }
 

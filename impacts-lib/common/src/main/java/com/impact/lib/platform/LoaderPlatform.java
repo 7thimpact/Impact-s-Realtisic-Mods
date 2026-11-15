@@ -5,6 +5,7 @@ import com.impact.lib.config.ConfigType;
 import com.impact.lib.network.NetworkChannel;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -41,4 +42,7 @@ public interface LoaderPlatform {
 
     /** Whether this game instance is a client (single player or connected to a server). */
     boolean isClient();
+
+    /** Whether the player is a loader's stand-in for a machine (Forge's FakePlayer), not a person. */
+    boolean isFakePlayer(Player player);
 }

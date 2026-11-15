@@ -8,6 +8,8 @@ import com.impact.lib.platform.LoaderPlatform;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -65,5 +67,10 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public boolean isClient() {
         return FMLEnvironment.dist.isClient();
+    }
+
+    @Override
+    public boolean isFakePlayer(Player player) {
+        return player instanceof FakePlayer;
     }
 }

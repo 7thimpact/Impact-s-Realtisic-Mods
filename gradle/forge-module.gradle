@@ -63,6 +63,12 @@ minecraft {
         client {
         }
 
+        // A client that loads straight into the world saved as run/saves/ImpactsTest, for scripted screenshots.
+        clientQuickPlay {
+            parent runs.client
+            args '--quickPlaySingleplayer', 'ImpactsTest'
+        }
+
         server {
             args '--nogui'
         }
