@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.impact.realisticinventory.forge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "impactsinventory.refmap.json",
+  "mixins": [
+    "PlayerMainInvWrapperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
