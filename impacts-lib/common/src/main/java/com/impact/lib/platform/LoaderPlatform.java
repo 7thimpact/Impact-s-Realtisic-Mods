@@ -2,7 +2,9 @@ package com.impact.lib.platform;
 
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
+import com.impact.lib.network.NetworkChannel;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.resources.ResourceLocation;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -33,4 +35,10 @@ public interface LoaderPlatform {
 
     /** Registers an advancement trigger. Vanilla keeps this private; each loader opens it its own way. */
     void registerCriterionTrigger(CriterionTrigger<?> trigger);
+
+    /** Creates a network channel. Call during mod construction. */
+    NetworkChannel createChannel(ResourceLocation channelId, String protocolVersion);
+
+    /** Whether this game instance is a client (single player or connected to a server). */
+    boolean isClient();
 }

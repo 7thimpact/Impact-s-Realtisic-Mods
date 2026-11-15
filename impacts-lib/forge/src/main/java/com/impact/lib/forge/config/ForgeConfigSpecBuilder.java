@@ -125,7 +125,7 @@ public final class ForgeConfigSpecBuilder implements ConfigSpecBuilder {
         ownerContext.registerConfig(forgeTypeOf(file.type()), spec, file.fileName());
         IEventBus ownerEventBus = ownerContext.getModEventBus();
         ownerEventBus.addListener((ModConfigEvent.Loading event) -> file.handleLoad(event.getConfig()));
-        ownerEventBus.addListener((ModConfigEvent.Reloading event) -> file.handleLoad(event.getConfig()));
+        ownerEventBus.addListener((ModConfigEvent.Reloading event) -> file.handleReload(event.getConfig()));
         ownerEventBus.addListener((ModConfigEvent.Unloading event) -> file.handleUnload(event.getConfig()));
         ConfigFileRegistry.add(file);
         return file;

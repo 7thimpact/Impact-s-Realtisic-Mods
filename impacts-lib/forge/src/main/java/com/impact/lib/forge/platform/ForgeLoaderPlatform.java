@@ -3,10 +3,13 @@ package com.impact.lib.forge.platform;
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
 import com.impact.lib.forge.config.ForgeConfigSpecBuilder;
+import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.platform.LoaderPlatform;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -52,5 +55,15 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     public void registerCriterionTrigger(CriterionTrigger<?> trigger) {
         // Forge's access transformer makes this vanilla method public.
         CriteriaTriggers.register(trigger);
+    }
+
+    @Override
+    public NetworkChannel createChannel(ResourceLocation channelId, String protocolVersion) {
+        return new ForgeNetworkChannel(channelId, protocolVersion);
+    }
+
+    @Override
+    public boolean isClient() {
+        return FMLEnvironment.dist.isClient();
     }
 }

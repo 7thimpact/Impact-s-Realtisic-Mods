@@ -1,13 +1,17 @@
 package com.impact.lib;
 
 import com.impact.lib.advancement.LibTriggers;
+import com.impact.lib.attachment.PlayerAttachments;
+import com.impact.lib.config.LibClientConfig;
 import com.impact.lib.config.LibCommonConfig;
 import com.impact.lib.config.LibServerConfig;
+import com.impact.lib.counter.ImpactsCounters;
 import com.impact.lib.debug.LibLogCategories;
 import com.impact.lib.dump.ImpactsDump;
 import com.impact.lib.dump.LibPlayerDumpSection;
 import com.impact.lib.log.DebugLogFile;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.lib.network.LibNetwork;
 import com.impact.lib.platform.LoaderPlatform;
 import net.minecraft.SharedConstants;
 
@@ -23,12 +27,15 @@ public final class LibStartup {
     private LibStartup() {
     }
 
-    /** Mod construction: Lib's log categories, its config files, its dump section, and the debug log file. */
+    /** Mod construction: Lib's log categories, config files, network channel, dump section and debug log file. */
     public static void onModConstruction() {
         LOG.registerCategories(LibLogCategories.ALL);
         ImpactsDump.registerPlayerSection(LibPlayerDumpSection.SECTION_NAME, new LibPlayerDumpSection());
         LibCommonConfig commonConfig = LibCommonConfig.register();
         LibServerConfig.register();
+        LibClientConfig.register();
+        LibNetwork.create();
+        PlayerAttachments.register(ImpactsCounters.COUNTERS);
         ImpactsLog.useFamilyDebugSwitch(commonConfig.isFamilyDebugOn::get);
         commonConfig.file.onLoad(LibStartup::applyDebugLogFile);
         applyDebugLogFile();

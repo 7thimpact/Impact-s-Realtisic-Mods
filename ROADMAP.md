@@ -7,7 +7,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | # | Step | Effort | Status |
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |
-| 1 | Impact's Lib core | M | In progress (M1, M2 done) |
+| 1 | Impact's Lib core | M | In progress (M1 to M4 done) |
 | 2 | Impact's Realistic Inventory (IRI) | M | Planned |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
@@ -42,15 +42,16 @@ Why this order:
 - [x] **M2 Commands and the lone-Lib achievement:**
   - `/impacts debug`, `/impacts config`, `/impacts dump player`
   - "Why am I here?" (the `impactslib:no_impact_mods` condition and the `impactslib:joined_alone` trigger)
-- [ ] **M3 Providers:**
+- [x] **M3 Providers:**
   - `ImpactsItems.giveOrDrop`
   - `BackSlot`, plus the `#impactslib:back_slot_items` tag
   - `HudLayout`
   - `CraftingProgress` API and renderer
   - the `impactslib:main` network channel, including a resync of SERVER config values when they change
-- [ ] **M4 Achievement pieces:**
+- [x] **M4 Achievement pieces and player data:**
   - `ImpactsCounters` and the `impactslib:count` trigger
   - datagen helpers (recipe pairs, advancement builder)
+  - player attachments: per-player data saved in vanilla NBT, with death rules (used by counters, then Inventory and Vitality)
 - [ ] **M5 Test-setup harness:** "Lib alone" first, then each mod's setups as the mods land
 
 ## 2. Impact's Realistic Inventory

@@ -120,3 +120,87 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 ## GameTests with a logged-in player
 
 `MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block.
+
+## Give or drop
+
+```java
+ImpactsItems.giveOrDrop(player, new ItemStack(ModItems.WOOD_SCRAPS.get()));
+```
+
+Inserts through vanilla's inventory, so Inventory's locked slots apply, and drops whatever doesn't fit at the player's feet. Never deletes an item, logs both outcomes under `giveordrop`, and does nothing on the client.
+
+## Back slot
+
+```java
+if (BackSlot.isAvailable() && BackSlot.accepts(stack)) {
+    BackSlot.set(player, stack);
+}
+ItemStack worn = BackSlot.get(player);   // empty when no mod provides a back slot
+```
+
+Inventory registers the provider with `BackSlot.registerBackSlotProvider("impactsinventory", provider)`. Other mods make an item fit by adding it to `#impactslib:back_slot_items`.
+
+## Crafting progress
+
+Crafting registers a source that reads its menus' synced progress: `CraftingProgress.registerSource("impactscrafting", menu -> ...)`. Any screen draws it:
+
+```java
+CraftingProgress.get(menu).ifPresent(progress -> {
+    CraftingProgressRenderer.renderArrow(graphics, left + arrowX, top + arrowY, progress);
+    CraftingProgressRenderer.renderFadedOutput(graphics, left + outputX, top + outputY, progress);
+});
+```
+
+## HUD layout (client)
+
+```java
+HudLayout.publishHotbarBounds("impactsinventory", (width, height) -> new HudBounds(...));   // Inventory
+HudBounds hotbar = HudLayout.hotbarBounds(screenWidth, screenHeight);                      // Vitality's gauge
+int thirstRowTop = HudLayout.claimRightRow(screenHeight, ROW_HEIGHT);                    // above hunger
+```
+
+Rows stack on Forge's own left and right row heights, so they never overlap vanilla's bars or each other. Lib's client config can shift every Impact row (`hud.rowOffsetX`, `hud.rowOffsetY`).
+
+## Network channels
+
+```java
+NetworkChannel channel = LoaderPlatform.current().createChannel(ResourceIds.of(MOD_ID, "main"), PROTOCOL_VERSION);
+channel.registerClientbound(ActiveSlotMessage.class, ActiveSlotMessage.CODEC, message -> InventoryClient.applyActiveSlot(message));
+channel.registerServerbound(SwitchSlotMessage.class, SwitchSlotMessage.CODEC, (message, sender) -> HotbarSwitch.apply(sender, message));
+```
+
+Register every message on both sides, in the same order, during mod construction. Handlers run on the main thread. Keep client-only classes out of the registering class: call into a separate client class from inside the handler. Lib's own `impactslib:main` channel (version = Lib's major.minor) resends changed SERVER config files to remote players.
+
+## Player attachments
+
+```java
+public static final PlayerAttachment<ThirstData> THIRST = PlayerAttachments.register(new PlayerAttachment<>(
+        ResourceIds.of(MOD_ID, "thirst"), ThirstData::new, DeathCopyRule.NEVER));
+
+ThirstData thirst = PlayerAttachments.get(player, THIRST);
+```
+
+Data classes implement `PlayerAttachmentData` (`save`, `load`). Lib's mixin saves every attachment in the player's NBT under `impactslib:attachments` and copies it on respawn by its `DeathCopyRule`: `ALWAYS`, `LIKE_INVENTORY` (kept with keepInventory) or `NEVER`. Returning from the End keeps everything. Register attachments during mod construction. Syncing to the client is each mod's job.
+
+## Counters and the count trigger
+
+```java
+ImpactsCounters.add(player, "impactsfood:styled_food_eaten", stack.getItem(), 1);
+int eaten = ImpactsCounters.get(player, "impactsfood:styled_food_eaten", Items.BREAD);
+```
+
+Counters are kept through death. Advancements use `impactslib:count` through `CountTrigger.TriggerInstance`:
+- `total(counter, value)`
+- `item(counter, itemId, value)`
+- `anyItem(counter, value)`: any single item reached the value ("Day in and Day out")
+- `distinctItems(counter, value)`: that many different items ("Taste Tester")
+
+## Advancements and conditional data
+
+- `ImpactsAdvancementBuilder.of(id, icon).parent(...).criterion(...).challenge().build()` follows the tab conventions. Its translation keys come from the ID: `advancements.<modid>.<path>.title` and `.description`.
+- Each mod's Forge data generation extends `ImpactsAdvancementProvider` and can attach Forge conditions, for example `ConditionalRecipes.modLoaded("impactscrafting")`.
+- `ConditionalRecipes.pair(output, "impactscrafting", withoutCrafting, withCrafting)` writes both versions of a recipe, so exactly one loads.
+
+## Mixins
+
+A mod with mixins puts `<modid>.mixins.json` in its common resources. The build then adds the refmap and the `MixinConfigs` manifest entry. Name every added member `<modid>$name` (for example `impactslib$attachments`).

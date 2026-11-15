@@ -2,6 +2,8 @@
 // module's sources and resources into one mod jar, then reobfuscates it for release.
 
 def commonProject = project.parent.project('common')
+def mixinConfigName = "${mod_id}.mixins.json"
+def hasMixins = commonProject.file("src/main/resources/${mixinConfigName}").exists()
 
 group = mod_group
 version = mod_version
@@ -23,6 +25,8 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -53,6 +57,25 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
+repositories {
+    maven {
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+}
+
+// Mods with a <modid>.mixins.json in their common resources get Mixin's refmap and manifest entry.
+if (hasMixins) {
+    apply plugin: 'org.spongepowered.mixin'
+    mixin {
+        add sourceSets.main, "${mod_id}.refmap.json"
+        config mixinConfigName
+    }
+    dependencies {
+        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
@@ -64,6 +87,7 @@ tasks.named('compileJava', JavaCompile) {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = java_version as int
+    options.compilerArgs << '-Xlint:deprecation'
 }
 
 def modMetadata = [

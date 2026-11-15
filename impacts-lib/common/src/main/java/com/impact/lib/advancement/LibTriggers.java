@@ -5,6 +5,7 @@ import com.impact.lib.platform.LoaderPlatform;
 /** Lib's advancement triggers. */
 public final class LibTriggers {
     public static final JoinedAloneTrigger JOINED_ALONE = new JoinedAloneTrigger();
+    public static final CountTrigger COUNT = new CountTrigger();
 
     private LibTriggers() {
     }
@@ -12,5 +13,6 @@ public final class LibTriggers {
     /** Registers every trigger with vanilla. Must run once, on the main thread, before any world loads. */
     public static void registerAll() {
         LoaderPlatform.current().registerCriterionTrigger(JOINED_ALONE);
+        LoaderPlatform.current().registerCriterionTrigger(COUNT);
     }
 }

@@ -5,9 +5,11 @@ import com.impact.lib.LibStartup;
 import com.impact.lib.advancement.LoneLibAchievement;
 import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.forge.condition.NoImpactModsCondition;
+import com.impact.lib.forge.config.ServerConfigResync;
 import com.impact.lib.forge.datagen.LibDataGenerators;
 import com.impact.lib.forge.event.ImpactsModsReadyEvent;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.lib.network.LibNetwork;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -27,6 +29,7 @@ import net.minecraftforge.registries.RegisterEvent;
 public final class ImpactsLibForge {
     public ImpactsLibForge(FMLJavaModLoadingContext context) {
         ForgeModConstruction.run(context, LibStartup::onModConstruction);
+        ServerConfigResync.register(LibNetwork.channel());
         IEventBus modEventBus = context.getModEventBus();
         modEventBus.addListener(ImpactsLibForge::onCommonSetup);
         modEventBus.addListener(ImpactsLibForge::onRegister);
