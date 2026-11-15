@@ -1,0 +1,27 @@
+Impact's Realistic Mods
+Copyright 2026 The Impact's Realistic Mods authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+
+AI DISCLOSURE
+-------------
+This project was made with artificial intelligence. Its source code, build
+scripts, data files and documentation were written in large part by
+Claude Code, an AI coding assistant made by Anthropic, working from design
+specifications and under the direction and review of the project's human
+author.
+
+
+REQUIREMENT FOR FORKS AND DERIVATIVE WORKS
+------------------------------------------
+Any fork, modified version, port, or other derivative work of this project
+that is distributed in any form (source code or compiled, including mod jars
+uploaded to CurseForge, Modrinth or any other site) must:
+
+  1. Keep this NOTICE file, including the AI disclosure above, unchanged.
+     You may add your own notices below it.
+
+  2. State clearly, in its README and on every download or project page,
+     that it is derived from a project made with AI, and disclose whether
+     and how AI tools were used to make its own changes.

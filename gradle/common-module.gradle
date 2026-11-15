@@ -1,0 +1,33 @@
+// Shared setup for every mod's `common` module: code and data that compile against vanilla Minecraft only.
+// The matching `forge` module compiles these sources into its own jar.
+
+group = mod_group
+version = mod_version
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+}
+
+base {
+    archivesName = "${mod_id}-common-${minecraft_version}"
+}
+
+minecraft {
+    version(minecraft_version)
+}
+
+repositories {
+    maven {
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+}
+
+dependencies {
+    compileOnly "org.spongepowered:mixin:${mixin_version}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = java_version as int
+}

@@ -1,0 +1,104 @@
+// Shared setup for every mod's `forge` module. Each forge module compiles its sibling `common`
+// module's sources and resources into one mod jar, then reobfuscates it for release.
+
+def commonProject = project.parent.project('common')
+
+group = mod_group
+version = mod_version
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+}
+
+base {
+    archivesName = "${mod_id}-forge-${minecraft_version}"
+}
+
+minecraft {
+    mappings channel: 'parchment', version: "${parchment_version}-${parchment_minecraft_version}"
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', mod_id
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+        }
+
+        server {
+            args '--nogui'
+        }
+
+        gameTestServer {
+        }
+
+        data {
+            args '--mod', mod_id, '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/'),
+                    '--existing', commonProject.file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+}
+
+tasks.named('compileJava', JavaCompile) {
+    source(commonProject.sourceSets.main.allJava)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = java_version as int
+}
+
+def modMetadata = [
+        mod_id                 : mod_id,
+        mod_name               : mod_name,
+        mod_version            : mod_version,
+        mod_description        : mod_description,
+        mod_authors            : mod_authors,
+        mod_license            : mod_license,
+        minecraft_version_range: minecraft_version_range,
+        forge_version_range    : forge_version_range,
+        loader_version_range   : loader_version_range,
+]
+
+tasks.named('processResources', ProcessResources) {
+    from(commonProject.sourceSets.main.resources)
+    inputs.properties(modMetadata)
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand(modMetadata)
+    }
+}
+
+tasks.named('jar', Jar) {
+    // Every release jar carries the license and the AI notice (see NOTICE).
+    from(rootProject.file('LICENSE'))
+    from(rootProject.file('NOTICE'))
+    manifest {
+        attributes([
+                'Specification-Title'   : mod_id,
+                'Specification-Vendor'  : mod_authors,
+                'Specification-Version' : '1',
+                'Implementation-Title'  : mod_name,
+                'Implementation-Version': mod_version,
+                'Implementation-Vendor' : mod_authors,
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
