@@ -19,8 +19,9 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 
 ## How a session works
 
-- One milestone per session. ROADMAP.md lists them in order.
-- For each milestone: implement it, run the checks below, tick it off in ROADMAP.md, commit, push, then stop and report for review.
+- Work one milestone at a time, in ROADMAP.md's order.
+- For each milestone: implement it, run the checks below, tick it off in ROADMAP.md, commit and push.
+- Stop to report and ask for review after a milestone, unless the user has asked you to keep going. The current goal is to finish all mods: keep going, and save questions for the end of a major task (a whole mod).
 - Work on branch `claude/minecraft-mods-dev-tz2j7p`.
 - If a spec and the real Minecraft or Forge API disagree, follow the API. Record the change under "Implementation changes" at the end of that mod's SPEC.md.
 
@@ -73,9 +74,16 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## Salty's Realistic Forging (SRF)
 
-- Reference only. Keep its jar and any decompiled copy outside the repo, for example `/home/user/reference/srf/`. `libs/` and `reference/` are git-ignored as a safety net.
+- Reference only. Keep its jar and any decompiled copy outside the repo. `libs/` and `reference/` are git-ignored as a safety net.
 - Never copy SRF's code or assets.
-- Record findings in `<mod>/docs/srf-notes.md`.
+- Findings are in `<mod>/docs/srf-notes.md`; shared facts are in `impacts-lib/docs/srf-notes.md`.
+- To read the jar again: unzip the user's upload into `/home/user/reference/jars/`, decompile with Vineflower, then turn SRG names (`m_12345_`) into readable names with `tools/remap_srg_names.py <mappings.tsrg> <source folder> <output folder>`. The mapping file is ForgeGradle's `impacts-lib/forge/build/createMcpToSrg/output.tsrg`.
+- For runtime tests, put the SRF jar in `libs/` (git-ignored). The build loads it, deobfuscated, when it is there.
+
+## playerAnimator
+
+- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib uses it for hold-to-use animations (hammering, grinding, sewing, …) when it is installed, and falls back to vanilla arm swings when it isn't.
+- Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
 
 ## AI notice
 

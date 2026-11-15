@@ -12,7 +12,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
-| 6 | Salty's Realistic Forging pass for all four mods (needs the SRF 4.1.6 copy) | M | Waiting for SRF copy |
+| 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
 | 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
 | 8 | NeoForge 1.20.1 | S | Planned |
 | 9 | Forge and NeoForge, Minecraft 1.20.2 up to 1.21, one version at a time | L | Planned |
@@ -100,9 +100,10 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 
 ## 6. Salty's Realistic Forging pass
 
-- [ ] One read of SRF 4.1.6's source, covering the checklist in each spec
-- [ ] `docs/srf-notes.md` in each mod, optional tag entries, a GameTest for each case
-- [ ] Add SRF detection to every startup log line (its mod ID becomes known here)
+- [x] One read of SRF 4.1.6's source ("no tools" version), covering the checklist in each spec
+- [x] `docs/srf-notes.md` in each mod
+- [ ] Optional tag entries and a GameTest for each case, added with each mod
+- [ ] Add SRF detection (`realisticforgingores`) to every startup log line
 
 ## 7. Family test setups
 
