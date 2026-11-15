@@ -36,7 +36,7 @@ public final class ImpactsItems {
         }
         dropAtFeet(player, remainder);
         LOG.debug(LibLogCategories.GIVE_OR_DROP, "dropped", "player", player.getGameProfile().getName(), "item", itemId,
-                "count", remainder.getCount(), "pos", player.blockPosition().toShortString());
+                "count", remainder.getCount(), "pos", player.blockPosition());
     }
 
     private static void dropAtFeet(Player player, ItemStack stack) {

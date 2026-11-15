@@ -10,6 +10,7 @@ import com.impact.realisticinventory.config.InventoryCommonConfig;
 import com.impact.realisticinventory.config.InventoryServerConfig;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import com.impact.realisticinventory.hotbar.HandSwitch;
+import com.impact.realisticinventory.inventory.LockedSlotOverflow;
 import com.impact.realisticinventory.network.InventoryNetwork;
 import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryBackSlotProvider;
@@ -33,6 +34,7 @@ public final class InventoryStartup {
         InventoryClientConfig.register();
         PlayerAttachments.register(HandSwitch.HOTBAR);
         PlayerAttachments.register(BackSlotStorage.BACK_SLOT);
+        PlayerAttachments.register(LockedSlotOverflow.MIGRATION);
         InventoryNetwork.create();
         BackSlot.registerBackSlotProvider(InventoryMod.MOD_ID, new InventoryBackSlotProvider());
         ImpactsLib.onModsReady(impactMods -> StartupSummary.log(InventoryMod.MOD_ID));

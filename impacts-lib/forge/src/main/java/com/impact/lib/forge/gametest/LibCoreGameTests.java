@@ -9,6 +9,7 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.log.LogLineFormatter;
 import com.impact.lib.log.RepeatedLineFolder;
 import com.impact.lib.platform.LoaderPlatform;
+import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -75,6 +76,8 @@ public final class LibCoreGameTests {
         helper.assertTrue(LogLineFormatter.modShortName("impactsinventory").equals("inventory"), "impactsinventory should log as inventory");
         helper.assertTrue(LogLineFormatter.modShortName("impactslib").equals("lib"), "impactslib should log as lib");
         helper.assertTrue(LogLineFormatter.modShortName("minecraft").equals("minecraft"), "Other mod IDs should stay as they are");
+        String positionLine = LogLineFormatter.format("inventory", "migration", "chest placed", "chest", new BlockPos(4, 72, -8), "note", "two words");
+        helper.assertTrue(positionLine.equals("[Impact/inventory/migration] chest placed chest=4,72,-8 note=\"two words\""), "Unexpected line: " + positionLine);
         helper.succeed();
     }
 

@@ -42,6 +42,24 @@ public final class PocketPlacement {
         return NO_SLOT;
     }
 
+    /** Moves as much of the stack as fits into the pockets only: onto matching stacks, then into empty pockets. */
+    public static void addToPockets(Inventory inventory, ItemStack stack) {
+        for (int pocketIndex = InventoryLayout.FIRST_POCKET_INDEX; pocketIndex <= InventoryLayout.LAST_POCKET_INDEX && !stack.isEmpty(); pocketIndex++) {
+            ItemStack pocket = inventory.getItem(pocketIndex);
+            if (canStackOnto(pocket, stack, inventory)) {
+                int movedCount = Math.min(stack.getCount(), Math.min(pocket.getMaxStackSize(), inventory.getMaxStackSize()) - pocket.getCount());
+                pocket.grow(movedCount);
+                stack.shrink(movedCount);
+            }
+        }
+        for (int pocketIndex = InventoryLayout.FIRST_POCKET_INDEX; pocketIndex <= InventoryLayout.LAST_POCKET_INDEX && !stack.isEmpty(); pocketIndex++) {
+            if (inventory.getItem(pocketIndex).isEmpty()) {
+                inventory.setItem(pocketIndex, stack.split(stack.getCount()));
+            }
+        }
+        inventory.setChanged();
+    }
+
     private static boolean canStackOnto(ItemStack existing, ItemStack incoming, Inventory inventory) {
         return !existing.isEmpty()
                 && ItemStack.isSameItemSameTags(existing, incoming)

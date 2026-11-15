@@ -4,6 +4,7 @@ import com.impact.realisticinventory.hotbar.HandSwitch;
 import com.impact.realisticinventory.hotbar.HotbarRespawn;
 import com.impact.realisticinventory.hotbar.SwitchSource;
 import com.impact.realisticinventory.inventory.InventoryLocks;
+import com.impact.realisticinventory.inventory.LockedSlotOverflow;
 import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.BackSlotSync;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,6 +65,7 @@ final class InventoryForgeEvents {
 
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
+            LockedSlotOverflow.tick(player);
             BackSlotSync.tick(player);
         }
     }
