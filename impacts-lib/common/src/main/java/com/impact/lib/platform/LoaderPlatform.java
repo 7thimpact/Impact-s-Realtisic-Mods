@@ -2,6 +2,7 @@ package com.impact.lib.platform;
 
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
+import net.minecraft.advancements.CriterionTrigger;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -29,4 +30,7 @@ public interface LoaderPlatform {
 
     /** Starts a config file for a mod. The builder's {@code register()} registers the file with the loader. */
     ConfigSpecBuilder configBuilder(String modId, ConfigType type);
+
+    /** Registers an advancement trigger. Vanilla keeps this private; each loader opens it its own way. */
+    void registerCriterionTrigger(CriterionTrigger<?> trigger);
 }

@@ -1,0 +1,35 @@
+{
+  "conditions": [
+    {
+      "type": "impactslib:no_impact_mods"
+    }
+  ],
+  "criteria": {
+    "joined_alone": {
+      "conditions": {},
+      "trigger": "impactslib:joined_alone"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.impactslib.why_am_i_here.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:book"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactslib.why_am_i_here.title"
+    }
+  },
+  "requirements": [
+    [
+      "joined_alone"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

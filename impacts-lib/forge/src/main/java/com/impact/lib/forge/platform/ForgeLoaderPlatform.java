@@ -4,6 +4,8 @@ import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
 import com.impact.lib.forge.config.ForgeConfigSpecBuilder;
 import com.impact.lib.platform.LoaderPlatform;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.CriterionTrigger;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -44,5 +46,11 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public ConfigSpecBuilder configBuilder(String modId, ConfigType type) {
         return new ForgeConfigSpecBuilder(modId, type);
+    }
+
+    @Override
+    public void registerCriterionTrigger(CriterionTrigger<?> trigger) {
+        // Forge's access transformer makes this vanilla method public.
+        CriteriaTriggers.register(trigger);
     }
 }

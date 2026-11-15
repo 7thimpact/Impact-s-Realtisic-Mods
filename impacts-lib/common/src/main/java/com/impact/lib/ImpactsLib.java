@@ -16,6 +16,8 @@ import java.util.function.Consumer;
  */
 public final class ImpactsLib {
     public static final String MOD_ID = "impactslib";
+    /** Every Impact mod's ID starts with this, for example {@code impactsinventory}. */
+    public static final String MOD_ID_PREFIX = "impacts";
 
     private static final Map<String, Boolean> LOAD_STATES_BY_MOD_ID = new ConcurrentHashMap<>();
     private static final Set<String> REGISTERED_IMPACT_MODS = ConcurrentHashMap.newKeySet();

@@ -1,0 +1,20 @@
+{
+  "advancements.impactslib.why_am_i_here.description": "Join a world where Impact's Lib is the only Impact mod. It adds nothing on its own!",
+  "advancements.impactslib.why_am_i_here.title": "Why am I here?",
+  "commands.impactslib.config.changed": "%s is now %s, saved to %s",
+  "commands.impactslib.config.invalid_value": "%s is not a valid value for %s (allowed %s)",
+  "commands.impactslib.config.no_values": "%s has no server config values",
+  "commands.impactslib.config.unknown_key": "%s has no server config key %s",
+  "commands.impactslib.config.value": "%s = %s (default %s, allowed %s)",
+  "commands.impactslib.debug.category_changed": "%s: debug category %s is now %s (saved to its config file)",
+  "commands.impactslib.debug.changed": "%s: debug is now %s (saved to its config file)",
+  "commands.impactslib.debug.family_switch": "Debug lines for every Impact mod (debug.allMods): %s",
+  "commands.impactslib.debug.family_switch_off": "Debug lines stay hidden while debug.allMods is off in config/impactslib/impactslib-common.toml",
+  "commands.impactslib.debug.status": "%s: debug %s, categories [%s], verbose %s",
+  "commands.impactslib.debug.unknown_category": "%s has no debug category %s. Its categories: %s",
+  "commands.impactslib.debug.unknown_category_any_mod": "No Impact mod has the debug category %s",
+  "commands.impactslib.dump.entry": "  %s = %s",
+  "commands.impactslib.dump.header": "Impact dump for %s",
+  "commands.impactslib.dump.section": "[%s]",
+  "commands.impactslib.unknown_mod": "No Impact mod called %s. Known mods: %s"
+}

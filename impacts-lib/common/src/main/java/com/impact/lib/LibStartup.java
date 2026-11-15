@@ -1,7 +1,11 @@
 package com.impact.lib;
 
+import com.impact.lib.advancement.LibTriggers;
 import com.impact.lib.config.LibCommonConfig;
+import com.impact.lib.config.LibServerConfig;
 import com.impact.lib.debug.LibLogCategories;
+import com.impact.lib.dump.ImpactsDump;
+import com.impact.lib.dump.LibPlayerDumpSection;
 import com.impact.lib.log.DebugLogFile;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
@@ -19,18 +23,23 @@ public final class LibStartup {
     private LibStartup() {
     }
 
-    /** Mod construction: Lib's log categories, its config file, and the debug log file with default settings. */
+    /** Mod construction: Lib's log categories, its config files, its dump section, and the debug log file. */
     public static void onModConstruction() {
         LOG.registerCategories(LibLogCategories.ALL);
+        ImpactsDump.registerPlayerSection(LibPlayerDumpSection.SECTION_NAME, new LibPlayerDumpSection());
         LibCommonConfig commonConfig = LibCommonConfig.register();
-        LOG.useDebugSettings(commonConfig.debug);
+        LibServerConfig.register();
         ImpactsLog.useFamilyDebugSwitch(commonConfig.isFamilyDebugOn::get);
         commonConfig.file.onLoad(LibStartup::applyDebugLogFile);
         applyDebugLogFile();
     }
 
-    /** Every mod finished common setup: logs Lib's startup summary and tells listeners which Impact mods are present. */
+    /**
+     * Every mod finished common setup (runs on the main thread): registers Lib's advancement triggers, logs the
+     * startup summary and tells listeners which Impact mods are present.
+     */
     public static void onModsReady() {
+        LibTriggers.registerAll();
         logStartupSummary();
         ImpactsLib.announceModsReady();
     }

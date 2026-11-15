@@ -63,7 +63,8 @@ public final class InventoryServerConfig {
 - **Automatic config lines:**
   - When a file loads, every value that differs from its default is logged under `startup`.
   - On a reload, every changed value is logged under `config`.
-- Every COMMON file carries the debug section: `DebugConfigSection debug = DebugConfigSection.define(builder);`, then `ImpactsLog.of(MOD_ID).useDebugSettings(debug);`.
+- Every COMMON file carries the debug section: `DebugConfigSection debug = DebugConfigSection.define(builder);`. Defining it connects it to the mod's `ImpactsLog` and to `/impacts debug`.
+- Every value can parse typed text (`value.parse("12")`), check its range (`value.isAllowed(12)`) and describe what's allowed (`value.allowedValues()`). `/impacts config` uses all three.
 
 ## Debug logging
 
@@ -85,3 +86,37 @@ LOG.warn("locks", "redirected locked slot write", "index", 20, "caller", callerN
 - Identical lines within one second fold into one line ending in `(xN)`.
 - Debug lines follow the mod's `debug.enabled`, `debug.categories` and `debug.verbose`, plus Lib's `debug.allMods` master switch. Warnings and errors are always written.
 - Every mod uses `ImpactsLog.STARTUP_CATEGORY` (`startup`) and `ImpactsLog.CONFIG_CATEGORY` (`config`).
+
+## The /impacts command
+
+Operators (`commands.permissionLevel` in Lib's COMMON file, default 2) can use:
+
+| Command | What it does |
+| --- | --- |
+| `/impacts debug` | Shows every mod's debug switches, and the `debug.allMods` master switch |
+| `/impacts debug <mod\|all>` | Shows one mod's switches, or every mod's |
+| `/impacts debug <mod\|all> <on\|off> [category]` | Turns debug lines, or one category, on or off. Saved to the mod's COMMON file |
+| `/impacts config <mod>` | Lists the mod's SERVER values with their defaults and allowed ranges |
+| `/impacts config <mod> <key> [value]` | Shows one value, or changes it and saves the world's file. Unreadable and out-of-range values are refused |
+| `/impacts dump player <name>` | Every Impact mod's state for one player |
+
+`<mod>` takes the full mod ID (`impactsinventory`) or the short name from log lines (`inventory`). A category can only be turned on or off once the mod has registered it with `ImpactsLog.registerCategories`.
+
+## Player dump sections
+
+Each mod adds its own part of `/impacts dump player`:
+
+```java
+ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
+        "activeSlot", hotbarState.activeSlot(player),
+        "backSlot", BackSlot.get(player)));
+```
+
+## Resource IDs and advancement triggers
+
+- Create every `ResourceLocation` through `ResourceIds.of(namespace, path)`. Forge 47.4 deprecates the constructor ahead of 1.21, so a port changes only that one method.
+- Register advancement triggers through `LoaderPlatform.current().registerCriterionTrigger(trigger)`, on the main thread (from `ImpactsLib.onModsReady`). Vanilla keeps the registration method private.
+
+## GameTests with a logged-in player
+
+`MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block.
