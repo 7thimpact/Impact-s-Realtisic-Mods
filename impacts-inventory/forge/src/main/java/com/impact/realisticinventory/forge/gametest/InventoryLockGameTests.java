@@ -6,12 +6,10 @@ import com.impact.realisticinventory.inventory.InventoryLayout;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -21,7 +19,6 @@ import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /** Inventory milestone 3: locked slots, pockets and pickups. */
 @GameTestHolder(InventoryMod.MOD_ID)
@@ -31,7 +28,6 @@ public final class InventoryLockGameTests {
     private static final int LOCKED_HOTBAR_INDEX = 3;
     private static final int SOME_POCKET_INDEX = 12;
     private static final int GIVEN_COUNT = 3;
-    private static final double DROP_SEARCH_RADIUS_BLOCKS = 2.0;
     private static final int FIRST_CHEST_SLOT = 0;
     private static final int UNLOCKED_SLOT_COUNT = 1 + InventoryLayout.POCKET_COUNT;
 
@@ -92,10 +88,10 @@ public final class InventoryLockGameTests {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
             fillWithSwords(player.getInventory());
-            Set<UUID> itemsAlreadyNearby = droppedItemIdsNear(player);
+            Set<UUID> itemsAlreadyNearby = DroppedItems.idsNear(player);
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.APPLE, GIVEN_COUNT));
             helper.assertTrue(countLockedItems(player.getInventory()) == 0, "giveItemToPlayer must not use a locked slot");
-            helper.assertTrue(countNewlyDroppedNear(player, Items.APPLE, itemsAlreadyNearby) == GIVEN_COUNT, "The apples should drop at the player's feet");
+            helper.assertTrue(DroppedItems.countNewNear(player, Items.APPLE, itemsAlreadyNearby) == GIVEN_COUNT, "The apples should drop at the player's feet");
         } finally {
             MockPlayers.leaveWorld(player);
         }
@@ -199,20 +195,5 @@ public final class InventoryLockGameTests {
                 .filter(slot -> slot.container == inventory && slot.getContainerSlot() == inventoryIndex)
                 .findFirst()
                 .orElseThrow();
-    }
-
-    private static Set<UUID> droppedItemIdsNear(ServerPlayer player) {
-        return player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(DROP_SEARCH_RADIUS_BLOCKS)).stream()
-                .map(ItemEntity::getUUID)
-                .collect(Collectors.toSet());
-    }
-
-    private static int countNewlyDroppedNear(ServerPlayer player, Item expectedItem, Set<UUID> itemsAlreadyNearby) {
-        return player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(DROP_SEARCH_RADIUS_BLOCKS)).stream()
-                .filter(itemEntity -> !itemsAlreadyNearby.contains(itemEntity.getUUID()))
-                .map(ItemEntity::getItem)
-                .filter(dropped -> dropped.is(expectedItem))
-                .mapToInt(ItemStack::getCount)
-                .sum();
     }
 }

@@ -6,13 +6,17 @@
   "refmap": "impactsinventory.refmap.json",
   "mixins": [
     "AbstractContainerMenuLocksMixin",
+    "InventoryDropAllMixin",
     "InventoryLocksMixin",
+    "InventoryMenuBackSlotMixin",
     "InventorySelectedSlotMixin",
     "ItemEntityPickupMixin",
     "ServerGamePacketListenerImplMixin",
-    "SlotLocksMixin"
+    "SlotLocksMixin",
+    "SlotPositionAccessor"
   ],
   "client": [
+    "client.CreativeModeInventoryScreenMixin",
     "client.InventoryScrollMixin",
     "client.MinecraftHotbarKeysMixin"
   ],

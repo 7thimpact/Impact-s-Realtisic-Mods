@@ -37,8 +37,10 @@ public final class BackSlot {
         LOG.debug(LibLogCategories.PROVIDERS, "back slot provider registered", "mod", modId);
     }
 
+    /** Whether a mod provides the back slot and has it switched on. */
     public static boolean isAvailable() {
-        return provider != null;
+        BackSlotProvider currentProvider = provider;
+        return currentProvider != null && currentProvider.isEnabled();
     }
 
     public static ItemStack get(Player player) {
@@ -46,19 +48,17 @@ public final class BackSlot {
         return currentProvider == null ? ItemStack.EMPTY : currentProvider.get(player);
     }
 
-    /** Puts the stack in the back slot. Returns false, changing nothing, when no mod provides a back slot. */
+    /** Puts the stack in the back slot. Returns false, changing nothing, when no mod provides a back slot or it is off. */
     public static boolean set(Player player, ItemStack stack) {
-        BackSlotProvider currentProvider = provider;
-        if (currentProvider == null) {
+        if (!isAvailable()) {
             return false;
         }
-        currentProvider.set(player, stack);
+        provider.set(player, stack);
         return true;
     }
 
     /** Whether the item may go in the back slot: the provider's own items, or anything in {@link #BACK_SLOT_ITEMS}. */
     public static boolean accepts(ItemStack stack) {
-        BackSlotProvider currentProvider = provider;
-        return currentProvider != null && (stack.is(BACK_SLOT_ITEMS) || currentProvider.acceptsOwnItem(stack));
+        return isAvailable() && (stack.is(BACK_SLOT_ITEMS) || provider.acceptsOwnItem(stack));
     }
 }

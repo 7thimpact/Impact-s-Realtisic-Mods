@@ -11,4 +11,9 @@ public interface BackSlotProvider {
 
     /** Whether the stack is one of the provider's own back-slot items, such as Inventory's packs. */
     boolean acceptsOwnItem(ItemStack stack);
+
+    /** Whether the back slot is switched on right now. A provider can turn it off in its own config. */
+    default boolean isEnabled() {
+        return true;
+    }
 }

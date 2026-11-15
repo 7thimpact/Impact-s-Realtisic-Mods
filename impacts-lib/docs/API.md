@@ -138,7 +138,7 @@ if (BackSlot.isAvailable() && BackSlot.accepts(stack)) {
 ItemStack worn = BackSlot.get(player);   // empty when no mod provides a back slot
 ```
 
-Inventory registers the provider with `BackSlot.registerBackSlotProvider("impactsinventory", provider)`. Other mods make an item fit by adding it to `#impactslib:back_slot_items`.
+Inventory registers the provider with `BackSlot.registerBackSlotProvider("impactsinventory", provider)`. Other mods make an item fit by adding it to `#impactslib:back_slot_items`. `isAvailable()` is false when no mod provides a back slot, or when the provider has it switched off (Inventory's `packs.backSlot`); `set` then returns false and changes nothing.
 
 ## Crafting progress
 
@@ -150,6 +150,10 @@ CraftingProgress.get(menu).ifPresent(progress -> {
     CraftingProgressRenderer.renderFadedOutput(graphics, left + outputX, top + outputY, progress);
 });
 ```
+
+- `renderArrow` fills a furnace-style arrow (24 by 16 pixels): crafting tables, furnaces and most modded screens.
+- `renderInventoryArrow` fills the smaller arrow (16 by 13 pixels) of vanilla's inventory screen and of Inventory's screen.
+- A screen that draws the progress itself implements `DrawsOwnCraftingProgress`. Code that draws over other mods' or vanilla's screens skips those screens, so the arrow is never drawn twice.
 
 ## HUD layout (client)
 
