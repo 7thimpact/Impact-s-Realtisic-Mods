@@ -4,8 +4,25 @@
 def commonProject = project.parent.project('common')
 def mixinConfigName = "${mod_id}.mixins.json"
 def hasMixins = commonProject.file("src/main/resources/${mixinConfigName}").exists()
+// Mixins that target Forge's own classes live in the forge module's resources.
+def forgeMixinConfigName = "${mod_id}.forge.mixins.json"
+def hasForgeMixins = project.file("src/main/resources/${forgeMixinConfigName}").exists()
 
-group = mod_group
+// Impact mods this one builds on, as project folders (for example impacts-lib), from its gradle.properties.
+def dependencyModProjects = (findProperty('mod_dependencies') ?: '').split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+        .collect { dependencyName -> project(":${dependencyName}:forge") }
+dependencyModProjects.each { dependencyProject -> evaluationDependsOn(dependencyProject.path) }
+// In development, a dependency's Mixin configs come from launch arguments.
+def dependencyMixinConfigs = dependencyModProjects.collectMany { dependencyProject ->
+    def dependencyModId = dependencyProject.property('mod_id')
+    [
+            dependencyProject.parent.project('common').file("src/main/resources/${dependencyModId}.mixins.json"),
+            dependencyProject.file("src/main/resources/${dependencyModId}.forge.mixins.json")
+    ].findAll { configFile -> configFile.exists() }.collect { configFile -> configFile.name }
+}
+
+// One group per mod: every mod's modules are named common and forge, and Gradle tells modules apart by group.
+group = "${mod_group}.${mod_id}"
 version = mod_version
 
 java {
@@ -24,12 +41,21 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', mod_id
+            // GameTests are filtered by their template's namespace, and mods reuse Lib's empty template.
+            property 'forge.enabledGameTestNamespaces', ([mod_id] + dependencyModProjects.collect { dependencyProject -> dependencyProject.property('mod_id') }).join(',')
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            dependencyMixinConfigs.each { configName ->
+                args '--mixin.config', configName
+            }
             mods {
                 "${mod_id}" {
                     source sourceSets.main
+                }
+                dependencyModProjects.each { dependencyProject ->
+                    "${dependencyProject.property('mod_id')}" {
+                        source dependencyProject.sourceSets.main
+                    }
                 }
             }
         }
@@ -64,12 +90,17 @@ repositories {
     }
 }
 
-// Mods with a <modid>.mixins.json in their common resources get Mixin's refmap and manifest entry.
-if (hasMixins) {
+// Mods with a <modid>.mixins.json (common) or <modid>.forge.mixins.json (forge) get Mixin's refmap and manifest entry.
+if (hasMixins || hasForgeMixins) {
     apply plugin: 'org.spongepowered.mixin'
     mixin {
         add sourceSets.main, "${mod_id}.refmap.json"
-        config mixinConfigName
+        if (hasMixins) {
+            config mixinConfigName
+        }
+        if (hasForgeMixins) {
+            config forgeMixinConfigName
+        }
     }
     dependencies {
         annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
@@ -78,6 +109,11 @@ if (hasMixins) {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    dependencyModProjects.each { dependencyProject -> compileOnly dependencyProject.sourceSets.main.output }
+}
+
+tasks.matching { task -> task.name.startsWith('prepareRun') }.configureEach { prepareTask ->
+    prepareTask.dependsOn dependencyModProjects.collect { dependencyProject -> "${dependencyProject.path}:classes" }
 }
 
 tasks.named('compileJava', JavaCompile) {
@@ -99,6 +135,9 @@ def modMetadata = [
         mod_license            : mod_license,
         minecraft_version_range: minecraft_version_range,
         forge_version_range    : forge_version_range,
+        lib_version_range      : lib_version_range,
+        impact_mod_version_range: impact_mod_version_range,
+        srf_version_range      : srf_version_range,
         loader_version_range   : loader_version_range,
 ]
 
