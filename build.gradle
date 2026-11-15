@@ -4,3 +4,10 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply false
     id 'org.spongepowered.mixin' version '0.7.38' apply false
 }
+
+tasks.register('runFamilyTestSetups') {
+    group = 'verification'
+    description = 'Runs every family test setup in test-setups/: its GameTests, then the Impact log check.'
+    dependsOn subprojects.findAll { setupProject -> setupProject.path.startsWith(':test-setups:') && setupProject.path.count(':') == 2 }
+            .collect { setupProject -> "${setupProject.path}:runGameTestServer" }
+}

@@ -7,7 +7,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | # | Step | Effort | Status |
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |
-| 1 | Impact's Lib core | M | In progress (M1 to M4 done) |
+| 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Planned |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
@@ -52,7 +52,10 @@ Why this order:
   - `ImpactsCounters` and the `impactslib:count` trigger
   - datagen helpers (recipe pairs, advancement builder)
   - player attachments: per-player data saved in vanilla NBT, with death rules (used by counters, then Inventory and Vitality)
-- [ ] **M5 Test-setup harness:** "Lib alone" first, then each mod's setups as the mods land
+- [x] **M5 Test-setup harness:**
+  - `test-setups/<name>/` runs a GameTest server with exactly the listed mods, plus SRF and playerAnimator when asked for, then fails on any Impact warning or error
+  - `./gradlew runFamilyTestSetups` runs them all
+  - "Lib alone" and "Lib with SRF" exist; each mod's setups are added as it lands
 
 ## 2. Impact's Realistic Inventory
 
@@ -104,7 +107,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 - [x] One read of SRF 4.1.6's source ("no tools" version), covering the checklist in each spec
 - [x] `docs/srf-notes.md` in each mod
 - [ ] Optional tag entries and a GameTest for each case, added with each mod
-- [ ] Add SRF detection (`realisticforgingores`) to every startup log line
+- [x] Add SRF detection (`realisticforgingores`) to every startup log line (`StartupSummary.log`)
 
 ## 7. Family test setups
 

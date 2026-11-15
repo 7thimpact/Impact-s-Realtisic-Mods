@@ -15,6 +15,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -22,6 +23,10 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /** Lib milestone 3: Give or drop, the back slot, crafting progress, the HUD layout and Lib's network channel. */
 @GameTestHolder(ImpactsLib.MOD_ID)
@@ -56,9 +61,10 @@ public final class LibProviderGameTests {
         ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
         try {
             fillInventory(player);
+            Set<UUID> itemsAlreadyNearby = droppedItemIdsNear(player);
             ImpactsItems.giveOrDrop(player, new ItemStack(Items.STONE, GIVEN_STONE_COUNT));
             helper.assertTrue(player.getInventory().countItem(Items.STONE) == 0, "A full inventory should take no stone");
-            int droppedStone = countDroppedNear(player, Items.STONE.getDefaultInstance());
+            int droppedStone = countNewlyDroppedNear(player, Items.STONE, itemsAlreadyNearby);
             helper.assertTrue(droppedStone == GIVEN_STONE_COUNT, "Every stone should drop at the player's feet, found " + droppedStone);
         } finally {
             MockPlayers.leaveWorld(player);
@@ -124,11 +130,22 @@ public final class LibProviderGameTests {
         }
     }
 
-    private static int countDroppedNear(ServerPlayer player, ItemStack expectedItem) {
-        return player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(DROP_SEARCH_RADIUS_BLOCKS)).stream()
+    // The test world keeps items dropped by earlier runs, and mock players spawn near the same point, so only
+    // items that appear during the test count.
+    private static Set<UUID> droppedItemIdsNear(ServerPlayer player) {
+        return itemsNear(player).stream().map(ItemEntity::getUUID).collect(Collectors.toSet());
+    }
+
+    private static int countNewlyDroppedNear(ServerPlayer player, Item expectedItem, Set<UUID> itemsAlreadyNearby) {
+        return itemsNear(player).stream()
+                .filter(itemEntity -> !itemsAlreadyNearby.contains(itemEntity.getUUID()))
                 .map(ItemEntity::getItem)
-                .filter(dropped -> dropped.is(expectedItem.getItem()))
+                .filter(dropped -> dropped.is(expectedItem))
                 .mapToInt(ItemStack::getCount)
                 .sum();
+    }
+
+    private static List<ItemEntity> itemsNear(ServerPlayer player) {
+        return player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(DROP_SEARCH_RADIUS_BLOCKS));
     }
 }
