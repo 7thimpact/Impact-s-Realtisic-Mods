@@ -17,7 +17,9 @@ public final class ImpactsCommands {
                 .requires(ImpactsCommands::hasPermission)
                 .then(DebugCommand.build())
                 .then(ConfigCommand.build())
-                .then(DumpCommand.build()));
+                .then(DumpCommand.build())
+                .then(RecipeCheckCommands.audit())
+                .then(RecipeCheckCommands.conflicts()));
     }
 
     private static boolean hasPermission(CommandSourceStack source) {

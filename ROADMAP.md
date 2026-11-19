@@ -9,7 +9,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
-| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
+| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | In progress (Lib's food systems: tool crafting, uses, fuel, heat, boiling, water, hold-to-use, grinding, audit and conflicts done) |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |

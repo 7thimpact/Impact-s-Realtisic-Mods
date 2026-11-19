@@ -273,3 +273,9 @@ HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // on
 - Items: `impactslib:wooden_grinder_bowl`, `stone_grinder_bowl` (off hand; 64 / 256 uses), `wooden_grinding_stick`, `stone_grinding_stick` (main hand, hold right-click; 30 / 20 ticks per item). The mods ship their recipes; Lib ships none.
 - A bowl holds up to `grinder.bowlCapacity` (16) items of at most 2 kinds. Load it by right-clicking with the item in the main hand, or by right-clicking the item onto the bowl in any inventory screen. Sneak-right-click with an empty main hand empties it.
 - Recipe JSON: `ingredients` (1 or 2), `result` (with `count`), `min_tier` (`wood` or `stone`), optional `grind_ticks` and `byproducts`. The bowl's tier limits the grind.
+
+## Recipe audit and conflict checker
+
+- `/impacts audit`: which Impact mod replaced or turned off each vanilla recipe right now (read from the data packs that provide each `minecraft:` recipe file).
+- `/impacts conflicts`: any two crafting recipes that could match the same grid, where at least one is an Impact recipe, plus any vanilla recipe two Impact mods both override.
+- Both run at every server start and `/reload`. Each conflict logs a warning, so a conflict fails every family test setup.

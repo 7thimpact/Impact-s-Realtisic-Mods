@@ -26,6 +26,11 @@ public final class LibTranslations {
     public static final String DUMP_SECTION = "commands.impactslib.dump.section";
     public static final String DUMP_ENTRY = "commands.impactslib.dump.entry";
 
+    public static final String AUDIT_SUMMARY = "commands.impactslib.audit.summary";
+    public static final String AUDIT_REPLACED = "commands.impactslib.audit.replaced";
+    public static final String AUDIT_TURNED_OFF = "commands.impactslib.audit.turned_off";
+    public static final String CONFLICTS_SUMMARY = "commands.impactslib.conflicts.summary";
+    public static final String CONFLICT_ENTRY = "commands.impactslib.conflicts.entry";
     public static final String BOWL_EMPTY = "tooltip.impactslib.bowl_empty";
     public static final String BOWL_ENTRY = "tooltip.impactslib.bowl_entry";
     public static final String WOODEN_GRINDER_BOWL = "item.impactslib.wooden_grinder_bowl";
@@ -58,6 +63,11 @@ public final class LibTranslations {
         english.put(DUMP_HEADER, "Impact dump for %s");
         english.put(DUMP_SECTION, "[%s]");
         english.put(DUMP_ENTRY, "  %s = %s");
+        english.put(AUDIT_SUMMARY, "%s vanilla recipes are replaced or turned off by Impact mods");
+        english.put(AUDIT_REPLACED, "  %s: replaced by %s");
+        english.put(AUDIT_TURNED_OFF, "  %s: turned off by %s");
+        english.put(CONFLICTS_SUMMARY, "Recipe conflicts: %s (details in the log)");
+        english.put(CONFLICT_ENTRY, "  %s and %s: %s");
         english.put(BOWL_EMPTY, "Empty. Right-click a grindable item onto it, or hold it in your off hand");
         english.put(BOWL_ENTRY, "%s x%s");
         english.put(WOODEN_GRINDER_BOWL, "Wooden Grinder Bowl");

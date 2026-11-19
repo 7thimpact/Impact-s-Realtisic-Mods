@@ -3,6 +3,7 @@ package com.impact.lib.forge;
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.LibStartup;
 import com.impact.lib.advancement.LoneLibAchievement;
+import com.impact.lib.audit.RecipeChecks;
 import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.forge.client.LibForgeClient;
 import com.impact.lib.forge.condition.NoImpactModsCondition;
@@ -16,10 +17,12 @@ import com.impact.lib.network.LibNetwork;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -48,6 +51,8 @@ public final class ImpactsLibForge {
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerStopped);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onFuelBurnTime);
+        MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onDatapackSync);
     }
 
     private static void onCommonSetup(FMLCommonSetupEvent event) {
@@ -67,6 +72,18 @@ public final class ImpactsLibForge {
         }
         CraftingHelper.register(NoImpactModsCondition.Serializer.INSTANCE);
         CraftingHelper.register(WaterBottleIngredient.ID, WaterBottleIngredient.Serializer.INSTANCE);
+    }
+
+    /** The recipe audit and conflict check run on the live recipe set at every start... */
+    private static void onServerStarted(ServerStartedEvent event) {
+        RecipeChecks.runAndLog(event.getServer());
+    }
+
+    /** ...and after every /reload (the sync without a player is the one sent to everyone). */
+    private static void onDatapackSync(OnDatapackSyncEvent event) {
+        if (event.getPlayer() == null) {
+            RecipeChecks.runAndLog(event.getPlayerList().getServer());
+        }
     }
 
     /** Impact items burn for the time Lib's fuel registry decides; anything it doesn't know is left to others. */
