@@ -17,6 +17,11 @@ public final class InventoryTranslations {
     public static final String BACKPACK = "item.impactsinventory.backpack";
     public static final String FRAME_PACK = "item.impactsinventory.frame_pack";
     public static final String PLACED_PACK = "block.impactsinventory.placed_pack";
+    public static final String SLOTS_USED_TOOLTIP = "tooltip.impactsinventory.slots_used";
+    public static final String STACK_TOOLTIP = "tooltip.impactsinventory.stack";
+    public static final String MORE_STACKS_TOOLTIP = "tooltip.impactsinventory.more_stacks";
+    public static final String FRAME_PACK_SLOWNESS_TOOLTIP = "tooltip.impactsinventory.frame_pack_slowness";
+    public static final String PACK_HINT_TOOLTIP = "tooltip.impactsinventory.pack_hint";
     /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
     public static final String ADVANCEMENT_TAB = "advancements.impactsinventory.tab";
     public static final String FIRST_JOIN = "message.impactsinventory.first_join";
@@ -40,6 +45,11 @@ public final class InventoryTranslations {
         english.put(BACKPACK, "Backpack");
         english.put(FRAME_PACK, "Frame Pack");
         english.put(PLACED_PACK, "Placed Pack");
+        english.put(SLOTS_USED_TOOLTIP, "%s/%s slots used");
+        english.put(STACK_TOOLTIP, "%s x%s");
+        english.put(MORE_STACKS_TOOLTIP, "and %s more...");
+        english.put(FRAME_PACK_SLOWNESS_TOOLTIP, "Walking %s%% slower while worn");
+        english.put(PACK_HINT_TOOLTIP, "Right-click to wear, sneak-right-click a block to set down");
         english.put(FIRST_JOIN, "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.");
         english.put(SLOTS_LOCKED, "Survival mode: you carry two hands and nine pockets again.");
         english.put(MOVED_TO_POCKETS, "Items from the locked slots went into your pockets.");

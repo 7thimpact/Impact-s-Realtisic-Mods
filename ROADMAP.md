@@ -8,7 +8,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
-| 2 | Impact's Realistic Inventory (IRI) | M | In progress (milestones 1 to 7, 9 and 10 done) |
+| 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
@@ -71,7 +71,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 - [ ] 8 Integration: IRV parts in step 4, IRC parts in step 5
 - [x] 9 SRF pass: the four GameTests from `docs/srf-notes.md`, and the `inventory-with-srf` setup
 - [x] 10 Achievements
-- [ ] 11 Polish and compatibility
+- [x] 11 Polish and compatibility: pack tooltips, generated lang, the `inventory-alone` and `inventory-with-srf` setups. JEI pages for packs come with Lib's JEI base plugin (step 3); the other setups with IRI come with their mods.
 
 ## 3. Impact's Realistic Food, plus Lib's food systems
 

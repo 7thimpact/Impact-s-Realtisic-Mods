@@ -2,8 +2,8 @@
 # Starts a mod's development client on a virtual display, straight into the world saved as
 # <mod>/forge/run/saves/ImpactsTest (copied from the GameTest world the first time), performs the given steps, then
 # saves a screenshot and stops the client. A step is a chat command, "key:<xdotool key name>" for a key press,
-# "click:<x>,<y>" (left) or "rclick:<x>,<y>" (right) for a click at game-window pixels (the window is 854x480 at GUI
-# scale 2, so double the GUI coordinates), or "shot:<file.png>" for an extra screenshot along the way.
+# "click:<x>,<y>" (left), "rclick:<x>,<y>" (right) or "move:<x>,<y>" (hover) at game-window pixels (the window is
+# 854x480 at GUI scale 2, so double the GUI coordinates), or "shot:<file.png>" for an extra screenshot along the way.
 #
 #   tools/client-screenshot.sh <mod folder> <output.png> [step ...]
 #   tools/client-screenshot.sh impacts-inventory /tmp/hotbar.png "/gamemode survival" "/give @s iron_sword" key:f
@@ -65,6 +65,11 @@ for step in "$@"; do
       click_position=${step#click:}
       xdotool mousemove --window "$GAME_WINDOW" "${click_position%,*}" "${click_position#*,}" click 1
       sleep 2
+      ;;
+    move:*)
+      move_position=${step#move:}
+      xdotool mousemove --window "$GAME_WINDOW" "${move_position%,*}" "${move_position#*,}"
+      sleep 1
       ;;
     rclick:*)
       click_position=${step#rclick:}

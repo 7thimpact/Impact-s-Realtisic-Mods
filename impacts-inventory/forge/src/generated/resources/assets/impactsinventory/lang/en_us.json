@@ -36,5 +36,10 @@
   "message.impactsinventory.moved_to_pack": "Items from the locked slots went into your pockets and your worn pack.",
   "message.impactsinventory.moved_to_pockets": "Items from the locked slots went into your pockets.",
   "message.impactsinventory.pockets_full": "Pockets full",
-  "message.impactsinventory.slots_locked": "Survival mode: you carry two hands and nine pockets again."
+  "message.impactsinventory.slots_locked": "Survival mode: you carry two hands and nine pockets again.",
+  "tooltip.impactsinventory.frame_pack_slowness": "Walking %s%% slower while worn",
+  "tooltip.impactsinventory.more_stacks": "and %s more...",
+  "tooltip.impactsinventory.pack_hint": "Right-click to wear, sneak-right-click a block to set down",
+  "tooltip.impactsinventory.slots_used": "%s/%s slots used",
+  "tooltip.impactsinventory.stack": "%s x%s"
 }

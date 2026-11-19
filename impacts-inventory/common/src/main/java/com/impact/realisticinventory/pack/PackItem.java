@@ -1,5 +1,6 @@
 package com.impact.realisticinventory.pack;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -7,8 +8,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * A satchel, backpack or frame pack. Its contents live in its own NBT ({@code Items}, like a shulker box), so it keeps
@@ -26,6 +31,11 @@ public final class PackItem extends Item implements DyeableLeatherItem {
 
     public PackKind kind() {
         return kind;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> lines, TooltipFlag flag) {
+        PackTooltip.append(stack, kind, lines);
     }
 
     /** Sneak-right-click on a block sets the pack down there (when placed packs are on). */
