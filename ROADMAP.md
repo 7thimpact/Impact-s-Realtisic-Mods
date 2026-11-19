@@ -87,7 +87,20 @@ These are the milestones from `impacts-inventory/SPEC.md`.
   - the water-filled event
   - recipe audit and conflict checker (`/impacts audit`, `/impacts conflicts`)
   - JEI base plugin
-- [ ] IRF milestones 1 to 12 from `impacts-food/SPEC.md`. Milestone 10 (IRC) moves to step 5, and the SRF part of milestone 11 moves to step 6.
+These are the milestones from `impacts-food/SPEC.md`.
+
+- [x] 1 Skeleton: configs, debug categories, Crafting detection, the `food-alone` setup
+- [ ] 2 Knives and cutting
+- [ ] 3 Cauldron boiling
+- [ ] 4 Cooking any food
+- [ ] 5 Soups
+- [ ] 6 Bucket on a campfire
+- [ ] 7 Spit roasting
+- [ ] 8 Raw food risk
+- [ ] 9 Baking
+- [ ] 10 IRC integration (moves to step 5)
+- [ ] 11 IRV, IRI and SRF checks: IRV parts in step 4, SRF part in step 6
+- [ ] 12 Polish
 
 ## 4. Impact's Realistic Vitality
 

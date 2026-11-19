@@ -114,6 +114,8 @@ repositories {
         url = 'https://maven.blamejared.com/'
         content {
             includeGroup 'mezz.jei'
+            // JEI's runtime jar depends on mezz's config library from the same repository.
+            includeGroup 'net.mezzdev.config'
         }
     }
     maven {
