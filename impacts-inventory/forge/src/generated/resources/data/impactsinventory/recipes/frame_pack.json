@@ -1,0 +1,36 @@
+{
+  "type": "impactsinventory:pack_upgrade",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "impactsinventory:backpack"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "I I",
+    "SPS",
+    "I I"
+  ],
+  "result": {
+    "item": "impactsinventory:frame_pack"
+  },
+  "show_notification": true
+}

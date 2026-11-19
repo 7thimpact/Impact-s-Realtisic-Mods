@@ -7,7 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-/** Inventory's generated data. Run with {@code runData}. */
+/** Inventory's generated data: translations, item models, item tags and recipes. Run with {@code runData}. */
 public final class InventoryDataGenerators {
     private static final String ENGLISH_LOCALE = "en_us";
 
@@ -23,5 +23,8 @@ public final class InventoryDataGenerators {
                 InventoryTranslations.ENGLISH.forEach(this::add);
             }
         });
+        generator.addProvider(event.includeClient(), new InventoryItemModels(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new InventoryItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new InventoryRecipes(output));
     }
 }

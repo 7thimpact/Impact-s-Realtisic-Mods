@@ -14,6 +14,9 @@ import com.impact.realisticinventory.inventory.LockedSlotOverflow;
 import com.impact.realisticinventory.network.InventoryNetwork;
 import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryBackSlotProvider;
+import com.impact.realisticinventory.pack.InventoryItems;
+import com.impact.realisticinventory.pack.PackMenus;
+import com.impact.realisticinventory.pack.PackRecipes;
 
 /** Inventory's startup steps that don't depend on the mod loader. */
 public final class InventoryStartup {
@@ -23,8 +26,8 @@ public final class InventoryStartup {
     }
 
     /**
-     * Mod construction: registers with Lib, then the log categories, config files, player data, the network channel
-     * and the back slot.
+     * Mod construction: registers with Lib, then the log categories, config files, player data, items, menus and
+     * recipe types, the network channel and the back slot.
      */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(InventoryMod.MOD_ID);
@@ -35,6 +38,9 @@ public final class InventoryStartup {
         PlayerAttachments.register(HandSwitch.HOTBAR);
         PlayerAttachments.register(BackSlotStorage.BACK_SLOT);
         PlayerAttachments.register(LockedSlotOverflow.MIGRATION);
+        InventoryItems.register();
+        PackMenus.register();
+        PackRecipes.register();
         InventoryNetwork.create();
         BackSlot.registerBackSlotProvider(InventoryMod.MOD_ID, new InventoryBackSlotProvider());
         ImpactsLib.onModsReady(impactMods -> StartupSummary.log(InventoryMod.MOD_ID));

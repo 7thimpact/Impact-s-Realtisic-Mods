@@ -7,6 +7,7 @@ import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.inventory.LockedSlotOverflow;
 import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.BackSlotSync;
+import com.impact.realisticinventory.pack.PackEffects;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
@@ -67,6 +68,7 @@ final class InventoryForgeEvents {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
             LockedSlotOverflow.tick(player);
             BackSlotSync.tick(player);
+            PackEffects.tick(player);
         }
     }
 

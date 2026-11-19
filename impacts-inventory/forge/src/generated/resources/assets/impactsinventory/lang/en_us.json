@@ -1,7 +1,13 @@
 {
+  "button.impactsinventory.open_pack": "Open pack (%s)",
+  "item.impactsinventory.backpack": "Backpack",
+  "item.impactsinventory.frame_pack": "Frame Pack",
+  "item.impactsinventory.satchel": "Satchel",
+  "key.impactsinventory.open_pack": "Open Pack",
   "message.impactsinventory.first_join": "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.",
-  "message.impactsinventory.moved_to_chest": "Items that didn't fit in your pockets went into a chest at %s.",
-  "message.impactsinventory.moved_to_ground": "Items that didn't fit in your pockets were dropped at your feet.",
+  "message.impactsinventory.moved_to_chest": "Items that didn't fit in your pockets or pack went into a chest at %s.",
+  "message.impactsinventory.moved_to_ground": "Items that didn't fit in your pockets or pack were dropped at your feet.",
+  "message.impactsinventory.moved_to_pack": "Items from the locked slots went into your pockets and your worn pack.",
   "message.impactsinventory.moved_to_pockets": "Items from the locked slots went into your pockets.",
   "message.impactsinventory.pockets_full": "Pockets full",
   "message.impactsinventory.slots_locked": "Survival mode: you carry two hands and nine pockets again."

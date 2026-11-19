@@ -35,14 +35,13 @@ public final class LockedSlotRedirect {
         ImpactsItems.giveOrDrop(inventory.player, stack.copy());
     }
 
-    /** {@code Inventory.add(index, stack)} aimed at a locked index places the stack normally instead. */
-    public static int placementIndexFor(Inventory inventory, int requestedIndex) {
+    /** Whether {@code Inventory.add(index, stack)} aims at a locked index; it is then placed normally instead (and logged). */
+    public static boolean isLockedAddRequest(Inventory inventory, int requestedIndex) {
         boolean isLockedRequest = requestedIndex >= 0 && InventoryLayout.isLocked(requestedIndex) && InventoryLocks.isActiveFor(inventory.player);
-        if (!isLockedRequest) {
-            return requestedIndex;
+        if (isLockedRequest) {
+            LOG.debug(InventoryLogCategories.LOCKS, "locked slot add redirected",
+                    "player", inventory.player.getGameProfile().getName(), "index", requestedIndex, "caller", CallerFinder.outsideCaller());
         }
-        LOG.debug(InventoryLogCategories.LOCKS, "locked slot add redirected",
-                "player", inventory.player.getGameProfile().getName(), "index", requestedIndex, "caller", CallerFinder.outsideCaller());
-        return PocketPlacement.NO_SLOT;
+        return isLockedRequest;
     }
 }

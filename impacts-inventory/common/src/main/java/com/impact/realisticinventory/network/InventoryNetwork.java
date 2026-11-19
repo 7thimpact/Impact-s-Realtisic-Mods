@@ -8,6 +8,7 @@ import com.impact.realisticinventory.client.ClientBackSlot;
 import com.impact.realisticinventory.client.ClientHotbar;
 import com.impact.realisticinventory.hotbar.HandSwitch;
 import com.impact.realisticinventory.hotbar.SwitchSource;
+import com.impact.realisticinventory.pack.PackMenus;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +27,7 @@ public final class InventoryNetwork {
         channel.registerServerbound(SelectHotbarSlotMessage.class, SelectHotbarSlotMessage.CODEC, HandSwitch::handleRequest);
         channel.registerClientbound(HotbarStateMessage.class, HotbarStateMessage.CODEC, message -> ClientHotbar.applyState(message));
         channel.registerClientbound(BackSlotMessage.class, BackSlotMessage.CODEC, message -> ClientBackSlot.apply(message));
+        channel.registerServerbound(OpenPackMessage.class, OpenPackMessage.CODEC, (message, sender) -> PackMenus.openWornPack(sender));
     }
 
     public static void sendHotbarState(ServerPlayer player) {
@@ -38,6 +40,11 @@ public final class InventoryNetwork {
 
     public static void sendBackSlot(ServerPlayer receiver, Player wearer, ItemStack worn) {
         channel.sendToPlayer(receiver, new BackSlotMessage(wearer.getId(), worn.copy()));
+    }
+
+    /** Client side: asks the server to open the worn pack. */
+    public static void requestOpenPack() {
+        channel.sendToServer(new OpenPackMessage());
     }
 
     /** Client side: asks the server to switch slots. */

@@ -8,7 +8,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
-| 2 | Impact's Realistic Inventory (IRI) | M | In progress (milestones 1 to 5 done) |
+| 2 | Impact's Realistic Inventory (IRI) | M | In progress (milestones 1 to 6 done) |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Planned |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
@@ -66,7 +66,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 - [x] 3 Locked slots and pockets
 - [x] 4 Inventory screen
 - [x] 5 First-join migration and creative mode
-- [ ] 6 Packs
+- [x] 6 Packs
 - [ ] 7 Placed packs
 - [ ] 8 Integration: IRV parts in step 4, IRC parts in step 5
 - [ ] 9 SRF pass: step 6

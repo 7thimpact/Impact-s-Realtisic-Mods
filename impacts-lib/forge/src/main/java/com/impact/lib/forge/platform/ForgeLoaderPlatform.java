@@ -2,25 +2,39 @@ package com.impact.lib.forge.platform;
 
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
+import com.impact.lib.forge.ForgeModConstruction;
 import com.impact.lib.forge.config.ForgeConfigSpecBuilder;
 import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.platform.LoaderPlatform;
+import com.impact.lib.registry.MenuWithDataFactory;
+import com.impact.lib.registry.ModRegistrar;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.network.NetworkHooks;
 
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 /** Forge's answers to {@link LoaderPlatform}. Found through {@code META-INF/services}. */
 public final class ForgeLoaderPlatform implements LoaderPlatform {
     private static final String LOADER_NAME = "forge";
+    private static final Map<String, ModRegistrar> REGISTRARS_BY_MOD = new ConcurrentHashMap<>();
 
     @Override
     public String loaderName() {
@@ -72,5 +86,22 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public boolean isFakePlayer(Player player) {
         return player instanceof FakePlayer;
+    }
+
+    /** The first call for a mod must come during its construction, so its deferred registers reach its event bus. */
+    @Override
+    public ModRegistrar registrar(String modId) {
+        return REGISTRARS_BY_MOD.computeIfAbsent(modId,
+                newModId -> new ForgeModRegistrar(newModId, ForgeModConstruction.currentContext().getModEventBus()));
+    }
+
+    @Override
+    public <M extends AbstractContainerMenu> MenuType<M> menuTypeWithData(MenuWithDataFactory<M> clientFactory) {
+        return IForgeMenuType.create(clientFactory::create);
+    }
+
+    @Override
+    public void openMenuWithData(ServerPlayer player, MenuProvider menuProvider, Consumer<FriendlyByteBuf> extraDataWriter) {
+        NetworkHooks.openScreen(player, menuProvider, extraDataWriter);
     }
 }

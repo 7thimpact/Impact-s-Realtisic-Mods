@@ -20,6 +20,11 @@ public final class BackSlotContents implements PlayerAttachmentData {
         stack = newStack;
     }
 
+    /** What clients were last told the player wears. */
+    public ItemStack lastSyncedStack() {
+        return lastSyncedStack;
+    }
+
     /** Whether the worn item changed since clients were last told. */
     public boolean hasChangedSinceSync() {
         return !ItemStack.matches(stack, lastSyncedStack);

@@ -3,6 +3,7 @@ package com.impact.realisticinventory.mixin;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.inventory.LockedSlotRedirect;
 import com.impact.realisticinventory.inventory.PickBlock;
+import com.impact.realisticinventory.inventory.PickupPlacement;
 import com.impact.realisticinventory.inventory.PocketPlacement;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,9 +40,17 @@ public abstract class InventoryLocksMixin {
         }
     }
 
-    @ModifyVariable(method = "add(ILnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), argsOnly = true)
-    private int impactsinventory$neverAddIntoLockedIndex(int requestedIndex) {
-        return LockedSlotRedirect.placementIndexFor((Inventory) (Object) this, requestedIndex);
+    /** Adds without a target slot (or aimed at a locked one) follow the pickup order: hands, pockets, worn pack. */
+    @Inject(method = "add(ILnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
+    private void impactsinventory$addThroughPickupOrder(int requestedIndex, ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
+        Inventory inventory = (Inventory) (Object) this;
+        if (!InventoryLocks.isActiveFor(player)) {
+            return;
+        }
+        boolean isPlacedAnywhere = requestedIndex < 0 || LockedSlotRedirect.isLockedAddRequest(inventory, requestedIndex);
+        if (isPlacedAnywhere) {
+            callback.setReturnValue(PickupPlacement.add(inventory, stack));
+        }
     }
 
     @Inject(method = "setItem", at = @At("HEAD"), cancellable = true)

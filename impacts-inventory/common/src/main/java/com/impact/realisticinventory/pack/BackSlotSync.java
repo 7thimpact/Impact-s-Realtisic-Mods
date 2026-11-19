@@ -18,6 +18,7 @@ public final class BackSlotSync {
         if (!contents.hasChangedSinceSync()) {
             return;
         }
+        PackWearing.onWornItemChanged(player, contents.lastSyncedStack(), contents.stack());
         contents.markSynced();
         InventoryNetwork.sendBackSlotToTrackingAndSelf(player, contents.stack());
     }

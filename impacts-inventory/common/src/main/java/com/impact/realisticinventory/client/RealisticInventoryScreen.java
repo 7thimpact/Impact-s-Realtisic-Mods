@@ -7,6 +7,8 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import com.impact.realisticinventory.inventory.InventoryLayout;
+import com.impact.realisticinventory.pack.BackMenuSlot;
+import com.impact.realisticinventory.pack.WornPack;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -31,9 +33,14 @@ public final class RealisticInventoryScreen extends InventoryScreen implements D
     private static final int CRAFTING_OUTPUT_Y = 28;
     private static final int FIRST_HAND_KEY_INDEX = 0;
     private static final int SECOND_HAND_KEY_INDEX = 1;
+    // The open-pack button sits centered just above the back slot's frame.
+    private static final int SLOT_FRAME_SIZE = 18;
+    private static final int OPEN_PACK_BUTTON_X = BackMenuSlot.SCREEN_X - 1 + (SLOT_FRAME_SIZE - OpenPackButton.WIDTH) / 2;
+    private static final int OPEN_PACK_BUTTON_Y = BackMenuSlot.SCREEN_Y - 2 - OpenPackButton.HEIGHT;
     private static final ImpactsLog LOG = ImpactsLog.of(InventoryMod.MOD_ID);
 
     private final InventoryScreenLayout layout = new InventoryScreenLayout();
+    private OpenPackButton openPackButton;
     private float lastMouseX;
     private float lastMouseY;
 
@@ -49,6 +56,7 @@ public final class RealisticInventoryScreen extends InventoryScreen implements D
             return;
         }
         layout.moveIntoLayout(menu, ClientHotbar.activeSlot());
+        openPackButton = addRenderableWidget(new OpenPackButton(leftPos + OPEN_PACK_BUTTON_X, topPos + OPEN_PACK_BUTTON_Y));
         LOG.debug(InventoryLogCategories.SCREEN, "inventory screen opened", "activeSlot", ClientHotbar.activeSlot());
         LOG.verbose(InventoryLogCategories.SCREEN, "inventory screen layout", "pocketsLeft", InventoryScreenLayout.POCKETS_LEFT,
                 "pocketsTop", InventoryScreenLayout.POCKETS_TOP, "handsLeft", InventoryScreenLayout.HANDS_LEFT,
@@ -64,6 +72,9 @@ public final class RealisticInventoryScreen extends InventoryScreen implements D
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         layout.placeHands(menu, ClientHotbar.activeSlot());
+        // The recipe book moves the whole screen sideways, so the button follows leftPos every frame.
+        openPackButton.setPosition(leftPos + OPEN_PACK_BUTTON_X, topPos + OPEN_PACK_BUTTON_Y);
+        openPackButton.visible = WornPack.of(minecraft.player).isPresent();
         super.render(graphics, mouseX, mouseY, partialTick);
         lastMouseX = mouseX;
         lastMouseY = mouseY;
@@ -86,6 +97,19 @@ public final class RealisticInventoryScreen extends InventoryScreen implements D
         super.renderLabels(graphics, mouseX, mouseY);
         CraftingProgress.get(menu).ifPresent(progress ->
                 CraftingProgressRenderer.renderFadedOutput(graphics, CRAFTING_OUTPUT_X, CRAFTING_OUTPUT_Y, progress));
+    }
+
+    /** B (the open-pack key) opens the worn pack, unless something else took the key first (the recipe book's search). */
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (super.keyPressed(keyCode, scanCode, modifiers)) {
+            return true;
+        }
+        if (InventoryKeys.isOpenPackKey(keyCode, scanCode)) {
+            InventoryKeys.requestOpenPack();
+            return true;
+        }
+        return false;
     }
 
     /** Keys 1 and 2 over a slot swap it with the hand drawn as hotbar slot 1 or 2 here, matching the HUD. */

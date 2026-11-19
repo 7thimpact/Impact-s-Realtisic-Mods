@@ -28,7 +28,7 @@ public final class CreativeInventoryBackSlot {
         if (!BackSlotStorage.isEnabled()) {
             return;
         }
-        InventoryScreenBackground.drawSlotFrame(graphics, left + SLOT_X, top + SLOT_Y);
+        GuiTexturePieces.drawSlotFrame(graphics, left + SLOT_X, top + SLOT_Y);
     }
 
     private static void moveToBackSlotPosition(Slot slot) {

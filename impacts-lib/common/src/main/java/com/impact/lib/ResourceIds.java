@@ -4,6 +4,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
+import java.util.Optional;
+
 /** Creates resource IDs in one place, so later ports change only this class. */
 public final class ResourceIds {
     private ResourceIds() {
@@ -14,6 +16,11 @@ public final class ResourceIds {
     @SuppressWarnings("removal")
     public static ResourceLocation of(String namespace, String path) {
         return new ResourceLocation(namespace, path);
+    }
+
+    /** Reads an ID written as {@code namespace:path} (or just {@code path} for minecraft), or nothing when it isn't valid. */
+    public static Optional<ResourceLocation> tryParse(String text) {
+        return Optional.ofNullable(ResourceLocation.tryParse(text));
     }
 
     // Forge deprecates vanilla's registries in favor of its own. Both hold the same entries, and vanilla's is the

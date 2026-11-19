@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "impactsinventory.refmap.json",
   "mixins": [
+    "ItemHandlerHelperMixin",
     "PlayerMainInvWrapperMixin"
   ],
   "injectors": {
