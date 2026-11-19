@@ -3,12 +3,17 @@ package com.impact.realisticfood.boiling;
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.mixin.ItemEntityAccessor;
+import com.impact.realisticfood.registry.FoodTags;
+import com.impact.realisticfood.soup.SoupRecipes;
+import com.impact.realisticfood.soup.SoupServings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -16,12 +21,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
+
 /**
- * Putting items into a water cauldron: by hand, or by dropping them in. Food acts only on items a boiling recipe takes,
- * in a hot cauldron; everything else (Salty's Realistic Forging's ores, bottles, buckets, ...) passes on untouched.
+ * Using a water cauldron: putting items in (by hand or by dropping them), ladling a ready soup into a bowl, eating it
+ * from the pot with an empty hand, and refusing bottles at a soup. Everything else (Salty's Realistic Forging's ores,
+ * buckets, ...) passes on untouched.
  */
 public final class CauldronInteractions {
     private static final ImpactsLog LOG = ImpactsLog.of(FoodMod.MOD_ID);
@@ -33,26 +43,42 @@ public final class CauldronInteractions {
     /** Right-clicking a cauldron. PASS leaves the click to vanilla's cauldron interactions and other mods. */
     public static InteractionResult use(BlockState state, Level level, BlockPos position, Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
-        if (!CauldronPotHost.isWaterCauldron(state) || held.isEmpty() || !FoodFeature.BOILING.isOn()) {
+        if (!CauldronPotHost.isWaterCauldron(state) || !FoodFeature.BOILING.isOn()) {
             return InteractionResult.PASS;
         }
-        if (!(level instanceof ServerLevel serverLevel)) {
-            return wouldClientAdd(level, position, held) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        if (isBottleRefused(level, position, held)) {
+            return InteractionResult.FAIL;
+        }
+        if (!(level instanceof ServerLevel serverLevel) || !(player instanceof ServerPlayer serverPlayer)) {
+            return predictOnClient(level, position, held, hand);
         }
         CauldronPotHost host = new CauldronPotHost(serverLevel, position);
-        if (!host.isHeated() && !CauldronPots.isBoiling(serverLevel, position)) {
-            logPassedOn(held, position, "cold");
-            return InteractionResult.PASS;
+        Optional<BoilingPot> pot = CauldronPots.of(serverLevel).pot(position);
+        boolean isSoupReady = pot.map(BoilingPot::isSoupReady).orElse(false);
+        if (isSoupReady && held.is(FoodTags.BOWLS)) {
+            return SoupServings.ladle(serverPlayer, hand, host, pot.get());
         }
-        if (CauldronPots.of(serverLevel).track(position).tryAdd(host, held).isEmpty()) {
-            logPassedOn(held, position, "no recipe or no room");
-            return InteractionResult.PASS;
+        if (isSoupReady && held.isEmpty() && hand == InteractionHand.MAIN_HAND && FoodFeature.EATING_FROM_POT.isOn()) {
+            return SoupServings.eatFromPot(serverPlayer, host, pot.get());
         }
-        if (!player.getAbilities().instabuild) {
-            held.shrink(1);
+        return addFromHand(serverLevel, position, player, held);
+    }
+
+    /**
+     * Whether Food refuses a bottle here: a cauldron holding a soup or its ingredients mustn't give water. Checked by
+     * the loader's early click event too, so no other mod fills a bottle from a soup.
+     */
+    public static boolean isBottleRefused(Level level, BlockPos position, ItemStack held) {
+        if (!held.is(Items.GLASS_BOTTLE) || !CauldronPotHost.isWaterCauldron(level.getBlockState(position)) || !FoodFeature.BOILING.isOn()) {
+            return false;
         }
-        level.playSound(null, position, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
-        return InteractionResult.CONSUME;
+        boolean holdsSoup = level instanceof ServerLevel serverLevel
+                ? CauldronPots.of(serverLevel).pot(position).map(BoilingPot::holdsSoup).orElse(false)
+                : ClientBoilingPots.soupState(level, position) != SoupState.NONE;
+        if (holdsSoup && level instanceof ServerLevel) {
+            LOG.debug(FoodLogCategories.SOUP, "bottle refused", "pos", position);
+        }
+        return holdsSoup;
     }
 
     /** An item entity in a cauldron's water: a hot pot takes every item it has a recipe and room for. */
@@ -67,10 +93,13 @@ public final class CauldronInteractions {
         }
         BoilingPot pot = CauldronPots.of(level).track(position);
         ItemStack dropped = itemEntity.getItem().copy();
-        while (!dropped.isEmpty() && pot.tryAdd(host, dropped).isPresent()) {
+        int taken = 0;
+        while (!dropped.isEmpty() && pot.tryAdd(host, dropped)) {
+            dropRemainder(level, position, dropped);
             dropped.shrink(1);
+            taken++;
         }
-        if (dropped.getCount() == itemEntity.getItem().getCount()) {
+        if (taken == 0) {
             return;
         }
         if (dropped.isEmpty()) {
@@ -81,10 +110,46 @@ public final class CauldronInteractions {
         level.playSound(null, position, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
     }
 
-    // The client can't see the server's pot, so it guesses from the heat source and the bubbles it was sent.
-    private static boolean wouldClientAdd(Level level, BlockPos position, ItemStack held) {
+    private static InteractionResult addFromHand(ServerLevel level, BlockPos position, Player player, ItemStack held) {
+        if (held.isEmpty()) {
+            return InteractionResult.PASS;
+        }
+        CauldronPotHost host = new CauldronPotHost(level, position);
+        if (!host.isHeated() && !CauldronPots.isBoiling(level, position)) {
+            logPassedOn(held, position, "cold");
+            return InteractionResult.PASS;
+        }
+        if (!CauldronPots.of(level).track(position).tryAdd(host, held)) {
+            logPassedOn(held, position, "no recipe or no room");
+            return InteractionResult.PASS;
+        }
+        if (!player.getAbilities().instabuild) {
+            ItemStack remainder = LoaderPlatform.current().craftingRemainder(held);
+            held.shrink(1);
+            if (!remainder.isEmpty()) {
+                player.getInventory().placeItemBackInInventory(remainder);
+            }
+        }
+        level.playSound(null, position, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
+        return InteractionResult.CONSUME;
+    }
+
+    // A milk bucket leaves its bucket behind, as it does in a crafting grid.
+    private static void dropRemainder(ServerLevel level, BlockPos position, ItemStack dropped) {
+        ItemStack remainder = LoaderPlatform.current().craftingRemainder(dropped);
+        if (!remainder.isEmpty()) {
+            Block.popResource(level, position.above(), remainder);
+        }
+    }
+
+    // The client can't see the server's pot, so it guesses from the heat source and the server's last update.
+    private static InteractionResult predictOnClient(Level level, BlockPos position, ItemStack held, InteractionHand hand) {
+        SoupState soupState = ClientBoilingPots.soupState(level, position);
+        boolean isServing = soupState == SoupState.READY && (held.is(FoodTags.BOWLS) || (held.isEmpty() && hand == InteractionHand.MAIN_HAND));
         boolean isHot = ImpactsLib.isHeated(level, position.below()) || ClientBoilingPots.isBoiling(level, position);
-        return isHot && BoilingRecipes.find(level, held, PotKind.CAULDRON).isPresent();
+        boolean takesItem = isHot && (BoilingRecipes.find(level, held, PotKind.CAULDRON).isPresent()
+                || SoupRecipes.isIngredient(level, held, PotKind.CAULDRON));
+        return isServing || takesItem ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     private static boolean isBelowSurface(BlockState state, BlockPos position, ItemEntity itemEntity) {

@@ -2,7 +2,7 @@ package com.impact.realisticfood.client;
 
 import com.impact.realisticfood.boiling.ClientBoilingPots;
 import com.impact.realisticfood.config.FoodClientConfig;
-import com.impact.realisticfood.network.PotBubblesMessage;
+import com.impact.realisticfood.network.PotStateMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,10 +26,10 @@ public final class BoilingEffects {
     private BoilingEffects() {
     }
 
-    public static void onBubbles(PotBubblesMessage message) {
+    public static void onPotState(PotStateMessage message) {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null) {
-            ClientBoilingPots.update(message.position(), message.surfaceCenter(), level.getGameTime());
+            ClientBoilingPots.update(message.position(), message.surfaceCenter(), message.isBoiling(), message.soupState(), level.getGameTime());
         }
     }
 
@@ -44,7 +44,7 @@ public final class BoilingEffects {
             return;
         }
         FoodClientConfig.BoilingDisplaySettings settings = FoodClientConfig.get().boiling;
-        ClientBoilingPots.activePots(level.getGameTime()).values().forEach(pot -> {
+        ClientBoilingPots.activePots(level.getGameTime()).values().stream().filter(ClientBoilingPots.PotView::isBoiling).forEach(pot -> {
             if (settings.areParticlesOn.get()) {
                 spawnParticles(level, pot.surfaceCenter());
             }

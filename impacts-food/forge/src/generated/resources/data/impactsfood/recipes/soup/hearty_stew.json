@@ -1,0 +1,27 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactsfood:meat_cuts"
+    },
+    {
+      "item": "impactsfood:potato_slices"
+    },
+    {
+      "item": "impactsfood:carrot_slices"
+    }
+  ],
+  "result": {
+    "item": "impactsfood:hearty_stew"
+  }
+}

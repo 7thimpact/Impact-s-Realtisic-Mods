@@ -1,0 +1,27 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    }
+  ],
+  "result": {
+    "item": "minecraft:beetroot_soup"
+  }
+}

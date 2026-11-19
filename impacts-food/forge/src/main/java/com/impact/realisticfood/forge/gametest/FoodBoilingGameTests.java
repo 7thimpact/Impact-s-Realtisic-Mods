@@ -74,9 +74,9 @@ public final class FoodBoilingGameTests {
         StandInPotHost host = new StandInPotHost(helper.getLevel(), helper.absolutePos(CAULDRON), evaporationTicks);
         BoilingPot pot = new BoilingPot();
         host.setHeated(true);
-        helper.assertTrue(pot.tryAdd(host, new ItemStack(Items.STICK)).isEmpty(), "No recipe boils a stick");
+        helper.assertFalse(pot.tryAdd(host, new ItemStack(Items.STICK)), "No recipe boils a stick");
         pot.boilNow(host);
-        helper.assertTrue(pot.tryAdd(host, new ItemStack(Items.EGG, 3)).isPresent(), "A boiling pot takes an egg");
+        helper.assertTrue(pot.tryAdd(host, new ItemStack(Items.EGG, 3)), "A boiling pot takes an egg");
         helper.assertTrue(pot.items().size() == 1, "One egg goes in at a time");
         tick(pot, host, EGG_BOIL_TICKS - 1);
         helper.assertTrue(host.released().isEmpty(), "The egg isn't done before its boil time");

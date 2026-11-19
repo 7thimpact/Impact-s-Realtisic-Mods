@@ -11,13 +11,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-/** Food's item tags: knives, meat cuts, fish fillets, the three styles, styled foods and finished foods. */
+/** Food's item tags: knives, meat cuts, fish fillets, the three styles, styled and finished foods, soups and bowls. */
 final class FoodItemTags extends ItemTagsProvider {
     FoodItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFiles) {
         super(output, lookupProvider, CompletableFuture.completedFuture(TagsProvider.TagLookup.empty()), FoodMod.MOD_ID, existingFiles);
@@ -34,6 +35,8 @@ final class FoodItemTags extends ItemTagsProvider {
         tag(FoodTags.STYLED_FOODS).addTag(FoodTags.DRIED_FOODS).addTag(FoodTags.TOASTED_FOODS).addTag(FoodTags.BOILED_FOODS);
         tag(FoodTags.FINISHED_FOODS).addTag(FoodTags.STYLED_FOODS)
                 .add(fixedFoods(FixedFood.FRIED_EGG, FixedFood.BOILED_EGG, FixedFood.BURNT_FOOD, FixedFood.MUSH));
+        tag(FoodTags.SOUPS).add(fixedFoods(FixedFood.BONE_BROTH, FixedFood.HEARTY_STEW, FixedFood.FISH_SOUP, FixedFood.PORRIDGE, FixedFood.WATERY_SOUP));
+        tag(FoodTags.BOWLS).add(Items.BOWL);
     }
 
     private static Item[] fixedFoods(FixedFood... foods) {

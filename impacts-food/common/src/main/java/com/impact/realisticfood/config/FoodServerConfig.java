@@ -110,18 +110,19 @@ public final class FoodServerConfig {
         public final ConfigValue<Integer> hunger;
         public final ConfigValue<Double> saturation;
         public final ConfigValue<Integer> eatTicks;
-        /** Only for foods with an effect (Burnt Food's Nausea, Cooked Rotten Flesh's Hunger). */
+        /** Only for foods with an effect (Burnt Food's Nausea, Bone Broth's Regeneration). */
         public final Optional<ConfigValue<Double>> effectChance;
         public final Optional<ConfigValue<Integer>> effectTicks;
 
         private FixedFoodSettings(ConfigSpecBuilder builder, FixedFood food) {
             builder.pushSection(food.configKey(), food.displayName + ".");
-            hunger = builder.defineInteger("hunger", food.defaultHunger, 0, MAXIMUM_HUNGER, "Hunger it restores.");
-            saturation = builder.defineDouble("saturation", food.defaultSaturation, 0.0, MAXIMUM_SATURATION, "Its saturation modifier.");
-            eatTicks = builder.defineInteger("eatTicks", food.defaultEatTicks, 1, MAXIMUM_EAT_TICKS, "Ticks to eat it (vanilla food takes 32).");
-            effectChance = food.effect.map(effect -> builder.defineDouble("effectChance", effect.defaultChance(), 0.0, 1.0,
+            FixedFood.Defaults defaults = food.defaults;
+            hunger = builder.defineInteger("hunger", defaults.hunger(), 0, MAXIMUM_HUNGER, "Hunger it restores.");
+            saturation = builder.defineDouble("saturation", defaults.saturation(), 0.0, MAXIMUM_SATURATION, "Its saturation modifier.");
+            eatTicks = builder.defineInteger("eatTicks", defaults.eatTicks(), 1, MAXIMUM_EAT_TICKS, "Ticks to eat it (vanilla food takes 32).");
+            effectChance = defaults.effect().map(effect -> builder.defineDouble("effectChance", effect.defaultChance(), 0.0, 1.0,
                     "Chance that eating it gives its effect."));
-            effectTicks = food.effect.map(effect -> builder.defineInteger("effectTicks", effect.defaultTicks(), 1, MAXIMUM_TICKS,
+            effectTicks = defaults.effect().map(effect -> builder.defineInteger("effectTicks", effect.defaultTicks(), 1, MAXIMUM_TICKS,
                     "Ticks the effect lasts."));
             builder.popSection();
         }
@@ -183,7 +184,7 @@ public final class FoodServerConfig {
             bucketBoils = builder.defineInteger("bucketBoils", 8, 1, 1000, "Boils a water bucket on a campfire lasts.");
             bucketHeatUpTicks = builder.defineInteger("bucketHeatUpTicks", 100, 1, MAXIMUM_TICKS, "Ticks a campfire bucket takes to boil.");
             bucketItemSlots = builder.defineInteger("bucketItemSlots", 2, 1, 16, "Single items a campfire bucket boils at once.");
-            cauldronItemSlots = builder.defineInteger("cauldronItemSlots", 8, 1, 64, "Single items a cauldron boils at once.");
+            cauldronItemSlots = builder.defineInteger("cauldronItemSlots", 8, 1, 64, "Single items a cauldron boils at once (soup ingredients have their own room).");
             boilTickOverrides = builder.defineStringList("boilTickOverrides", List.of(),
                     "Boil time per input, as input=ticks. Unlisted inputs use their recipe's boil_ticks. Example: [\"minecraft:egg=150\"].");
         }
@@ -194,14 +195,20 @@ public final class FoodServerConfig {
         public final ConfigValue<Integer> maxBowls;
         public final ConfigValue<Integer> bucketBowls;
         public final ConfigValue<Integer> servingsPerWaterLevel;
-        public final ConfigValue<Integer> waterySoupHunger;
+        public final ConfigValue<Integer> settleTicks;
+        public final ConfigValue<Integer> cauldronIngredientSlots;
+        public final ConfigValue<Integer> bucketIngredientSlots;
 
         private SoupSettings(ConfigSpecBuilder builder) {
-            cookTicks = builder.defineInteger("cookTicks", 400, 1, MAXIMUM_TICKS, "Ticks a soup batch cooks before it can be served.");
+            cookTicks = builder.defineInteger("cookTicks", 400, 1, MAXIMUM_TICKS,
+                    "Ticks a soup batch cooks before it can be served, and ingredients wait before they turn into Watery Soup.");
             maxBowls = builder.defineInteger("maxBowls", 6, 1, 64, "Servings one cauldron batch makes at most.");
             bucketBowls = builder.defineInteger("bucketBowls", 2, 1, 64, "Servings one campfire bucket batch makes at most.");
             servingsPerWaterLevel = builder.defineInteger("servingsPerWaterLevel", 2, 1, 64, "Servings that use up 1 water level.");
-            waterySoupHunger = builder.defineInteger("waterySoupHunger", 2, 0, MAXIMUM_HUNGER, "Hunger a bowl of Watery Soup restores.");
+            settleTicks = builder.defineInteger("settleTicks", 40, 1, MAXIMUM_TICKS,
+                    "Ticks after the last ingredient goes in before the pot decides which soup it makes, so a bigger recipe can still be finished.");
+            cauldronIngredientSlots = builder.defineInteger("cauldronIngredientSlots", 12, 1, 64, "Soup ingredients a cauldron holds (three sets of the biggest soup).");
+            bucketIngredientSlots = builder.defineInteger("bucketIngredientSlots", 4, 1, 64, "Soup ingredients a campfire bucket holds (one set).");
         }
     }
 

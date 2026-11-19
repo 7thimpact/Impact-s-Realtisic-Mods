@@ -1,0 +1,27 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "tag": "minecraft:small_flowers"
+    }
+  ],
+  "result": {
+    "item": "minecraft:suspicious_stew"
+  }
+}

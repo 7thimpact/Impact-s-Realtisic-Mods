@@ -74,6 +74,21 @@ final class StandInPotHost implements PotHost {
     }
 
     @Override
+    public int soupIngredientSlots() {
+        return FoodServerConfig.get().soup.cauldronIngredientSlots.get();
+    }
+
+    @Override
+    public int maxServings() {
+        return FoodServerConfig.get().soup.maxBowls.get();
+    }
+
+    @Override
+    public void useWaterForServings() {
+        evaporatedLevels++;
+    }
+
+    @Override
     public int evaporationTicks() {
         return evaporationTicks;
     }

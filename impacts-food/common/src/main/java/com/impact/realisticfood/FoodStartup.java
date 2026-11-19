@@ -17,6 +17,7 @@ import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.network.FoodNetwork;
 import com.impact.realisticfood.registry.FoodItems;
+import com.impact.realisticfood.soup.SoupRecipes;
 
 /** Food's startup steps that don't depend on the mod loader. */
 public final class FoodStartup {
@@ -41,6 +42,7 @@ public final class FoodStartup {
         StyleCooking.register();
         registerFuelAndCompost();
         BoilingRecipes.register();
+        SoupRecipes.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
         ImpactsLib.onModsReady(impactMods -> {

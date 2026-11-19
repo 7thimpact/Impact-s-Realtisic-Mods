@@ -31,7 +31,7 @@ public final class CauldronPots extends SavedData {
     private static final String POTS_KEY = "Pots";
     private static final String POSITION_KEY = "Pos";
     private static final String POT_KEY = "Pot";
-    private static final int BUBBLE_UPDATE_TICKS = 20;
+    private static final int STATE_UPDATE_TICKS = 20;
 
     private final Map<BlockPos, BoilingPot> potsByPosition = new HashMap<>();
 
@@ -59,16 +59,16 @@ public final class CauldronPots extends SavedData {
         if (pots.potsByPosition.isEmpty()) {
             return;
         }
-        boolean isBubbleTick = level.getGameTime() % BUBBLE_UPDATE_TICKS == 0;
+        boolean isStateUpdateTick = level.getGameTime() % STATE_UPDATE_TICKS == 0;
         // A pot can boil dry or be emptied mid-tick, which removes it, so walk over a copy.
         for (BlockPos position : List.copyOf(pots.potsByPosition.keySet())) {
-            pots.tickPot(level, position, isBubbleTick);
+            pots.tickPot(level, position, isStateUpdateTick);
         }
         pots.setDirty();
     }
 
     /** Ticks one cauldron's pot. GameTests call this directly. */
-    public void tickPot(ServerLevel level, BlockPos position, boolean isBubbleTick) {
+    public void tickPot(ServerLevel level, BlockPos position, boolean isStateUpdateTick) {
         BoilingPot pot = potsByPosition.get(position);
         if (pot == null || !level.isLoaded(position)) {
             return;
@@ -87,8 +87,8 @@ public final class CauldronPots extends SavedData {
             potsByPosition.remove(position);
             return;
         }
-        if (isBubbleTick && pot.isBoiling()) {
-            FoodNetwork.sendBubbles(level, position, host.surfaceCenter());
+        if (isStateUpdateTick && (pot.isBoiling() || pot.holdsSoup())) {
+            FoodNetwork.sendPotState(level, position, host.surfaceCenter(), pot.isBoiling(), SoupState.of(pot));
         }
     }
 

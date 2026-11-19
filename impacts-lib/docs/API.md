@@ -263,6 +263,10 @@ ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // Imp
 
 `fuel.overrides` in Lib's server config (`item=ticks`) wins over registered burn times. A compost chance can also be a supplier read from config (`CompostRegistry.register(item, () -> chance)`); Lib applies chances once every mod is ready and again at every server start. `#impactslib:cold_sources` holds ice and snow for Vitality.
 
+## Eating without the hold
+
+`LoaderPlatform.current().postItemUseFinished(entity, used, useTicks, result)` tells other mods an entity finished using an item (Forge's `LivingEntityUseItemEvent.Finish`). Food calls it for a serving eaten straight from a pot, after the soup's own `finishUsingItem`, so mods that react to eating (Vitality's thirst and warmth) see it like a bowl.
+
 ## Water bottles and the water-filled event
 
 - Ingredient `{"type": "impactslib:water_bottle"}` matches a vanilla water bottle or anything in `#impactslib:water_bottles`.

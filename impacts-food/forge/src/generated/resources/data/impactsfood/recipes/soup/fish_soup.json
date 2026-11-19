@@ -1,0 +1,24 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactsfood:fish_fillets"
+    },
+    {
+      "item": "impactsfood:potato_slices"
+    }
+  ],
+  "result": {
+    "item": "impactsfood:fish_soup"
+  }
+}

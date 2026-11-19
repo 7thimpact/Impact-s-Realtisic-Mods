@@ -60,6 +60,24 @@ public record CauldronPotHost(ServerLevel level, BlockPos position) implements P
     }
 
     @Override
+    public int soupIngredientSlots() {
+        return FoodServerConfig.get().soup.cauldronIngredientSlots.get();
+    }
+
+    @Override
+    public int maxServings() {
+        return FoodServerConfig.get().soup.maxBowls.get();
+    }
+
+    @Override
+    public void useWaterForServings() {
+        BlockState state = level.getBlockState(position);
+        if (isWaterCauldron(state)) {
+            LayeredCauldronBlock.lowerFillLevel(state, level, position);
+        }
+    }
+
+    @Override
     public int evaporationTicks() {
         return FoodServerConfig.get().boiling.evaporationTicks.get();
     }

@@ -12,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -69,6 +70,12 @@ public interface LoaderPlatform {
 
     /** Posts Lib's water-filled event on the loader's own event bus. */
     void postWaterFilled(WaterFilled event);
+
+    /**
+     * Tells other mods an entity finished using an item, as if it had held it for {@code useTicks} (Forge's
+     * {@code LivingEntityUseItemEvent.Finish}). For eating that skips the usual hold, like Food's soup from the pot.
+     */
+    void postItemUseFinished(LivingEntity entity, ItemStack used, int useTicks, ItemStack result);
 
     /** The player taking a crafting result right now, when the loader tracks it (Forge does, around the take). */
     Optional<Player> craftingPlayer();

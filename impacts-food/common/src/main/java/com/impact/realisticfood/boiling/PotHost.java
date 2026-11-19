@@ -24,6 +24,15 @@ public interface PotHost {
     /** Single items the pot boils at once. */
     int itemSlots();
 
+    /** Soup ingredients the pot holds at once. */
+    int soupIngredientSlots();
+
+    /** Servings one soup batch makes at most. */
+    int maxServings();
+
+    /** Uses up water for servings taken (a cauldron level, or one of a bucket's boils). */
+    void useWaterForServings();
+
     /** Ticks between losing water levels while boiling, or 0 when the pot doesn't evaporate. */
     int evaporationTicks();
 
