@@ -51,7 +51,7 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 
 These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
-- Every mod runs with only Impact's Lib installed.
+- Every mod runs with only Impact's Lib installed. The one exception: Impact's Realistic Inventory also requires Curios (its back slot is Curios's `back` slot; decided by the user, Nov 2026).
 - No Impact mod imports another Impact mod's classes. Mods meet only through Lib's API, shared items, tags and recipe conditions (`forge:mod_loaded`, `forge:not`).
 - Refer to other mods' items by registry ID at runtime. Tag entries for them use `"required": false`.
 - Interaction handlers act only on items they own (or items in Lib's shared interactions table) and return PASS for everything else.
@@ -85,6 +85,12 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 - Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib uses it for hold-to-use animations (hammering, grinding, sewing, …) when it is installed, and falls back to vanilla arm swings when it isn't.
 - Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
+
+## Curios
+
+- Required by Impact's Realistic Inventory only (`curios`, Maven `top.theillusivec4.curios:curios-forge:<curios_version>` from https://maven.theillusivec4.top/). A mod opts in with `mod_requires_curios=true` in its `gradle.properties`: it then compiles against Curios's API jar, its runs load Curios, and every test setup that lists it loads Curios too.
+- IRI's back slot is Curios's `back` slot. IRI's data gives players that slot (`data/impactsinventory/curios/entities/player_back.json`, gated by `impactsinventory:back_slot_enabled`) and tags its packs `#curios:back`. Curios saves, syncs and drops it.
+- Code that imports Curios lives in IRI's `forge` module (`com.impact.realisticinventory.forge.curios`), behind `BackSlotBackend` in `common`.
 
 ## AI notice
 

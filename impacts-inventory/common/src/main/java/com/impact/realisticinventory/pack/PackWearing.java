@@ -25,20 +25,23 @@ public final class PackWearing {
     /** Right-click with a pack: it goes on the back, and whatever was worn comes to the hand. */
     public static InteractionResultHolder<ItemStack> wearFromHand(Level level, Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
-        if (!BackSlotStorage.isEnabled() || !WornPack.arePacksEnabled()) {
+        if (!BackSlotStorage.isEnabled() || !WornPack.arePacksEnabled() || !BackSlotStorage.hasBackSlot(player)) {
             return InteractionResultHolder.pass(held);
         }
         if (level.isClientSide()) {
             return InteractionResultHolder.success(held);
         }
         ItemStack previouslyWorn = BackSlotStorage.get(player);
-        BackSlotStorage.set(player, held.copyAndClear());
+        if (!BackSlotStorage.set(player, held.copy())) {
+            return InteractionResultHolder.pass(held);
+        }
+        held.setCount(0);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS,
                 EQUIP_VOLUME, EQUIP_PITCH);
         return InteractionResultHolder.consume(previouslyWorn);
     }
 
-    /** Called by the back-slot sync when the worn item's kind changed: logs packs put on and taken off. */
+    /** Called when the back slot's item changed (Curios reports it): logs packs put on and taken off. */
     public static void onWornItemChanged(ServerPlayer player, ItemStack previouslyWorn, ItemStack nowWorn) {
         if (ItemStack.isSameItem(previouslyWorn, nowWorn)) {
             return;

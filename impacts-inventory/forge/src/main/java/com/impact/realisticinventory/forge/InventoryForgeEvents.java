@@ -5,11 +5,8 @@ import com.impact.realisticinventory.hotbar.HotbarRespawn;
 import com.impact.realisticinventory.hotbar.SwitchSource;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.inventory.LockedSlotOverflow;
-import com.impact.realisticinventory.pack.BackSlotStorage;
-import com.impact.realisticinventory.pack.BackSlotSync;
 import com.impact.realisticinventory.pack.PackEffects;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;
@@ -27,7 +24,6 @@ final class InventoryForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onChangedDimension);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onClone);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onPlayerTick);
-        MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onStartTracking);
     }
 
     /** The swap-hands key (F) switches slots, the same as scrolling. */
@@ -42,7 +38,6 @@ final class InventoryForgeEvents {
     private static void onLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             HotbarRespawn.syncToClient(player);
-            BackSlotStorage.emptyIfDisabled(player);
         }
     }
 
@@ -67,15 +62,7 @@ final class InventoryForgeEvents {
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
             LockedSlotOverflow.tick(player);
-            BackSlotSync.tick(player);
             PackEffects.tick(player);
-        }
-    }
-
-    /** A player came into view: send what they wear on their back, so it can be drawn. */
-    private static void onStartTracking(PlayerEvent.StartTracking event) {
-        if (event.getEntity() instanceof ServerPlayer receiver && event.getTarget() instanceof Player wearer) {
-            BackSlotSync.sendTo(receiver, wearer);
         }
     }
 }

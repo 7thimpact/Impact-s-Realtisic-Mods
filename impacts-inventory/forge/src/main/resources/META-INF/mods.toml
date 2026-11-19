@@ -32,6 +32,14 @@ Made with AI: written in large part by Claude Code (Anthropic). Forks must discl
     ordering="AFTER"
     side="BOTH"
 
+# The back slot is Curios's "back" slot.
+[[dependencies.${mod_id}]]
+    modId="curios"
+    mandatory=true
+    versionRange="${curios_version_range}"
+    ordering="AFTER"
+    side="BOTH"
+
 [[dependencies.${mod_id}]]
     modId="impactscrafting"
     mandatory=false

@@ -6,7 +6,6 @@
   "refmap": "impactsinventory.refmap.json",
   "mixins": [
     "AbstractContainerMenuLocksMixin",
-    "InventoryDropAllMixin",
     "InventoryLocksMixin",
     "InventoryMenuBackSlotMixin",
     "InventorySelectedSlotMixin",

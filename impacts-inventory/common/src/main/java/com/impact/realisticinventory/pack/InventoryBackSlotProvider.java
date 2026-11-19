@@ -12,8 +12,8 @@ public final class InventoryBackSlotProvider implements BackSlotProvider {
     }
 
     @Override
-    public void set(Player player, ItemStack stack) {
-        BackSlotStorage.set(player, stack);
+    public boolean set(Player player, ItemStack stack) {
+        return BackSlotStorage.set(player, stack);
     }
 
     @Override

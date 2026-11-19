@@ -26,13 +26,13 @@ public final class BackSlotMoves {
     public static Optional<ItemStack> quickMoveIntoBackSlot(InventoryMenu menu, Player player, int clickedSlotIndex) {
         boolean isBackOrResultSlot = clickedSlotIndex == InventoryLayout.MENU_BACK_SLOT || clickedSlotIndex == InventoryMenu.RESULT_SLOT;
         boolean isKnownSlot = clickedSlotIndex >= 0 && clickedSlotIndex < menu.slots.size() && menu.slots.size() > InventoryLayout.MENU_BACK_SLOT;
-        if (isBackOrResultSlot || !isKnownSlot) {
+        if (isBackOrResultSlot || !isKnownSlot || !(menu.slots.get(InventoryLayout.MENU_BACK_SLOT) instanceof BackMenuSlot)) {
             return Optional.empty();
         }
         Slot clickedSlot = menu.slots.get(clickedSlotIndex);
         Slot backSlot = menu.slots.get(InventoryLayout.MENU_BACK_SLOT);
         ItemStack clickedStack = clickedSlot.getItem();
-        if (clickedStack.isEmpty() || backSlot.hasItem() || !backSlot.mayPlace(clickedStack)) {
+        if (clickedStack.isEmpty() || backSlot.hasItem() || !backSlot.isActive() || !backSlot.mayPlace(clickedStack)) {
             return Optional.empty();
         }
         backSlot.setByPlayer(clickedStack.split(1));

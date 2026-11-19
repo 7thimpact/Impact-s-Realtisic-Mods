@@ -1,0 +1,13 @@
+{
+  "conditions": [
+    {
+      "type": "impactsinventory:back_slot_enabled"
+    }
+  ],
+  "entities": [
+    "minecraft:player"
+  ],
+  "slots": [
+    "back"
+  ]
+}

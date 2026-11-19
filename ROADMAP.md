@@ -111,7 +111,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 
 ## 7. Family test setups
 
-- [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools")
+- [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools"). Every setup with IRI loads Curios too (IRI requires it).
 
 ## Open items
 

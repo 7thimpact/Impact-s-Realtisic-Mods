@@ -7,7 +7,8 @@ import net.minecraft.world.item.ItemStack;
 public interface BackSlotProvider {
     ItemStack get(Player player);
 
-    void set(Player player, ItemStack stack);
+    /** Stores the stack. Returns false, changing nothing, when this player has no back slot right now. */
+    boolean set(Player player, ItemStack stack);
 
     /** Whether the stack is one of the provider's own back-slot items, such as Inventory's packs. */
     boolean acceptsOwnItem(ItemStack stack);

@@ -7,7 +7,6 @@ import com.impact.realisticinventory.client.PackItemColors;
 import com.impact.realisticinventory.client.PackScreen;
 import com.impact.realisticinventory.client.RealisticInventoryScreen;
 import com.impact.realisticinventory.client.TwoSlotHotbarRenderer;
-import com.impact.realisticinventory.client.WornPackLayer;
 import com.impact.realisticinventory.client.WornPackModels;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.pack.InventoryItems;
@@ -18,9 +17,6 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -32,10 +28,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 /**
  * Inventory's client side on Forge: the two-slot hotbar and the inventory screen in place of vanilla's, the pack
- * screen, the open-pack key, dyed pack items and the pack on the player's back. Loaded only on the client.
+ * screen, the open-pack key, dyed pack items and the pack on the player's back (drawn through Curios). Loaded only on
+ * the client.
  */
 public final class InventoryForgeClient {
     private InventoryForgeClient() {
@@ -46,7 +44,6 @@ public final class InventoryForgeClient {
         modEventBus.addListener(InventoryForgeClient::onRegisterKeyMappings);
         modEventBus.addListener(InventoryForgeClient::onRegisterItemColors);
         modEventBus.addListener(InventoryForgeClient::onRegisterLayerDefinitions);
-        modEventBus.addListener(InventoryForgeClient::onAddLayers);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onClientTick);
@@ -55,6 +52,8 @@ public final class InventoryForgeClient {
     private static void onClientSetup(FMLClientSetupEvent event) {
         HudLayout.publishHotbarBounds(InventoryMod.MOD_ID, TwoSlotHotbarRenderer::bounds);
         event.enqueueWork(() -> MenuScreens.register(PackMenus.packMenuType(), PackScreen::new));
+        PackCurioRenderer packRenderer = new PackCurioRenderer();
+        InventoryItems.packs().forEach(pack -> CuriosRendererRegistry.register(pack, () -> packRenderer));
     }
 
     private static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
@@ -71,15 +70,6 @@ public final class InventoryForgeClient {
         }
     }
 
-    /** Every player model (vanilla's wide and slim arms, and any a mod adds) gets the worn-pack layer. */
-    private static void onAddLayers(EntityRenderersEvent.AddLayers event) {
-        for (String skinModel : event.getSkins()) {
-            EntityRenderer<? extends Player> renderer = event.getPlayerSkin(skinModel);
-            if (renderer instanceof PlayerRenderer playerRenderer) {
-                playerRenderer.addLayer(new WornPackLayer(playerRenderer, event.getEntityModels()));
-            }
-        }
-    }
 
     /** Replaces vanilla's hotbar (and its separate off-hand slot) while the two-slot hotbar is in use. */
     private static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {

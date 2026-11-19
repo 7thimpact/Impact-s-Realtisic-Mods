@@ -1,10 +1,14 @@
 package com.impact.realisticinventory.pack;
 
+import com.impact.lib.item.ImpactsItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-/** The player's back slot seen as a one-slot container, so it can sit in a menu like any other slot. */
+/**
+ * The player's back slot (Curios's {@code back} slot) seen as a one-slot container, so it can sit in vanilla's
+ * inventory menu like any other slot.
+ */
 public final class BackSlotContainer implements Container {
     private static final int ONLY_INDEX = 0;
     private static final int SIZE = 1;
@@ -51,10 +55,12 @@ public final class BackSlotContainer implements Container {
         return worn;
     }
 
+    // Without a back slot the item would vanish, so the server hands it back instead.
     @Override
     public void setItem(int index, ItemStack stack) {
-        if (index == ONLY_INDEX) {
-            BackSlotStorage.set(wearer, stack);
+        boolean isStored = index == ONLY_INDEX && BackSlotStorage.set(wearer, stack);
+        if (!isStored && !wearer.level().isClientSide()) {
+            ImpactsItems.giveOrDrop(wearer, stack);
         }
     }
 
@@ -63,7 +69,7 @@ public final class BackSlotContainer implements Container {
         return MAXIMUM_STACK_SIZE;
     }
 
-    // Changes reach clients through the menu's own sync and the per-tick back-slot sync.
+    // Changes reach clients through the menu's own sync and Curios's sync.
     @Override
     public void setChanged() {
     }

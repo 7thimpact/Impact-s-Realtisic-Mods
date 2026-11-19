@@ -138,7 +138,7 @@ if (BackSlot.isAvailable() && BackSlot.accepts(stack)) {
 ItemStack worn = BackSlot.get(player);   // empty when no mod provides a back slot
 ```
 
-Inventory registers the provider with `BackSlot.registerBackSlotProvider("impactsinventory", provider)`. Other mods make an item fit by adding it to `#impactslib:back_slot_items`. `isAvailable()` is false when no mod provides a back slot, or when the provider has it switched off (Inventory's `packs.backSlot`); `set` then returns false and changes nothing.
+Inventory registers the provider with `BackSlot.registerBackSlotProvider("impactsinventory", provider)`. Other mods make an item fit by adding it to `#impactslib:back_slot_items`. `isAvailable()` is false when no mod provides a back slot, or when the provider has it switched off (Inventory's `packs.backSlot`). `set` returns false and changes nothing then, and also when that player has no back slot; the caller still holds the stack, so give it back with `ImpactsItems.giveOrDrop`. Inventory's back slot is Curios's `back` slot, so Curios-aware mods see it too.
 
 ## Crafting progress
 

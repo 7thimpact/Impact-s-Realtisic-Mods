@@ -48,13 +48,12 @@ public final class BackSlot {
         return currentProvider == null ? ItemStack.EMPTY : currentProvider.get(player);
     }
 
-    /** Puts the stack in the back slot. Returns false, changing nothing, when no mod provides a back slot or it is off. */
+    /**
+     * Puts the stack in the back slot. Returns false, changing nothing, when no mod provides a back slot, it is off, or
+     * this player has none; the caller keeps the stack then.
+     */
     public static boolean set(Player player, ItemStack stack) {
-        if (!isAvailable()) {
-            return false;
-        }
-        provider.set(player, stack);
-        return true;
+        return isAvailable() && provider.set(player, stack);
     }
 
     /** Whether the item may go in the back slot: the provider's own items, or anything in {@link #BACK_SLOT_ITEMS}. */

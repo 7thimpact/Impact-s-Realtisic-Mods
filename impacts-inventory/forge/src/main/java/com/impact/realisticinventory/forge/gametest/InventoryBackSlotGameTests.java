@@ -1,17 +1,15 @@
 package com.impact.realisticinventory.forge.gametest;
 
-import com.impact.lib.attachment.PlayerAttachments;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.forge.curios.CuriosBackSlot;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.pack.BackMenuSlot;
-import com.impact.realisticinventory.pack.BackSlotContents;
 import com.impact.realisticinventory.pack.BackSlotStorage;
+import com.impact.realisticinventory.pack.InventoryItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSetCreativeModeSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,17 +20,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Set;
 import java.util.UUID;
 
-/** Inventory milestone 4: the back slot appended to vanilla's inventory menu, and Lib's back-slot provider. */
+/** Inventory milestone 4: the back slot (Curios's back slot) appended to vanilla's inventory menu, and Lib's back-slot provider. */
 @GameTestHolder(InventoryMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class InventoryBackSlotGameTests {
     private static final int LEFT_MOUSE_BUTTON = 0;
     private static final int STONE_COUNT = 5;
-    private static final String WORN_ITEM_NAME = "Test pack";
 
     private InventoryBackSlotGameTests() {
     }
@@ -58,10 +56,10 @@ public final class InventoryBackSlotGameTests {
         try {
             helper.assertTrue(BackSlot.isAvailable(), "Inventory provides Lib's back slot");
             helper.assertFalse(BackSlot.accepts(new ItemStack(Items.STONE)), "Stone doesn't fit the back slot");
-            helper.assertTrue(BackSlot.set(player, new ItemStack(Items.SADDLE)), "Setting through Lib works when a provider exists");
-            helper.assertTrue(BackSlotStorage.get(player).is(Items.SADDLE), "Lib's write lands in Inventory's back slot");
-            helper.assertTrue(BackSlot.get(player).is(Items.SADDLE), "Lib reads the same item back");
-            helper.assertTrue(player.inventoryMenu.getSlot(InventoryLayout.MENU_BACK_SLOT).getItem().is(Items.SADDLE),
+            helper.assertTrue(BackSlot.set(player, new ItemStack(InventoryItems.satchel())), "Setting through Lib works when a provider exists");
+            helper.assertTrue(BackSlotStorage.get(player).is(InventoryItems.satchel()), "Lib's write lands in Inventory's back slot");
+            helper.assertTrue(BackSlot.get(player).is(InventoryItems.satchel()), "Lib reads the same item back");
+            helper.assertTrue(player.inventoryMenu.getSlot(InventoryLayout.MENU_BACK_SLOT).getItem().is(InventoryItems.satchel()),
                     "The menu's back slot shows the worn item");
         } finally {
             MockPlayers.leaveWorld(player);
@@ -94,11 +92,12 @@ public final class InventoryBackSlotGameTests {
     public static void wornItemDropsOnDeath(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            BackSlotStorage.set(player, new ItemStack(Items.SADDLE));
+            BackSlotStorage.set(player, new ItemStack(InventoryItems.satchel()));
             Set<UUID> itemsAlreadyNearby = DroppedItems.idsNear(player);
-            player.getInventory().dropAll();
+            player.kill();
             helper.assertTrue(BackSlotStorage.get(player).isEmpty(), "The back slot empties on death");
-            helper.assertTrue(DroppedItems.countNewNear(player, Items.SADDLE, itemsAlreadyNearby) == 1, "The worn item drops at the player's feet");
+            helper.assertTrue(DroppedItems.countNewNear(player, InventoryItems.satchel(), itemsAlreadyNearby) == 1,
+                    "Curios drops the worn pack at the player's feet");
         } finally {
             MockPlayers.leaveWorld(player);
         }
@@ -112,7 +111,7 @@ public final class InventoryBackSlotGameTests {
             player.setGameMode(GameType.CREATIVE);
             player.connection.handleSetCreativeModeSlot(new ServerboundSetCreativeModeSlotPacket(InventoryLayout.MENU_BACK_SLOT, new ItemStack(Items.STONE)));
             helper.assertTrue(BackSlotStorage.get(player).isEmpty(), "Creative mode can't put stone on the back either");
-            BackSlotStorage.set(player, new ItemStack(Items.SADDLE));
+            BackSlotStorage.set(player, new ItemStack(InventoryItems.satchel()));
             player.connection.handleSetCreativeModeSlot(new ServerboundSetCreativeModeSlotPacket(InventoryLayout.MENU_BACK_SLOT, ItemStack.EMPTY));
             helper.assertTrue(BackSlotStorage.get(player).isEmpty(), "Creative mode can take the worn item off");
         } finally {
@@ -122,17 +121,16 @@ public final class InventoryBackSlotGameTests {
     }
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
-    public static void wornItemIsSavedWithThePlayer(GameTestHelper helper) {
+    public static void theBackSlotIsCuriosBackSlot(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            ItemStack namedSaddle = new ItemStack(Items.SADDLE);
-            namedSaddle.setHoverName(Component.literal(WORN_ITEM_NAME));
-            BackSlotStorage.set(player, namedSaddle);
-            CompoundTag playerTag = player.saveWithoutId(new CompoundTag());
-            CompoundTag savedBackSlot = playerTag.getCompound(PlayerAttachments.NBT_KEY).getCompound(BackSlotStorage.BACK_SLOT.id().toString());
-            BackSlotContents loaded = new BackSlotContents();
-            loaded.load(savedBackSlot);
-            helper.assertTrue(ItemStack.matches(loaded.stack(), namedSaddle), "The worn item, name included, survives saving and loading");
+            helper.assertTrue(BackSlotStorage.hasBackSlot(player), "Inventory's data gives every player Curios's back slot");
+            BackSlotStorage.set(player, new ItemStack(InventoryItems.satchel()));
+            ItemStack inCurios = CuriosApi.getCuriosInventory(player).resolve()
+                    .flatMap(curios -> curios.getStacksHandler(CuriosBackSlot.SLOT_TYPE))
+                    .map(handler -> handler.getStacks().getStackInSlot(0))
+                    .orElse(ItemStack.EMPTY);
+            helper.assertTrue(inCurios.is(InventoryItems.satchel()), "The worn satchel is in Curios's back slot");
         } finally {
             MockPlayers.leaveWorld(player);
         }

@@ -15,7 +15,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Appends the back slot to the player's inventory menu (index 46, after vanilla's slots) and handles shift-clicks into it. */
+/**
+ * Appends the back slot to the player's inventory menu (index 46, after vanilla's slots) and handles shift-clicks into
+ * it. Only vanilla's own menu gets it: subclasses such as Curios's menu put their own slots from index 46 on.
+ */
 @Mixin(InventoryMenu.class)
 public abstract class InventoryMenuBackSlotMixin extends RecipeBookMenu<CraftingContainer> {
     private InventoryMenuBackSlotMixin(MenuType<?> menuType, int containerId) {
@@ -24,7 +27,9 @@ public abstract class InventoryMenuBackSlotMixin extends RecipeBookMenu<Crafting
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void impactsinventory$appendBackSlot(Inventory playerInventory, boolean isActive, Player owner, CallbackInfo callback) {
-        addSlot(new BackMenuSlot(owner));
+        if (((Object) this).getClass() == InventoryMenu.class) {
+            addSlot(new BackMenuSlot(owner));
+        }
     }
 
     @Inject(method = "quickMoveStack", at = @At("HEAD"), cancellable = true)
