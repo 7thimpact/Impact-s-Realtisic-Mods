@@ -12,6 +12,7 @@ public final class InventoryTranslations {
     public static final String SATCHEL = "item.impactsinventory.satchel";
     public static final String BACKPACK = "item.impactsinventory.backpack";
     public static final String FRAME_PACK = "item.impactsinventory.frame_pack";
+    public static final String PLACED_PACK = "block.impactsinventory.placed_pack";
     public static final String FIRST_JOIN = "message.impactsinventory.first_join";
     public static final String SLOTS_LOCKED = "message.impactsinventory.slots_locked";
     public static final String MOVED_TO_POCKETS = "message.impactsinventory.moved_to_pockets";
@@ -32,6 +33,7 @@ public final class InventoryTranslations {
         english.put(SATCHEL, "Satchel");
         english.put(BACKPACK, "Backpack");
         english.put(FRAME_PACK, "Frame Pack");
+        english.put(PLACED_PACK, "Placed Pack");
         english.put(FIRST_JOIN, "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.");
         english.put(SLOTS_LOCKED, "Survival mode: you carry two hands and nine pockets again.");
         english.put(MOVED_TO_POCKETS, "Items from the locked slots went into your pockets.");

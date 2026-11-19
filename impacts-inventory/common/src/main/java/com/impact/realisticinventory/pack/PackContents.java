@@ -53,6 +53,20 @@ public final class PackContents {
         ContainerHelper.saveAllItems(pack.getOrCreateTag(), slots, false);
     }
 
+    /** The highest slot number that holds an item, or -1 for an empty pack. */
+    public static int highestUsedSlot(ItemStack pack) {
+        CompoundTag packTag = pack.getTag();
+        if (packTag == null || !packTag.contains(ITEMS_KEY, Tag.TAG_LIST)) {
+            return -1;
+        }
+        ListTag itemTags = packTag.getList(ITEMS_KEY, Tag.TAG_COMPOUND);
+        int highestSlot = -1;
+        for (int entry = 0; entry < itemTags.size(); entry++) {
+            highestSlot = Math.max(highestSlot, itemTags.getCompound(entry).getByte(SLOT_KEY) & SLOT_NUMBER_MASK);
+        }
+        return highestSlot;
+    }
+
     /** Every stack in the pack, empty slots skipped. */
     public static List<ItemStack> stacksIn(ItemStack pack) {
         List<ItemStack> ignoredBeyondSize = new ArrayList<>();

@@ -1,9 +1,10 @@
 package com.impact.realisticinventory.pack;
 
 import com.impact.realisticinventory.config.InventoryServerConfig;
+import net.minecraft.util.StringRepresentable;
 
 /** The three packs. Each is laid out in 3-wide rows like the pockets; bigger packs cost more to make. */
-public enum PackKind {
+public enum PackKind implements StringRepresentable {
     SATCHEL("satchel"),
     BACKPACK("backpack"),
     /** Slows walking while worn ({@code packs.framePackSlowness}). */
@@ -16,6 +17,12 @@ public enum PackKind {
     }
 
     public String itemPath() {
+        return itemPath;
+    }
+
+    /** The name in a placed pack's block state. */
+    @Override
+    public String getSerializedName() {
         return itemPath;
     }
 

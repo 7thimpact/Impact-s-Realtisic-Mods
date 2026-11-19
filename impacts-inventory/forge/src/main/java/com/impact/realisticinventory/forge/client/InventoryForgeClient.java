@@ -5,6 +5,7 @@ import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.client.InventoryKeys;
 import com.impact.realisticinventory.client.PackItemColors;
 import com.impact.realisticinventory.client.PackScreen;
+import com.impact.realisticinventory.client.PlacedPackRenderer;
 import com.impact.realisticinventory.client.RealisticInventoryScreen;
 import com.impact.realisticinventory.client.TwoSlotHotbarRenderer;
 import com.impact.realisticinventory.client.WornPackModels;
@@ -12,6 +13,7 @@ import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackKind;
 import com.impact.realisticinventory.pack.PackMenus;
+import com.impact.realisticinventory.pack.PlacedPacks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
@@ -44,6 +46,7 @@ public final class InventoryForgeClient {
         modEventBus.addListener(InventoryForgeClient::onRegisterKeyMappings);
         modEventBus.addListener(InventoryForgeClient::onRegisterItemColors);
         modEventBus.addListener(InventoryForgeClient::onRegisterLayerDefinitions);
+        modEventBus.addListener(InventoryForgeClient::onRegisterRenderers);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onScreenOpening);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onClientTick);
@@ -70,6 +73,10 @@ public final class InventoryForgeClient {
         }
     }
 
+
+    private static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(PlacedPacks.blockEntityType(), PlacedPackRenderer::new);
+    }
 
     /** Replaces vanilla's hotbar (and its separate off-hand slot) while the two-slot hotbar is in use. */
     private static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {

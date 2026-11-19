@@ -60,6 +60,20 @@ public final class PackMenus {
                 "item", ResourceIds.itemId(pack.getItem()), "slots", slotCount, "stacks", PackContents.stacksIn(pack).size());
     }
 
+    /** Server: opens a placed pack, like a small chest. */
+    public static void openPlacedPack(ServerPlayer player, PlacedPackBlockEntity placedPack) {
+        ItemStack pack = placedPack.pack();
+        if (pack.isEmpty()) {
+            return;
+        }
+        int slotCount = placedPack.getContainerSize();
+        SimpleMenuProvider menuProvider = new SimpleMenuProvider((containerId, playerInventory, menuPlayer) ->
+                new PackMenu(containerId, playerInventory, placedPack), pack.getHoverName());
+        LoaderPlatform.current().openMenuWithData(player, menuProvider, buffer -> buffer.writeVarInt(slotCount));
+        LOG.debug(InventoryLogCategories.PACKS, "placed pack opened", "player", player.getGameProfile().getName(),
+                "item", ResourceIds.itemId(pack.getItem()), "pos", placedPack.getBlockPos());
+    }
+
     // Trimmed and written back first, so handing the extra items out (which may fill the pack) can't be overwritten.
     private static void handOutItemsBeyondSize(ServerPlayer player, ItemStack pack, int slotCount) {
         List<ItemStack> itemsBeyondSize = new ArrayList<>();

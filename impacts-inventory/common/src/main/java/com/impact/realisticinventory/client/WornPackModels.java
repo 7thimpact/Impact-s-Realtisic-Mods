@@ -25,6 +25,23 @@ public final class WornPackModels {
     private WornPackModels() {
     }
 
+    /** Where a placed pack's model rests: its lowest point (y grows downward in model space), in pixels. */
+    public static float placedBottomPixels(PackKind kind) {
+        return switch (kind) {
+            case SATCHEL -> 11.5F;
+            case BACKPACK -> 10.5F;
+            case FRAME_PACK -> 13.0F;
+        };
+    }
+
+    /** The middle of a placed pack's depth (z, away from the wearer's back), in pixels, so it sits centered in its block. */
+    public static float placedDepthCenterPixels(PackKind kind) {
+        return switch (kind) {
+            case SATCHEL -> 3.0F;
+            case BACKPACK, FRAME_PACK -> 4.5F;
+        };
+    }
+
     public static ModelLayerLocation layerFor(PackKind kind) {
         return new ModelLayerLocation(ResourceIds.of(InventoryMod.MOD_ID, kind.itemPath()), LAYER_NAME);
     }

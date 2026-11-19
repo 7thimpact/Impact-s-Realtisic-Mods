@@ -1,4 +1,5 @@
 {
+  "block.impactsinventory.placed_pack": "Placed Pack",
   "button.impactsinventory.open_pack": "Open pack (%s)",
   "item.impactsinventory.backpack": "Backpack",
   "item.impactsinventory.frame_pack": "Frame Pack",

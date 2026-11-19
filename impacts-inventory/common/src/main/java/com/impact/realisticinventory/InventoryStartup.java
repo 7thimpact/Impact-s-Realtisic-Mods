@@ -16,6 +16,7 @@ import com.impact.realisticinventory.pack.InventoryBackSlotProvider;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackMenus;
 import com.impact.realisticinventory.pack.PackRecipes;
+import com.impact.realisticinventory.pack.PlacedPacks;
 
 /** Inventory's startup steps that don't depend on the mod loader. */
 public final class InventoryStartup {
@@ -38,6 +39,7 @@ public final class InventoryStartup {
         PlayerAttachments.register(LockedSlotOverflow.MIGRATION);
         InventoryItems.register();
         PackMenus.register();
+        PlacedPacks.register();
         PackRecipes.register();
         InventoryNetwork.create();
         BackSlot.registerBackSlotProvider(InventoryMod.MOD_ID, new InventoryBackSlotProvider());

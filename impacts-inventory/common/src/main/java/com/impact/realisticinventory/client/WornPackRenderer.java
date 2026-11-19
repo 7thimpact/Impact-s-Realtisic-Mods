@@ -41,14 +41,22 @@ public final class WornPackRenderer {
         if (!isShown) {
             return;
         }
-        PackItem pack = (PackItem) worn.getItem();
-        ModelPart model = modelsByKind.computeIfAbsent(pack.kind(),
-                kind -> Minecraft.getInstance().getEntityModels().bakeLayer(WornPackModels.layerFor(kind)));
         poseStack.pushPose();
         if (!wearer.getItemBySlot(EquipmentSlot.CHEST).isEmpty()) {
             poseStack.translate(0.0F, 0.0F, PIXEL);
         }
-        int color = pack.getColor(worn);
+        drawPack(poseStack, buffers, packedLight, worn);
+        poseStack.popPose();
+    }
+
+    /** Draws the pack model in model space (as on a torso): dyed leather, then the undyed buckles and frame. */
+    public void drawPack(PoseStack poseStack, MultiBufferSource buffers, int packedLight, ItemStack packStack) {
+        if (!(packStack.getItem() instanceof PackItem pack)) {
+            return;
+        }
+        ModelPart model = modelsByKind.computeIfAbsent(pack.kind(),
+                kind -> Minecraft.getInstance().getEntityModels().bakeLayer(WornPackModels.layerFor(kind)));
+        int color = pack.getColor(packStack);
         float red = (color >> RED_SHIFT & CHANNEL_MASK) / CHANNEL_MAXIMUM;
         float green = (color >> GREEN_SHIFT & CHANNEL_MASK) / CHANNEL_MAXIMUM;
         float blue = (color & CHANNEL_MASK) / CHANNEL_MAXIMUM;
@@ -56,7 +64,6 @@ public final class WornPackRenderer {
                 OverlayTexture.NO_OVERLAY, red, green, blue, FULL_ALPHA);
         model.render(poseStack, buffers.getBuffer(RenderType.entityCutoutNoCull(texture(pack.kind(), true))), packedLight,
                 OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, FULL_ALPHA);
-        poseStack.popPose();
     }
 
     private static ResourceLocation texture(PackKind kind, boolean isOverlay) {
