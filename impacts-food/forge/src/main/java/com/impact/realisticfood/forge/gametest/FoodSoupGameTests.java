@@ -167,7 +167,8 @@ public final class FoodSoupGameTests {
         }
         long turnedOffByFood = RecipeAudit.audit(helper.getLevel().getServer().getResourceManager(), helper.getLevel().getRecipeManager()).stream()
                 .filter(entry -> entry.overridingMods().contains(FoodMod.MOD_ID) && entry.isTurnedOff()).count();
-        helper.assertTrue(turnedOffByFood == 7, "Food turns off 7 vanilla recipes: 2 seeds and 5 stews (found " + turnedOffByFood + ")");
+        helper.assertTrue(turnedOffByFood == 11, "Food turns off 11 vanilla recipes: 2 seeds, 5 stews, bread, cake, cookies and pie (found "
+                + turnedOffByFood + ")");
         helper.assertTrue(new ItemStack(FoodItems.fixedFood(FixedFood.HEARTY_STEW)).is(FoodTags.SOUPS), "Hearty Stew is in #impactsfood:soups");
         helper.assertFalse(new ItemStack(Items.MUSHROOM_STEW).is(FoodTags.SOUPS), "Vanilla's stews aren't");
         helper.assertTrue(new ItemStack(FoodItems.fixedFood(FixedFood.FISH_SOUP)).getMaxStackSize() == 1, "Soups stack to 1");

@@ -1,0 +1,17 @@
+{
+  "type": "impactsfood:boiling",
+  "boil_ticks": 200,
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "input": {
+    "item": "impactsfood:dough"
+  },
+  "result": {
+    "item": "impactsfood:dumpling"
+  },
+  "vessel": "any"
+}

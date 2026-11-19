@@ -5,6 +5,7 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
@@ -37,6 +38,7 @@ public final class FoodItems {
     private static final Map<KnifeMaterial, Supplier<KnifeItem>> KNIVES = new EnumMap<>(KnifeMaterial.class);
     private static final Map<FoodPiece, Supplier<Item>> PIECES = new EnumMap<>(FoodPiece.class);
     private static final Map<FixedFood, Supplier<FixedFoodItem>> FIXED_FOODS = new EnumMap<>(FixedFood.class);
+    private static final Map<BakingIngredient, Supplier<Item>> BAKING_INGREDIENTS = new EnumMap<>(BakingIngredient.class);
     private static final Map<FoodStyle, Map<FoodBase, Supplier<StyledFoodItem>>> STYLED_FOODS = new EnumMap<>(FoodStyle.class);
 
     private FoodItems() {
@@ -50,6 +52,9 @@ public final class FoodItems {
         }
         for (FoodPiece piece : FoodPiece.values()) {
             PIECES.put(piece, registrar.register(Registries.ITEM, piece.path, () -> newPieceItem(piece)));
+        }
+        for (BakingIngredient ingredient : BakingIngredient.values()) {
+            BAKING_INGREDIENTS.put(ingredient, registrar.register(Registries.ITEM, ingredient.itemPath, () -> new Item(new Item.Properties())));
         }
         for (FixedFood fixedFood : FixedFood.values()) {
             FIXED_FOODS.put(fixedFood, registrar.register(Registries.ITEM, fixedFood.itemPath, () -> new FixedFoodItem(fixedFood)));
@@ -74,6 +79,10 @@ public final class FoodItems {
 
     public static Item piece(FoodPiece piece) {
         return PIECES.get(piece).get();
+    }
+
+    public static Item bakingIngredient(BakingIngredient ingredient) {
+        return BAKING_INGREDIENTS.get(ingredient).get();
     }
 
     public static Item fixedFood(FixedFood fixedFood) {
@@ -105,6 +114,7 @@ public final class FoodItems {
             }
         }
         Arrays.stream(FoodPiece.values()).map(FoodItems::piece).forEach(items::add);
+        Arrays.stream(BakingIngredient.values()).map(FoodItems::bakingIngredient).forEach(items::add);
         Arrays.stream(FixedFood.values()).map(FoodItems::fixedFood).forEach(items::add);
         for (FoodBase base : FoodBase.values()) {
             Arrays.stream(FoodStyle.values()).map(style -> styled(base, style)).flatMap(Optional::stream).forEach(items::add);

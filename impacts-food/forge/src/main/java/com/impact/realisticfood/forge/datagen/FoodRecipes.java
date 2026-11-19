@@ -53,6 +53,7 @@ final class FoodRecipes extends RecipeProvider {
         boiling(output);
         FoodStyleRecipes.build(output);
         FoodSoupRecipes.build(output);
+        FoodBakingRecipes.build(output);
     }
 
     private static void knives(Consumer<FinishedRecipe> output) {

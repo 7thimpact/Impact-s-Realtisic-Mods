@@ -34,7 +34,8 @@ final class FoodItemTags extends ItemTagsProvider {
         }
         tag(FoodTags.STYLED_FOODS).addTag(FoodTags.DRIED_FOODS).addTag(FoodTags.TOASTED_FOODS).addTag(FoodTags.BOILED_FOODS);
         tag(FoodTags.FINISHED_FOODS).addTag(FoodTags.STYLED_FOODS)
-                .add(fixedFoods(FixedFood.FRIED_EGG, FixedFood.BOILED_EGG, FixedFood.BURNT_FOOD, FixedFood.MUSH));
+                .add(fixedFoods(FixedFood.FRIED_EGG, FixedFood.BOILED_EGG, FixedFood.DOUGH_BUN, FixedFood.FLATBREAD, FixedFood.DUMPLING,
+                        FixedFood.BURNT_FOOD, FixedFood.MUSH));
         tag(FoodTags.SOUPS).add(fixedFoods(FixedFood.BONE_BROTH, FixedFood.HEARTY_STEW, FixedFood.FISH_SOUP, FixedFood.PORRIDGE, FixedFood.WATERY_SOUP));
         tag(FoodTags.BOWLS).add(Items.BOWL);
         tag(FoodTags.RAW_RISKY).add(Items.BEEF, Items.PORKCHOP, Items.MUTTON, Items.RABBIT, Items.COD, Items.SALMON)

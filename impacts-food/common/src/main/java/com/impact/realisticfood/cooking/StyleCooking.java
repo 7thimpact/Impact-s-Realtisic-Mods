@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.config.ConfigValue;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.config.FoodServerConfig;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodStyle;
@@ -19,6 +20,9 @@ import java.util.List;
 public final class StyleCooking {
     private static final String STYLES_FOLDER = "styles/";
     private static final String COOKING_FOLDER = "cooking/";
+    private static final String BAKING_FOLDER = "baking/";
+    /** The doughs, which bake like raw food: Dough into a Dough Bun or Flatbread, Loaf Dough into Bread or 3 Flatbread. */
+    public static final List<BakingIngredient> DOUGHS = List.of(BakingIngredient.DOUGH, BakingIngredient.LOAF_DOUGH);
     private static final String FROM = "_from_";
     /** The new raw foods: tropical fish and rotten flesh cook into Food's own cooked versions. */
     public static final List<FixedFood> COOKED_FROM_RAW = List.of(FixedFood.COOKED_TROPICAL_FISH, FixedFood.COOKED_ROTTEN_FLESH);
@@ -40,6 +44,16 @@ public final class StyleCooking {
             COOKED_FROM_RAW.forEach(cooked -> CookingTimes.register(rawRecipeId(cooked.itemPath, method), () -> rawTicks(method).get()));
         }
         CookingTimes.register(rawRecipeId(FixedFood.FRIED_EGG.itemPath, CookingMethod.CAMPFIRE), () -> rawTicks(CookingMethod.CAMPFIRE).get());
+        for (BakingIngredient dough : DOUGHS) {
+            for (CookingMethod method : CookingMethod.values()) {
+                CookingTimes.register(bakingRecipeId(dough, method), () -> rawTicks(method).get());
+            }
+        }
+    }
+
+    /** {@code impactsfood:baking/<dough>_<method>}: Dough and Loaf Dough baking in a furnace or smoker, or on a campfire. */
+    public static ResourceLocation bakingRecipeId(BakingIngredient dough, CookingMethod method) {
+        return ResourceIds.of(FoodMod.MOD_ID, BAKING_FOLDER + dough.itemPath + "_" + method.recipeSuffix);
     }
 
     /** {@code impactsfood:styles/<styled item>_from_<method>}. */

@@ -2,6 +2,7 @@ package com.impact.realisticfood.lang;
 
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
@@ -58,6 +59,7 @@ public final class FoodTranslations {
         translations.put(itemKey("spit"), "Spit");
         KNIFE_NAMES.forEach((material, name) -> translations.put(itemKey(material.itemPath), name));
         PIECE_NAMES.forEach((piece, name) -> translations.put(itemKey(piece.path), name));
+        Arrays.stream(BakingIngredient.values()).forEach(ingredient -> translations.put(itemKey(ingredient.itemPath), ingredient.displayName));
         Arrays.stream(FixedFood.values()).forEach(food -> translations.put(itemKey(food.itemPath), food.displayName));
         for (FoodBase base : FoodBase.values()) {
             for (FoodStyle style : FoodStyle.values()) {

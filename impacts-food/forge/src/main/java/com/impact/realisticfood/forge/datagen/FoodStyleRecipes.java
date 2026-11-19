@@ -99,21 +99,25 @@ final class FoodStyleRecipes {
         }
     }
 
-    // Dry heat burns dried and toasted food (and dried kelp, which is already dried); boiling finished food makes Mush.
+    // Dry heat burns dried and toasted food, fried eggs, buns and flatbread (and dried kelp, which is already dried);
+    // boiling any finished food makes Mush.
     private static void overcooking(Consumer<FinishedRecipe> output) {
         Consumer<FinishedRecipe> overcookingOutput = conditional(output, new FeatureEnabledCondition(FoodFeature.STYLES),
                 new FeatureEnabledCondition(FoodFeature.OVERCOOKING));
         Item burntFood = FoodItems.fixedFood(FixedFood.BURNT_FOOD);
-        Ingredient burnsInFurnace = anyOf(List.of(FoodTags.DRIED_FOODS, FoodTags.TOASTED_FOODS), List.of(FoodItems.fixedFood(FixedFood.FRIED_EGG), Items.DRIED_KELP));
-        Ingredient burnsOnCampfire = anyOf(List.of(FoodTags.DRIED_FOODS, FoodTags.TOASTED_FOODS), List.of(FoodItems.fixedFood(FixedFood.FRIED_EGG)));
+        List<Item> dryFinishedFoods = List.of(FoodItems.fixedFood(FixedFood.FRIED_EGG), FoodItems.fixedFood(FixedFood.DOUGH_BUN),
+                FoodItems.fixedFood(FixedFood.FLATBREAD));
+        Ingredient burnsInFurnace = anyOf(List.of(FoodTags.DRIED_FOODS, FoodTags.TOASTED_FOODS),
+                Stream.concat(dryFinishedFoods.stream(), Stream.of(Items.DRIED_KELP)).toList());
+        Ingredient burnsOnCampfire = anyOf(List.of(FoodTags.DRIED_FOODS, FoodTags.TOASTED_FOODS), dryFinishedFoods);
         for (CookingMethod method : CookingMethod.values()) {
             Ingredient input = method == CookingMethod.CAMPFIRE ? burnsOnCampfire : burnsInFurnace;
             cookingBuilder(method, input, burntFood, BURNT_EXPERIENCE, dryHeatTicks(method))
                     .unlockedBy("has_styled_food", hasAny(FoodTags.STYLED_FOODS))
                     .save(overcookingOutput, StyleCooking.burntRecipeId(method));
         }
-        Ingredient boilsIntoMush = anyOf(List.of(FoodTags.STYLED_FOODS), List.of(FoodItems.fixedFood(FixedFood.FRIED_EGG),
-                FoodItems.fixedFood(FixedFood.BOILED_EGG), burntFood));
+        Ingredient boilsIntoMush = anyOf(List.of(FoodTags.STYLED_FOODS), Stream.concat(dryFinishedFoods.stream(),
+                Stream.of(FoodItems.fixedFood(FixedFood.BOILED_EGG), FoodItems.fixedFood(FixedFood.DUMPLING), burntFood)).toList());
         BoilingRecipeBuilder.boiling(boilsIntoMush, FoodItems.fixedFood(FixedFood.MUSH), MUSH_BOIL_TICKS)
                 .save(conditional(overcookingOutput, new FeatureEnabledCondition(FoodFeature.BOILING)),
                         ResourceIds.of(FoodMod.MOD_ID, BOILING_FOLDER + FixedFood.MUSH.itemPath));

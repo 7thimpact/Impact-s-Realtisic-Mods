@@ -1,6 +1,7 @@
 package com.impact.realisticfood.forge.datagen;
 
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
@@ -33,6 +34,9 @@ final class FoodItemModels extends ItemModelProvider {
         flatItem(SPIT, HANDHELD_ITEM_PARENT);
         for (FoodPiece piece : FoodPiece.values()) {
             flatItem(piece.path, GENERATED_ITEM_PARENT);
+        }
+        for (BakingIngredient ingredient : BakingIngredient.values()) {
+            flatItem(ingredient.itemPath, GENERATED_ITEM_PARENT);
         }
         for (FixedFood fixedFood : FixedFood.values()) {
             flatItem(fixedFood.itemPath, GENERATED_ITEM_PARENT);

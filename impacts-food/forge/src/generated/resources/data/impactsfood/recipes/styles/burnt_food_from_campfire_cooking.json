@@ -22,6 +22,12 @@
     },
     {
       "item": "impactsfood:fried_egg"
+    },
+    {
+      "item": "impactsfood:dough_bun"
+    },
+    {
+      "item": "impactsfood:flatbread"
     }
   ],
   "result": "impactsfood:burnt_food"

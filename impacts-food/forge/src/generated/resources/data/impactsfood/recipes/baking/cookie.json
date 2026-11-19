@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:cocoa_beans"
+    },
+    "F": {
+      "item": "impactsfood:flour"
+    }
+  },
+  "pattern": [
+    "FCF"
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:cookie"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "impactsfood:loaf_dough"
+  },
+  "result": "minecraft:bread"
+}

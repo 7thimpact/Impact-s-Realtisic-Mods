@@ -97,7 +97,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 6 Bucket on a campfire: placing with sneak + water bucket, the 8-boil limit, smaller pot sizes, taking it back (water or empty, NBT kept), popping off when the campfire goes out
 - [x] 7 Spit roasting: the Spit item, mounting on a lit campfire, 6 slots on top of the campfire's 4, 1.25x and turned 1.5x speed, taking it down, staying while the campfire is out and dropping when it breaks, saved and synced on the campfire, drawn by vanilla's campfire renderer
 - [x] 8 Raw food risk: `#impactsfood:raw_risky`, the Hunger roll on Forge's finished-eating event, per-food overrides, the switch
-- [ ] 9 Baking
+- [x] 9 Baking: Flour from a stone grinder (with seeds), Dough with any water bottle, Loaf Dough, Dough Bun, Flatbread, Dumpling, bread from Loaf Dough, cake, cookies, pie and porridge from Flour, grid baking off, the grinders' standalone recipes
 - [ ] 10 IRC integration (moves to step 5)
 - [ ] 11 IRV, IRI and SRF checks: IRV parts in step 4, SRF part in step 6
 - [ ] 12 Polish

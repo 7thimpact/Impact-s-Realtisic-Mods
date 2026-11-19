@@ -292,6 +292,8 @@ HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // on
 - A bowl holds up to `grinder.bowlCapacity` (16) items of at most 2 kinds. Load it by right-clicking with the item in the main hand, or by right-clicking the item onto the bowl in any inventory screen. Sneak-right-click with an empty main hand empties it.
 - Recipe JSON: `ingredients` (1 or 2), `result` (with `count`), `min_tier` (`wood` or `stone`), optional `grind_ticks` and `byproducts`. The bowl's tier limits the grind.
 
+**Data generation:** `GrindingRecipeBuilder.of(result, count)` (in Lib's Forge module) writes `impactslib:grinding` recipes: `requires(...)` (one or two), `minimumTier(...)`, `grindTicks(...)` (leave it out to let the stick decide) and `byproduct(item, count, chance)`.
+
 ## Recipe audit and conflict checker
 
 - `/impacts audit`: which Impact mod replaced or turned off each vanilla recipe right now. Forge merges every mod's data into one pack, so the audit asks the loader which mod files hold each `data/minecraft/recipes/` file (`LoaderPlatform.modsWithDataFile`).

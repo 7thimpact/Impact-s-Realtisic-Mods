@@ -1,0 +1,31 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsfood:flour"
+    },
+    {
+      "item": "impactsfood:flour"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    }
+  ],
+  "result": {
+    "item": "impactsfood:porridge"
+  }
+}
