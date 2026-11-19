@@ -3,11 +3,14 @@ package com.impact.realisticfood.forge;
 import com.impact.realisticfood.boiling.CauldronInteractions;
 import com.impact.realisticfood.boiling.CauldronPots;
 import com.impact.realisticfood.bucket.CampfireBuckets;
+import com.impact.realisticfood.raw.RawFoodRisk;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 
@@ -18,6 +21,7 @@ final class FoodForgeEvents {
 
     static void register() {
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onLevelTick);
+        MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onItemUseFinished);
         // Early, so no other mod fills a bottle from a soup or pours the water bucket meant for a campfire; other clicks pass.
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FoodForgeEvents::onRightClickBlock);
     }
@@ -25,6 +29,12 @@ final class FoodForgeEvents {
     private static void onLevelTick(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.level instanceof ServerLevel serverLevel) {
             CauldronPots.tickAll(serverLevel);
+        }
+    }
+
+    private static void onItemUseFinished(LivingEntityUseItemEvent.Finish event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            RawFoodRisk.onEaten(player, event.getItem());
         }
     }
 

@@ -37,6 +37,8 @@ final class FoodItemTags extends ItemTagsProvider {
                 .add(fixedFoods(FixedFood.FRIED_EGG, FixedFood.BOILED_EGG, FixedFood.BURNT_FOOD, FixedFood.MUSH));
         tag(FoodTags.SOUPS).add(fixedFoods(FixedFood.BONE_BROTH, FixedFood.HEARTY_STEW, FixedFood.FISH_SOUP, FixedFood.PORRIDGE, FixedFood.WATERY_SOUP));
         tag(FoodTags.BOWLS).add(Items.BOWL);
+        tag(FoodTags.RAW_RISKY).add(Items.BEEF, Items.PORKCHOP, Items.MUTTON, Items.RABBIT, Items.COD, Items.SALMON)
+                .add(piecesWhere(FoodPiece::isRawRisky));
     }
 
     private static Item[] fixedFoods(FixedFood... foods) {

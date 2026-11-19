@@ -50,6 +50,11 @@ public enum FoodPiece {
         };
     }
 
+    /** Raw meat and fish pieces that can give Hunger; a raw chicken piece keeps raw chicken's own vanilla risk instead. */
+    public boolean isRawRisky() {
+        return (isMeatCut() && this != RAW_CHICKEN_PIECE) || isFishFillet();
+    }
+
     public boolean isFishFillet() {
         return this == RAW_COD_FILLET || this == RAW_SALMON_FILLET;
     }

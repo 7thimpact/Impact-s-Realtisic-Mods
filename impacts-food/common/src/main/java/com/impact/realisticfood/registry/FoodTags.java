@@ -23,6 +23,8 @@ public final class FoodTags {
     /** Styled foods plus Food's other finished foods (eggs, doughs' results, Burnt Food, Mush), for the overcooking rules and achievements. */
     public static final TagKey<Item> FINISHED_FOODS = itemTag("finished_foods");
 
+    /** Raw meat and fish that can give Hunger when eaten (raw chicken keeps vanilla's own risk). Pack makers can add or remove foods. */
+    public static final TagKey<Item> RAW_RISKY = itemTag("raw_risky");
     /** Every bowl soup and stew Food adds (not vanilla's, which Vitality gives its own values). Vitality reads it. */
     public static final TagKey<Item> SOUPS = itemTag("soups");
     /** Bowls a ready soup can be ladled into: vanilla's bowl, and any a pack adds. */

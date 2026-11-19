@@ -96,7 +96,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 5 Soups: soup recipes and batches (the biggest soup wins), sets, Watery Soup, ladling into any bowl, eating from the pot, the new soups, grid stews off, `#impactsfood:soups`, bottles refused at a soup. Porridge's recipe comes with baking (Flour).
 - [x] 6 Bucket on a campfire: placing with sneak + water bucket, the 8-boil limit, smaller pot sizes, taking it back (water or empty, NBT kept), popping off when the campfire goes out
 - [x] 7 Spit roasting: the Spit item, mounting on a lit campfire, 6 slots on top of the campfire's 4, 1.25x and turned 1.5x speed, taking it down, staying while the campfire is out and dropping when it breaks, saved and synced on the campfire, drawn by vanilla's campfire renderer
-- [ ] 8 Raw food risk
+- [x] 8 Raw food risk: `#impactsfood:raw_risky`, the Hunger roll on Forge's finished-eating event, per-food overrides, the switch
 - [ ] 9 Baking
 - [ ] 10 IRC integration (moves to step 5)
 - [ ] 11 IRV, IRI and SRF checks: IRV parts in step 4, SRF part in step 6
