@@ -21,6 +21,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -47,6 +49,7 @@ public final class FoodCuttingGameTests {
     private static final int KNIFE_SLOT = 1;
     private static final int FOOD_SLOT = 0;
     private static final int SPEC_PIECES_PER_CUT = 2;
+    private static final int FULL_STACK = 64;
 
     private FoodCuttingGameTests() {
     }
@@ -91,6 +94,27 @@ public final class FoodCuttingGameTests {
             });
             ConfigOverrides.withValue(cutting.byproductChanceOverrides, List.of("minecraft:beef=0"), () -> cutBeefAs(helper, player));
             helper.assertTrue(player.getInventory().countItem(Items.BONE) == 1, "With chance 0, never a bone");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    // With Inventory installed, its locked slots count as full too; either way the byproduct is never deleted.
+    @GameTest(templateNamespace = FoodSkeletonGameTests.LIB_NAMESPACE, template = FoodSkeletonGameTests.EMPTY_TEMPLATE)
+    public static void byproductsWithNoRoomDropAtTheFeet(GameTestHelper helper) {
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            Inventory inventory = player.getInventory();
+            for (int slot = 0; slot < inventory.items.size(); slot++) {
+                inventory.items.set(slot, new ItemStack(Items.DIRT, FULL_STACK));
+            }
+            inventory.offhand.set(0, new ItemStack(Items.DIRT, FULL_STACK));
+            ConfigOverrides.withValue(FoodServerConfig.get().cutting.byproductChanceOverrides, List.of("minecraft:beef=1.0"), () -> cutBeefAs(helper, player));
+            List<ItemEntity> droppedBones = helper.getLevel().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(3.0),
+                    entity -> entity.getItem().is(Items.BONE));
+            helper.assertTrue(droppedBones.size() == 1, "With every slot full, the bone drops at the player's feet");
+            helper.assertTrue(inventory.countItem(Items.BONE) == 0, "Nothing is squeezed into the inventory");
         } finally {
             MockPlayers.leaveWorld(player);
         }

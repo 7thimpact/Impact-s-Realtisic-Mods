@@ -99,7 +99,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 8 Raw food risk: `#impactsfood:raw_risky`, the Hunger roll on Forge's finished-eating event, per-food overrides, the switch
 - [x] 9 Baking: Flour from a stone grinder (with seeds), Dough with any water bottle, Loaf Dough, Dough Bun, Flatbread, Dumpling, bread from Loaf Dough, cake, cookies, pie and porridge from Flour, grid baking off, the grinders' standalone recipes
 - [ ] 10 IRC integration (moves to step 5)
-- [ ] 11 IRV, IRI and SRF checks: IRV parts in step 4, SRF part in step 6
+- [ ] 11 IRV, IRI and SRF checks: done for IRI (byproducts with no room drop, with or without its locked slots) and SRF (the cauldron pass-through with SRF's raw gold ore, in the new `food-with-srf` setup); the IRV parts come in step 4
 - [ ] 12 Polish
 
 ## 4. Impact's Realistic Vitality
