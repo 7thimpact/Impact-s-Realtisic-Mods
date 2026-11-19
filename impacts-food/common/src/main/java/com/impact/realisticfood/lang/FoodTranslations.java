@@ -2,8 +2,10 @@ package com.impact.realisticfood.lang;
 
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticfood.FoodMod;
-import com.impact.realisticfood.food.FinishedFood;
+import com.impact.realisticfood.food.FixedFood;
+import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
+import com.impact.realisticfood.food.FoodStyle;
 import com.impact.realisticfood.item.KnifeMaterial;
 
 import java.util.Arrays;
@@ -53,7 +55,12 @@ public final class FoodTranslations {
         translations.put(CREATIVE_TAB, "Impact's Realistic Food");
         KNIFE_NAMES.forEach((material, name) -> translations.put(itemKey(material.itemPath), name));
         PIECE_NAMES.forEach((piece, name) -> translations.put(itemKey(piece.path), name));
-        Arrays.stream(FinishedFood.values()).forEach(food -> translations.put(itemKey(food.itemPath), food.displayName));
+        Arrays.stream(FixedFood.values()).forEach(food -> translations.put(itemKey(food.itemPath), food.displayName));
+        for (FoodBase base : FoodBase.values()) {
+            for (FoodStyle style : FoodStyle.values()) {
+                base.name(style).ifPresent(name -> translations.put(itemKey(style.itemPath(base)), name));
+            }
+        }
         return translations;
     }
 }

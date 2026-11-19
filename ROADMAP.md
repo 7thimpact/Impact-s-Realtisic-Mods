@@ -92,7 +92,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 1 Skeleton: configs, debug categories, Crafting detection, the `food-alone` setup
 - [x] 2 Knives and cutting: knives, every cut and its byproducts, config overrides for yields, chances and piece cooking times, cooked pieces, knife cutting for seeds, Food's creative tab
 - [x] 3 Cauldron boiling: heat sources, warm-up and cool-down, single-item boiling (the egg; styled foods come with milestone 4), evaporation, Lib's boiling answer, the handler pass-through and its SRF check, boiling particles and sounds
-- [ ] 4 Cooking any food
+- [x] 4 Cooking any food: the FoodVariants table (86 styled foods), layered models with overlays trimmed to each food, every smelting, smoking, campfire and boiling recipe, Burnt Food, Mush, the new raw foods and eggs, style tags and tag inheritance. Its advancements come with milestone 12's 26.
 - [ ] 5 Soups
 - [ ] 6 Bucket on a campfire
 - [ ] 7 Spit roasting

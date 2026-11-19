@@ -1,6 +1,7 @@
 package com.impact.realisticfood.forge.client;
 
 import com.impact.realisticfood.client.BoilingEffects;
+import com.impact.realisticfood.client.StyledOverlaySource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 
@@ -10,6 +11,7 @@ public final class FoodForgeClient {
     }
 
     public static void register() {
+        StyledOverlaySource.registerType();
         MinecraftForge.EVENT_BUS.addListener(FoodForgeClient::onClientTick);
     }
 

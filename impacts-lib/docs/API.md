@@ -261,7 +261,7 @@ ImpactsLib.isHeated(level, pos);                                          // #im
 ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // ImpactsLib.isBoiling(level, pos)
 ```
 
-`fuel.overrides` in Lib's server config (`item=ticks`) wins over registered burn times. `#impactslib:cold_sources` holds ice and snow for Vitality.
+`fuel.overrides` in Lib's server config (`item=ticks`) wins over registered burn times. A compost chance can also be a supplier read from config (`CompostRegistry.register(item, () -> chance)`); Lib applies chances once every mod is ready and again at every server start. `#impactslib:cold_sources` holds ice and snow for Vitality.
 
 ## Water bottles and the water-filled event
 

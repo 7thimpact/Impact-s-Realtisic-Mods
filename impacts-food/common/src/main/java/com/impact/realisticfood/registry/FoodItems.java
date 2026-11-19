@@ -5,12 +5,15 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticfood.FoodMod;
-import com.impact.realisticfood.food.FinishedFood;
+import com.impact.realisticfood.food.FixedFood;
+import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
-import com.impact.realisticfood.item.FinishedFoodItem;
+import com.impact.realisticfood.food.FoodStyle;
+import com.impact.realisticfood.item.FixedFoodItem;
 import com.impact.realisticfood.item.KnifeItem;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.item.PieceFoodItem;
+import com.impact.realisticfood.item.StyledFoodItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,14 +24,19 @@ import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
-/** Food's items, and its creative tab (which also lists Lib's grinder items, since Food ships their recipes). */
+/**
+ * Food's items: knives, pieces, its own foods and every styled food from the {@link FoodBase} table, plus its creative tab
+ * (which also lists Lib's grinder items, since Food ships their recipes).
+ */
 public final class FoodItems {
     private static final Map<KnifeMaterial, Supplier<KnifeItem>> KNIVES = new EnumMap<>(KnifeMaterial.class);
     private static final Map<FoodPiece, Supplier<Item>> PIECES = new EnumMap<>(FoodPiece.class);
-    private static final Map<FinishedFood, Supplier<FinishedFoodItem>> FINISHED_FOODS = new EnumMap<>(FinishedFood.class);
+    private static final Map<FixedFood, Supplier<FixedFoodItem>> FIXED_FOODS = new EnumMap<>(FixedFood.class);
+    private static final Map<FoodStyle, Map<FoodBase, Supplier<StyledFoodItem>>> STYLED_FOODS = new EnumMap<>(FoodStyle.class);
 
     private FoodItems() {
     }
@@ -42,8 +50,15 @@ public final class FoodItems {
         for (FoodPiece piece : FoodPiece.values()) {
             PIECES.put(piece, registrar.register(Registries.ITEM, piece.path, () -> newPieceItem(piece)));
         }
-        for (FinishedFood finishedFood : FinishedFood.values()) {
-            FINISHED_FOODS.put(finishedFood, registrar.register(Registries.ITEM, finishedFood.itemPath, () -> new FinishedFoodItem(finishedFood)));
+        for (FixedFood fixedFood : FixedFood.values()) {
+            FIXED_FOODS.put(fixedFood, registrar.register(Registries.ITEM, fixedFood.itemPath, () -> new FixedFoodItem(fixedFood)));
+        }
+        // Styled foods read their base's values when they are built, so they come after the pieces and fixed foods.
+        for (FoodStyle style : FoodStyle.values()) {
+            Map<FoodBase, Supplier<StyledFoodItem>> styledByBase = new EnumMap<>(FoodBase.class);
+            Arrays.stream(FoodBase.values()).filter(base -> base.has(style)).forEach(base ->
+                    styledByBase.put(base, registrar.register(Registries.ITEM, style.itemPath(base), () -> new StyledFoodItem(base, style))));
+            STYLED_FOODS.put(style, styledByBase);
         }
         CreativeTabs.register(FoodMod.MOD_ID, () -> new ItemStack(knife(KnifeMaterial.FLINT)), FoodItems::creativeTabItems);
     }
@@ -60,8 +75,17 @@ public final class FoodItems {
         return PIECES.get(piece).get();
     }
 
-    public static Item finishedFood(FinishedFood finishedFood) {
-        return FINISHED_FOODS.get(finishedFood).get();
+    public static Item fixedFood(FixedFood fixedFood) {
+        return FIXED_FOODS.get(fixedFood).get();
+    }
+
+    /** The base food's version in the style; empty for dried kelp, which has no dried version. */
+    public static Optional<Item> styled(FoodBase base, FoodStyle style) {
+        return Optional.ofNullable(STYLED_FOODS.get(style).get(base)).map(Supplier::get);
+    }
+
+    public static List<Item> styledFoods(FoodStyle style) {
+        return STYLED_FOODS.get(style).values().stream().<Item>map(Supplier::get).toList();
     }
 
     private static Item newPieceItem(FoodPiece piece) {
@@ -79,7 +103,10 @@ public final class FoodItems {
             }
         }
         Arrays.stream(FoodPiece.values()).map(FoodItems::piece).forEach(items::add);
-        Arrays.stream(FinishedFood.values()).map(FoodItems::finishedFood).forEach(items::add);
+        Arrays.stream(FixedFood.values()).map(FoodItems::fixedFood).forEach(items::add);
+        for (FoodBase base : FoodBase.values()) {
+            Arrays.stream(FoodStyle.values()).map(style -> styled(base, style)).flatMap(Optional::stream).forEach(items::add);
+        }
         return List.copyOf(items);
     }
 }

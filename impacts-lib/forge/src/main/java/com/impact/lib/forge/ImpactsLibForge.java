@@ -11,6 +11,7 @@ import com.impact.lib.forge.config.ServerConfigResync;
 import com.impact.lib.forge.crafting.WaterBottleIngredient;
 import com.impact.lib.forge.datagen.LibDataGenerators;
 import com.impact.lib.forge.event.ImpactsModsReadyEvent;
+import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.LibNetwork;
@@ -76,6 +77,7 @@ public final class ImpactsLibForge {
 
     /** The recipe audit and conflict check run on the live recipe set at every start... */
     private static void onServerStarted(ServerStartedEvent event) {
+        CompostRegistry.applyAll();
         RecipeChecks.runAndLog(event.getServer());
     }
 

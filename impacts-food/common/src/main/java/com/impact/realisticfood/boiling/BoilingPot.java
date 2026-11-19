@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.food.StyleLog;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -138,6 +139,7 @@ public final class BoilingPot {
                 LOG.debug(FoodLogCategories.BOILING, "boiled", "pot", host.kind().logName, "pos", host.position(),
                         "input", ResourceIds.itemId(item.input().getItem()), "result", ResourceIds.itemId(item.result().getItem()),
                         "ticks", item.ticksNeeded());
+                StyleLog.onCooked(BoilingRecipes.ID.toString(), item.input(), item.result());
                 host.release(item.result().copy());
             }
         }

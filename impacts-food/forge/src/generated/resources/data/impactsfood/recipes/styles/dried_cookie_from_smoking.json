@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "dried"
+    }
+  ],
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:cookie"
+  },
+  "result": "impactsfood:dried_cookie"
+}

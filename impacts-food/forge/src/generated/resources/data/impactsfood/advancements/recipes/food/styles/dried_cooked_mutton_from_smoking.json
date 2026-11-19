@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "dried"
+    }
+  ],
+  "criteria": {
+    "has_cooked_mutton": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:cooked_mutton"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsfood:styles/dried_cooked_mutton_from_smoking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cooked_mutton",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsfood:styles/dried_cooked_mutton_from_smoking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

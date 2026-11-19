@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "overcooking"
+    }
+  ],
+  "criteria": {
+    "has_styled_food": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactsfood:styled_foods"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsfood:styles/burnt_food_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_styled_food",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsfood:styles/burnt_food_from_campfire_cooking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

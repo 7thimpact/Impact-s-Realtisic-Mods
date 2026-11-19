@@ -9,7 +9,7 @@ import com.impact.realisticfood.cooking.CookingMethod;
 import com.impact.realisticfood.cooking.PieceCooking;
 import com.impact.realisticfood.cutting.Cut;
 import com.impact.realisticfood.cutting.Cuts;
-import com.impact.realisticfood.food.FinishedFood;
+import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.forge.condition.FeatureEnabledCondition;
 import com.impact.realisticfood.item.KnifeMaterial;
@@ -50,6 +50,7 @@ final class FoodRecipes extends RecipeProvider {
         vanillaSeedsWithoutCutting(output);
         pieceCooking(output);
         boiling(output);
+        FoodStyleRecipes.build(output);
     }
 
     private static void knives(Consumer<FinishedRecipe> output) {
@@ -111,10 +112,10 @@ final class FoodRecipes extends RecipeProvider {
         });
     }
 
-    // Milestone 4 adds every styled food's boiling recipe; the egg is the one non-food that boils.
+    // The egg is the one non-food that boils; styled foods' boiling recipes are in FoodStyleRecipes.
     private static void boiling(Consumer<FinishedRecipe> output) {
         Consumer<FinishedRecipe> boilingOutput = conditional(output, new FeatureEnabledCondition(FoodFeature.BOILING));
-        BoilingRecipeBuilder.boiling(Ingredient.of(Items.EGG), FoodItems.finishedFood(FinishedFood.BOILED_EGG), EGG_BOIL_TICKS)
+        BoilingRecipeBuilder.boiling(Ingredient.of(Items.EGG), FoodItems.fixedFood(FixedFood.BOILED_EGG), EGG_BOIL_TICKS)
                 .save(boilingOutput, ResourceIds.of(FoodMod.MOD_ID, "boiling/boiled_egg"));
     }
 

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "dried"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactsfood:cooked_salmon_fillet"
+  },
+  "result": "impactsfood:dried_cooked_salmon_fillet"
+}

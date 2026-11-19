@@ -2,6 +2,8 @@ package com.impact.realisticfood;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
+import com.impact.lib.fuel.CompostRegistry;
+import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.boiling.BoilingRecipes;
 import com.impact.realisticfood.boiling.PotBoiling;
@@ -9,8 +11,10 @@ import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.config.FoodCommonConfig;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.cooking.PieceCooking;
+import com.impact.realisticfood.cooking.StyleCooking;
 import com.impact.realisticfood.cutting.Cutting;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.network.FoodNetwork;
 import com.impact.realisticfood.registry.FoodItems;
 
@@ -34,15 +38,26 @@ public final class FoodStartup {
         FoodItems.register();
         Cutting.register();
         PieceCooking.register();
+        StyleCooking.register();
+        registerFuelAndCompost();
         BoilingRecipes.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
-        ImpactsLib.onModsReady(impactMods -> logStartup());
+        ImpactsLib.onModsReady(impactMods -> {
+            FuelRegistry.register(FoodItems.fixedFood(FixedFood.BURNT_FOOD), stack -> FoodServerConfig.get().burntFood.burnTicks.get());
+            logStartup();
+        });
     }
 
     /** Which recipe set Food uses: its own vanilla-material recipes, or the versions made from Crafting's parts. */
     public static RecipeSet activeRecipeSet() {
         return ImpactsLib.isLoaded(FoodMod.CRAFTING_MOD_ID) ? RecipeSet.WITH_CRAFTING : RecipeSet.ALONE;
+    }
+
+    // Compost chances apply once every mod is ready and again at every server start, with the world's settings.
+    private static void registerFuelAndCompost() {
+        CompostRegistry.register(() -> FoodItems.fixedFood(FixedFood.BURNT_FOOD), () -> FoodServerConfig.get().burntFood.compostChance.get().floatValue());
+        CompostRegistry.register(() -> FoodItems.fixedFood(FixedFood.MUSH), () -> FoodServerConfig.get().mush.compostChance.get().floatValue());
     }
 
     private static void logStartup() {

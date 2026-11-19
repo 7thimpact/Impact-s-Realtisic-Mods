@@ -1,0 +1,32 @@
+{
+  "type": "impactsfood:boiling",
+  "boil_ticks": 200,
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "overcooking"
+    }
+  ],
+  "input": [
+    {
+      "tag": "impactsfood:styled_foods"
+    },
+    {
+      "item": "impactsfood:fried_egg"
+    },
+    {
+      "item": "impactsfood:boiled_egg"
+    },
+    {
+      "item": "impactsfood:burnt_food"
+    }
+  ],
+  "result": {
+    "item": "impactsfood:mush"
+  },
+  "vessel": "any"
+}

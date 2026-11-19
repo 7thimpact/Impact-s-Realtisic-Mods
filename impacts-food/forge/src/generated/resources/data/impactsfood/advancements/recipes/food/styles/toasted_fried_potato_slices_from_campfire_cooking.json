@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "toasted"
+    }
+  ],
+  "criteria": {
+    "has_fried_potato_slices": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:fried_potato_slices"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsfood:styles/toasted_fried_potato_slices_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_fried_potato_slices",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsfood:styles/toasted_fried_potato_slices_from_campfire_cooking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

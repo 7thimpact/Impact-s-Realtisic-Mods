@@ -6,12 +6,13 @@ import com.impact.lib.config.ConfigType;
 import com.impact.lib.config.ConfigValue;
 import com.impact.lib.config.ImpactsConfig;
 import com.impact.realisticfood.FoodMod;
-import com.impact.realisticfood.food.FinishedFood;
+import com.impact.realisticfood.food.FixedFood;
 
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Food's SERVER file: {@code <world>/serverconfig/impactslib/impactsfood-server.toml}. Every gameplay number in the
@@ -36,7 +37,7 @@ public final class FoodServerConfig {
     public final SpitSettings spit;
     public final RawFoodSettings rawFood;
     public final StyleSettings styles;
-    public final Map<FinishedFood, FoodValueSettings> finishedFoods;
+    public final Map<FixedFood, FixedFoodSettings> fixedFoods;
     public final BurntFoodSettings burntFood;
     public final MushSettings mush;
     public final CounterSettings counters;
@@ -67,16 +68,16 @@ public final class FoodServerConfig {
         builder.pushSection("rawFood", "Eating raw meat or fish.");
         rawFood = new RawFoodSettings(builder);
         builder.popSection();
-        builder.pushSection("cooking", "Food values of the three cooking styles, relative to the base food.");
+        builder.pushSection("cooking", "The three cooking styles: food values relative to the base food, and cooking times.");
         styles = new StyleSettings(builder);
         builder.popSection();
-        builder.pushSection("foods", "Food values of Food's own finished foods.");
-        finishedFoods = defineFinishedFoods(builder);
+        builder.pushSection("foods", "Food values of Food's own foods (pieces and styled foods follow other foods instead).");
+        fixedFoods = defineFixedFoods(builder);
         builder.popSection();
-        builder.pushSection("burntFood", "Burnt Food, from cooking finished food again with dry heat.");
+        builder.pushSection("burntFood", "Burnt Food as fuel and compost (its food values are under foods.burntFood).");
         burntFood = new BurntFoodSettings(builder);
         builder.popSection();
-        builder.pushSection("mush", "Mush, from boiling food that is already cooked.");
+        builder.pushSection("mush", "Mush as compost (its food values are under foods.mush).");
         mush = new MushSettings(builder);
         builder.popSection();
         builder.pushSection("counters", "Achievement counts.");
@@ -97,22 +98,31 @@ public final class FoodServerConfig {
         return registered;
     }
 
-    private static Map<FinishedFood, FoodValueSettings> defineFinishedFoods(ConfigSpecBuilder builder) {
-        Map<FinishedFood, FoodValueSettings> settings = new EnumMap<>(FinishedFood.class);
-        for (FinishedFood food : FinishedFood.values()) {
-            settings.put(food, new FoodValueSettings(builder, food));
+    private static Map<FixedFood, FixedFoodSettings> defineFixedFoods(ConfigSpecBuilder builder) {
+        Map<FixedFood, FixedFoodSettings> settings = new EnumMap<>(FixedFood.class);
+        for (FixedFood food : FixedFood.values()) {
+            settings.put(food, new FixedFoodSettings(builder, food));
         }
         return Collections.unmodifiableMap(settings);
     }
 
-    public static final class FoodValueSettings {
+    public static final class FixedFoodSettings {
         public final ConfigValue<Integer> hunger;
         public final ConfigValue<Double> saturation;
+        public final ConfigValue<Integer> eatTicks;
+        /** Only for foods with an effect (Burnt Food's Nausea, Cooked Rotten Flesh's Hunger). */
+        public final Optional<ConfigValue<Double>> effectChance;
+        public final Optional<ConfigValue<Integer>> effectTicks;
 
-        private FoodValueSettings(ConfigSpecBuilder builder, FinishedFood food) {
+        private FixedFoodSettings(ConfigSpecBuilder builder, FixedFood food) {
             builder.pushSection(food.configKey(), food.displayName + ".");
             hunger = builder.defineInteger("hunger", food.defaultHunger, 0, MAXIMUM_HUNGER, "Hunger it restores.");
             saturation = builder.defineDouble("saturation", food.defaultSaturation, 0.0, MAXIMUM_SATURATION, "Its saturation modifier.");
+            eatTicks = builder.defineInteger("eatTicks", food.defaultEatTicks, 1, MAXIMUM_EAT_TICKS, "Ticks to eat it (vanilla food takes 32).");
+            effectChance = food.effect.map(effect -> builder.defineDouble("effectChance", effect.defaultChance(), 0.0, 1.0,
+                    "Chance that eating it gives its effect."));
+            effectTicks = food.effect.map(effect -> builder.defineInteger("effectTicks", effect.defaultTicks(), 1, MAXIMUM_TICKS,
+                    "Ticks the effect lasts."));
             builder.popSection();
         }
     }
@@ -237,6 +247,12 @@ public final class FoodServerConfig {
         public final StyleValues toasted;
         public final StyleValues boiled;
         public final ConfigValue<Double> boiledNegativeEffectChance;
+        public final ConfigValue<Integer> dryTicks;
+        public final ConfigValue<Integer> smokerDryTicks;
+        public final ConfigValue<Integer> toastTicks;
+        public final ConfigValue<Integer> rawFurnaceTicks;
+        public final ConfigValue<Integer> rawSmokerTicks;
+        public final ConfigValue<Integer> rawCampfireTicks;
 
         private StyleSettings(ConfigSpecBuilder builder) {
             dried = new StyleValues(builder, "dried", "Dried food (furnace, smoker).", 0, 0.75, 16);
@@ -244,6 +260,16 @@ public final class FoodServerConfig {
             boiled = new StyleValues(builder, "boiled", "Boiled food (cauldron, campfire bucket).", 0, 0.9, 24);
             boiledNegativeEffectChance = builder.defineDouble("boiledNegativeEffectChance", 0.5, 0.0, 1.0,
                     "Boiling multiplies the chance of a food's negative effects by this (0.5 halves it).");
+            dryTicks = builder.defineInteger("dryTicks", 200, 1, MAXIMUM_TICKS,
+                    "Ticks a furnace takes to dry cooked food, or to burn dried and toasted food.");
+            smokerDryTicks = builder.defineInteger("smokerDryTicks", 100, 1, MAXIMUM_TICKS, "Ticks a smoker takes for the same.");
+            toastTicks = builder.defineInteger("toastTicks", 300, 1, MAXIMUM_TICKS,
+                    "Ticks a campfire takes to toast cooked food, or to burn dried and toasted food.");
+            rawFurnaceTicks = builder.defineInteger("rawFurnaceTicks", 200, 1, MAXIMUM_TICKS,
+                    "Ticks a furnace takes to cook Food's new raw foods (tropical fish, rotten flesh).");
+            rawSmokerTicks = builder.defineInteger("rawSmokerTicks", 100, 1, MAXIMUM_TICKS, "Ticks a smoker takes for the same.");
+            rawCampfireTicks = builder.defineInteger("rawCampfireTicks", 600, 1, MAXIMUM_TICKS,
+                    "Ticks a campfire takes for the same, and to fry an egg.");
         }
     }
 
@@ -265,33 +291,19 @@ public final class FoodServerConfig {
     }
 
     public static final class BurntFoodSettings {
-        public final ConfigValue<Integer> hunger;
-        public final ConfigValue<Double> saturation;
-        public final ConfigValue<Double> nauseaChance;
-        public final ConfigValue<Integer> nauseaTicks;
         public final ConfigValue<Integer> burnTicks;
         public final ConfigValue<Double> compostChance;
 
         private BurntFoodSettings(ConfigSpecBuilder builder) {
-            hunger = builder.defineInteger("hunger", 1, 0, MAXIMUM_HUNGER, "Hunger Burnt Food restores.");
-            saturation = builder.defineDouble("saturation", 0.1, 0.0, MAXIMUM_SATURATION, "Burnt Food's saturation modifier.");
-            nauseaChance = builder.defineDouble("nauseaChance", 0.5, 0.0, 1.0, "Chance that eating Burnt Food gives Nausea.");
-            nauseaTicks = builder.defineInteger("nauseaTicks", 100, 1, MAXIMUM_TICKS, "Ticks of Nausea.");
             burnTicks = builder.defineInteger("burnTicks", 400, 0, MAXIMUM_TICKS, "Ticks Burnt Food burns as furnace fuel.");
             compostChance = builder.defineDouble("compostChance", 0.3, 0.0, 1.0, "Chance Burnt Food raises a composter's level.");
         }
     }
 
     public static final class MushSettings {
-        public final ConfigValue<Integer> hunger;
-        public final ConfigValue<Double> saturation;
-        public final ConfigValue<Integer> eatTicks;
         public final ConfigValue<Double> compostChance;
 
         private MushSettings(ConfigSpecBuilder builder) {
-            hunger = builder.defineInteger("hunger", 2, 0, MAXIMUM_HUNGER, "Hunger Mush restores.");
-            saturation = builder.defineDouble("saturation", 0.2, 0.0, MAXIMUM_SATURATION, "Mush's saturation modifier.");
-            eatTicks = builder.defineInteger("eatTicks", 16, 1, MAXIMUM_EAT_TICKS, "Ticks to eat Mush.");
             compostChance = builder.defineDouble("compostChance", 0.65, 0.0, 1.0, "Chance Mush raises a composter's level.");
         }
     }

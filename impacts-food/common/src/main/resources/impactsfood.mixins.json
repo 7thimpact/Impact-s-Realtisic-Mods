@@ -9,9 +9,12 @@
     "AbstractCookingRecipeMixin",
     "BlockStateBaseMixin",
     "ItemEntityAccessor",
-    "LayeredCauldronBlockMixin"
+    "LayeredCauldronBlockMixin",
+    "TagLoaderMixin"
   ],
-  "client": [],
+  "client": [
+    "client.SpriteSourcesInvoker"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

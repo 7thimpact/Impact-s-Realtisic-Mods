@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "overcooking"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": [
+    {
+      "tag": "impactsfood:dried_foods"
+    },
+    {
+      "tag": "impactsfood:toasted_foods"
+    },
+    {
+      "item": "impactsfood:fried_egg"
+    },
+    {
+      "item": "minecraft:dried_kelp"
+    }
+  ],
+  "result": "impactsfood:burnt_food"
+}

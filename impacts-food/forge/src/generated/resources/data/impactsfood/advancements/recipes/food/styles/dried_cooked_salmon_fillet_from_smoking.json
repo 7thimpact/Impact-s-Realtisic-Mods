@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "dried"
+    }
+  ],
+  "criteria": {
+    "has_cooked_salmon_fillet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:cooked_salmon_fillet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsfood:styles/dried_cooked_salmon_fillet_from_smoking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cooked_salmon_fillet",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsfood:styles/dried_cooked_salmon_fillet_from_smoking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

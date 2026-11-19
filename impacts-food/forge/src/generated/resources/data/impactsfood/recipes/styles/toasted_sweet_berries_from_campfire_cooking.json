@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "toasted"
+    }
+  ],
+  "cookingtime": 300,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:sweet_berries"
+  },
+  "result": "impactsfood:toasted_sweet_berries"
+}

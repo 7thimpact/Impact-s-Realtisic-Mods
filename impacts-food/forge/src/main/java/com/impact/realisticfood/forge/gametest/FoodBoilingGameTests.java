@@ -9,7 +9,7 @@ import com.impact.realisticfood.boiling.BoilingPot;
 import com.impact.realisticfood.boiling.CauldronPotHost;
 import com.impact.realisticfood.boiling.CauldronPots;
 import com.impact.realisticfood.config.FoodServerConfig;
-import com.impact.realisticfood.food.FinishedFood;
+import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.registry.FoodItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -81,7 +81,7 @@ public final class FoodBoilingGameTests {
         tick(pot, host, EGG_BOIL_TICKS - 1);
         helper.assertTrue(host.released().isEmpty(), "The egg isn't done before its boil time");
         tick(pot, host, 1);
-        helper.assertTrue(host.released().size() == 1 && host.released().get(0).is(FoodItems.finishedFood(FinishedFood.BOILED_EGG)),
+        helper.assertTrue(host.released().size() == 1 && host.released().get(0).is(FoodItems.fixedFood(FixedFood.BOILED_EGG)),
                 "After 200 ticks a Boiled Egg comes out");
         helper.assertTrue(host.evaporatedLevels() == EGG_BOIL_TICKS / evaporationTicks, "A boiling pot loses a level every evaporation interval");
         helper.succeed();
@@ -104,7 +104,7 @@ public final class FoodBoilingGameTests {
         boilNow(helper, cauldron);
         helper.spawnItem(Items.EGG, 0.5F, 1.5F, 0.5F);
         helper.succeedWhen(() -> {
-            helper.assertItemEntityPresent(FoodItems.finishedFood(FinishedFood.BOILED_EGG), CAULDRON, 3.0);
+            helper.assertItemEntityPresent(FoodItems.fixedFood(FixedFood.BOILED_EGG), CAULDRON, 3.0);
             helper.assertItemEntityNotPresent(Items.EGG, CAULDRON, 3.0);
         });
     }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsfood:item/cooked_tropical_fish",
+    "layer1": "impactsfood:item/styled/dried_cooked_tropical_fish"
+  }
+}
