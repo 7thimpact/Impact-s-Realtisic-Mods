@@ -8,11 +8,14 @@
     "AbstractCauldronBlockMixin",
     "AbstractCookingRecipeMixin",
     "BlockStateBaseMixin",
+    "CampfireBlockEntityMixin",
+    "CampfireBlockMixin",
     "ItemEntityAccessor",
     "LayeredCauldronBlockMixin",
     "TagLoaderMixin"
   ],
   "client": [
+    "client.CampfireRendererMixin",
     "client.SpriteSourcesInvoker"
   ],
   "injectors": {

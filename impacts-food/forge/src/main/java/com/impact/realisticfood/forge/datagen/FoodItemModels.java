@@ -19,6 +19,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 final class FoodItemModels extends ItemModelProvider {
     private static final String GENERATED_ITEM_PARENT = "item/generated";
     private static final String HANDHELD_ITEM_PARENT = "item/handheld";
+    private static final String SPIT = "spit";
 
     FoodItemModels(PackOutput output, ExistingFileHelper existingFiles) {
         super(output, FoodMod.MOD_ID, existingFiles);
@@ -29,6 +30,7 @@ final class FoodItemModels extends ItemModelProvider {
         for (KnifeMaterial material : KnifeMaterial.values()) {
             flatItem(material.itemPath, HANDHELD_ITEM_PARENT);
         }
+        flatItem(SPIT, HANDHELD_ITEM_PARENT);
         for (FoodPiece piece : FoodPiece.values()) {
             flatItem(piece.path, GENERATED_ITEM_PARENT);
         }

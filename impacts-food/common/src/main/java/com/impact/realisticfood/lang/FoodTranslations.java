@@ -55,6 +55,7 @@ public final class FoodTranslations {
         Map<String, String> translations = new LinkedHashMap<>();
         translations.put(CREATIVE_TAB, "Impact's Realistic Food");
         translations.put(CAMPFIRE_BUCKET, "Campfire Bucket");
+        translations.put(itemKey("spit"), "Spit");
         KNIFE_NAMES.forEach((material, name) -> translations.put(itemKey(material.itemPath), name));
         PIECE_NAMES.forEach((piece, name) -> translations.put(itemKey(piece.path), name));
         Arrays.stream(FixedFood.values()).forEach(food -> translations.put(itemKey(food.itemPath), food.displayName));

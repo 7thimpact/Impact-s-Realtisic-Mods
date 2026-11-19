@@ -14,6 +14,7 @@ import com.impact.realisticfood.item.KnifeItem;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.item.PieceFoodItem;
 import com.impact.realisticfood.item.StyledFoodItem;
+import com.impact.realisticfood.spit.Spits;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -95,6 +96,7 @@ public final class FoodItems {
     // Tools first, then Lib's grinder, then each raw piece followed by the piece it cooks into.
     private static List<ItemLike> creativeTabItems() {
         Set<Item> items = new LinkedHashSet<>(knives());
+        items.add(Spits.spitItem());
         items.addAll(Grinding.grinderItems());
         for (FoodPiece piece : FoodPiece.values()) {
             if (piece.cooks()) {

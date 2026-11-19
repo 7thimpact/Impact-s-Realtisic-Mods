@@ -15,6 +15,7 @@ import com.impact.realisticfood.forge.condition.FeatureEnabledCondition;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.registry.FoodItems;
 import com.impact.realisticfood.registry.FoodTags;
+import com.impact.realisticfood.spit.Spits;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -59,6 +60,12 @@ final class FoodRecipes extends RecipeProvider {
                 new FeatureEnabledCondition(FoodFeature.CUTTING), ConditionalRecipes.modNotLoaded(FoodMod.CRAFTING_MOD_ID));
         knife(aloneOutput, KnifeMaterial.FLINT, Items.FLINT);
         knife(aloneOutput, KnifeMaterial.IRON, Items.IRON_INGOT);
+        // Three sticks in a row: two sticks would clash with Salty's Realistic Forging's two_sticks recipe.
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Spits.spitItem())
+                .pattern("SSS")
+                .define('S', Items.STICK)
+                .unlockedBy("has_stick", has(Items.STICK))
+                .save(conditional(output, new FeatureEnabledCondition(FoodFeature.SPIT), ConditionalRecipes.modNotLoaded(FoodMod.CRAFTING_MOD_ID)));
     }
 
     private static void knife(Consumer<FinishedRecipe> output, KnifeMaterial material, Item blade) {

@@ -19,10 +19,13 @@ import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.network.FoodNetwork;
 import com.impact.realisticfood.registry.FoodItems;
 import com.impact.realisticfood.soup.SoupRecipes;
+import com.impact.realisticfood.spit.Spits;
 
 /** Food's startup steps that don't depend on the mod loader. */
 public final class FoodStartup {
     private static final ImpactsLog LOG = ImpactsLog.of(FoodMod.MOD_ID);
+    /** The spit burns like a stick. */
+    private static final int SPIT_BURN_TICKS = 100;
 
     private FoodStartup() {
     }
@@ -45,10 +48,12 @@ public final class FoodStartup {
         BoilingRecipes.register();
         SoupRecipes.register();
         CampfireBuckets.register();
+        Spits.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
         ImpactsLib.onModsReady(impactMods -> {
             FuelRegistry.register(FoodItems.fixedFood(FixedFood.BURNT_FOOD), stack -> FoodServerConfig.get().burntFood.burnTicks.get());
+            FuelRegistry.register(Spits.spitItem(), SPIT_BURN_TICKS);
             logStartup();
         });
     }
