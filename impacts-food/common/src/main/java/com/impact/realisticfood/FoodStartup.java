@@ -19,6 +19,7 @@ import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.network.FoodNetwork;
 import com.impact.realisticfood.registry.FoodItems;
+import com.impact.realisticfood.registry.FoodSounds;
 import com.impact.realisticfood.soup.SoupRecipes;
 import com.impact.realisticfood.spit.Spits;
 
@@ -42,6 +43,7 @@ public final class FoodStartup {
         FoodServerConfig.register();
         FoodClientConfig.register();
         FoodItems.register();
+        FoodSounds.register();
         Cutting.register();
         PieceCooking.register();
         StyleCooking.register();

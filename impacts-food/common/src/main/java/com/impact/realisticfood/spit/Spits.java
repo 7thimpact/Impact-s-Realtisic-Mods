@@ -10,6 +10,7 @@ import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.registry.FoodSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -135,7 +136,7 @@ public final class Spits {
             serverLevel.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE, position.getX() + 0.5, position.getY() + 0.9, position.getZ() + 0.5,
                     TURN_SMOKE, SMOKE_SPREAD, 0.1, SMOKE_SPREAD, SMOKE_RISE);
         }
-        level.playSound(null, position, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, SIZZLE_VOLUME, 1.6F);
+        level.playSound(null, position, FoodSounds.spitSizzle(), SoundSource.BLOCKS, SIZZLE_VOLUME, 1.6F);
         if (player instanceof ServerPlayer serverPlayer) {
             LibTriggers.HOLD_ACTION.trigger(serverPlayer, TURN_ACTION);
             FoodAchievements.onSpitTurned(serverPlayer);

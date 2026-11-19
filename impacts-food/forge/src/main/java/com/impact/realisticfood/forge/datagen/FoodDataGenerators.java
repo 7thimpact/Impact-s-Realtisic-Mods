@@ -7,7 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-/** Food's generated data: translations, item models, block states, item tags, recipes and advancements. Run with {@code runData}. */
+/** Food's generated data: translations, item models, block states, sounds, item tags, recipes and advancements. Run with {@code runData}. */
 public final class FoodDataGenerators {
     private static final String ENGLISH_LOCALE = "en_us";
 
@@ -25,6 +25,7 @@ public final class FoodDataGenerators {
         });
         generator.addProvider(event.includeClient(), new FoodItemModels(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new FoodBlockStates(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new FoodSoundDefinitions(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new FoodItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new FoodRecipes(output));
         generator.addProvider(event.includeServer(), new FoodAdvancementProvider(output));

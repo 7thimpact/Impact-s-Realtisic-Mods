@@ -9,7 +9,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
-| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | In progress (Lib's food systems done) |
+| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done standalone (IRC parts in step 5, IRV parts in step 4) |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
@@ -100,7 +100,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 9 Baking: Flour from a stone grinder (with seeds), Dough with any water bottle, Loaf Dough, Dough Bun, Flatbread, Dumpling, bread from Loaf Dough, cake, cookies, pie and porridge from Flour, grid baking off, the grinders' standalone recipes
 - [ ] 10 IRC integration (moves to step 5)
 - [ ] 11 IRV, IRI and SRF checks: done for IRI (byproducts with no room drop, with or without its locked slots) and SRF (the cauldron pass-through with SRF's raw gold ore, in the new `food-with-srf` setup); the IRV parts come in step 4
-- [ ] 12 Polish: all 26 achievements done; JEI, tooltips and sounds next
+- [x] 12 Polish: all 26 achievements, JEI (Boiling, Soups and Spit Roasting categories; cutting in Lib's Tool Crafting; info on the cooking styles, the spit and the campfire bucket), tooltips (styles, tools, raw pieces, the raw-food risk on vanilla items too), Food's own sound events with subtitles
 
 ## 4. Impact's Realistic Vitality
 

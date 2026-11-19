@@ -6,12 +6,12 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.registry.FoodSounds;
 import com.impact.realisticfood.registry.FoodTags;
 import com.impact.realisticfood.soup.SoupRecipes;
 import com.impact.realisticfood.soup.SoupServings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -80,7 +80,7 @@ public final class PotInteractions {
                 player.getInventory().placeItemBackInInventory(remainder);
             }
         }
-        host.level().playSound(null, host.position(), SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
+        host.level().playSound(null, host.position(), FoodSounds.potSplash(), SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
         return InteractionResult.CONSUME;
     }
 

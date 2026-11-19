@@ -3,10 +3,10 @@ package com.impact.realisticfood.client;
 import com.impact.realisticfood.boiling.ClientBoilingPots;
 import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.network.PotStateMessage;
+import com.impact.realisticfood.registry.FoodSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
@@ -70,7 +70,7 @@ public final class BoilingEffects {
             return;
         }
         float pitch = SIMMER_PITCH_BASE + random.nextFloat() * SIMMER_PITCH_SPREAD;
-        level.playLocalSound(surface.x, surface.y, surface.z, SoundEvents.BUBBLE_COLUMN_BUBBLE_POP, SoundSource.BLOCKS, SIMMER_VOLUME, pitch, false);
+        level.playLocalSound(surface.x, surface.y, surface.z, FoodSounds.potSimmer(), SoundSource.BLOCKS, SIMMER_VOLUME, pitch, false);
     }
 
     private static double spread(double center, RandomSource random) {

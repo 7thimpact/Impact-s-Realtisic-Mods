@@ -8,10 +8,10 @@ import com.impact.realisticfood.bucket.CampfireBucketBlockEntity;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.mixin.ItemEntityAccessor;
+import com.impact.realisticfood.registry.FoodSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -105,7 +105,7 @@ public final class CauldronInteractions {
         } else {
             itemEntity.setItem(dropped);
         }
-        level.playSound(null, position, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
+        level.playSound(null, position, FoodSounds.potSplash(), SoundSource.BLOCKS, SPLASH_VOLUME, 1.0F);
     }
 
     // A milk bucket leaves its bucket behind, as it does in a crafting grid.

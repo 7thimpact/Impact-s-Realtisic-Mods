@@ -4,12 +4,14 @@ import com.impact.lib.advancement.ImpactsAdvancementBuilder;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.advancement.FoodAdvancements;
+import com.impact.realisticfood.boiling.RecipeVessel;
 import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.food.FoodStyle;
 import com.impact.realisticfood.item.KnifeMaterial;
+import com.impact.realisticfood.registry.FoodSounds;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -23,6 +25,24 @@ import java.util.Map;
 public final class FoodTranslations {
     public static final String CREATIVE_TAB = CreativeTabs.titleKey(FoodMod.MOD_ID);
     public static final String CAMPFIRE_BUCKET = "block." + FoodMod.MOD_ID + ".campfire_bucket";
+    public static final String JEI_BOILING = "jei.impactsfood.boiling";
+    public static final String JEI_SOUP = "jei.impactsfood.soup";
+    public static final String JEI_SPIT_ROASTING = "jei.impactsfood.spit_roasting";
+    public static final String JEI_SECONDS = "jei.impactsfood.seconds";
+    public static final String JEI_POT_AND_TIME = "jei.impactsfood.pot_and_time";
+    public static final String JEI_SOUP_DETAILS = "jei.impactsfood.soup_details";
+    public static final String JEI_SPIT_TIMES = "jei.impactsfood.spit_times";
+    public static final String JEI_STYLES_INFO = "jei.impactsfood.info.styles";
+    public static final String JEI_SPIT_INFO = "jei.impactsfood.info.spit";
+    public static final String JEI_CAMPFIRE_BUCKET_INFO = "jei.impactsfood.info.campfire_bucket";
+    public static final String KNIFE_TOOLTIP = "tooltip.impactsfood.knife";
+    public static final String SPIT_TOOLTIP = "tooltip.impactsfood.spit";
+    public static final String PIECE_TOOLTIP = "tooltip.impactsfood.piece";
+    public static final String RAW_RISK_TOOLTIP = "tooltip.impactsfood.raw_risk";
+    private static final String STYLE_TOOLTIP_PREFIX = "tooltip.impactsfood.style.";
+    private static final String SUBTITLE_PREFIX = "subtitles.impactsfood.";
+    private static final String JEI_VESSEL_PREFIX = "jei.impactsfood.vessel.";
+    private static final String JEI_STYLE_INFO_PREFIX = "jei.impactsfood.info.style.";
     /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
     public static final String ADVANCEMENT_TAB = "advancements." + FoodMod.MOD_ID + ".tab";
     private static final String ITEM_KEY_PREFIX = "item." + FoodMod.MOD_ID + ".";
@@ -54,8 +74,64 @@ public final class FoodTranslations {
     private FoodTranslations() {
     }
 
+    public static String styleTooltip(FoodStyle style) {
+        return STYLE_TOOLTIP_PREFIX + style.prefix;
+    }
+
+    /** The subtitle key of one of Food's sounds, by its sound event path. */
+    public static String subtitle(String soundPath) {
+        return SUBTITLE_PREFIX + soundPath;
+    }
+
+    public static String jeiVessel(RecipeVessel vessel) {
+        return JEI_VESSEL_PREFIX + vessel.jsonName;
+    }
+
+    public static String jeiStyleInfo(FoodStyle style) {
+        return JEI_STYLE_INFO_PREFIX + style.prefix;
+    }
+
     public static String itemKey(String itemPath) {
         return ITEM_KEY_PREFIX + itemPath;
+    }
+
+    private static void addTooltipsAndSubtitles(Map<String, String> translations) {
+        translations.put(styleTooltip(FoodStyle.DRIED), "Dried: eaten quickly");
+        translations.put(styleTooltip(FoodStyle.TOASTED), "Toasted: more filling");
+        translations.put(styleTooltip(FoodStyle.BOILED), "Boiled: safer, but can't go back on the heat");
+        translations.put(KNIFE_TOOLTIP, "Cuts raw food in any crafting grid");
+        translations.put(SPIT_TOOLTIP, "Use on a lit campfire");
+        translations.put(PIECE_TOOLTIP, "Cooks in half the time");
+        translations.put(RAW_RISK_TOOLTIP, "May cause Hunger if eaten raw");
+        translations.put(subtitle(FoodSounds.POT_SIMMER), "Pot simmers");
+        translations.put(subtitle(FoodSounds.POT_SPLASH), "Food splashes into a pot");
+        translations.put(subtitle(FoodSounds.SOUP_LADLE), "Soup is ladled");
+        translations.put(subtitle(FoodSounds.SPIT_SIZZLE), "Spit sizzles");
+    }
+
+    private static void addJei(Map<String, String> translations) {
+        translations.put(JEI_BOILING, "Boiling");
+        translations.put(JEI_SOUP, "Soups");
+        translations.put(JEI_SPIT_ROASTING, "Spit Roasting");
+        translations.put(JEI_SECONDS, "%s s");
+        translations.put(JEI_POT_AND_TIME, "%s, %s");
+        translations.put(JEI_SOUP_DETAILS, "%s bowls a set, %s");
+        translations.put(JEI_SPIT_TIMES, "%s on a spit, %s turned");
+        translations.put(jeiVessel(RecipeVessel.CAULDRON), "Cauldron");
+        translations.put(jeiVessel(RecipeVessel.BUCKET), "Bucket");
+        translations.put(jeiVessel(RecipeVessel.ANY), "Cauldron or bucket");
+        translations.put(JEI_STYLES_INFO, "Food cooks in order: raw, then cooked or boiled, then toasted. Once food is cooked, a campfire "
+                + "toasts it, a furnace dries it, and boiling softens it. Toasted and dried food burns with more dry heat; boiled food "
+                + "can only be boiled again, into Mush.");
+        translations.put(jeiStyleInfo(FoodStyle.DRIED), "Dried food (furnace or smoker) restores the same hunger with less saturation, and is "
+                + "eaten twice as fast.");
+        translations.put(jeiStyleInfo(FoodStyle.TOASTED), "Toasted food (campfire or spit) restores 1 more hunger and more saturation.");
+        translations.put(jeiStyleInfo(FoodStyle.BOILED), "Boiled food (cauldron or campfire bucket) restores the same hunger with a little "
+                + "less saturation, and its harmful effects are less likely.");
+        translations.put(JEI_SPIT_INFO, "Use a spit on a lit campfire to mount it. It holds 6 more items and cooks them faster. Use it with an "
+                + "empty hand to turn it for a burst of speed, and sneak with an empty hand to take it down.");
+        translations.put(JEI_CAMPFIRE_BUCKET_INFO, "Sneak and use a water bucket on the top of a lit campfire to set it down as a small pot. "
+                + "Its water lasts 8 boils. Sneak with an empty hand to take it back.");
     }
 
     private static void addAdvancements(Map<String, String> translations) {
@@ -98,6 +174,8 @@ public final class FoodTranslations {
         translations.put(CAMPFIRE_BUCKET, "Campfire Bucket");
         translations.put(itemKey("spit"), "Spit");
         translations.put(ADVANCEMENT_TAB, "Realistic Food");
+        addJei(translations);
+        addTooltipsAndSubtitles(translations);
         addAdvancements(translations);
         KNIFE_NAMES.forEach((material, name) -> translations.put(itemKey(material.itemPath), name));
         PIECE_NAMES.forEach((piece, name) -> translations.put(itemKey(piece.path), name));

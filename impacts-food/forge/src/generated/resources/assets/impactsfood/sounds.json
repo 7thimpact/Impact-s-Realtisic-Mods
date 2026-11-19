@@ -1,0 +1,38 @@
+{
+  "block.pot.ladle": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bottle.fill"
+      }
+    ],
+    "subtitle": "subtitles.impactsfood.block.pot.ladle"
+  },
+  "block.pot.simmer": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.bubble_column.bubble_pop"
+      }
+    ],
+    "subtitle": "subtitles.impactsfood.block.pot.simmer"
+  },
+  "block.pot.splash": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.generic.splash"
+      }
+    ],
+    "subtitle": "subtitles.impactsfood.block.pot.splash"
+  },
+  "block.spit.sizzle": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.fire.extinguish"
+      }
+    ],
+    "subtitle": "subtitles.impactsfood.block.spit.sizzle"
+  }
+}
