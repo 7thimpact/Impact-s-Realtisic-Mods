@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "chance": 0.1,
+      "item": "minecraft:rabbit_hide"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "cutting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:rabbit"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactsfood:raw_rabbit_piece"
+  },
+  "tools": [
+    {
+      "tag": "impactsfood:knives"
+    }
+  ]
+}

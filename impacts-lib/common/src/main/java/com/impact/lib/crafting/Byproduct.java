@@ -12,6 +12,11 @@ public record Byproduct(ItemStack stack, float chance) {
     private static final String CHANCE_FIELD = "chance";
     private static final float ALWAYS = 1.0F;
 
+    /** The same byproduct with another chance (a config override). */
+    public Byproduct withChance(float newChance) {
+        return new Byproduct(stack, newChance);
+    }
+
     public boolean rolls(RandomSource random) {
         return chance >= ALWAYS || random.nextFloat() < chance;
     }

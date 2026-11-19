@@ -86,7 +86,7 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
     @Override
     public ItemStack assemble(CraftingContainer grid, RegistryAccess registryAccess) {
         Set<Integer> toolSlots = ToolCrafting.findToolSlots(grid, tools).orElse(Set.of());
-        ItemStack result = shape.assemble(gridWithout(grid, toolSlots), registryAccess);
+        ItemStack result = withConfiguredCount(shape.assemble(gridWithout(grid, toolSlots), registryAccess));
         nbtSource.flatMap(source -> firstMatching(grid, toolSlots, source))
                 .filter(ItemStack::hasTag)
                 .ifPresent(source -> result.setTag(source.getTag().copy()));
@@ -99,17 +99,20 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
         Set<Integer> toolSlots = ToolCrafting.findToolSlots(grid, tools).orElse(Set.of());
         Optional<Player> player = ToolCrafting.craftingPlayer();
         NonNullList<ItemStack> remaining = NonNullList.withSize(grid.getContainerSize(), ItemStack.EMPTY);
-        List<ItemStack> usedTools = new ArrayList<>();
+        List<ItemStack> toolsBefore = new ArrayList<>();
+        List<ItemStack> toolsAfter = new ArrayList<>();
         for (int slot = 0; slot < grid.getContainerSize(); slot++) {
             ItemStack stack = grid.getItem(slot);
             if (toolSlots.contains(slot)) {
-                usedTools.add(stack.copy());
-                remaining.set(slot, ToolCrafting.wearTool(stack, toolDamage, player.orElse(null)));
+                ItemStack worn = ToolCrafting.wearTool(stack, toolDamage, player.orElse(null));
+                toolsBefore.add(stack.copy());
+                toolsAfter.add(worn.copy());
+                remaining.set(slot, worn);
             } else {
                 remaining.set(slot, remainderFor(stack));
             }
         }
-        player.ifPresent(crafter -> ToolCrafting.finishCraft(crafter, this, shape.getResultItem(crafter.level().registryAccess()), usedTools));
+        player.ifPresent(crafter -> ToolCrafting.finishCraft(crafter, this, getResultItem(crafter.level().registryAccess()), toolsBefore, toolsAfter));
         return remaining;
     }
 
@@ -120,7 +123,7 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
 
     @Override
     public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return shape.getResultItem(registryAccess);
+        return withConfiguredCount(shape.getResultItem(registryAccess));
     }
 
     @Override
@@ -152,6 +155,15 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
     @Override
     public RecipeSerializer<?> getSerializer() {
         return ToolCrafting.serializer();
+    }
+
+    // The owning mod's config can change how many items a craft gives (see ToolCraftingOverrides).
+    private ItemStack withConfiguredCount(ItemStack result) {
+        int configuredCount = ToolCrafting.overridesFor(this).resultCount(this, result.getCount());
+        if (configuredCount == result.getCount()) {
+            return result;
+        }
+        return result.copyWithCount(configuredCount);
     }
 
     private ItemStack remainderFor(ItemStack stack) {

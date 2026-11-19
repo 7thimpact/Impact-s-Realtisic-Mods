@@ -6,7 +6,10 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.config.FoodCommonConfig;
 import com.impact.realisticfood.config.FoodServerConfig;
+import com.impact.realisticfood.cooking.PieceCooking;
+import com.impact.realisticfood.cutting.Cutting;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.registry.FoodItems;
 
 /** Food's startup steps that don't depend on the mod loader. */
 public final class FoodStartup {
@@ -15,13 +18,16 @@ public final class FoodStartup {
     private FoodStartup() {
     }
 
-    /** Mod construction: registers with Lib, then the log categories and config files. */
+    /** Mod construction: registers with Lib, then the log categories, config files, items, cutting and cooking times. */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(FoodMod.MOD_ID);
         LOG.registerCategories(FoodLogCategories.ALL);
         FoodCommonConfig.register();
         FoodServerConfig.register();
         FoodClientConfig.register();
+        FoodItems.register();
+        Cutting.register();
+        PieceCooking.register();
         ImpactsLib.onModsReady(impactMods -> logStartup());
     }
 

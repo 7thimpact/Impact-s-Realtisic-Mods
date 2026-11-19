@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "cutting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:pumpkin"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:pumpkin_seeds"
+  },
+  "tools": [
+    {
+      "tag": "impactsfood:knives"
+    }
+  ]
+}

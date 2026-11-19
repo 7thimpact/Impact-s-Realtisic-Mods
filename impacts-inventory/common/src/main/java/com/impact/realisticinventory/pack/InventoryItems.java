@@ -1,15 +1,17 @@
 package com.impact.realisticinventory.pack;
 
 import com.impact.lib.platform.LoaderPlatform;
+import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticinventory.InventoryMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-/** Inventory's items: the three packs. */
+/** Inventory's items: the three packs, and the creative tab that lists them. */
 public final class InventoryItems {
     private static Supplier<PackItem> satchel;
     private static Supplier<PackItem> backpack;
@@ -24,6 +26,7 @@ public final class InventoryItems {
         satchel = registerPack(registrar, PackKind.SATCHEL);
         backpack = registerPack(registrar, PackKind.BACKPACK);
         framePack = registerPack(registrar, PackKind.FRAME_PACK);
+        CreativeTabs.register(InventoryMod.MOD_ID, () -> new ItemStack(backpack()), InventoryItems::packs);
     }
 
     public static PackItem satchel() {

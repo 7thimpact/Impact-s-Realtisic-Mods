@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactsfood:raw_salmon_fillet"
+  },
+  "result": "impactsfood:cooked_salmon_fillet"
+}

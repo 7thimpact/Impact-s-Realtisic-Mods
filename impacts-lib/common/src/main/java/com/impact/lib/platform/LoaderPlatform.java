@@ -15,6 +15,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -76,6 +78,15 @@ public interface LoaderPlatform {
 
     /** A block entity type for these blocks. Vanilla keeps the factory type private; each loader opens it its own way. */
     <T extends BlockEntity> BlockEntityType<T> blockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks);
+
+    /**
+     * The installed mods whose own files hold this data file, such as {@code minecraft:recipes/bread.json} for
+     * {@code data/minecraft/recipes/bread.json}. Loaders merge mod data into one pack, so a resource can't say this itself.
+     */
+    Set<String> modsWithDataFile(ResourceLocation fileLocation);
+
+    /** A builder for a mod's creative tab. Vanilla's builder asks for a row and column, which only fit vanilla's own tabs. */
+    CreativeModeTab.Builder creativeTabBuilder();
 
     /** A menu type whose client copy is built from extra data the server sends (a slot count, a position, ...). */
     <M extends AbstractContainerMenu> MenuType<M> menuTypeWithData(MenuWithDataFactory<M> clientFactory);

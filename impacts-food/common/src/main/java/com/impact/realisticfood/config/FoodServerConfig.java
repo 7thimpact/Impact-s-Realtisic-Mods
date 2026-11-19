@@ -25,6 +25,7 @@ public final class FoodServerConfig {
 
     public final KnifeSettings knives;
     public final CuttingSettings cutting;
+    public final PieceSettings pieces;
     public final BoilingSettings boiling;
     public final SoupSettings soup;
     public final StoneBoilingSettings stoneBoiling;
@@ -42,6 +43,9 @@ public final class FoodServerConfig {
         builder.popSection();
         builder.pushSection("cutting", "Cutting raw food with a knife.");
         cutting = new CuttingSettings(builder);
+        builder.popSection();
+        builder.pushSection("pieces", "Cuts, pieces, fillets and slices.");
+        pieces = new PieceSettings(builder);
         builder.popSection();
         builder.pushSection("boiling", "Boiling water in cauldrons and campfire buckets.");
         boiling = new BoilingSettings(builder);
@@ -106,6 +110,21 @@ public final class FoodServerConfig {
                     "Pieces one cut gives, as input=count. Unlisted inputs use the recipe's count (2). Example: [\"minecraft:beef=3\"].");
             byproductChanceOverrides = builder.defineStringList("byproductChanceOverrides", List.of(),
                     "Byproduct chance per input, as input=chance (0 to 1). Unlisted inputs use the recipe's chance. Example: [\"minecraft:beef=0.5\"].");
+        }
+    }
+
+    public static final class PieceSettings {
+        public final ConfigValue<Double> foodShare;
+        public final ConfigValue<Integer> furnaceTicks;
+        public final ConfigValue<Integer> smokerTicks;
+        public final ConfigValue<Integer> campfireTicks;
+
+        private PieceSettings(ConfigSpecBuilder builder) {
+            foodShare = builder.defineDouble("foodShare", 0.5, 0.0, 1.0,
+                    "A piece restores this share of the whole item's hunger (rounded down, at least 1). Cutting never gains food.");
+            furnaceTicks = builder.defineInteger("furnaceTicks", 100, 1, MAXIMUM_TICKS, "Ticks a raw piece takes to cook in a furnace.");
+            smokerTicks = builder.defineInteger("smokerTicks", 50, 1, MAXIMUM_TICKS, "Ticks a raw piece takes to cook in a smoker.");
+            campfireTicks = builder.defineInteger("campfireTicks", 300, 1, MAXIMUM_TICKS, "Ticks a raw piece takes to cook on a campfire.");
         }
     }
 

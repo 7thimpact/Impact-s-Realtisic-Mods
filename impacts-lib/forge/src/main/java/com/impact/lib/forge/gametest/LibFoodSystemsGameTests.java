@@ -9,6 +9,7 @@ import com.impact.lib.event.ImpactsEvents;
 import com.impact.lib.event.WaterFilled;
 import com.impact.lib.forge.crafting.WaterBottleIngredient;
 import com.impact.lib.fuel.FuelRegistry;
+import com.impact.lib.gametest.CraftingGrids;
 import com.impact.lib.gametest.MockPlayers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -16,10 +17,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -42,8 +40,7 @@ import java.util.Optional;
 @PrefixGameTestTemplate(false)
 public final class LibFoodSystemsGameTests {
     private static final String EMPTY_TEMPLATE = "empty";
-    private static final int GRID_SIZE = 3;
-    private static final int TOOL_SLOT = 4;
+    private static final int TOOL_SLOT = 1;
     private static final int FOOD_SLOT = 0;
     private static final int TEST_BURN_TICKS = 50;
     private static final BlockPos HEAT_TEST_POSITION = BlockPos.ZERO;
@@ -139,26 +136,8 @@ public final class LibFoodSystemsGameTests {
                 ToolCraftingRecipe.NO_CRAFT_TICKS, Optional.empty());
     }
 
+    // The food goes in the first slot and the tool in the second.
     private static CraftingContainer gridWith(ItemStack first, ItemStack second) {
-        NonNullList<ItemStack> items = NonNullList.withSize(GRID_SIZE * GRID_SIZE, ItemStack.EMPTY);
-        items.set(FOOD_SLOT, first);
-        items.set(TOOL_SLOT, second);
-        return new TransientCraftingContainer(new UnshownMenu(), GRID_SIZE, GRID_SIZE, items);
-    }
-
-    private static final class UnshownMenu extends AbstractContainerMenu {
-        UnshownMenu() {
-            super(null, -1);
-        }
-
-        @Override
-        public ItemStack quickMoveStack(Player player, int slotIndex) {
-            return ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean stillValid(Player player) {
-            return false;
-        }
+        return CraftingGrids.of(first, second);
     }
 }

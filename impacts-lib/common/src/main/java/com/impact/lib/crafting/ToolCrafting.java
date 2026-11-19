@@ -22,8 +22,12 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -37,6 +41,10 @@ public final class ToolCrafting {
     private static final float BREAK_PITCH_BASE = 0.8F;
     private static final float BREAK_PITCH_SPREAD = 0.4F;
     private static final ImpactsLog LOG = ImpactsLog.of(ImpactsLib.MOD_ID);
+    private static final ToolCraftingOverrides NO_OVERRIDES = new ToolCraftingOverrides() {
+    };
+    private static final Map<String, ToolCraftingOverrides> OVERRIDES_BY_NAMESPACE = new ConcurrentHashMap<>();
+    private static final List<Consumer<CompletedToolCraft>> CRAFTED_LISTENERS = new CopyOnWriteArrayList<>();
     private static Supplier<ToolCraftingRecipe.Serializer> serializer;
 
     private ToolCrafting() {
@@ -50,6 +58,21 @@ public final class ToolCrafting {
 
     public static ToolCraftingRecipe.Serializer serializer() {
         return serializer.get();
+    }
+
+    /** Config-driven yields and byproduct chances for every tool-crafting recipe whose ID is in the namespace. */
+    public static void registerOverrides(String recipeNamespace, ToolCraftingOverrides overrides) {
+        OVERRIDES_BY_NAMESPACE.put(recipeNamespace, overrides);
+    }
+
+    /** The overrides registered for the recipe's namespace, or ones that keep the recipe's own values. */
+    public static ToolCraftingOverrides overridesFor(ToolCraftingRecipe recipe) {
+        return OVERRIDES_BY_NAMESPACE.getOrDefault(recipe.getId().getNamespace(), NO_OVERRIDES);
+    }
+
+    /** Runs the listener on the server after every tool craft, once its byproducts are given. */
+    public static void onCrafted(Consumer<CompletedToolCraft> listener) {
+        CRAFTED_LISTENERS.add(listener);
     }
 
     /** Whether the stack can act as a tool: it has vanilla durability or Lib's uses. */
@@ -107,25 +130,29 @@ public final class ToolCrafting {
         return ItemStack.EMPTY;
     }
 
-    /** Server side, once per craft: byproducts through Give or drop, the {@code impactslib:tool_crafted} trigger, the log line. */
-    static void finishCraft(Player player, ToolCraftingRecipe recipe, ItemStack result, List<ItemStack> usedTools) {
+    /** Server side, once per craft: byproducts through Give or drop, the {@code impactslib:tool_crafted} trigger, the log line, the listeners. */
+    static void finishCraft(Player player, ToolCraftingRecipe recipe, ItemStack result, List<ItemStack> toolsBefore, List<ItemStack> toolsAfter) {
         if (!(player instanceof ServerPlayer serverPlayer)) {
             return;
         }
+        ToolCraftingOverrides overrides = overridesFor(recipe);
         List<ItemStack> givenByproducts = new ArrayList<>();
         for (Byproduct byproduct : recipe.byproducts()) {
-            if (byproduct.rolls(serverPlayer.getRandom())) {
-                ItemStack given = byproduct.stack().copy();
+            Byproduct configured = byproduct.withChance(overrides.byproductChance(recipe, byproduct));
+            if (configured.rolls(serverPlayer.getRandom())) {
+                ItemStack given = configured.stack().copy();
                 givenByproducts.add(given.copy());
                 ImpactsItems.giveOrDrop(serverPlayer, given);
             }
         }
-        LibTriggers.TOOL_CRAFTED.trigger(serverPlayer, result, usedTools, givenByproducts);
+        LibTriggers.TOOL_CRAFTED.trigger(serverPlayer, result, toolsBefore, givenByproducts);
         if (LOG.isEnabled(LibLogCategories.TOOL_CRAFTING)) {
             LOG.debug(LibLogCategories.TOOL_CRAFTING, "crafted", "player", serverPlayer.getGameProfile().getName(), "recipe", recipe.getId(),
-                    "result", ResourceIds.itemId(result.getItem()), "tools", usedTools.stream().map(tool -> ResourceIds.itemId(tool.getItem()).toString()).toList(),
+                    "result", ResourceIds.itemId(result.getItem()), "tools", toolsBefore.stream().map(tool -> ResourceIds.itemId(tool.getItem()).toString()).toList(),
                     "byproducts", givenByproducts.stream().map(given -> ResourceIds.itemId(given.getItem()).toString()).toList());
         }
+        CompletedToolCraft craft = new CompletedToolCraft(serverPlayer, recipe, result, List.copyOf(toolsBefore), List.copyOf(toolsAfter), List.copyOf(givenByproducts));
+        CRAFTED_LISTENERS.forEach(listener -> listener.accept(craft));
     }
 
     private static Optional<Integer> firstFreeToolSlot(CraftingContainer grid, Ingredient tool, Set<Integer> claimed) {

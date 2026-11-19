@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "chance": 0.15,
+      "item": "minecraft:bone"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "cutting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:mutton"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactsfood:raw_mutton_cut"
+  },
+  "tools": [
+    {
+      "tag": "impactsfood:knives"
+    }
+  ]
+}

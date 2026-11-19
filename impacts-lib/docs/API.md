@@ -65,6 +65,7 @@ public final class InventoryServerConfig {
   - On a reload, every changed value is logged under `config`.
 - Every COMMON file carries the debug section: `DebugConfigSection debug = DebugConfigSection.define(builder);`. Defining it connects it to the mod's `ImpactsLog` and to `/impacts debug`.
 - Every value can parse typed text (`value.parse("12")`), check its range (`value.isAllowed(12)`) and describe what's allowed (`value.allowedValues()`). `/impacts config` uses all three.
+- **`key=value` lists:** `KeyValueEntries.find`, `findInt` and `findDouble` read lists such as `["minecraft:beef=3"]`. Entries that don't parse are skipped, and the first entry for a key wins.
 
 ## Debug logging
 
@@ -122,6 +123,8 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 ## GameTests with a logged-in player
 
 `MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block.
+
+`CraftingGrids.of(stacks...)` builds a 3x3 crafting grid filled from the top left, for matching and crafting recipes in tests. Set the crafting player with Forge's `ForgeHooks.setCraftingPlayer(player)` (and clear it in a `finally` block) to test byproducts.
 
 ## Give or drop
 
@@ -232,6 +235,13 @@ A crafting recipe, shaped (`pattern` + `key`) or shapeless (`ingredients`), whos
 - The `impactslib:tool_crafted` trigger takes optional `result`, `tool` and `byproduct` item predicates.
 - Other mods' special recipes get the same tool behavior from `ToolCrafting.damageTools(grid, isTool, damage)`.
 - Tool recipes stay out of the vanilla recipe book (it can't place tools); JEI shows them in Lib's category.
+- **Config overrides:** `ToolCrafting.registerOverrides(namespace, overrides)` lets a mod's config change the result count (`resultCount`) and byproduct chances (`byproductChance`, where 0 turns a byproduct off) of every tool recipe in its namespace. Food uses it for `cutting.yieldOverrides`, `cutting.byproductChanceOverrides` and `cutting.byproducts`.
+- **Craft listeners:** `ToolCrafting.onCrafted(craft -> ...)` runs on the server after every tool craft. The `CompletedToolCraft` record holds the player, the recipe, the result, the tools before and after (an empty stack for a tool that broke) and the byproducts given.
+- **Data generation:** `ToolCraftingRecipeBuilder.of(result, count)` (in Lib's Forge module) writes these recipes: `requires(...)` for shapeless ones, `pattern(...)` and `define(...)` for shaped ones, then `tool`, `toolDamage`, `byproduct`, `remainder`, `craftTicks`, `copyNbtFrom` and `save(output, id)`. Wrap the output with `ConditionalRecipes.withConditions` for conditions.
+
+## Creative tabs
+
+`CreativeTabs.register(modId, iconSupplier, itemsSupplier)` registers the mod's tab as `<modId>:items` during mod construction, titled by the translation key `CreativeTabs.titleKey(modId)` (`itemGroup.<modId>`). The suppliers are read when the tab is filled.
 
 ## Uses and configured durability
 
@@ -276,7 +286,8 @@ HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // on
 
 ## Recipe audit and conflict checker
 
-- `/impacts audit`: which Impact mod replaced or turned off each vanilla recipe right now (read from the data packs that provide each `minecraft:` recipe file).
+- `/impacts audit`: which Impact mod replaced or turned off each vanilla recipe right now. Forge merges every mod's data into one pack, so the audit asks the loader which mod files hold each `data/minecraft/recipes/` file (`LoaderPlatform.modsWithDataFile`).
+- To turn a vanilla recipe off, write it under its own ID with a condition that fails while your feature is on (Food writes `minecraft:melon_seeds` gated by `forge:not` of its cutting switch). The audit then counts it as turned off.
 - `/impacts conflicts`: any two crafting recipes that could match the same grid, where at least one is an Impact recipe, plus any vanilla recipe two Impact mods both override.
 - Both run at every server start and `/reload`. Each conflict logs a warning, so a conflict fails every family test setup.
 

@@ -1,26 +1,25 @@
 package com.impact.lib.audit;
 
 import com.impact.lib.ImpactsLib;
+import com.impact.lib.platform.LoaderPlatform;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
- * Which Impact mod replaced or turned off each vanilla recipe right now, read from the data packs that provide each
+ * Which Impact mod replaced or turned off each vanilla recipe right now: the Impact mods whose files hold each
  * {@code minecraft:} recipe file. Only one Impact mod may override a given vanilla recipe; two is a conflict.
  */
 public final class RecipeAudit {
     private static final String RECIPES_FOLDER = "recipes";
     private static final String JSON_SUFFIX = ".json";
     private static final String MINECRAFT_NAMESPACE = "minecraft";
-    private static final String MOD_PACK_PREFIX = "mod:";
 
     private RecipeAudit() {
     }
@@ -30,16 +29,16 @@ public final class RecipeAudit {
     }
 
     public static List<Entry> audit(ResourceManager resources, RecipeManager recipes) {
-        Map<ResourceLocation, List<Resource>> vanillaRecipeFiles = resources.listResourceStacks(RECIPES_FOLDER,
-                location -> location.getNamespace().equals(MINECRAFT_NAMESPACE) && location.getPath().endsWith(JSON_SUFFIX));
+        Set<ResourceLocation> vanillaRecipeFiles = resources.listResources(RECIPES_FOLDER,
+                location -> location.getNamespace().equals(MINECRAFT_NAMESPACE) && location.getPath().endsWith(JSON_SUFFIX)).keySet();
         List<Entry> entries = new ArrayList<>();
-        vanillaRecipeFiles.forEach((fileLocation, stack) -> {
-            Set<String> impactMods = impactModsIn(stack);
+        for (ResourceLocation fileLocation : vanillaRecipeFiles) {
+            Set<String> impactMods = impactModsWith(fileLocation);
             if (!impactMods.isEmpty()) {
                 ResourceLocation recipeId = recipeIdOf(fileLocation);
                 entries.add(new Entry(recipeId, impactMods, recipes.byKey(recipeId).isEmpty()));
             }
-        });
+        }
         return entries;
     }
 
@@ -50,16 +49,10 @@ public final class RecipeAudit {
                 .toList();
     }
 
-    private static Set<String> impactModsIn(List<Resource> stack) {
-        Set<String> impactMods = new LinkedHashSet<>();
-        for (Resource resource : stack) {
-            String packId = resource.sourcePackId();
-            String modId = packId.startsWith(MOD_PACK_PREFIX) ? packId.substring(MOD_PACK_PREFIX.length()) : packId;
-            if (modId.startsWith(ImpactsLib.MOD_ID_PREFIX)) {
-                impactMods.add(modId);
-            }
-        }
-        return impactMods;
+    private static Set<String> impactModsWith(ResourceLocation fileLocation) {
+        return LoaderPlatform.current().modsWithDataFile(fileLocation).stream()
+                .filter(modId -> modId.startsWith(ImpactsLib.MOD_ID_PREFIX))
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     // data/minecraft/recipes/bread.json is the recipe minecraft:bread.

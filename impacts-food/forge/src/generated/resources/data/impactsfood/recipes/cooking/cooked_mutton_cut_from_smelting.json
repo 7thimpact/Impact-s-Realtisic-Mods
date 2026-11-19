@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactsfood:raw_mutton_cut"
+  },
+  "result": "impactsfood:cooked_mutton_cut"
+}

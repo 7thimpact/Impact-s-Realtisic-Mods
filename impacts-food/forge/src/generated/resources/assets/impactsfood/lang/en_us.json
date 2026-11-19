@@ -1,3 +1,22 @@
 {
+  "item.impactsfood.carrot_slices": "Carrot Slices",
+  "item.impactsfood.cooked_beef_cut": "Cooked Beef Cut",
+  "item.impactsfood.cooked_chicken_piece": "Cooked Chicken Piece",
+  "item.impactsfood.cooked_cod_fillet": "Cooked Cod Fillet",
+  "item.impactsfood.cooked_mutton_cut": "Cooked Mutton Cut",
+  "item.impactsfood.cooked_pork_cut": "Cooked Pork Cut",
+  "item.impactsfood.cooked_rabbit_piece": "Cooked Rabbit Piece",
+  "item.impactsfood.cooked_salmon_fillet": "Cooked Salmon Fillet",
+  "item.impactsfood.flint_knife": "Flint Knife",
+  "item.impactsfood.fried_potato_slices": "Fried Potato Slices",
+  "item.impactsfood.iron_knife": "Iron Knife",
+  "item.impactsfood.potato_slices": "Potato Slices",
+  "item.impactsfood.raw_beef_cut": "Raw Beef Cut",
+  "item.impactsfood.raw_chicken_piece": "Raw Chicken Piece",
+  "item.impactsfood.raw_cod_fillet": "Raw Cod Fillet",
+  "item.impactsfood.raw_mutton_cut": "Raw Mutton Cut",
+  "item.impactsfood.raw_pork_cut": "Raw Pork Cut",
+  "item.impactsfood.raw_rabbit_piece": "Raw Rabbit Piece",
+  "item.impactsfood.raw_salmon_fillet": "Raw Salmon Fillet",
   "itemGroup.impactsfood": "Impact's Realistic Food"
 }

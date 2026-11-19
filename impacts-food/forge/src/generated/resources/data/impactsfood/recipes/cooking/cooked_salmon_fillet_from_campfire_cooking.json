@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 300,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactsfood:raw_salmon_fillet"
+  },
+  "result": "impactsfood:cooked_salmon_fillet"
+}

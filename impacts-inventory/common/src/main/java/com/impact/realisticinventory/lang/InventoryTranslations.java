@@ -1,6 +1,8 @@
 package com.impact.realisticinventory.lang;
 
 import com.impact.lib.advancement.ImpactsAdvancementBuilder;
+import com.impact.lib.registry.CreativeTabs;
+import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.advancement.InventoryAdvancements;
 import net.minecraft.resources.ResourceLocation;
 
@@ -24,6 +26,7 @@ public final class InventoryTranslations {
     public static final String PACK_HINT_TOOLTIP = "tooltip.impactsinventory.pack_hint";
     /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
     public static final String ADVANCEMENT_TAB = "advancements.impactsinventory.tab";
+    public static final String CREATIVE_TAB = CreativeTabs.titleKey(InventoryMod.MOD_ID);
     public static final String FIRST_JOIN = "message.impactsinventory.first_join";
     public static final String SLOTS_LOCKED = "message.impactsinventory.slots_locked";
     public static final String MOVED_TO_POCKETS = "message.impactsinventory.moved_to_pockets";
@@ -41,6 +44,7 @@ public final class InventoryTranslations {
         english.put(POCKETS_FULL, "Pockets full");
         english.put(OPEN_PACK_KEY, "Open Pack");
         english.put(OPEN_PACK_BUTTON, "Open pack (%s)");
+        english.put(CREATIVE_TAB, "Impact's Realistic Inventory");
         english.put(SATCHEL, "Satchel");
         english.put(BACKPACK, "Backpack");
         english.put(FRAME_PACK, "Frame Pack");

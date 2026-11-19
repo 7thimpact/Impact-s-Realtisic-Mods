@@ -2,6 +2,7 @@ package com.impact.lib.fuel;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
+import com.impact.lib.config.KeyValueEntries;
 import com.impact.lib.config.LibServerConfig;
 import com.impact.lib.debug.LibLogCategories;
 import com.impact.lib.log.ImpactsLog;
@@ -19,7 +20,6 @@ import java.util.function.ToIntFunction;
  * module asks this class whenever a furnace looks for fuel.
  */
 public final class FuelRegistry {
-    private static final String OVERRIDE_SEPARATOR = "=";
     private static final ImpactsLog LOG = ImpactsLog.of(ImpactsLib.MOD_ID);
     private static final Map<Item, ToIntFunction<ItemStack>> BURN_TICKS_BY_ITEM = new ConcurrentHashMap<>();
 
@@ -48,21 +48,7 @@ public final class FuelRegistry {
     }
 
     private static OptionalInt configuredOverride(Item item) {
-        String itemId = ResourceIds.itemId(item).toString();
-        return LibServerConfig.get().fuel.overrides.get().stream()
-                .map(entry -> entry.split(OVERRIDE_SEPARATOR, 2))
-                .filter(parts -> parts.length == 2 && parts[0].trim().equals(itemId))
-                .map(parts -> parseTicks(parts[1]))
-                .filter(OptionalInt::isPresent)
-                .findFirst()
-                .orElse(OptionalInt.empty());
-    }
-
-    private static OptionalInt parseTicks(String text) {
-        try {
-            return OptionalInt.of(Math.max(0, Integer.parseInt(text.trim())));
-        } catch (NumberFormatException notANumber) {
-            return OptionalInt.empty();
-        }
+        OptionalInt override = KeyValueEntries.findInt(LibServerConfig.get().fuel.overrides.get(), ResourceIds.itemId(item).toString());
+        return override.isPresent() ? OptionalInt.of(Math.max(0, override.getAsInt())) : override;
     }
 }

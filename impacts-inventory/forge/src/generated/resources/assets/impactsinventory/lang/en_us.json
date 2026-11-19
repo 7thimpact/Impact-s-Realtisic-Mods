@@ -29,6 +29,7 @@
   "item.impactsinventory.backpack": "Backpack",
   "item.impactsinventory.frame_pack": "Frame Pack",
   "item.impactsinventory.satchel": "Satchel",
+  "itemGroup.impactsinventory": "Impact's Realistic Inventory",
   "key.impactsinventory.open_pack": "Open Pack",
   "message.impactsinventory.first_join": "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.",
   "message.impactsinventory.moved_to_chest": "Items that didn't fit in your pockets or pack went into a chest at %s.",

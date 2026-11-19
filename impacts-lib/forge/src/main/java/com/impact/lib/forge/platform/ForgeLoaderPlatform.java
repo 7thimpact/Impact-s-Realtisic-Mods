@@ -20,6 +20,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -33,18 +34,23 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.network.NetworkHooks;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /** Forge's answers to {@link LoaderPlatform}. Found through {@code META-INF/services}. */
 public final class ForgeLoaderPlatform implements LoaderPlatform {
     private static final String LOADER_NAME = "forge";
+    private static final String DATA_FOLDER = "data";
     private static final Map<String, ModRegistrar> REGISTRARS_BY_MOD = new ConcurrentHashMap<>();
 
     @Override
@@ -126,6 +132,21 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public <T extends BlockEntity> BlockEntityType<T> blockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
         return BlockEntityType.Builder.of(factory::apply, blocks).build(null);
+    }
+
+    @Override
+    public Set<String> modsWithDataFile(ResourceLocation fileLocation) {
+        return ModList.get().getModFiles().stream()
+                .filter(modFile -> Files.exists(modFile.getFile().findResource(DATA_FOLDER, fileLocation.getNamespace(), fileLocation.getPath())))
+                .flatMap(modFile -> modFile.getMods().stream())
+                .map(IModInfo::getModId)
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    // Forge places modded tabs on its own pages, after vanilla's.
+    @Override
+    public CreativeModeTab.Builder creativeTabBuilder() {
+        return CreativeModeTab.builder();
     }
 
     @Override

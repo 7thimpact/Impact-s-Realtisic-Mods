@@ -90,7 +90,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 These are the milestones from `impacts-food/SPEC.md`.
 
 - [x] 1 Skeleton: configs, debug categories, Crafting detection, the `food-alone` setup
-- [ ] 2 Knives and cutting
+- [x] 2 Knives and cutting: knives, every cut and its byproducts, config overrides for yields, chances and piece cooking times, cooked pieces, knife cutting for seeds, Food's creative tab
 - [ ] 3 Cauldron boiling
 - [ ] 4 Cooking any food
 - [ ] 5 Soups
