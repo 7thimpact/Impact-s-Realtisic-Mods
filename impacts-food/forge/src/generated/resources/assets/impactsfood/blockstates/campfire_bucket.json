@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_water=false": {
+      "model": "impactsfood:block/campfire_bucket_empty"
+    },
+    "has_water=true": {
+      "model": "impactsfood:block/campfire_bucket"
+    }
+  }
+}

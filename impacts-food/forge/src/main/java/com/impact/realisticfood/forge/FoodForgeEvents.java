@@ -2,6 +2,8 @@ package com.impact.realisticfood.forge;
 
 import com.impact.realisticfood.boiling.CauldronInteractions;
 import com.impact.realisticfood.boiling.CauldronPots;
+import com.impact.realisticfood.bucket.CampfireBuckets;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,7 +18,7 @@ final class FoodForgeEvents {
 
     static void register() {
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onLevelTick);
-        // Early, so no other mod fills a bottle from a soup; every other click is left alone.
+        // Early, so no other mod fills a bottle from a soup or pours the water bucket meant for a campfire; other clicks pass.
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FoodForgeEvents::onRightClickBlock);
     }
 
@@ -30,6 +32,13 @@ final class FoodForgeEvents {
         if (CauldronInteractions.isBottleRefused(event.getLevel(), event.getPos(), event.getItemStack())) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
+            return;
+        }
+        Direction face = event.getFace() == null ? Direction.UP : event.getFace();
+        InteractionResult placing = CampfireBuckets.tryPlace(event.getLevel(), event.getPos(), face, event.getEntity(), event.getHand());
+        if (placing != InteractionResult.PASS) {
+            event.setCanceled(true);
+            event.setCancellationResult(placing);
         }
     }
 }

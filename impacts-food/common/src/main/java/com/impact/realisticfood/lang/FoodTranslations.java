@@ -17,6 +17,7 @@ import java.util.Map;
 /** Food's translation keys and their English text. Data generation writes {@link #ENGLISH} to en_us.json. */
 public final class FoodTranslations {
     public static final String CREATIVE_TAB = CreativeTabs.titleKey(FoodMod.MOD_ID);
+    public static final String CAMPFIRE_BUCKET = "block." + FoodMod.MOD_ID + ".campfire_bucket";
     private static final String ITEM_KEY_PREFIX = "item." + FoodMod.MOD_ID + ".";
 
     private static final Map<KnifeMaterial, String> KNIFE_NAMES = new EnumMap<>(Map.of(
@@ -53,6 +54,7 @@ public final class FoodTranslations {
     private static Map<String, String> english() {
         Map<String, String> translations = new LinkedHashMap<>();
         translations.put(CREATIVE_TAB, "Impact's Realistic Food");
+        translations.put(CAMPFIRE_BUCKET, "Campfire Bucket");
         KNIFE_NAMES.forEach((material, name) -> translations.put(itemKey(material.itemPath), name));
         PIECE_NAMES.forEach((piece, name) -> translations.put(itemKey(piece.path), name));
         Arrays.stream(FixedFood.values()).forEach(food -> translations.put(itemKey(food.itemPath), food.displayName));

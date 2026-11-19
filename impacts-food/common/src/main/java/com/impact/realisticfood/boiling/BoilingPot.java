@@ -58,9 +58,9 @@ public final class BoilingPot {
         return isBoiling;
     }
 
-    /** Whether the pot is warming up or boiling, so it takes items. */
+    /** Whether the pot has water and is warming up or boiling, so it takes items. */
     public boolean isHot(PotHost host) {
-        return isBoiling || host.isHeated();
+        return host.hasWater() && (isBoiling || host.isHeated());
     }
 
     public List<PotItem> items() {
@@ -80,9 +80,9 @@ public final class BoilingPot {
         return soup != null || items.stream().anyMatch(PotItem::isSoupIngredient);
     }
 
-    /** Nothing left to track: cold, not boiling, and empty. */
+    /** Nothing left to track: cold (or dry), not boiling, and empty. */
     public boolean isIdle(PotHost host) {
-        return !isBoiling && heatTicks == 0 && items.isEmpty() && soup == null && !host.isHeated();
+        return !isBoiling && heatTicks == 0 && items.isEmpty() && soup == null && !(host.isHeated() && host.hasWater());
     }
 
     /** Brings the water straight to a boil (a Hot Pebble does this). */
@@ -169,6 +169,10 @@ public final class BoilingPot {
     }
 
     private void updateHeat(PotHost host) {
+        if (!host.hasWater()) {
+            dryOut(host);
+            return;
+        }
         if (host.isHeated()) {
             warmUp(host);
             return;
@@ -178,6 +182,17 @@ public final class BoilingPot {
             return;
         }
         heatTicks = 0;
+    }
+
+    // With its water gone, a pot stops boiling at once, and the items still in it pop out unboiled.
+    private void dryOut(PotHost host) {
+        if (isBoiling) {
+            logHeat(host, "dry");
+        }
+        isBoiling = false;
+        heatTicks = 0;
+        coolTicks = 0;
+        takeAllInputs().forEach(host::release);
     }
 
     private void warmUp(PotHost host) {
@@ -291,6 +306,7 @@ public final class BoilingPot {
                     "input", ResourceIds.itemId(item.input().getItem()), "result", ResourceIds.itemId(result.getItem()), "ticks", item.ticksNeeded());
             StyleLog.onCooked(BoilingRecipes.ID.toString(), item.input(), result);
             host.release(result.copy());
+            host.useWaterForBoil();
         }
     }
 

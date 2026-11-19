@@ -54,6 +54,11 @@ final class StandInPotHost implements PotHost {
     }
 
     @Override
+    public boolean hasWater() {
+        return true;
+    }
+
+    @Override
     public boolean isHeated() {
         return isHeated;
     }
@@ -86,6 +91,11 @@ final class StandInPotHost implements PotHost {
     @Override
     public void useWaterForServings() {
         evaporatedLevels++;
+    }
+
+    @Override
+    public void useWaterForBoil() {
+        // The stand-in counts only evaporation and servings.
     }
 
     @Override

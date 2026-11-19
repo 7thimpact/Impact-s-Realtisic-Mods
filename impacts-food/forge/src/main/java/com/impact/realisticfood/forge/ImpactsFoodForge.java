@@ -22,7 +22,7 @@ public final class ImpactsFoodForge {
         context.getModEventBus().addListener(ImpactsFoodForge::onRegister);
         FoodForgeEvents.register();
         if (FMLEnvironment.dist.isClient()) {
-            FoodForgeClient.register();
+            FoodForgeClient.register(context.getModEventBus());
         }
     }
 

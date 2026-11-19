@@ -7,6 +7,7 @@ import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.boiling.BoilingRecipes;
 import com.impact.realisticfood.boiling.PotBoiling;
+import com.impact.realisticfood.bucket.CampfireBuckets;
 import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.config.FoodCommonConfig;
 import com.impact.realisticfood.config.FoodServerConfig;
@@ -43,6 +44,7 @@ public final class FoodStartup {
         registerFuelAndCompost();
         BoilingRecipes.register();
         SoupRecipes.register();
+        CampfireBuckets.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
         ImpactsLib.onModsReady(impactMods -> {

@@ -40,6 +40,11 @@ public record CauldronPotHost(ServerLevel level, BlockPos position) implements P
     }
 
     @Override
+    public boolean hasWater() {
+        return isWaterCauldron(level.getBlockState(position));
+    }
+
+    @Override
     public boolean isHeated() {
         return ImpactsLib.isHeated(level, position.below());
     }
@@ -75,6 +80,11 @@ public record CauldronPotHost(ServerLevel level, BlockPos position) implements P
         if (isWaterCauldron(state)) {
             LayeredCauldronBlock.lowerFillLevel(state, level, position);
         }
+    }
+
+    @Override
+    public void useWaterForBoil() {
+        // A cauldron's water boils away over time instead (see evaporationTicks).
     }
 
     @Override

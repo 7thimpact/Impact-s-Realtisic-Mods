@@ -13,6 +13,9 @@ public interface PotHost {
 
     PotKind kind();
 
+    /** Whether the pot has any water left. A dry pot stops boiling at once and takes nothing. */
+    boolean hasWater();
+
     /** Whether something under the pot gives heat right now. */
     boolean isHeated();
 
@@ -32,6 +35,9 @@ public interface PotHost {
 
     /** Uses up water for servings taken (a cauldron level, or one of a bucket's boils). */
     void useWaterForServings();
+
+    /** Uses up water for one item boiled on its own (one of a bucket's boils; a cauldron loses water by evaporating instead). */
+    void useWaterForBoil();
 
     /** Ticks between losing water levels while boiling, or 0 when the pot doesn't evaporate. */
     int evaporationTicks();
