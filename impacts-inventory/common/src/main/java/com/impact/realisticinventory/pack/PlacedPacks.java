@@ -5,11 +5,13 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.config.InventoryCommonConfig;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -92,6 +94,9 @@ public final class PlacedPacks {
         held.shrink(1);
         LOG.debug(InventoryLogCategories.PACKS, "pack placed", "player", player.getGameProfile().getName(), "item", itemId,
                 "pos", placeContext.getClickedPos());
+        if (player instanceof ServerPlayer serverPlayer) {
+            InventoryTriggers.PACK_PLACED.trigger(serverPlayer);
+        }
         return InteractionResult.CONSUME;
     }
 

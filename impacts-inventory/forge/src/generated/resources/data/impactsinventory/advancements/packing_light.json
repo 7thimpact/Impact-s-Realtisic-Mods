@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:pocket_space",
+  "criteria": {
+    "wore_satchel": {
+      "conditions": {
+        "pack": "satchel"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.packing_light.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:satchel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.packing_light.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_satchel"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

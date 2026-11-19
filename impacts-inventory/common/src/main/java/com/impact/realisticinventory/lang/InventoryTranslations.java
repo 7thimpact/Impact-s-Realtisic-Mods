@@ -1,5 +1,9 @@
 package com.impact.realisticinventory.lang;
 
+import com.impact.lib.advancement.ImpactsAdvancementBuilder;
+import com.impact.realisticinventory.advancement.InventoryAdvancements;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,6 +17,8 @@ public final class InventoryTranslations {
     public static final String BACKPACK = "item.impactsinventory.backpack";
     public static final String FRAME_PACK = "item.impactsinventory.frame_pack";
     public static final String PLACED_PACK = "block.impactsinventory.placed_pack";
+    /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
+    public static final String ADVANCEMENT_TAB = "advancements.impactsinventory.tab";
     public static final String FIRST_JOIN = "message.impactsinventory.first_join";
     public static final String SLOTS_LOCKED = "message.impactsinventory.slots_locked";
     public static final String MOVED_TO_POCKETS = "message.impactsinventory.moved_to_pockets";
@@ -40,6 +46,24 @@ public final class InventoryTranslations {
         english.put(MOVED_TO_PACK, "Items from the locked slots went into your pockets and your worn pack.");
         english.put(MOVED_TO_CHEST, "Items that didn't fit in your pockets or pack went into a chest at %s.");
         english.put(MOVED_TO_GROUND, "Items that didn't fit in your pockets or pack were dropped at your feet.");
+        english.put(ADVANCEMENT_TAB, "Realistic Inventory");
+        addAdvancement(english, InventoryAdvancements.HANDS_FULL, "Hands Full", "Switch between your two hotbar slots");
+        addAdvancement(english, InventoryAdvancements.QUICK_DRAW, "Quick Draw", "Hit a mob within a second of switching slots");
+        addAdvancement(english, InventoryAdvancements.SWORD_AND_BOARD, "Sword and Board", "Block an attack with a shield in your off hand while holding a sword");
+        addAdvancement(english, InventoryAdvancements.JUGGLER, "Juggler", "Switch slots 10 times in 5 seconds");
+        addAdvancement(english, InventoryAdvancements.SECOND_NATURE, "Second Nature", "Switch slots 1,000 times");
+        addAdvancement(english, InventoryAdvancements.POCKET_SPACE, "Pocket Space", "Fill all 9 pockets");
+        addAdvancement(english, InventoryAdvancements.NO_ROOM_AT_ALL, "No Room at All", "Walk over an item with every slot full");
+        addAdvancement(english, InventoryAdvancements.PACKING_LIGHT, "Packing Light", "Wear a Satchel");
+        addAdvancement(english, InventoryAdvancements.PACK_MULE, "Pack Mule", "Wear a Backpack");
+        addAdvancement(english, InventoryAdvancements.HEAVY_LIFTING, "Heavy Lifting", "Wear a Frame Pack");
+        addAdvancement(english, InventoryAdvancements.HOME_AWAY_FROM_HOME, "Home Away From Home", "Set a pack down as a block");
+        addAdvancement(english, InventoryAdvancements.TRAVEL_LIGHT, "Travel Light", "Enter the Nether with empty pockets and no pack");
         return Collections.unmodifiableMap(english);
+    }
+
+    private static void addAdvancement(Map<String, String> english, ResourceLocation advancementId, String title, String description) {
+        english.put(ImpactsAdvancementBuilder.titleKey(advancementId), title);
+        english.put(ImpactsAdvancementBuilder.descriptionKey(advancementId), description);
     }
 }

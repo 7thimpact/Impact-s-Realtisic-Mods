@@ -1,0 +1,53 @@
+{
+  "parent": "impactsinventory:hands_full",
+  "criteria": {
+    "blocked_with_sword_drawn": {
+      "conditions": {
+        "damage": {
+          "blocked": true
+        },
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "equipment": {
+                "mainhand": {
+                  "tag": "minecraft:swords"
+                },
+                "offhand": {
+                  "items": [
+                    "minecraft:shield"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:entity_hurt_player"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.sword_and_board.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:shield",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.sword_and_board.title"
+    }
+  },
+  "requirements": [
+    [
+      "blocked_with_sword_drawn"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

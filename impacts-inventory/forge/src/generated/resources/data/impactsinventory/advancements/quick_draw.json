@@ -1,0 +1,31 @@
+{
+  "parent": "impactsinventory:hands_full",
+  "criteria": {
+    "hit_after_switch": {
+      "conditions": {},
+      "trigger": "impactsinventory:quick_draw"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.quick_draw.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:iron_sword",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.quick_draw.title"
+    }
+  },
+  "requirements": [
+    [
+      "hit_after_switch"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

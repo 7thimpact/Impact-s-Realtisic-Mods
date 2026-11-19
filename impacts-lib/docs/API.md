@@ -116,6 +116,8 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 
 - Create every `ResourceLocation` through `ResourceIds.of(namespace, path)`. Forge 47.4 deprecates the constructor ahead of 1.21, so a port changes only that one method.
 - Register advancement triggers through `LoaderPlatform.current().registerCriterionTrigger(trigger)`, on the main thread (from `ImpactsLib.onModsReady`). Vanilla keeps the registration method private.
+- For an event with no conditions of its own, use `new EventTrigger(ResourceIds.of(modId, "pack_placed"))`: fire it with `trigger(player)`, and use `anyPlayer()` as the criterion in data generation.
+- Registries: `LoaderPlatform.current().registrar(modId)` registers items, blocks, menus and recipe serializers during mod construction; `blockEntityType(...)` and `menuTypeWithData(...)` build the types vanilla keeps closed, and `openMenuWithData(...)` opens a menu with extra data.
 
 ## GameTests with a logged-in player
 

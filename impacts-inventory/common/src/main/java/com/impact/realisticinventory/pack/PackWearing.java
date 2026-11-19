@@ -3,6 +3,7 @@ package com.impact.realisticinventory.pack;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -54,6 +55,7 @@ public final class PackWearing {
         if (PackRules.isPack(nowWorn)) {
             LOG.debug(InventoryLogCategories.PACKS, "pack worn", "player", playerName, "item", ResourceIds.itemId(nowWorn.getItem()),
                     "stacks", PackContents.stacksIn(nowWorn).size());
+            InventoryTriggers.PACK_WORN.trigger(player, ((PackItem) nowWorn.getItem()).kind());
         }
     }
 }

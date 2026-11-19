@@ -5,6 +5,7 @@ import com.impact.lib.StartupSummary;
 import com.impact.lib.attachment.PlayerAttachments;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.config.InventoryClientConfig;
 import com.impact.realisticinventory.config.InventoryCommonConfig;
 import com.impact.realisticinventory.config.InventoryServerConfig;
@@ -43,6 +44,9 @@ public final class InventoryStartup {
         PackRecipes.register();
         InventoryNetwork.create();
         BackSlot.registerBackSlotProvider(InventoryMod.MOD_ID, new InventoryBackSlotProvider());
-        ImpactsLib.onModsReady(impactMods -> StartupSummary.log(InventoryMod.MOD_ID));
+        ImpactsLib.onModsReady(impactMods -> {
+            InventoryTriggers.registerAll();
+            StartupSummary.log(InventoryMod.MOD_ID);
+        });
     }
 }

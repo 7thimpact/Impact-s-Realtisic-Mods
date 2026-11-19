@@ -1,0 +1,37 @@
+{
+  "parent": "impactsinventory:juggler",
+  "criteria": {
+    "thousand_switches": {
+      "conditions": {
+        "counter": "impactsinventory:slot_switches",
+        "measure": "total",
+        "value": 1000
+      },
+      "trigger": "impactslib:count"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.second_nature.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:clock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.second_nature.title"
+    }
+  },
+  "requirements": [
+    [
+      "thousand_switches"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

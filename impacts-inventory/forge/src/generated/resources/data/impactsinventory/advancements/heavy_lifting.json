@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:pack_mule",
+  "criteria": {
+    "wore_frame_pack": {
+      "conditions": {
+        "pack": "frame_pack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.heavy_lifting.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:frame_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.heavy_lifting.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_frame_pack"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

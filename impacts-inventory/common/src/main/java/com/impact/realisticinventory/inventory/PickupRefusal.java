@@ -3,6 +3,7 @@ package com.impact.realisticinventory.inventory;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.config.InventoryServerConfig;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import com.impact.realisticinventory.lang.InventoryTranslations;
@@ -26,7 +27,11 @@ public final class PickupRefusal {
     }
 
     public static void onRefused(ServerPlayer player, ItemStack refusedStack) {
-        if (!InventoryLocks.isActiveFor(player) || !isMessageDue(player)) {
+        if (!InventoryLocks.isActiveFor(player)) {
+            return;
+        }
+        InventoryTriggers.PICKUP_REFUSED.trigger(player);
+        if (!isMessageDue(player)) {
             return;
         }
         LOG.debug(InventoryLogCategories.PICKUP, "pickup refused, everything full", "player", player.getGameProfile().getName(),

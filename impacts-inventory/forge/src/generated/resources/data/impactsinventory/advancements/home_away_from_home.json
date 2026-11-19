@@ -1,0 +1,30 @@
+{
+  "parent": "impactsinventory:packing_light",
+  "criteria": {
+    "pack_placed": {
+      "conditions": {},
+      "trigger": "impactsinventory:pack_placed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.home_away_from_home.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:campfire"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.home_away_from_home.title"
+    }
+  },
+  "requirements": [
+    [
+      "pack_placed"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

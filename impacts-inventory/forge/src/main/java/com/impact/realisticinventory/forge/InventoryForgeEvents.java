@@ -1,5 +1,6 @@
 package com.impact.realisticinventory.forge;
 
+import com.impact.realisticinventory.advancement.AchievementChecks;
 import com.impact.realisticinventory.hotbar.HandSwitch;
 import com.impact.realisticinventory.hotbar.HotbarRespawn;
 import com.impact.realisticinventory.hotbar.SwitchSource;
@@ -12,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -29,6 +31,7 @@ final class InventoryForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onClone);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onPlayerTick);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onRightClickBlock);
+        MinecraftForge.EVENT_BUS.addListener(InventoryForgeEvents::onLivingHurt);
     }
 
     /** The swap-hands key (F) switches slots, the same as scrolling. */
@@ -55,6 +58,13 @@ final class InventoryForgeEvents {
     private static void onChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             HotbarRespawn.syncToClient(player);
+            AchievementChecks.onChangedDimension(player, event.getTo());
+        }
+    }
+
+    private static void onLivingHurt(LivingHurtEvent event) {
+        if (event.getSource().getEntity() instanceof ServerPlayer player) {
+            AchievementChecks.onPlayerHurtEntity(player, event.getEntity());
         }
     }
 
@@ -80,6 +90,7 @@ final class InventoryForgeEvents {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
             LockedSlotOverflow.tick(player);
             PackEffects.tick(player);
+            AchievementChecks.checkPockets(player);
         }
     }
 }

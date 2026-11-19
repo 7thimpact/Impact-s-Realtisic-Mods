@@ -4,8 +4,10 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.attachment.DeathCopyRule;
 import com.impact.lib.attachment.PlayerAttachment;
 import com.impact.lib.attachment.PlayerAttachments;
+import com.impact.lib.counter.ImpactsCounters;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.InventoryLocks;
@@ -83,8 +85,10 @@ public final class HandSwitch {
         player.stopUsingItem();
         int previousSlot = state.activeSlot();
         state.setActiveSlot(HotbarState.otherSlot(previousSlot));
-        state.recordSwitch(player.level().getGameTime(), RECENT_SWITCH_WINDOW_TICKS);
+        int recentSwitches = state.recordSwitch(player.level().getGameTime(), RECENT_SWITCH_WINDOW_TICKS);
         InventoryNetwork.sendHotbarState(player);
+        InventoryTriggers.SLOT_SWITCHED.trigger(player, recentSwitches);
+        ImpactsCounters.add(player, InventoryTriggers.SLOT_SWITCHES_COUNTER, null, 1);
         logSwitch(player, previousSlot, state.activeSlot(), source, wasUsingItem);
     }
 

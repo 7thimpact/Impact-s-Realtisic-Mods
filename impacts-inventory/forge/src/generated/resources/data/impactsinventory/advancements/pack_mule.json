@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:packing_light",
+  "criteria": {
+    "wore_backpack": {
+      "conditions": {
+        "pack": "backpack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.pack_mule.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:backpack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.pack_mule.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_backpack"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
