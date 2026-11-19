@@ -2,6 +2,7 @@ package com.impact.lib.platform;
 
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
+import com.impact.lib.event.WaterFilled;
 import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.registry.MenuWithDataFactory;
 import com.impact.lib.registry.ModRegistrar;
@@ -14,6 +15,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -59,6 +61,15 @@ public interface LoaderPlatform {
 
     /** Whether the player is a loader's stand-in for a machine (Forge's FakePlayer), not a person. */
     boolean isFakePlayer(Player player);
+
+    /** What an item leaves in a crafting grid after a craft (a milk bucket leaves a bucket), or an empty stack. */
+    ItemStack craftingRemainder(ItemStack stack);
+
+    /** Posts Lib's water-filled event on the loader's own event bus. */
+    void postWaterFilled(WaterFilled event);
+
+    /** The player taking a crafting result right now, when the loader tracks it (Forge does, around the take). */
+    Optional<Player> craftingPlayer();
 
     /** The registrar for a mod's game objects. Call during that mod's construction. */
     ModRegistrar registrar(String modId);

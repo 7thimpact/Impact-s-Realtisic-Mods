@@ -2,8 +2,10 @@ package com.impact.lib.forge.platform;
 
 import com.impact.lib.config.ConfigSpecBuilder;
 import com.impact.lib.config.ConfigType;
+import com.impact.lib.event.WaterFilled;
 import com.impact.lib.forge.ForgeModConstruction;
 import com.impact.lib.forge.config.ForgeConfigSpecBuilder;
+import com.impact.lib.forge.event.ImpactsWaterFilledEvent;
 import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.MenuWithDataFactory;
@@ -18,10 +20,13 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.ModList;
@@ -92,6 +97,22 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public boolean isFakePlayer(Player player) {
         return player instanceof FakePlayer;
+    }
+
+    // Forge's stack-aware remainder, which mods use for remainders that depend on NBT.
+    @Override
+    public ItemStack craftingRemainder(ItemStack stack) {
+        return stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY;
+    }
+
+    @Override
+    public void postWaterFilled(WaterFilled event) {
+        MinecraftForge.EVENT_BUS.post(new ImpactsWaterFilledEvent(event));
+    }
+
+    @Override
+    public Optional<Player> craftingPlayer() {
+        return Optional.ofNullable(ForgeHooks.getCraftingPlayer());
     }
 
     /** The first call for a mod must come during its construction, so its deferred registers reach its event bus. */

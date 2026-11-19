@@ -1,8 +1,13 @@
 package com.impact.lib;
 
 import com.impact.lib.debug.LibLogCategories;
+import com.impact.lib.heat.Boiling;
+import com.impact.lib.heat.BoilingProvider;
+import com.impact.lib.heat.HeatSources;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Map;
@@ -48,6 +53,20 @@ public final class ImpactsLib {
     /** Runs the listener once every mod has finished common setup, with the registered Impact mods. */
     public static void onModsReady(Consumer<Set<String>> listener) {
         MODS_READY_LISTENERS.add(listener);
+    }
+
+    /** Whether the block at the position gives heat right now (see {@code HeatSources}). */
+    public static boolean isHeated(Level level, BlockPos position) {
+        return HeatSources.isHeated(level, position);
+    }
+
+    /** Whether water at the position is boiling. Always false without a boiling provider (Food). */
+    public static boolean isBoiling(Level level, BlockPos position) {
+        return Boiling.isBoiling(level, position);
+    }
+
+    public static void registerBoilingProvider(String modId, BoilingProvider provider) {
+        Boiling.registerBoilingProvider(modId, provider);
     }
 
     /** Called once by Lib's loader module after every mod's common setup. Other mods must not call it. */

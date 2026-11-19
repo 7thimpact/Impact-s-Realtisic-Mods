@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "impactslib.refmap.json",
   "mixins": [
+    "ItemStackWearMixin",
     "PlayerAttachmentsMixin",
     "ServerPlayerAttachmentsMixin"
   ],

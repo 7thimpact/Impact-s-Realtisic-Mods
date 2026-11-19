@@ -210,3 +210,46 @@ Counters are kept through death. Advancements use `impactslib:count` through `Co
 ## Mixins
 
 A mod with mixins puts `<modid>.mixins.json` in its common resources. The build then adds the refmap and the `MixinConfigs` manifest entry. Name every added member `<modid>$name` (for example `impactslib$attachments`).
+
+## Tool crafting (`impactslib:tool_crafting`)
+
+A crafting recipe, shaped (`pattern` + `key`) or shapeless (`ingredients`), whose `tools` stay in the grid in any slot and take `tool_damage` (default 1). A tool is anything with durability: vanilla damage, or Lib's uses.
+
+```json
+{
+  "type": "impactslib:tool_crafting",
+  "ingredients": [{"item": "minecraft:beef"}],
+  "tools": [{"tag": "impactsfood:knives"}],
+  "result": {"item": "impactsfood:raw_beef_cut", "count": 2},
+  "byproducts": [{"item": "minecraft:bone", "chance": 0.15}],
+  "remainders": [{"ingredient": {"type": "impactslib:water_bottle"}, "result": {"item": "minecraft:glass_bottle"}}],
+  "craft_ticks": 20,
+  "copy_nbt_from": {"tag": "impactscrafting:wooden_panels"}
+}
+```
+
+- Byproducts go to the crafting player through Give or drop; `chance` defaults to 1.
+- The `impactslib:tool_crafted` trigger takes optional `result`, `tool` and `byproduct` item predicates.
+- Other mods' special recipes get the same tool behavior from `ToolCrafting.damageTools(grid, isTool, damage)`.
+- Tool recipes stay out of the vanilla recipe book (it can't place tools); JEI shows them in Lib's category.
+
+## Uses and configured durability
+
+- `UsesTrackedItem` (implement `maxUses(stack)`) plus `UsesDurability.get/use/isUnused/copyUses`: uses spent live in the `uses` NBT key, absent while unused, and a used item stacks to 1. Override the item's bar methods with `UsesDurability.isBarVisible/barWidth/barColor`.
+- `ConfiguredDurabilityItem` (implement `configuredMaxDamage()`): vanilla durability read from a config value whenever it's needed. Register the item with any durability above 0.
+
+## Fuel, compost, heat and boiling
+
+```java
+FuelRegistry.register(ModItems.BURNT_FOOD.get(), 400);                   // or a function of the stack
+CompostRegistry.register(ModItems.MUSH, 0.65F);                           // applied once every mod is ready
+ImpactsLib.isHeated(level, pos);                                          // #impactslib:heat_sources, lit if lightable
+ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // ImpactsLib.isBoiling(level, pos)
+```
+
+`fuel.overrides` in Lib's server config (`item=ticks`) wins over registered burn times. `#impactslib:cold_sources` holds ice and snow for Vitality.
+
+## Water bottles and the water-filled event
+
+- Ingredient `{"type": "impactslib:water_bottle"}` matches a vanilla water bottle or anything in `#impactslib:water_bottles`.
+- `ImpactsEvents.postWaterFilled(new WaterFilled(player, stack, level, pos, boiled))` after a mod fills a container item. Listen in common code with `ImpactsEvents.onWaterFilled(...)`, or on Forge's bus with `ImpactsWaterFilledEvent`.

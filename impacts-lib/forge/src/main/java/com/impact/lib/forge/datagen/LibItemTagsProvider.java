@@ -2,6 +2,7 @@ package com.impact.lib.forge.datagen;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.backslot.BackSlot;
+import com.impact.lib.forge.crafting.WaterBottleIngredient;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -20,5 +21,6 @@ final class LibItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookup) {
         tag(BackSlot.BACK_SLOT_ITEMS);
+        tag(WaterBottleIngredient.WATER_BOTTLES);
     }
 }

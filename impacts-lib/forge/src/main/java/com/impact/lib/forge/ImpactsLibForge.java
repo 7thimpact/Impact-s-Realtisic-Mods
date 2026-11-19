@@ -6,8 +6,10 @@ import com.impact.lib.advancement.LoneLibAchievement;
 import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.forge.condition.NoImpactModsCondition;
 import com.impact.lib.forge.config.ServerConfigResync;
+import com.impact.lib.forge.crafting.WaterBottleIngredient;
 import com.impact.lib.forge.datagen.LibDataGenerators;
 import com.impact.lib.forge.event.ImpactsModsReadyEvent;
+import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.LibNetwork;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +18,7 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -39,6 +42,7 @@ public final class ImpactsLibForge {
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerTick);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerStopped);
+        MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onFuelBurnTime);
     }
 
     private static void onCommonSetup(FMLCommonSetupEvent event) {
@@ -57,6 +61,12 @@ public final class ImpactsLibForge {
             return;
         }
         CraftingHelper.register(NoImpactModsCondition.Serializer.INSTANCE);
+        CraftingHelper.register(WaterBottleIngredient.ID, WaterBottleIngredient.Serializer.INSTANCE);
+    }
+
+    /** Impact items burn for the time Lib's fuel registry decides; anything it doesn't know is left to others. */
+    private static void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
+        FuelRegistry.burnTicks(event.getItemStack()).ifPresent(event::setBurnTime);
     }
 
     private static void onRegisterCommands(RegisterCommandsEvent event) {

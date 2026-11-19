@@ -115,5 +115,6 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 
 ## Open items
 
-- Lib's `FuelHelper` is planned as `FuelRegistry` plus `CompostRegistry` (clean-naming rule 6). Needs confirmation before step 3.
-- A dedicated-server start (as opposed to the GameTest server) needs `eula=true` in the git-ignored run folder. Needs confirmation before the first such run.
+- Lib's `FuelHelper` is `FuelRegistry` plus `CompostRegistry` (clean-naming rule 6), as proposed in the approved plan.
+- Dedicated-server start checks: the user accepted the Minecraft EULA for test runs (Nov 2026). `eula=true` goes only into git-ignored run folders.
+- "All four + SRF (full)" needs the full SRF jar, which the user will upload later. Until then that setup reports the missing jar.
