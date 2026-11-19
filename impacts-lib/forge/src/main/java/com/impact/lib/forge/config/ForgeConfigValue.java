@@ -18,6 +18,7 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
     private final T defaultValue;
     private final ValueRules<T> rules;
     private volatile Object lastRejectedValue;
+    private volatile Optional<T> inMemoryOverride = Optional.empty();
 
     ForgeConfigValue(ForgeConfigFile file, String key, ForgeConfigSpec.ConfigValue<?> forgeValue, T defaultValue, ValueRules<T> rules) {
         this.file = file;
@@ -29,6 +30,10 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
 
     @Override
     public T get() {
+        Optional<T> override = inMemoryOverride;
+        if (override.isPresent()) {
+            return override.get();
+        }
         // Forge throws when a value is read before its file loads; Impact code gets the default instead.
         if (!file.isLoaded()) {
             return defaultValue;
@@ -56,6 +61,16 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
         ForgeConfigSpec.ConfigValue<Object> storedValue = (ForgeConfigSpec.ConfigValue<Object>) forgeValue;
         storedValue.set(value);
         storedValue.save();
+    }
+
+    @Override
+    public void overrideInMemory(T value) {
+        inMemoryOverride = Optional.of(value);
+    }
+
+    @Override
+    public void clearOverride() {
+        inMemoryOverride = Optional.empty();
     }
 
     @Override

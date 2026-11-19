@@ -5,7 +5,9 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.FinishedFood;
 import com.impact.realisticfood.food.FoodPiece;
+import com.impact.realisticfood.item.FinishedFoodItem;
 import com.impact.realisticfood.item.KnifeItem;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.item.PieceFoodItem;
@@ -26,6 +28,7 @@ import java.util.function.Supplier;
 public final class FoodItems {
     private static final Map<KnifeMaterial, Supplier<KnifeItem>> KNIVES = new EnumMap<>(KnifeMaterial.class);
     private static final Map<FoodPiece, Supplier<Item>> PIECES = new EnumMap<>(FoodPiece.class);
+    private static final Map<FinishedFood, Supplier<FinishedFoodItem>> FINISHED_FOODS = new EnumMap<>(FinishedFood.class);
 
     private FoodItems() {
     }
@@ -38,6 +41,9 @@ public final class FoodItems {
         }
         for (FoodPiece piece : FoodPiece.values()) {
             PIECES.put(piece, registrar.register(Registries.ITEM, piece.path, () -> newPieceItem(piece)));
+        }
+        for (FinishedFood finishedFood : FinishedFood.values()) {
+            FINISHED_FOODS.put(finishedFood, registrar.register(Registries.ITEM, finishedFood.itemPath, () -> new FinishedFoodItem(finishedFood)));
         }
         CreativeTabs.register(FoodMod.MOD_ID, () -> new ItemStack(knife(KnifeMaterial.FLINT)), FoodItems::creativeTabItems);
     }
@@ -52,6 +58,10 @@ public final class FoodItems {
 
     public static Item piece(FoodPiece piece) {
         return PIECES.get(piece).get();
+    }
+
+    public static Item finishedFood(FinishedFood finishedFood) {
+        return FINISHED_FOODS.get(finishedFood).get();
     }
 
     private static Item newPieceItem(FoodPiece piece) {
@@ -69,6 +79,7 @@ public final class FoodItems {
             }
         }
         Arrays.stream(FoodPiece.values()).map(FoodItems::piece).forEach(items::add);
+        Arrays.stream(FinishedFood.values()).map(FoodItems::finishedFood).forEach(items::add);
         return List.copyOf(items);
     }
 }

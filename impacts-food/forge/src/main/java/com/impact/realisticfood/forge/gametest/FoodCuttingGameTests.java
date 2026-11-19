@@ -2,7 +2,7 @@ package com.impact.realisticfood.forge.gametest;
 
 import com.impact.lib.ResourceIds;
 import com.impact.lib.audit.RecipeAudit;
-import com.impact.lib.config.ConfigValue;
+import com.impact.lib.gametest.ConfigOverrides;
 import com.impact.lib.gametest.CraftingGrids;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticfood.FoodMod;
@@ -83,13 +83,13 @@ public final class FoodCuttingGameTests {
         FoodServerConfig.CuttingSettings cutting = FoodServerConfig.get().cutting;
         ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
         try {
-            withSetting(cutting.byproductChanceOverrides, List.of("minecraft:beef=1.0"), () -> {
+            ConfigOverrides.withValue(cutting.byproductChanceOverrides, List.of("minecraft:beef=1.0"), () -> {
                 cutBeefAs(helper, player);
                 helper.assertTrue(player.getInventory().countItem(Items.BONE) == 1, "With chance 1, cutting beef always gives a bone");
-                withSetting(cutting.areByproductsOn, false, () -> cutBeefAs(helper, player));
+                ConfigOverrides.withValue(cutting.areByproductsOn, false, () -> cutBeefAs(helper, player));
                 helper.assertTrue(player.getInventory().countItem(Items.BONE) == 1, "With byproducts off, no more bones");
             });
-            withSetting(cutting.byproductChanceOverrides, List.of("minecraft:beef=0"), () -> cutBeefAs(helper, player));
+            ConfigOverrides.withValue(cutting.byproductChanceOverrides, List.of("minecraft:beef=0"), () -> cutBeefAs(helper, player));
             helper.assertTrue(player.getInventory().countItem(Items.BONE) == 1, "With chance 0, never a bone");
         } finally {
             MockPlayers.leaveWorld(player);
@@ -99,7 +99,7 @@ public final class FoodCuttingGameTests {
 
     @GameTest(templateNamespace = FoodSkeletonGameTests.LIB_NAMESPACE, template = FoodSkeletonGameTests.EMPTY_TEMPLATE)
     public static void yieldsFollowTheConfig(GameTestHelper helper) {
-        withSetting(FoodServerConfig.get().cutting.yieldOverrides, List.of("minecraft:beef=3"), () -> {
+        ConfigOverrides.withValue(FoodServerConfig.get().cutting.yieldOverrides, List.of("minecraft:beef=3"), () -> {
             CraftingContainer grid = gridWithKnife(new ItemStack(Items.BEEF), KnifeMaterial.FLINT);
             ItemStack result = findCraftingRecipe(helper, grid).orElseThrow().assemble(grid, helper.getLevel().registryAccess());
             helper.assertTrue(result.getCount() == 3, "cutting.yieldOverrides makes beef cut into 3");
@@ -124,7 +124,7 @@ public final class FoodCuttingGameTests {
                     || foodOf(FoodItems.piece(piece)).getNutrition() * SPEC_PIECES_PER_CUT <= Math.max(SPEC_PIECES_PER_CUT, foodOf(piece.wholeItem).getNutrition());
             helper.assertTrue(neverGainsFood, piece.path + " shouldn't give more food than its whole item");
         }
-        withSetting(FoodServerConfig.get().pieces.foodShare, 0.25, () ->
+        ConfigOverrides.withValue(FoodServerConfig.get().pieces.foodShare, 0.25, () ->
                 helper.assertTrue(foodOf(FoodItems.piece(FoodPiece.COOKED_BEEF_CUT)).getNutrition() == 2, "pieces.foodShare 0.25 gives 2"));
         helper.succeed();
     }
@@ -142,7 +142,7 @@ public final class FoodCuttingGameTests {
         AbstractCookingRecipe frying = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMOKING, potatoSlices, helper.getLevel()).orElseThrow();
         helper.assertTrue(frying.getResultItem(helper.getLevel().registryAccess()).is(FoodItems.piece(FoodPiece.FRIED_POTATO_SLICES)),
                 "Potato slices cook into Fried Potato Slices");
-        withSetting(PieceCooking.ticksSetting(CookingMethod.SMELTING), 120, () ->
+        ConfigOverrides.withValue(PieceCooking.ticksSetting(CookingMethod.SMELTING), 120, () ->
                 helper.assertTrue(smelting.getCookingTime() == 120, "pieces.furnaceTicks changes the furnace time"));
         helper.succeed();
     }
@@ -151,7 +151,7 @@ public final class FoodCuttingGameTests {
     public static void knivesAreWeakConfiguredWeapons(GameTestHelper helper) {
         helper.assertTrue(new ItemStack(FoodItems.knife(KnifeMaterial.FLINT)).getMaxDamage() == 64, "A Flint Knife lasts 64 uses");
         helper.assertTrue(new ItemStack(FoodItems.knife(KnifeMaterial.IRON)).getMaxDamage() == 250, "An Iron Knife lasts 250 uses");
-        withSetting(FoodServerConfig.get().knives.flintDurability, 10, () ->
+        ConfigOverrides.withValue(FoodServerConfig.get().knives.flintDurability, 10, () ->
                 helper.assertTrue(new ItemStack(FoodItems.knife(KnifeMaterial.FLINT)).getMaxDamage() == 10, "knives.flintDurability changes it"));
         helper.assertTrue(attackDamageBonus(FoodItems.knife(KnifeMaterial.FLINT)) == 2.0, "A Flint Knife deals 3 damage (1 + 2)");
         helper.assertTrue(attackDamageBonus(FoodItems.knife(KnifeMaterial.IRON)) == 3.0, "An Iron Knife deals 4 damage (1 + 3)");
@@ -198,16 +198,5 @@ public final class FoodCuttingGameTests {
 
     private static Optional<CraftingRecipe> findCraftingRecipe(GameTestHelper helper, CraftingContainer grid) {
         return helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, grid, helper.getLevel());
-    }
-
-    /** Runs the check with the setting changed, then puts the setting back. */
-    static <T> void withSetting(ConfigValue<T> setting, T value, Runnable check) {
-        T original = setting.get();
-        setting.set(value);
-        try {
-            check.run();
-        } finally {
-            setting.set(original);
-        }
     }
 }

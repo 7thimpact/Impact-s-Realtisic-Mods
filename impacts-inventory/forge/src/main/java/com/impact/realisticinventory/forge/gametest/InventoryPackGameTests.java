@@ -3,6 +3,7 @@ package com.impact.realisticinventory.forge.gametest;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.config.ConfigValue;
+import com.impact.lib.gametest.ConfigOverrides;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.config.InventoryServerConfig;
@@ -131,16 +132,11 @@ public final class InventoryPackGameTests {
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
     public static void shulkerBoxesFollowTheAllowShulkersSetting(GameTestHelper helper) {
         ConfigValue<Boolean> allowShulkers = InventoryServerConfig.get().packs.isShulkerAllowed;
-        boolean configuredValue = allowShulkers.get();
-        try {
-            ItemStack shulkerBox = new ItemStack(Items.SHULKER_BOX);
-            allowShulkers.set(false);
-            helper.assertFalse(PackRules.canGoInPack(shulkerBox), "Shulker boxes stay out of packs by default");
-            allowShulkers.set(true);
-            helper.assertTrue(PackRules.canGoInPack(shulkerBox), "allowShulkers lets them in");
-        } finally {
-            allowShulkers.set(configuredValue);
-        }
+        ItemStack shulkerBox = new ItemStack(Items.SHULKER_BOX);
+        ConfigOverrides.withValue(allowShulkers, false, () ->
+                helper.assertFalse(PackRules.canGoInPack(shulkerBox), "Shulker boxes stay out of packs by default"));
+        ConfigOverrides.withValue(allowShulkers, true, () ->
+                helper.assertTrue(PackRules.canGoInPack(shulkerBox), "allowShulkers lets them in"));
         helper.succeed();
     }
 

@@ -15,6 +15,14 @@ public interface ConfigValue<T> {
     /** Changes the value and saves the file. The file must be loaded. */
     void set(T value);
 
+    /**
+     * Holds this value in memory, leaving the file alone, until {@link #clearOverride()}. For GameTests: saving the
+     * file makes the loader reload it on another thread, which can put an older value back.
+     */
+    void overrideInMemory(T value);
+
+    void clearOverride();
+
     /** The value's full dotted key, for example {@code debug.logFile.sizeMb}. */
     String key();
 

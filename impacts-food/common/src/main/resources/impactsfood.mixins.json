@@ -5,10 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "impactsfood.refmap.json",
   "mixins": [
-    "AbstractCookingRecipeMixin"
+    "AbstractCauldronBlockMixin",
+    "AbstractCookingRecipeMixin",
+    "BlockStateBaseMixin",
+    "ItemEntityAccessor",
+    "LayeredCauldronBlockMixin"
   ],
-  "client": [
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

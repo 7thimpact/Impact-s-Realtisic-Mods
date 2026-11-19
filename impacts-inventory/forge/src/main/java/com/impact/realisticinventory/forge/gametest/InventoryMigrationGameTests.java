@@ -1,7 +1,7 @@
 package com.impact.realisticinventory.forge.gametest;
 
 import com.impact.lib.attachment.PlayerAttachments;
-import com.impact.lib.config.ConfigValue;
+import com.impact.lib.gametest.ConfigOverrides;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.config.InventoryServerConfig;
@@ -87,19 +87,17 @@ public final class InventoryMigrationGameTests {
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
     public static void overflowCanDropInsteadOfPlacingAChest(GameTestHelper helper) {
         ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
-        ConfigValue<InventoryServerConfig.OverflowTarget> overflow = InventoryServerConfig.get().firstJoin.overflow;
-        InventoryServerConfig.OverflowTarget configuredTarget = overflow.get();
         try {
-            overflow.set(InventoryServerConfig.OverflowTarget.DROP);
-            Inventory inventory = player.getInventory();
-            fillPockets(inventory);
-            inventory.items.set(STRAY_INDEX, new ItemStack(Items.APPLE, STACK_COUNT));
-            Set<UUID> itemsAlreadyNearby = DroppedItems.idsNear(player);
-            endCreativeMode(player);
-            helper.assertTrue(DroppedItems.countNewNear(player, Items.APPLE, itemsAlreadyNearby) == STACK_COUNT, "The apples drop at the player's feet");
-            helper.assertTrue(findChestNear(player).isEmpty(), "No chest is placed when overflow is set to drop");
+            ConfigOverrides.withValue(InventoryServerConfig.get().firstJoin.overflow, InventoryServerConfig.OverflowTarget.DROP, () -> {
+                Inventory inventory = player.getInventory();
+                fillPockets(inventory);
+                inventory.items.set(STRAY_INDEX, new ItemStack(Items.APPLE, STACK_COUNT));
+                Set<UUID> itemsAlreadyNearby = DroppedItems.idsNear(player);
+                endCreativeMode(player);
+                helper.assertTrue(DroppedItems.countNewNear(player, Items.APPLE, itemsAlreadyNearby) == STACK_COUNT, "The apples drop at the player's feet");
+                helper.assertTrue(findChestNear(player).isEmpty(), "No chest is placed when overflow is set to drop");
+            });
         } finally {
-            overflow.set(configuredTarget);
             MockPlayers.leaveWorld(player);
         }
         helper.succeed();

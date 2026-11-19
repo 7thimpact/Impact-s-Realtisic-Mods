@@ -22,7 +22,7 @@ Six more procedures do the same in open water ("river"), not in a cauldron.
 - Food's cauldron handler acts only on items in a boiling or soup recipe, on bowls, and on empty hands at a finished soup. None of SRF's items is any of those, so they pass through.
 - **Never cancel `RightClickBlock` for an item Food doesn't own.** Three of SRF's cauldron steps run in `RightClickItem`, which never fires if an earlier `RightClickBlock` handler cancels the click.
 - Items thrown into a boiling cauldron that match no recipe are left alone, SRF's included.
-- **GameTest:** using a boiling cauldron with an item no recipe knows must leave the item and the cauldron unchanged. With SRF installed, repeat it with `realisticforgingores:rawgoldore`, looked up by registry ID, and skip that half without SRF.
+- **GameTest (done, milestone 3):** `clicksaddonlyitemsfoodboils` uses a boiling cauldron with a stick and checks that the click passes, the item stays in the hand and the cauldron doesn't change. With SRF installed it repeats this with `realisticforgingores:rawgoldore`, looked up by registry ID. `droppedunknownitemsstayput` checks that a dropped item no recipe takes stays where it fell.
 
 ## Recipe clashes
 

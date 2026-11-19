@@ -115,6 +115,8 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 
 ## Resource IDs and advancement triggers
 
+`ResourceIds.itemId(item)` and `ResourceIds.blockId(block)` give an item's or block's registry ID from loader-independent code.
+
 - Create every `ResourceLocation` through `ResourceIds.of(namespace, path)`. Forge 47.4 deprecates the constructor ahead of 1.21, so a port changes only that one method.
 - Register advancement triggers through `LoaderPlatform.current().registerCriterionTrigger(trigger)`, on the main thread (from `ImpactsLib.onModsReady`). Vanilla keeps the registration method private.
 - For an event with no conditions of its own, use `new EventTrigger(ResourceIds.of(modId, "pack_placed"))`: fire it with `trigger(player)`, and use `anyPlayer()` as the criterion in data generation.
@@ -123,6 +125,8 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 ## GameTests with a logged-in player
 
 `MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block.
+
+**Config values in tests:** never `set` a config value in a GameTest. Saving the file makes Forge reload it on another thread, which can put a test's value back after the test ends (and keep it in the test world's file). Use `ConfigOverrides.withValue(value, override, () -> check)`, which holds the value in memory only (`ConfigValue.overrideInMemory` and `clearOverride`).
 
 `CraftingGrids.of(stacks...)` builds a 3x3 crafting grid filled from the top left, for matching and crafting recipes in tests. Set the crafting player with Forge's `ForgeHooks.setCraftingPlayer(player)` (and clear it in a `finally` block) to test byproducts.
 

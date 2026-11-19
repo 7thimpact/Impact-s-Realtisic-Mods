@@ -9,6 +9,7 @@ import com.impact.realisticfood.cooking.CookingMethod;
 import com.impact.realisticfood.cooking.PieceCooking;
 import com.impact.realisticfood.cutting.Cut;
 import com.impact.realisticfood.cutting.Cuts;
+import com.impact.realisticfood.food.FinishedFood;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.forge.condition.FeatureEnabledCondition;
 import com.impact.realisticfood.item.KnifeMaterial;
@@ -32,10 +33,11 @@ import java.util.function.Consumer;
 
 /**
  * Food's recipes without Crafting installed (the versions made from Crafting's parts arrive with Crafting): knives,
- * every cut, and cooking for raw pieces. With cutting on, vanilla's grid seed recipes give way to knife cutting.
+ * every cut, cooking for raw pieces, and boiling. With cutting on, vanilla's grid seed recipes give way to knife cutting.
  */
 final class FoodRecipes extends RecipeProvider {
     private static final float PIECE_COOKING_EXPERIENCE = 0.1F;
+    private static final int EGG_BOIL_TICKS = 200;
 
     FoodRecipes(PackOutput output) {
         super(output);
@@ -47,6 +49,7 @@ final class FoodRecipes extends RecipeProvider {
         cuts(output);
         vanillaSeedsWithoutCutting(output);
         pieceCooking(output);
+        boiling(output);
     }
 
     private static void knives(Consumer<FinishedRecipe> output) {
@@ -106,6 +109,13 @@ final class FoodRecipes extends RecipeProvider {
                     .unlockedBy(unlockName, has(raw))
                     .save(output, PieceCooking.recipeId(rawPiece, CookingMethod.CAMPFIRE));
         });
+    }
+
+    // Milestone 4 adds every styled food's boiling recipe; the egg is the one non-food that boils.
+    private static void boiling(Consumer<FinishedRecipe> output) {
+        Consumer<FinishedRecipe> boilingOutput = conditional(output, new FeatureEnabledCondition(FoodFeature.BOILING));
+        BoilingRecipeBuilder.boiling(Ingredient.of(Items.EGG), FoodItems.finishedFood(FinishedFood.BOILED_EGG), EGG_BOIL_TICKS)
+                .save(boilingOutput, ResourceIds.of(FoodMod.MOD_ID, "boiling/boiled_egg"));
     }
 
     private static int defaultTicks(CookingMethod method) {

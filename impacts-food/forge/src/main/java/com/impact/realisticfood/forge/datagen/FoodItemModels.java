@@ -1,6 +1,7 @@
 package com.impact.realisticfood.forge.datagen;
 
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.FinishedFood;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.item.KnifeMaterial;
 import net.minecraft.data.PackOutput;
@@ -23,6 +24,9 @@ final class FoodItemModels extends ItemModelProvider {
         }
         for (FoodPiece piece : FoodPiece.values()) {
             flatItem(piece.path, GENERATED_ITEM_PARENT);
+        }
+        for (FinishedFood finishedFood : FinishedFood.values()) {
+            flatItem(finishedFood.itemPath, GENERATED_ITEM_PARENT);
         }
     }
 

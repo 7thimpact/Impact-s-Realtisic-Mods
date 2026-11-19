@@ -6,8 +6,12 @@ import com.impact.lib.config.ConfigType;
 import com.impact.lib.config.ConfigValue;
 import com.impact.lib.config.ImpactsConfig;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.FinishedFood;
 
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Food's SERVER file: {@code <world>/serverconfig/impactslib/impactsfood-server.toml}. Every gameplay number in the
@@ -32,6 +36,7 @@ public final class FoodServerConfig {
     public final SpitSettings spit;
     public final RawFoodSettings rawFood;
     public final StyleSettings styles;
+    public final Map<FinishedFood, FoodValueSettings> finishedFoods;
     public final BurntFoodSettings burntFood;
     public final MushSettings mush;
     public final CounterSettings counters;
@@ -65,6 +70,9 @@ public final class FoodServerConfig {
         builder.pushSection("cooking", "Food values of the three cooking styles, relative to the base food.");
         styles = new StyleSettings(builder);
         builder.popSection();
+        builder.pushSection("foods", "Food values of Food's own finished foods.");
+        finishedFoods = defineFinishedFoods(builder);
+        builder.popSection();
         builder.pushSection("burntFood", "Burnt Food, from cooking finished food again with dry heat.");
         burntFood = new BurntFoodSettings(builder);
         builder.popSection();
@@ -87,6 +95,26 @@ public final class FoodServerConfig {
             throw new IllegalStateException("Food's server config is read before it was registered.");
         }
         return registered;
+    }
+
+    private static Map<FinishedFood, FoodValueSettings> defineFinishedFoods(ConfigSpecBuilder builder) {
+        Map<FinishedFood, FoodValueSettings> settings = new EnumMap<>(FinishedFood.class);
+        for (FinishedFood food : FinishedFood.values()) {
+            settings.put(food, new FoodValueSettings(builder, food));
+        }
+        return Collections.unmodifiableMap(settings);
+    }
+
+    public static final class FoodValueSettings {
+        public final ConfigValue<Integer> hunger;
+        public final ConfigValue<Double> saturation;
+
+        private FoodValueSettings(ConfigSpecBuilder builder, FinishedFood food) {
+            builder.pushSection(food.configKey(), food.displayName + ".");
+            hunger = builder.defineInteger("hunger", food.defaultHunger, 0, MAXIMUM_HUNGER, "Hunger it restores.");
+            saturation = builder.defineDouble("saturation", food.defaultSaturation, 0.0, MAXIMUM_SATURATION, "Its saturation modifier.");
+            builder.popSection();
+        }
     }
 
     public static final class KnifeSettings {
@@ -135,6 +163,7 @@ public final class FoodServerConfig {
         public final ConfigValue<Integer> bucketBoils;
         public final ConfigValue<Integer> bucketHeatUpTicks;
         public final ConfigValue<Integer> bucketItemSlots;
+        public final ConfigValue<Integer> cauldronItemSlots;
         public final ConfigValue<List<String>> boilTickOverrides;
 
         private BoilingSettings(ConfigSpecBuilder builder) {
@@ -144,6 +173,7 @@ public final class FoodServerConfig {
             bucketBoils = builder.defineInteger("bucketBoils", 8, 1, 1000, "Boils a water bucket on a campfire lasts.");
             bucketHeatUpTicks = builder.defineInteger("bucketHeatUpTicks", 100, 1, MAXIMUM_TICKS, "Ticks a campfire bucket takes to boil.");
             bucketItemSlots = builder.defineInteger("bucketItemSlots", 2, 1, 16, "Single items a campfire bucket boils at once.");
+            cauldronItemSlots = builder.defineInteger("cauldronItemSlots", 8, 1, 64, "Single items a cauldron boils at once.");
             boilTickOverrides = builder.defineStringList("boilTickOverrides", List.of(),
                     "Boil time per input, as input=ticks. Unlisted inputs use their recipe's boil_ticks. Example: [\"minecraft:egg=150\"].");
         }

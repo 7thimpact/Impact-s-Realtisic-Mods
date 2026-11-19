@@ -3,12 +3,15 @@ package com.impact.realisticfood;
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticfood.boiling.BoilingRecipes;
+import com.impact.realisticfood.boiling.PotBoiling;
 import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.config.FoodCommonConfig;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.cooking.PieceCooking;
 import com.impact.realisticfood.cutting.Cutting;
 import com.impact.realisticfood.debug.FoodLogCategories;
+import com.impact.realisticfood.network.FoodNetwork;
 import com.impact.realisticfood.registry.FoodItems;
 
 /** Food's startup steps that don't depend on the mod loader. */
@@ -18,7 +21,10 @@ public final class FoodStartup {
     private FoodStartup() {
     }
 
-    /** Mod construction: registers with Lib, then the log categories, config files, items, cutting and cooking times. */
+    /**
+     * Mod construction: registers with Lib, then the log categories, config files, items, cutting, cooking times,
+     * boiling recipes, the network channel and Food's answer to Lib's boiling question.
+     */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(FoodMod.MOD_ID);
         LOG.registerCategories(FoodLogCategories.ALL);
@@ -28,6 +34,9 @@ public final class FoodStartup {
         FoodItems.register();
         Cutting.register();
         PieceCooking.register();
+        BoilingRecipes.register();
+        FoodNetwork.create();
+        ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
         ImpactsLib.onModsReady(impactMods -> logStartup());
     }
 

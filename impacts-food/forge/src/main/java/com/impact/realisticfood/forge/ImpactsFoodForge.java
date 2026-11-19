@@ -3,11 +3,13 @@ package com.impact.realisticfood.forge;
 import com.impact.lib.forge.ForgeModConstruction;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.FoodStartup;
+import com.impact.realisticfood.forge.client.FoodForgeClient;
 import com.impact.realisticfood.forge.condition.FeatureEnabledCondition;
 import com.impact.realisticfood.forge.datagen.FoodDataGenerators;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -18,6 +20,10 @@ public final class ImpactsFoodForge {
         ForgeModConstruction.run(context, FoodStartup::onModConstruction);
         context.getModEventBus().addListener(FoodDataGenerators::onGatherData);
         context.getModEventBus().addListener(ImpactsFoodForge::onRegister);
+        FoodForgeEvents.register();
+        if (FMLEnvironment.dist.isClient()) {
+            FoodForgeClient.register();
+        }
     }
 
     private static void onRegister(RegisterEvent event) {
