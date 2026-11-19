@@ -318,11 +318,13 @@ public final class FoodServerConfig {
     public static final class CounterSettings {
         public final ConfigValue<Integer> dayInAndDayOutEats;
         public final ConfigValue<Integer> tasteTesterFoods;
+        public final ConfigValue<Integer> roundAndRoundTurns;
 
         private CounterSettings(ConfigSpecBuilder builder) {
             dayInAndDayOutEats = builder.defineInteger("dayInAndDayOutEats", 100, 1, 100000,
                     "Times one boiled or toasted food must be eaten for Day in and Day out.");
             tasteTesterFoods = builder.defineInteger("tasteTesterFoods", 25, 1, 1000, "Different styled foods to eat for Taste Tester.");
+            roundAndRoundTurns = builder.defineInteger("roundAndRoundTurns", 20, 1, 100000, "Spit turns for Round and Round.");
         }
     }
 }

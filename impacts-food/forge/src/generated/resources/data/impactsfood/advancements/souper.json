@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:hot_water",
+  "criteria": {
+    "ladled": {
+      "conditions": {},
+      "trigger": "impactsfood:soup_ladled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.souper.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bowl"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.souper.title"
+    }
+  },
+  "requirements": [
+    [
+      "ladled"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

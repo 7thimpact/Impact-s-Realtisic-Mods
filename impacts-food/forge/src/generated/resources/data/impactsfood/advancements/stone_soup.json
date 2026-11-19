@@ -1,0 +1,36 @@
+{
+  "parent": "impactsfood:camp_cook",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "criteria": {
+    "stone_boiled": {
+      "conditions": {},
+      "trigger": "impactsfood:stone_boiled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.stone_soup.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.stone_soup.title"
+    }
+  },
+  "requirements": [
+    [
+      "stone_boiled"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

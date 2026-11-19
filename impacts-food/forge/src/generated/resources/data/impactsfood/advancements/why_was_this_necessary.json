@@ -1,0 +1,38 @@
+{
+  "parent": "impactsfood:hot_water",
+  "criteria": {
+    "has_boiled_bread": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:boiled_bread"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.why_was_this_necessary.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "impactsfood:boiled_bread"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.why_was_this_necessary.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_boiled_bread"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

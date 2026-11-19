@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "has_knife": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactsfood:knives"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/stripped_spruce_log.png",
+    "description": {
+      "translate": "advancements.impactsfood.sharp_thinking.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:flint_knife",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.sharp_thinking.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_knife"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

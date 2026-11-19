@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.boiling.BoilingPot;
 import com.impact.realisticfood.boiling.PotHost;
 import com.impact.realisticfood.debug.FoodLogCategories;
@@ -42,6 +43,7 @@ public final class SoupServings {
         player.setItemInHand(hand, ItemUtils.createFilledResult(bowls, player, serving.get()));
         host.level().playSound(null, host.position(), SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, LADLE_VOLUME, 1.0F);
         logServing("serving bowled", player, bowled, pot);
+        FoodTriggers.SOUP_LADLED.trigger(player, bowled);
         return InteractionResult.CONSUME;
     }
 
@@ -59,6 +61,7 @@ public final class SoupServings {
         ItemStack leftover = serving.finishUsingItem(host.level(), player);
         LoaderPlatform.current().postItemUseFinished(player, eaten, eaten.getUseDuration(), leftover);
         logServing("serving eaten", player, eaten, pot);
+        FoodTriggers.SOUP_LADLED.trigger(player, eaten);
         return InteractionResult.CONSUME;
     }
 

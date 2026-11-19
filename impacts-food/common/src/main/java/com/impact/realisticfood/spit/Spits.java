@@ -5,6 +5,8 @@ import com.impact.lib.advancement.LibTriggers;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.advancement.FoodAchievements;
+import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.debug.FoodLogCategories;
@@ -107,6 +109,9 @@ public final class Spits {
         }
         level.playSound(null, position, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS, 1.0F, 1.0F);
         markUpdated(level, position, campfire.getBlockState(), campfire);
+        if (player instanceof ServerPlayer serverPlayer) {
+            FoodTriggers.SPIT_MOUNTED.trigger(serverPlayer);
+        }
         LOG.debug(FoodLogCategories.SPIT, "mounted", "player", player.getGameProfile().getName(), "pos", position);
         return InteractionResult.CONSUME;
     }
@@ -133,6 +138,7 @@ public final class Spits {
         level.playSound(null, position, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, SIZZLE_VOLUME, 1.6F);
         if (player instanceof ServerPlayer serverPlayer) {
             LibTriggers.HOLD_ACTION.trigger(serverPlayer, TURN_ACTION);
+            FoodAchievements.onSpitTurned(serverPlayer);
         }
         markUpdated(level, position, campfire.getBlockState(), campfire);
         return InteractionResult.CONSUME;

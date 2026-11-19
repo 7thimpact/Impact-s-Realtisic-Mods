@@ -1,0 +1,68 @@
+{
+  "parent": "impactsfood:use_your_loaf",
+  "criteria": {
+    "dough_bun": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dough_bun"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "dumpling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dumpling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "flatbread": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:flatbread"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.dough_re_mi.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:dough"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.dough_re_mi.title"
+    }
+  },
+  "requirements": [
+    [
+      "dough_bun"
+    ],
+    [
+      "flatbread"
+    ],
+    [
+      "dumpling"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

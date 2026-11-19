@@ -1,0 +1,38 @@
+{
+  "parent": "impactsfood:hot_water",
+  "criteria": {
+    "has_boiled_egg": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:boiled_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.hard_boiled.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:boiled_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.hard_boiled.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_boiled_egg"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

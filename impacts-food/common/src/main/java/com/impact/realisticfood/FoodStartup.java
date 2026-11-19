@@ -5,6 +5,7 @@ import com.impact.lib.StartupSummary;
 import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.boiling.BoilingRecipes;
 import com.impact.realisticfood.boiling.PotBoiling;
 import com.impact.realisticfood.bucket.CampfireBuckets;
@@ -54,6 +55,7 @@ public final class FoodStartup {
         ImpactsLib.onModsReady(impactMods -> {
             FuelRegistry.register(FoodItems.fixedFood(FixedFood.BURNT_FOOD), stack -> FoodServerConfig.get().burntFood.burnTicks.get());
             FuelRegistry.register(Spits.spitItem(), SPIT_BURN_TICKS);
+            FoodTriggers.registerAll();
             logStartup();
         });
     }

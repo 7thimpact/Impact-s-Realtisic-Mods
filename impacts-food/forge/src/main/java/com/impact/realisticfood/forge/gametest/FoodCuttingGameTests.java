@@ -40,6 +40,8 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.Set;
 
 /** Food milestone 2: knives, every cut, byproducts and their config, piece food values and cooking. */
@@ -110,10 +112,11 @@ public final class FoodCuttingGameTests {
                 inventory.items.set(slot, new ItemStack(Items.DIRT, FULL_STACK));
             }
             inventory.offhand.set(0, new ItemStack(Items.DIRT, FULL_STACK));
+            // Mock players all join at the world spawn, where earlier runs may have left bones lying.
+            Set<UUID> bonesAlreadyThere = bonesNear(helper, player).stream().map(ItemEntity::getUUID).collect(Collectors.toSet());
             ConfigOverrides.withValue(FoodServerConfig.get().cutting.byproductChanceOverrides, List.of("minecraft:beef=1.0"), () -> cutBeefAs(helper, player));
-            List<ItemEntity> droppedBones = helper.getLevel().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(3.0),
-                    entity -> entity.getItem().is(Items.BONE));
-            helper.assertTrue(droppedBones.size() == 1, "With every slot full, the bone drops at the player's feet");
+            long newBones = bonesNear(helper, player).stream().filter(bone -> !bonesAlreadyThere.contains(bone.getUUID())).count();
+            helper.assertTrue(newBones == 1, "With every slot full, the bone drops at the player's feet (found " + newBones + ")");
             helper.assertTrue(inventory.countItem(Items.BONE) == 0, "Nothing is squeezed into the inventory");
         } finally {
             MockPlayers.leaveWorld(player);
@@ -205,6 +208,10 @@ public final class FoodCuttingGameTests {
         } finally {
             ForgeHooks.setCraftingPlayer(null);
         }
+    }
+
+    private static List<ItemEntity> bonesNear(GameTestHelper helper, ServerPlayer player) {
+        return helper.getLevel().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(3.0), entity -> entity.getItem().is(Items.BONE));
     }
 
     private static double attackDamageBonus(Item knife) {

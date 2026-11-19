@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:sharp_thinking",
+  "criteria": {
+    "mounted_spit": {
+      "conditions": {},
+      "trigger": "impactsfood:spit_mounted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.spit_take.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:spit"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.spit_take.title"
+    }
+  },
+  "requirements": [
+    [
+      "mounted_spit"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

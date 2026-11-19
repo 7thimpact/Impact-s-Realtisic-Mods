@@ -1,0 +1,58 @@
+{
+  "parent": "impactsfood:cut_it_out",
+  "criteria": {
+    "bone": {
+      "conditions": {
+        "byproduct": {
+          "items": [
+            "minecraft:bone"
+          ]
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    },
+    "bone_meal": {
+      "conditions": {
+        "byproduct": {
+          "items": [
+            "minecraft:bone_meal"
+          ]
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    },
+    "feather": {
+      "conditions": {
+        "byproduct": {
+          "items": [
+            "minecraft:feather"
+          ]
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.bone_appetit.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.bone_appetit.title"
+    }
+  },
+  "requirements": [
+    [
+      "bone",
+      "feather",
+      "bone_meal"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "impactsfood:use_your_loaf",
+  "criteria": {
+    "has_flour": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:flour"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.rise_and_grind.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:flour"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.rise_and_grind.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_flour"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

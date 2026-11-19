@@ -1,5 +1,7 @@
 package com.impact.realisticfood.forge;
 
+import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.advancement.FoodAchievements;
 import com.impact.realisticfood.boiling.CauldronInteractions;
 import com.impact.realisticfood.boiling.CauldronPots;
 import com.impact.realisticfood.bucket.CampfireBuckets;
@@ -11,6 +13,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 
@@ -22,6 +26,8 @@ final class FoodForgeEvents {
     static void register() {
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onLevelTick);
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onItemUseFinished);
+        MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onItemSmelted);
+        MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onAdvancementEarned);
         // Early, so no other mod fills a bottle from a soup or pours the water bucket meant for a campfire; other clicks pass.
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FoodForgeEvents::onRightClickBlock);
     }
@@ -35,6 +41,20 @@ final class FoodForgeEvents {
     private static void onItemUseFinished(LivingEntityUseItemEvent.Finish event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             RawFoodRisk.onEaten(player, event.getItem());
+            FoodAchievements.onEaten(player, event.getItem());
+        }
+    }
+
+    private static void onItemSmelted(PlayerEvent.ItemSmeltedEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            FoodAchievements.onItemSmelted(player, event.getSmelting());
+        }
+    }
+
+    private static void onAdvancementEarned(AdvancementEvent.AdvancementEarnEvent event) {
+        boolean isFoodAdvancement = event.getAdvancement().getId().getNamespace().equals(FoodMod.MOD_ID);
+        if (isFoodAdvancement && event.getEntity() instanceof ServerPlayer player) {
+            FoodAchievements.checkWellFed(player);
         }
     }
 

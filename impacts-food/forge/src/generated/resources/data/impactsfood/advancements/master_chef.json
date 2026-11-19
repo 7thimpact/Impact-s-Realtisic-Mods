@@ -1,0 +1,98 @@
+{
+  "parent": "impactsfood:souper",
+  "criteria": {
+    "beetroot_soup": {
+      "conditions": {
+        "soup": "minecraft:beetroot_soup"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "bone_broth": {
+      "conditions": {
+        "soup": "impactsfood:bone_broth"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "fish_soup": {
+      "conditions": {
+        "soup": "impactsfood:fish_soup"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "hearty_stew": {
+      "conditions": {
+        "soup": "impactsfood:hearty_stew"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "mushroom_stew": {
+      "conditions": {
+        "soup": "minecraft:mushroom_stew"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "porridge": {
+      "conditions": {
+        "soup": "impactsfood:porridge"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "rabbit_stew": {
+      "conditions": {
+        "soup": "minecraft:rabbit_stew"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    },
+    "suspicious_stew": {
+      "conditions": {
+        "soup": "minecraft:suspicious_stew"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.master_chef.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:hearty_stew"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.master_chef.title"
+    }
+  },
+  "requirements": [
+    [
+      "mushroom_stew"
+    ],
+    [
+      "beetroot_soup"
+    ],
+    [
+      "rabbit_stew"
+    ],
+    [
+      "suspicious_stew"
+    ],
+    [
+      "bone_broth"
+    ],
+    [
+      "hearty_stew"
+    ],
+    [
+      "fish_soup"
+    ],
+    [
+      "porridge"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

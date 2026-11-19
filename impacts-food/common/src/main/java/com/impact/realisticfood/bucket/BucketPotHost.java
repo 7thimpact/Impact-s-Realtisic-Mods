@@ -1,6 +1,7 @@
 package com.impact.realisticfood.bucket;
 
 import com.impact.lib.ImpactsLib;
+import com.impact.realisticfood.advancement.FoodAchievements;
 import com.impact.realisticfood.boiling.PotHost;
 import com.impact.realisticfood.boiling.PotKind;
 import com.impact.realisticfood.config.FoodServerConfig;
@@ -64,6 +65,7 @@ public record BucketPotHost(ServerLevel level, BlockPos position, CampfireBucket
 
     @Override
     public void useWaterForBoil() {
+        FoodAchievements.onCampfireBucketBoiled(level, position);
         bucket.useOneBoil(level);
     }
 

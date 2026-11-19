@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.config.KeyValueEntries;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.debug.FoodLogCategories;
@@ -39,6 +40,7 @@ public final class RawFoodRisk {
         boolean isSick = roll < chance;
         if (isSick) {
             player.addEffect(new MobEffectInstance(MobEffects.HUNGER, settings.durationTicks.get()));
+            FoodTriggers.RAW_FOOD_SICKNESS.trigger(player);
         }
         LOG.debug(FoodLogCategories.RAW, "raw food eaten", "player", player.getGameProfile().getName(), "food", foodId,
                 "chance", chance, "roll", roll, "hunger", isSick);

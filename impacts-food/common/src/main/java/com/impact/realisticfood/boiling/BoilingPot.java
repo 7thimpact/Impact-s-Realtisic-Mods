@@ -3,6 +3,7 @@ package com.impact.realisticfood.boiling;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.advancement.FoodAchievements;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.food.FixedFood;
@@ -88,8 +89,7 @@ public final class BoilingPot {
     /** Brings the water straight to a boil (a Hot Pebble does this). */
     public void boilNow(PotHost host) {
         if (!isBoiling) {
-            isBoiling = true;
-            logHeat(host, "boiling");
+            startBoiling(host);
         }
         heatTicks = host.heatUpTicks();
         coolTicks = 0;
@@ -205,8 +205,16 @@ public final class BoilingPot {
         }
         heatTicks++;
         if (heatTicks >= host.heatUpTicks()) {
-            isBoiling = true;
-            logHeat(host, "boiling");
+            startBoiling(host);
+        }
+    }
+
+    // A cauldron coming to the boil is what "Hot Water" asks for.
+    private void startBoiling(PotHost host) {
+        isBoiling = true;
+        logHeat(host, "boiling");
+        if (host.kind() == PotKind.CAULDRON) {
+            FoodAchievements.onCauldronBoiling(host.level(), host.position());
         }
     }
 

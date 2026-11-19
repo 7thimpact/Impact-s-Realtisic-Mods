@@ -1,0 +1,33 @@
+{
+  "parent": "impactsfood:day_in_and_day_out",
+  "criteria": {
+    "earned_everything": {
+      "conditions": {},
+      "trigger": "impactsfood:well_fed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.well_fed.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cake"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.well_fed.title"
+    }
+  },
+  "requirements": [
+    [
+      "earned_everything"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}
