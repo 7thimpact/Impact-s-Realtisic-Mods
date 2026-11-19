@@ -14,6 +14,9 @@ def dependencyModProjects = (findProperty('mod_dependencies') ?: '').split(',').
 dependencyModProjects.each { dependencyProject -> evaluationDependsOn(dependencyProject.path) }
 // Mods that need the Curios API (Inventory's back slot) set mod_requires_curios=true in their gradle.properties.
 def isUsingCurios = (findProperty('mod_requires_curios') ?: 'false').toBoolean()
+// Mods with optional playerAnimator support (Lib's hold-to-use animations) set mod_uses_player_animator=true. It is
+// compile-only: the mod's own runs leave it out, so they test the fallback; test setups can load it.
+def isUsingPlayerAnimator = (findProperty('mod_uses_player_animator') ?: 'false').toBoolean()
 // In development, a dependency's Mixin configs come from launch arguments.
 def dependencyMixinConfigs = dependencyModProjects.collectMany { dependencyProject ->
     def dependencyModId = dependencyProject.property('mod_id')
@@ -103,6 +106,13 @@ repositories {
             includeGroup 'top.theillusivec4.curios'
         }
     }
+    maven {
+        name = 'KosmX'
+        url = 'https://maven.kosmx.dev/'
+        content {
+            includeGroup 'dev.kosmx.player-anim'
+        }
+    }
 }
 
 // Mods with a <modid>.mixins.json (common) or <modid>.forge.mixins.json (forge) get Mixin's refmap and manifest entry.
@@ -125,6 +135,9 @@ if (hasMixins || hasForgeMixins) {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     dependencyModProjects.each { dependencyProject -> compileOnly dependencyProject.sourceSets.main.output }
+    if (isUsingPlayerAnimator) {
+        compileOnly fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
+    }
     if (isUsingCurios) {
         // Compile against Curios's API only; the runs load the whole mod.
         compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")

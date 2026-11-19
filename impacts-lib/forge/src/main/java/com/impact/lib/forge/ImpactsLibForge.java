@@ -4,6 +4,7 @@ import com.impact.lib.ImpactsLib;
 import com.impact.lib.LibStartup;
 import com.impact.lib.advancement.LoneLibAchievement;
 import com.impact.lib.command.ImpactsCommands;
+import com.impact.lib.forge.client.LibForgeClient;
 import com.impact.lib.forge.condition.NoImpactModsCondition;
 import com.impact.lib.forge.config.ServerConfigResync;
 import com.impact.lib.forge.crafting.WaterBottleIngredient;
@@ -24,6 +25,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -37,6 +39,9 @@ public final class ImpactsLibForge {
         modEventBus.addListener(ImpactsLibForge::onCommonSetup);
         modEventBus.addListener(ImpactsLibForge::onRegister);
         modEventBus.addListener(LibDataGenerators::onGatherData);
+        if (FMLEnvironment.dist.isClient()) {
+            LibForgeClient.register(modEventBus);
+        }
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onRegisterCommands);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onPlayerLoggedIn);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerTick);

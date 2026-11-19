@@ -58,11 +58,15 @@ public final class LibServerConfig {
         private static final int DEFAULT_STONE_STICK_GRIND_TICKS = 20;
         private static final int MINIMUM_GRIND_TICKS = 1;
         private static final int MAXIMUM_GRIND_TICKS = 1200;
+        private static final int DEFAULT_BOWL_CAPACITY = 16;
+        private static final int MINIMUM_BOWL_CAPACITY = 1;
+        private static final int MAXIMUM_BOWL_CAPACITY = 64;
 
         public final ConfigValue<Integer> woodenDurability;
         public final ConfigValue<Integer> stoneDurability;
         public final ConfigValue<Integer> woodenStickGrindTicks;
         public final ConfigValue<Integer> stoneStickGrindTicks;
+        public final ConfigValue<Integer> bowlCapacity;
 
         private GrinderSettings(ConfigSpecBuilder builder) {
             woodenDurability = builder.defineInteger("woodenDurability", DEFAULT_WOODEN_DURABILITY,
@@ -73,6 +77,8 @@ public final class LibServerConfig {
                     MINIMUM_GRIND_TICKS, MAXIMUM_GRIND_TICKS, "Ticks to grind one item with a wooden grinding stick.");
             stoneStickGrindTicks = builder.defineInteger("stoneStickGrindTicks", DEFAULT_STONE_STICK_GRIND_TICKS,
                     MINIMUM_GRIND_TICKS, MAXIMUM_GRIND_TICKS, "Ticks to grind one item with a stone grinding stick.");
+            bowlCapacity = builder.defineInteger("bowlCapacity", DEFAULT_BOWL_CAPACITY, MINIMUM_BOWL_CAPACITY, MAXIMUM_BOWL_CAPACITY,
+                    "Items a grinder bowl holds in all (up to 2 kinds, for mixing dyes).");
         }
     }
 }

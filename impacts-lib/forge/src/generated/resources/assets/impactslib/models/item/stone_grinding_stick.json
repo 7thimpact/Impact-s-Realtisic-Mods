@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "impactslib:item/stone_grinding_stick"
+  }
+}

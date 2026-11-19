@@ -26,6 +26,13 @@ public final class LibTranslations {
     public static final String DUMP_SECTION = "commands.impactslib.dump.section";
     public static final String DUMP_ENTRY = "commands.impactslib.dump.entry";
 
+    public static final String BOWL_EMPTY = "tooltip.impactslib.bowl_empty";
+    public static final String BOWL_ENTRY = "tooltip.impactslib.bowl_entry";
+    public static final String WOODEN_GRINDER_BOWL = "item.impactslib.wooden_grinder_bowl";
+    public static final String STONE_GRINDER_BOWL = "item.impactslib.stone_grinder_bowl";
+    public static final String WOODEN_GRINDING_STICK = "item.impactslib.wooden_grinding_stick";
+    public static final String STONE_GRINDING_STICK = "item.impactslib.stone_grinding_stick";
+
     public static final Map<String, String> ENGLISH = englishText();
 
     private LibTranslations() {
@@ -51,6 +58,12 @@ public final class LibTranslations {
         english.put(DUMP_HEADER, "Impact dump for %s");
         english.put(DUMP_SECTION, "[%s]");
         english.put(DUMP_ENTRY, "  %s = %s");
+        english.put(BOWL_EMPTY, "Empty. Right-click a grindable item onto it, or hold it in your off hand");
+        english.put(BOWL_ENTRY, "%s x%s");
+        english.put(WOODEN_GRINDER_BOWL, "Wooden Grinder Bowl");
+        english.put(STONE_GRINDER_BOWL, "Stone Grinder Bowl");
+        english.put(WOODEN_GRINDING_STICK, "Wooden Grinding Stick");
+        english.put(STONE_GRINDING_STICK, "Stone Grinding Stick");
         return Collections.unmodifiableMap(english);
     }
 }

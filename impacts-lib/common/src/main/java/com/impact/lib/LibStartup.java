@@ -11,6 +11,7 @@ import com.impact.lib.debug.LibLogCategories;
 import com.impact.lib.dump.ImpactsDump;
 import com.impact.lib.dump.LibPlayerDumpSection;
 import com.impact.lib.fuel.CompostRegistry;
+import com.impact.lib.grinding.Grinding;
 import com.impact.lib.log.DebugLogFile;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.LibNetwork;
@@ -35,6 +36,7 @@ public final class LibStartup {
         LibClientConfig.register();
         LibNetwork.create();
         ToolCrafting.register();
+        Grinding.register();
         PlayerAttachments.register(ImpactsCounters.COUNTERS);
         ImpactsLog.useFamilyDebugSwitch(commonConfig.isFamilyDebugOn::get);
         commonConfig.file.onLoad(LibStartup::applyDebugLogFile);
@@ -48,6 +50,7 @@ public final class LibStartup {
     public static void onModsReady() {
         LibTriggers.registerAll();
         CompostRegistry.applyAll();
+        Grinding.registerHoldActions();
         StartupSummary.log(ImpactsLib.MOD_ID);
         ImpactsLib.announceModsReady();
     }

@@ -16,5 +16,11 @@
   "commands.impactslib.dump.entry": "  %s = %s",
   "commands.impactslib.dump.header": "Impact dump for %s",
   "commands.impactslib.dump.section": "[%s]",
-  "commands.impactslib.unknown_mod": "No Impact mod called %s. Known mods: %s"
+  "commands.impactslib.unknown_mod": "No Impact mod called %s. Known mods: %s",
+  "item.impactslib.stone_grinder_bowl": "Stone Grinder Bowl",
+  "item.impactslib.stone_grinding_stick": "Stone Grinding Stick",
+  "item.impactslib.wooden_grinder_bowl": "Wooden Grinder Bowl",
+  "item.impactslib.wooden_grinding_stick": "Wooden Grinding Stick",
+  "tooltip.impactslib.bowl_empty": "Empty. Right-click a grindable item onto it, or hold it in your off hand",
+  "tooltip.impactslib.bowl_entry": "%s x%s"
 }

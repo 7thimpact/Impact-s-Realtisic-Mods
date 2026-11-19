@@ -14,6 +14,7 @@ public final class LibDataGenerators {
         PackOutput output = generator.getPackOutput();
         generator.addProvider(event.includeServer(), new LibAdvancementProvider(output));
         generator.addProvider(event.includeClient(), new LibLanguageProvider(output));
+        generator.addProvider(event.includeClient(), new LibItemModelProvider(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new LibItemTagsProvider(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new LibBlockTagsProvider(output, event.getLookupProvider(), event.getExistingFileHelper()));
     }

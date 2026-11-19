@@ -253,3 +253,23 @@ ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // Imp
 
 - Ingredient `{"type": "impactslib:water_bottle"}` matches a vanilla water bottle or anything in `#impactslib:water_bottles`.
 - `ImpactsEvents.postWaterFilled(new WaterFilled(player, stack, level, pos, boiled))` after a mod fills a container item. Listen in common code with `ImpactsEvents.onWaterFilled(...)`, or on Forge's bus with `ImpactsWaterFilledEvent`.
+
+## Hold-to-use
+
+An item opts in by registering a `HoldAction` and delegating its use methods:
+
+```java
+HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // once every mod is ready
+// In the item: use -> HoldToUse.start(...), onUseTick -> HoldToUse.tick(...), releaseUsing -> HoldToUse.release(...),
+// getUseDuration -> HoldToUse.USE_DURATION_TICKS, getUseAnimation -> HoldToUse.USE_ANIMATION (UseAnim.NONE).
+```
+
+- A `HoldAction` gives its `id()`, `cycleTicks(player, held)`, `canContinue(player, held)` (both sides, every tick), `completeCycle(serverPlayer, held)` (returns whether to keep going) and a `motion()` (`STIR`, `HAMMER`, `TURN`).
+- Vanilla's item-use hold ends it: letting go, switching hands, eating. The cycle in progress is lost, nothing else.
+- Each finished cycle swings the arm, fires `impactslib:hold_action` (optional `action` ID) and logs under `holdtouse`. With playerAnimator installed, the arms follow the action's motion. A bar under the crosshair shows the cycle (`holdToUse.showProgressBar`).
+
+## Grinding (`impactslib:grinding`)
+
+- Items: `impactslib:wooden_grinder_bowl`, `stone_grinder_bowl` (off hand; 64 / 256 uses), `wooden_grinding_stick`, `stone_grinding_stick` (main hand, hold right-click; 30 / 20 ticks per item). The mods ship their recipes; Lib ships none.
+- A bowl holds up to `grinder.bowlCapacity` (16) items of at most 2 kinds. Load it by right-clicking with the item in the main hand, or by right-clicking the item onto the bowl in any inventory screen. Sneak-right-click with an empty main hand empties it.
+- Recipe JSON: `ingredients` (1 or 2), `result` (with `count`), `min_tier` (`wood` or `stone`), optional `grind_ticks` and `byproducts`. The bowl's tier limits the grind.
