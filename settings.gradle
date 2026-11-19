@@ -28,6 +28,8 @@ include 'impacts-inventory:common'
 include 'impacts-inventory:forge'
 include 'impacts-food:common'
 include 'impacts-food:forge'
+include 'impacts-vitality:common'
+include 'impacts-vitality:forge'
 
 // Every folder in test-setups/ with a gradle.properties is one family test setup.
 file('test-setups').listFiles()

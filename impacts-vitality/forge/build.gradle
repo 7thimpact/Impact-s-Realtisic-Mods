@@ -1,0 +1,6 @@
+plugins {
+    id 'net.minecraftforge.gradle'
+    id 'org.parchmentmc.librarian.forgegradle'
+}
+
+apply from: rootProject.file('gradle/forge-module.gradle')

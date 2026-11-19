@@ -9,7 +9,7 @@ A family of Minecraft mods that make survival more hands-on. Each mod works on i
 | [Impact's Lib](impacts-lib/SPEC.md) | `impactslib` | Shared systems every Impact mod needs. Required by all of them | Core done |
 | [Impact's Realistic Inventory](impacts-inventory/SPEC.md) | `impactsinventory` | Two hand slots, nine pockets, satchels and backpacks. Also requires [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) | Working on its own; integrations come with the other mods |
 | [Impact's Realistic Food](impacts-food/SPEC.md) | `impactsfood` | Knives, boiling, soups, spit roasting, cooking styles and baking | Done on 1.20.1 Forge, standalone; Crafting and Vitality integrations come with those mods |
-| [Impact's Realistic Vitality](impacts-vitality/SPEC.md) | `impactsvitality` | Thirst, temperature and air | Planned |
+| [Impact's Realistic Vitality](impacts-vitality/SPEC.md) | `impactsvitality` | Thirst, temperature and air | In progress |
 | [Impact's Realistic Crafting](impacts-crafting/SPEC.md) | `impactscrafting` | Multi-step crafting from shared parts, timed and tiered tables | Planned |
 
 The build order and progress are in [ROADMAP.md](ROADMAP.md).

@@ -10,7 +10,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done standalone (IRC parts in step 5, IRV parts in step 4) |
-| 4 | Impact's Realistic Vitality (IRV) | L+ | Planned |
+| 4 | Impact's Realistic Vitality (IRV) | L+ | In progress |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
 | 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
@@ -104,7 +104,20 @@ These are the milestones from `impacts-food/SPEC.md`.
 
 ## 4. Impact's Realistic Vitality
 
-- [ ] IRV milestones 1 to 12 from `impacts-vitality/SPEC.md`. The IRF and IRI parts of milestone 10 happen here, the IRC parts in step 5 and the SRF part in step 6.
+These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts of milestone 10 happen here, the IRC parts in step 5 and the SRF part in step 6.
+
+- [x] 1 Skeleton: the three configs (need, piece and gear switches in common; every number in server; units and HUD in client), the `impactsvitality:feature_enabled` condition, debug categories, the player attachment with thirst, temperature and air parts, the `impactsvitality:main` channel syncing it, the `vitality-alone` setup
+- [ ] 2 Thirst: the bar, drain, HUD through Lib's layout, dehydration damage
+- [ ] 3 Drinks and water gear
+- [ ] 4 Health cap
+- [ ] 5 Ambient temperature
+- [ ] 6 Body temperature
+- [ ] 7 Insulation
+- [ ] 8 Air
+- [ ] 9 Breathing gear
+- [ ] 10 Integration: IRF and IRI parts here; IRC parts in step 5; SRF heat entries in step 6
+- [ ] 11 Achievements
+- [ ] 12 Polish
 
 ## 5. Impact's Realistic Crafting, plus Lib's crafting systems
 
