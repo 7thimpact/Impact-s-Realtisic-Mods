@@ -10,6 +10,7 @@ import com.impact.lib.registry.MenuWithDataFactory;
 import com.impact.lib.registry.ModRegistrar;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +18,10 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.ModList;
@@ -29,6 +34,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /** Forge's answers to {@link LoaderPlatform}. Found through {@code META-INF/services}. */
@@ -93,6 +99,12 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     public ModRegistrar registrar(String modId) {
         return REGISTRARS_BY_MOD.computeIfAbsent(modId,
                 newModId -> new ForgeModRegistrar(newModId, ForgeModConstruction.currentContext().getModEventBus()));
+    }
+
+    // Forge's access transformer makes vanilla's block entity factory type public.
+    @Override
+    public <T extends BlockEntity> BlockEntityType<T> blockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
+        return BlockEntityType.Builder.of(factory::apply, blocks).build(null);
     }
 
     @Override

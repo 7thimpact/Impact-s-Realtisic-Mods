@@ -56,7 +56,7 @@ public final class PlacedPacks {
                 .noLootTable()
                 .pushReaction(PushReaction.DESTROY)));
         blockEntityType = registrar.register(Registries.BLOCK_ENTITY_TYPE, "placed_pack",
-                () -> BlockEntityType.Builder.of(PlacedPackBlockEntity::new, block.get()).build(null));
+                () -> LoaderPlatform.current().blockEntityType(PlacedPackBlockEntity::new, block.get()));
     }
 
     public static PlacedPackBlock block() {

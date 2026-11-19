@@ -6,6 +6,7 @@ import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.registry.MenuWithDataFactory;
 import com.impact.lib.registry.ModRegistrar;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,9 +14,14 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -56,6 +62,9 @@ public interface LoaderPlatform {
 
     /** The registrar for a mod's game objects. Call during that mod's construction. */
     ModRegistrar registrar(String modId);
+
+    /** A block entity type for these blocks. Vanilla keeps the factory type private; each loader opens it its own way. */
+    <T extends BlockEntity> BlockEntityType<T> blockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks);
 
     /** A menu type whose client copy is built from extra data the server sends (a slot count, a position, ...). */
     <M extends AbstractContainerMenu> MenuType<M> menuTypeWithData(MenuWithDataFactory<M> clientFactory);

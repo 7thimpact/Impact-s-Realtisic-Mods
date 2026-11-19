@@ -121,17 +121,12 @@ public final class PlacedPackBlockEntity extends BlockEntity implements Containe
         ContainerHelper.saveAllItems(tag, contents);
     }
 
-    // Clients get the pack item only (to draw its kind and color), never the contents.
+    // Clients get the pack item only (to draw its kind and color), never the contents; they read it through load().
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
         tag.put(PACK_KEY, pack.save(new CompoundTag()));
         return tag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        pack = ItemStack.of(tag.getCompound(PACK_KEY));
     }
 
     @Override
