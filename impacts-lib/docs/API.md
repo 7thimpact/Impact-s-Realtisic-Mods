@@ -279,3 +279,7 @@ HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // on
 - `/impacts audit`: which Impact mod replaced or turned off each vanilla recipe right now (read from the data packs that provide each `minecraft:` recipe file).
 - `/impacts conflicts`: any two crafting recipes that could match the same grid, where at least one is an Impact recipe, plus any vanilla recipe two Impact mods both override.
 - Both run at every server start and `/reload`. Each conflict logs a warning, so a conflict fails every family test setup.
+
+## JEI base plugin
+
+Lib's plugin (`impactslib:jei`) shows every `tool_crafting` and `grinding` recipe in two shared categories. Mods add catalysts to them through `LibJeiRecipeTypes.TOOL_CRAFTING` and `LibJeiRecipeTypes.GRINDING` in their own JEI plugins. A mod that has JEI pages sets `mod_uses_jei=true` in its `gradle.properties` (compile-only API); `mod_runs_with_jei=true` also loads JEI in its runs.

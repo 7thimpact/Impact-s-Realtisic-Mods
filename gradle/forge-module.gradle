@@ -17,6 +17,9 @@ def isUsingCurios = (findProperty('mod_requires_curios') ?: 'false').toBoolean()
 // Mods with optional playerAnimator support (Lib's hold-to-use animations) set mod_uses_player_animator=true. It is
 // compile-only: the mod's own runs leave it out, so they test the fallback; test setups can load it.
 def isUsingPlayerAnimator = (findProperty('mod_uses_player_animator') ?: 'false').toBoolean()
+// Mods with JEI pages set mod_uses_jei=true (compile-only API); mod_runs_with_jei=true also loads JEI in their runs.
+def isUsingJei = (findProperty('mod_uses_jei') ?: 'false').toBoolean()
+def isRunningWithJei = (findProperty('mod_runs_with_jei') ?: 'false').toBoolean()
 // In development, a dependency's Mixin configs come from launch arguments.
 def dependencyMixinConfigs = dependencyModProjects.collectMany { dependencyProject ->
     def dependencyModId = dependencyProject.property('mod_id')
@@ -107,6 +110,13 @@ repositories {
         }
     }
     maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com/'
+        content {
+            includeGroup 'mezz.jei'
+        }
+    }
+    maven {
         name = 'KosmX'
         url = 'https://maven.kosmx.dev/'
         content {
@@ -135,6 +145,13 @@ if (hasMixins || hasForgeMixins) {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     dependencyModProjects.each { dependencyProject -> compileOnly dependencyProject.sourceSets.main.output }
+    if (isUsingJei) {
+        compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+        compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    }
+    if (isRunningWithJei) {
+        runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    }
     if (isUsingPlayerAnimator) {
         compileOnly fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
     }

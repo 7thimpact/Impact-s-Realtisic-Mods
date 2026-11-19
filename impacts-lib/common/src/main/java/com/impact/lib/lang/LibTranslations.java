@@ -31,6 +31,12 @@ public final class LibTranslations {
     public static final String AUDIT_TURNED_OFF = "commands.impactslib.audit.turned_off";
     public static final String CONFLICTS_SUMMARY = "commands.impactslib.conflicts.summary";
     public static final String CONFLICT_ENTRY = "commands.impactslib.conflicts.entry";
+    public static final String JEI_TOOL_CRAFTING = "jei.impactslib.tool_crafting";
+    public static final String JEI_GRINDING = "jei.impactslib.grinding";
+    public static final String JEI_TOOL = "jei.impactslib.tool";
+    public static final String JEI_BYPRODUCT = "jei.impactslib.byproduct";
+    public static final String JEI_WOODEN_GRINDER = "jei.impactslib.wooden_grinder";
+    public static final String JEI_STONE_GRINDER = "jei.impactslib.stone_grinder";
     public static final String BOWL_EMPTY = "tooltip.impactslib.bowl_empty";
     public static final String BOWL_ENTRY = "tooltip.impactslib.bowl_entry";
     public static final String WOODEN_GRINDER_BOWL = "item.impactslib.wooden_grinder_bowl";
@@ -68,6 +74,12 @@ public final class LibTranslations {
         english.put(AUDIT_TURNED_OFF, "  %s: turned off by %s");
         english.put(CONFLICTS_SUMMARY, "Recipe conflicts: %s (details in the log)");
         english.put(CONFLICT_ENTRY, "  %s and %s: %s");
+        english.put(JEI_TOOL_CRAFTING, "Tool Crafting");
+        english.put(JEI_GRINDING, "Grinding");
+        english.put(JEI_TOOL, "Tool: stays in the grid (any slot) and takes %s damage");
+        english.put(JEI_BYPRODUCT, "Byproduct: %s%% chance");
+        english.put(JEI_WOODEN_GRINDER, "Any grinder bowl");
+        english.put(JEI_STONE_GRINDER, "Needs a stone grinder bowl");
         english.put(BOWL_EMPTY, "Empty. Right-click a grindable item onto it, or hold it in your off hand");
         english.put(BOWL_ENTRY, "%s x%s");
         english.put(WOODEN_GRINDER_BOWL, "Wooden Grinder Bowl");
