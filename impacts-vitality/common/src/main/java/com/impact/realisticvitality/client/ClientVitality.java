@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.client;
 
+import com.impact.realisticvitality.air.AirQuality;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.network.NeedSwitchesMessage;
@@ -8,7 +9,8 @@ import com.impact.realisticvitality.player.ThirstState;
 
 /** The local player's values as the server last sent them, and the server's need switches. Client side only. */
 public final class ClientVitality {
-    private static final VitalityStateMessage STARTING_STATE = new VitalityStateMessage(ThirstState.FULL, ThirstState.STARTING_HYDRATION, 0.0F, Float.NaN, false);
+    private static final VitalityStateMessage STARTING_STATE = new VitalityStateMessage(ThirstState.FULL, ThirstState.STARTING_HYDRATION, 0.0F, Float.NaN, false,
+            AirQuality.GOOD);
     private static volatile VitalityStateMessage state = STARTING_STATE;
     private static volatile NeedSwitchesMessage needSwitches;
 

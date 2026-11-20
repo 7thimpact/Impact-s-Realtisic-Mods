@@ -8,6 +8,7 @@
     "AbstractCookingRecipeMixin",
     "DispenserBlockAccessor",
     "FoodDataMixin",
+    "LivingEntityMixin",
     "MobEffectMixin",
     "PlayerMixin"
   ],

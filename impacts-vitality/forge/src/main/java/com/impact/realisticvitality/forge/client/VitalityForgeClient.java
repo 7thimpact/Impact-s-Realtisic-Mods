@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.forge.client;
 
+import com.impact.realisticvitality.client.AirQualityIcon;
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.client.FrostOverlay;
 import com.impact.realisticvitality.client.LiningTooltips;
@@ -31,6 +32,7 @@ public final class VitalityForgeClient {
     private static final String THIRST_OVERLAY = "thirst_level";
     private static final String GAUGE_OVERLAY = "temperature_gauge";
     private static final String FROST_OVERLAY = "temperature_frost";
+    private static final String AIR_QUALITY_OVERLAY = "air_quality";
     private static final int LIQUID_LAYER = 0;
     private static final int NO_TINT = -1;
     private static final KeyMapping SIP_PACK_KEY = new KeyMapping(VitalityTranslations.SIP_PACK_KEY, KeyConflictContext.IN_GAME,
@@ -60,6 +62,13 @@ public final class VitalityForgeClient {
             if (!gui.getMinecraft().options.hideGui && gui.shouldDrawSurvivalElements()) {
                 gui.setupOverlayRenderState(true, false);
                 TemperatureGauge.render(graphics, screenWidth, screenHeight, gui.getGuiTicks(), partialTick);
+            }
+        });
+        // Right after vanilla's bubbles, so the cloud sits in the row they just took.
+        event.registerAbove(VanillaGuiOverlay.AIR_LEVEL.id(), AIR_QUALITY_OVERLAY, (gui, graphics, partialTick, screenWidth, screenHeight) -> {
+            if (!gui.getMinecraft().options.hideGui && gui.shouldDrawSurvivalElements()) {
+                gui.setupOverlayRenderState(true, false);
+                AirQualityIcon.render(graphics, screenWidth, screenHeight);
             }
         });
         event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), FROST_OVERLAY,

@@ -1,14 +1,20 @@
 package com.impact.realisticvitality.player;
 
+import com.impact.realisticvitality.air.AirQuality;
 import net.minecraft.nbt.CompoundTag;
 
-/** Breathing outside water: the ticks until the next bubble is lost to bad air, and the damage timer once bubbles run out. */
+/**
+ * Breathing outside water: the ticks until the next bubble is lost to bad air, the damage timer once bubbles run out,
+ * and (not saved, read again within a second) the air quality around the player and whether bubbles are draining.
+ */
 public final class AirState {
     private static final String DRAIN_TICKS_KEY = "DrainTicks";
     private static final String DAMAGE_TICKS_KEY = "DamageTicks";
 
     private int drainTicks;
     private int damageTicks;
+    private AirQuality quality = AirQuality.GOOD;
+    private boolean isDraining;
 
     public int drainTicks() {
         return drainTicks;
@@ -24,6 +30,22 @@ public final class AirState {
 
     public void setDamageTicks(int ticks) {
         damageTicks = ticks;
+    }
+
+    public AirQuality quality() {
+        return quality;
+    }
+
+    public void setQuality(AirQuality newQuality) {
+        quality = newQuality;
+    }
+
+    public boolean isDraining() {
+        return isDraining;
+    }
+
+    public void setDraining(boolean draining) {
+        isDraining = draining;
     }
 
     CompoundTag save() {

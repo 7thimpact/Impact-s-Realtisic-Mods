@@ -50,6 +50,11 @@ public final class HudLayout {
         return rowTop;
     }
 
+    /** The top edge of the right-hand row claimed last (for example vanilla's air bubbles), to draw beside it. */
+    public static int lastRightRowTop(int screenHeight, int rowHeightPixels) {
+        return screenHeight - ClientPlatform.current().statusRowHeights().rightHeight() + rowHeightPixels + rowOffsetY();
+    }
+
     /** Claims the next row on the left (above health and armor) and returns its top edge. */
     public static int claimLeftRow(int screenHeight, int rowHeightPixels) {
         StatusRowHeights heights = ClientPlatform.current().statusRowHeights();

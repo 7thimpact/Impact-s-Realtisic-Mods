@@ -31,6 +31,7 @@ public final class VitalityServerConfig {
     public final FilterSettings filters;
     public final TemperatureSettings temperature;
     public final InsulationSettings insulation;
+    public final AirSettings air;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
@@ -58,6 +59,9 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("insulation", "Points of warmth and cooling from armor, linings and clothing. Each point moves an edge of the comfortable range.");
         insulation = new InsulationSettings(builder);
+        builder.popSection();
+        builder.pushSection("air", "Breathing outside water: thin air up high and deep down, smoke in the Nether and near lava.");
+        air = new AirSettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -348,6 +352,44 @@ public final class VitalityServerConfig {
             anvilLiningLevels = builder.defineInteger("anvilLiningLevels", 1, 0, 40, "Experience levels to sew a lining in at an anvil (without Crafting).");
             strawHatCooling = builder.defineDouble("strawHatCooling", 4.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Cooling of a worn Straw Hat, in the sun only.");
             wetCooling = builder.defineDouble("wetCooling", 6.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Cooling while Wet.");
+        }
+    }
+
+    public static final class AirSettings {
+        private static final int MAXIMUM_HEIGHT = 2048;
+
+        public final ConfigValue<Integer> goodFromY;
+        public final ConfigValue<Integer> thinAboveY;
+        public final ConfigValue<Integer> veryThinAboveY;
+        public final ConfigValue<List<String>> heightBandDimensions;
+        public final ConfigValue<Integer> thinBubbleTicks;
+        public final ConfigValue<Integer> veryThinBubbleTicks;
+        public final ConfigValue<Integer> smokyBubbleTicks;
+        public final ConfigValue<Integer> verySmokyBubbleTicks;
+        public final ConfigValue<Integer> lavaSmokyRadius;
+        public final ConfigValue<Integer> lavaVerySmokyRadius;
+        public final ConfigValue<Double> damage;
+        public final ConfigValue<Integer> damageIntervalTicks;
+        public final ConfigValue<Boolean> doesWaterBreathingProtect;
+        public final ConfigValue<Double> respirationSlowingPerLevel;
+
+        private AirSettings(ConfigSpecBuilder builder) {
+            goodFromY = builder.defineInteger("goodFromY", -40, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Below this, deep air is stale and Thin.");
+            thinAboveY = builder.defineInteger("thinAboveY", 160, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Above this the air is Thin.");
+            veryThinAboveY = builder.defineInteger("veryThinAboveY", 220, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Above this the air is Very Thin.");
+            heightBandDimensions = builder.defineStringList("heightBandDimensions", List.of("minecraft:overworld"),
+                    "Dimensions whose air gets thin by height. Other dimensions take their air from data/<namespace>/air_quality files.");
+            thinBubbleTicks = builder.defineInteger("thinBubbleTicks", 120, 1, MAXIMUM_TICKS, "Ticks per air bubble lost in Thin air.");
+            veryThinBubbleTicks = builder.defineInteger("veryThinBubbleTicks", 60, 1, MAXIMUM_TICKS, "Ticks per air bubble lost in Very Thin air.");
+            smokyBubbleTicks = builder.defineInteger("smokyBubbleTicks", 80, 1, MAXIMUM_TICKS, "Ticks per air bubble lost in Smoky air.");
+            verySmokyBubbleTicks = builder.defineInteger("verySmokyBubbleTicks", 40, 1, MAXIMUM_TICKS, "Ticks per air bubble lost in Very Smoky air.");
+            lavaSmokyRadius = builder.defineInteger("lavaSmokyRadius", 3, 0, 16, "Lava within this many blocks makes the air Smoky.");
+            lavaVerySmokyRadius = builder.defineInteger("lavaVerySmokyRadius", 1, 0, 16, "Lava within this many blocks makes the air Very Smoky.");
+            damage = builder.defineDouble("damage", 2.0, 0.0, 100.0, "Damage once the bubbles run out, as with drowning.");
+            damageIntervalTicks = builder.defineInteger("damageIntervalTicks", 40, 1, MAXIMUM_TICKS, "Ticks between air damage.");
+            doesWaterBreathingProtect = builder.defineBoolean("waterBreathingProtects", true, "Water Breathing and Conduit Power protect against bad air.");
+            respirationSlowingPerLevel = builder.defineDouble("respirationSlowingPerLevel", 1.0 / 3.0, 0.0, 1.0,
+                    "Each level of Respiration slows bubble loss by this share (a third: Respiration III stops it).");
         }
     }
 

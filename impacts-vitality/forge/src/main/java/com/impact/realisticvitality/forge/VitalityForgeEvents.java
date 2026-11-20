@@ -3,6 +3,7 @@ package com.impact.realisticvitality.forge;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.air.DimensionAirQualities;
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
@@ -28,6 +29,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
@@ -60,6 +62,11 @@ final class VitalityForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onBreakSpeed);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onAnvilUpdate);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onAnvilRepair);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onAddReloadListeners);
+    }
+
+    private static void onAddReloadListeners(AddReloadListenerEvent event) {
+        event.addListener(DimensionAirQualities.INSTANCE);
     }
 
     // Without Crafting, linings are sewn at an anvil. The armor keeps all its NBT; the player's new name, if any, applies too.
