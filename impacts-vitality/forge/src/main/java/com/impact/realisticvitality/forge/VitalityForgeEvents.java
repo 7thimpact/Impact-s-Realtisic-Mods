@@ -23,6 +23,7 @@ import com.impact.realisticvitality.temperature.TemperatureTicks;
 import com.impact.realisticvitality.thirst.BottleFilling;
 import com.impact.realisticvitality.thirst.Drinking;
 import com.impact.realisticvitality.thirst.Sipping;
+import com.impact.realisticvitality.thirst.VesselFilling;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -163,8 +164,15 @@ final class VitalityForgeEvents {
         }
     }
 
-    // Sneak-using water with an empty hand: when there's a block behind the water, the click arrives here on both sides.
+    // A bottle or container used on another mod's water vessel (Food's campfire bucket) fills from it; sneak-using water with an
+    // empty hand sips (when there's a block behind the water, the click arrives here on both sides).
     private static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        InteractionResult filling = VesselFilling.tryFill(event.getLevel(), event.getPos(), event.getEntity(), event.getHand());
+        if (filling != InteractionResult.PASS) {
+            event.setCanceled(true);
+            event.setCancellationResult(filling);
+            return;
+        }
         if (event.getHand() != InteractionHand.MAIN_HAND || !Sipping.canSip(event.getEntity())) {
             return;
         }

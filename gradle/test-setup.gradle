@@ -49,10 +49,9 @@ minecraft {
     mappings channel: 'parchment', version: "${parchment_version}-${parchment_minecraft_version}"
 
     runs {
-        gameTestServer {
+        configureEach {
             workingDirectory project.file('run')
             property 'forge.logging.console.level', 'info'
-            property 'forge.enabledGameTestNamespaces', setupModIds.join(',')
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             setupMixinConfigs.each { configName ->
@@ -65,6 +64,19 @@ minecraft {
                     }
                 }
             }
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', setupModIds.join(',')
+        }
+
+        client {
+        }
+
+        // A client with exactly this setup's mods, straight into run/saves/ImpactsTest: tools/client-screenshot.sh takes the setup's folder.
+        clientQuickPlay {
+            parent runs.client
+            args '--quickPlaySingleplayer', 'ImpactsTest'
         }
     }
 }
@@ -117,7 +129,7 @@ tasks.matching { task -> task.name == 'runGameTestServer' }.configureEach { runT
     runTask.finalizedBy checkImpactLog
 }
 
-tasks.matching { task -> task.name == 'prepareRunGameTestServer' }.configureEach { prepareTask ->
+tasks.matching { task -> task.name in ['prepareRunGameTestServer', 'prepareRunClient', 'prepareRunClientQuickPlay'] }.configureEach { prepareTask ->
     prepareTask.dependsOn setupModProjects.collect { modProject -> "${modProject.path}:classes" }
     prepareTask.dependsOn copySetupModJars
     // Mixin remaps each mod's refmap with this file at launch.

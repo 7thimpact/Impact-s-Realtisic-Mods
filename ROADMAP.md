@@ -68,7 +68,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 - [x] 5 First-join migration and creative mode
 - [x] 6 Packs
 - [x] 7 Placed packs
-- [ ] 8 Integration: IRV parts in step 4, IRC parts in step 5
+- [ ] 8 Integration: IRV parts done in step 4 (Air Tanks and the Hydration Pack in the back slot, Vitality's HUD lined up with the two-slot hotbar, the Frame Pack's thirst, the `inventory-and-vitality` setup); IRC parts in step 5
 - [x] 9 SRF pass: the four GameTests from `docs/srf-notes.md`, and the `inventory-with-srf` setup
 - [x] 10 Achievements
 - [x] 11 Polish and compatibility: pack tooltips, generated lang, the `inventory-alone` and `inventory-with-srf` setups. JEI pages for packs come with Lib's JEI base plugin (step 3); the other setups with IRI come with their mods.
@@ -99,7 +99,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 8 Raw food risk: `#impactsfood:raw_risky`, the Hunger roll on Forge's finished-eating event, per-food overrides, the switch
 - [x] 9 Baking: Flour from a stone grinder (with seeds), Dough with any water bottle, Loaf Dough, Dough Bun, Flatbread, Dumpling, bread from Loaf Dough, cake, cookies, pie and porridge from Flour, grid baking off, the grinders' standalone recipes
 - [ ] 10 IRC integration (moves to step 5)
-- [ ] 11 IRV, IRI and SRF checks: done for IRI (byproducts with no room drop, with or without its locked slots) and SRF (the cauldron pass-through with SRF's raw gold ore, in the new `food-with-srf` setup); the IRV parts come in step 4
+- [x] 11 IRV, IRI and SRF checks: IRI (byproducts with no room drop, with or without its locked slots), SRF (the cauldron pass-through with SRF's raw gold ore, in the new `food-with-srf` setup) and IRV (the campfire bucket as a Lib water vessel, so Vitality fills Purified Water from it while it boils; the food tags Vitality reads; the `food-and-vitality` setup)
 - [x] 12 Polish: all 26 achievements, JEI (Boiling, Soups and Spit Roasting categories; cutting in Lib's Tool Crafting; info on the cooking styles, the spit and the campfire bucket), tooltips (styles, tools, raw pieces, the raw-food risk on vanilla items too), Food's own sound events with subtitles
 
 ## 4. Impact's Realistic Vitality
@@ -115,7 +115,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] 7 Insulation: warm, cooling and conductive armor tags (leather, chainmail, iron), Wool, Fur and Leather Linings sewn at an anvil without Crafting (keeping the armor's NBT; the Bone Needle recipe comes with Crafting in step 5), lining tooltips, the Straw Hat (cooling in the sun), being Wet, and the Thermometer's ambient readout under the gauge
 - [x] 8 Air: Overworld height bands, the Nether (smoky) and End (thin) from `air_quality` data files any datapack can add to, lava and lava cauldrons fuming within 3 and 1 blocks, a bubble lost every so often with vanilla's refill held back, 2 damage every 2 seconds once out (`thin_air` or `fumes`, none on Peaceful), Water Breathing, Conduit Power and Respiration, and the cloud at the end of the bubble row
 - [x] 9 Breathing gear: the Cloth Mask (damp from water, halves smoke), Air Bladder, Bottled Air, Respirator and Charcoal Filters (fitted in a grid, worn down by smoke), Air Tank (thin air with a Respirator on, from the inventory or back slot, refilling in good air), Rebreather (filters and tanks last twice as long), Air Compressor (fuel fills a tank in 5 seconds), Netherite Rebreather (smithing; smoke never affects you) and Shulker Air Tank
-- [ ] 10 Integration: IRF and IRI parts here; IRC parts in step 5; SRF heat entries in step 6
+- [ ] 10 Integration. IRF and IRI parts done: bottles and containers fill from Food's campfire bucket through Lib's new water vessels (purified while it boils), Food's soups, boiled, toasted and dried foods in the drink and food-temperature tables, the Frame Pack (`#impactsvitality:heavy_packs`) adding 10% to exertion thirst, tanks and the Hydration Pack in Inventory's back slot, the HUD lined up with Inventory's two-slot hotbar, and the `food-and-vitality` and `inventory-and-vitality` setups. IRC parts in step 5; SRF heat entries in step 6
 - [ ] 11 Achievements
 - [ ] 12 Polish
 

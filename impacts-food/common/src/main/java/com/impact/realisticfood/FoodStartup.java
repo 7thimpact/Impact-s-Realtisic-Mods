@@ -5,9 +5,11 @@ import com.impact.lib.StartupSummary;
 import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.fuel.FuelRegistry;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.lib.water.WaterVessels;
 import com.impact.realisticfood.advancement.FoodTriggers;
 import com.impact.realisticfood.boiling.BoilingRecipes;
 import com.impact.realisticfood.boiling.PotBoiling;
+import com.impact.realisticfood.bucket.CampfireBucketWaterVessel;
 import com.impact.realisticfood.bucket.CampfireBuckets;
 import com.impact.realisticfood.config.FoodClientConfig;
 import com.impact.realisticfood.config.FoodCommonConfig;
@@ -34,7 +36,7 @@ public final class FoodStartup {
 
     /**
      * Mod construction: registers with Lib, then the log categories, config files, items, cutting, cooking times,
-     * boiling recipes, the network channel and Food's answer to Lib's boiling question.
+     * boiling recipes, the network channel, Food's answer to Lib's boiling question and its campfire bucket as a water vessel.
      */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(FoodMod.MOD_ID);
@@ -54,6 +56,7 @@ public final class FoodStartup {
         Spits.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
+        WaterVessels.registerProvider(FoodMod.MOD_ID, new CampfireBucketWaterVessel());
         ImpactsLib.onModsReady(impactMods -> {
             FuelRegistry.register(FoodItems.fixedFood(FixedFood.BURNT_FOOD), stack -> FoodServerConfig.get().burntFood.burnTicks.get());
             FuelRegistry.register(Spits.spitItem(), SPIT_BURN_TICKS);

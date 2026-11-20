@@ -128,6 +128,10 @@ public final class BottleFilling {
         BottledWater water = BottledWater.filledWith(purity);
         player.awardStat(Stats.ITEM_USED.get(held.getItem()));
         player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, VitalityItems.bottle(water)));
+        logFilled(player, purity, source);
+    }
+
+    static void logFilled(Player player, WaterPurity purity, String source) {
         LOG.debug(VitalityLogCategories.DRINK, "bottle filled", "player", player.getScoreboardName(), "source", source,
                 "purity", purity.serializedName, "boiling", purity == WaterPurity.PURIFIED);
     }

@@ -23,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
  */
 final class VitalityItemTags extends ItemTagsProvider {
     private static final String FOOD_MOD_ID = VitalityMod.FOOD_MOD_ID;
+    private static final String INVENTORY_MOD_ID = VitalityMod.INVENTORY_MOD_ID;
 
     VitalityItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFiles) {
         super(output, lookupProvider, CompletableFuture.completedFuture(TagsProvider.TagLookup.empty()), VitalityMod.MOD_ID, existingFiles);
@@ -39,7 +40,9 @@ final class VitalityItemTags extends ItemTagsProvider {
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "dried_foods"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "dough_bun"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "flatbread"));
-        tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW);
+        tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW)
+                .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "soups"));
+        tag(VitalityTags.HEAVY_PACKS).addOptional(ResourceIds.of(INVENTORY_MOD_ID, "frame_pack"));
         tag(VitalityTags.JUICY_FOODS).add(Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.APPLE, Items.CARROT, Items.BEETROOT);
         tag(VitalityTags.WARM_ARMOR).add(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
         tag(VitalityTags.COOLING_ARMOR).add(Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);

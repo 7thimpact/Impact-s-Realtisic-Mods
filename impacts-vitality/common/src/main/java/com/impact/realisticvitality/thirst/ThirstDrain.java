@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.thirst;
 
+import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
@@ -10,6 +11,7 @@ import com.impact.realisticvitality.player.ThirstState;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityDamageTypes;
 import com.impact.realisticvitality.registry.VitalityEffects;
+import com.impact.realisticvitality.registry.VitalityTags;
 import com.impact.realisticvitality.temperature.BodyState;
 import com.impact.realisticvitality.temperature.TemperatureTicks;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,8 +48,9 @@ public final class ThirstDrain {
         if (!isPayingForAnAction || player.level().isClientSide || !isOn()) {
             return;
         }
-        double multiplier = VitalityServerConfig.get().thirst.exhaustionMultiplier.get();
-        addExhaustion(player, (float) (hungerExhaustion * multiplier));
+        VitalityServerConfig.ThirstSettings settings = VitalityServerConfig.get().thirst;
+        double packMultiplier = BackSlot.get(player).is(VitalityTags.HEAVY_PACKS) ? settings.heavyPackMultiplier.get() : 1.0;
+        addExhaustion(player, (float) (hungerExhaustion * settings.exhaustionMultiplier.get() * packMultiplier));
     }
 
     /** Marks the Hunger effect's own food drain, which is not an action and so costs no thirst. */

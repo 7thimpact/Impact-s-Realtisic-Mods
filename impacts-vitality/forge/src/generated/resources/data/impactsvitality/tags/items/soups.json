@@ -3,6 +3,10 @@
     "minecraft:mushroom_stew",
     "minecraft:rabbit_stew",
     "minecraft:beetroot_soup",
-    "minecraft:suspicious_stew"
+    "minecraft:suspicious_stew",
+    {
+      "id": "#impactsfood:soups",
+      "required": false
+    }
   ]
 }

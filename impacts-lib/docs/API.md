@@ -103,6 +103,8 @@ Operators (`commands.permissionLevel` in Lib's COMMON file, default 2) can use:
 
 `<mod>` takes the full mod ID (`impactsinventory`) or the short name from log lines (`inventory`). A category can only be turned on or off once the mod has registered it with `ImpactsLog.registerCategories`.
 
+A mod adds its own subcommand during construction with `ImpactsCommands.addSubcommand(() -> Commands.literal("vitality")...)`; it inherits `/impacts`'s permission level. Vitality's is `/impacts vitality show|set`.
+
 ## Player dump sections
 
 Each mod adds its own part of `/impacts dump player`:
@@ -262,6 +264,8 @@ ImpactsLib.isHeated(level, pos);                                          // #im
 ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // ImpactsLib.isBoiling(level, pos)
 ```
 
+`LoaderPlatform.current().burnTicks(stack)` reads any item's furnace burn time, every mod's fuels included (Vitality's Air Compressor burns them).
+
 `fuel.overrides` in Lib's server config (`item=ticks`) wins over registered burn times. A compost chance can also be a supplier read from config (`CompostRegistry.register(item, () -> chance)`); Lib applies chances once every mod is ready and again at every server start. `#impactslib:cold_sources` holds ice and snow for Vitality.
 
 ## Eating without the hold
@@ -272,6 +276,7 @@ ImpactsLib.registerBoilingProvider("impactsfood", (level, pos) -> ...);   // Imp
 
 - Ingredient `{"type": "impactslib:water_bottle"}` matches a vanilla water bottle or anything in `#impactslib:water_bottles`.
 - `ImpactsEvents.postWaterFilled(new WaterFilled(player, stack, level, pos, boiled))` after a mod fills a container item. Listen in common code with `ImpactsEvents.onWaterFilled(...)`, or on Forge's bus with `ImpactsWaterFilledEvent`.
+- Water vessels: a block that holds water but isn't a water block or a vanilla cauldron (Food's campfire bucket) can be filled from by other mods. Its mod registers `WaterVessels.registerProvider(modId, provider)`, answering `canFillBottle(level, pos)` (both sides) and `takeBottle(level, pos)` (server, takes one bottle's worth). Vitality fills bottles and containers from any vessel, purified while `isBoiling` says so.
 
 ## Hold-to-use
 

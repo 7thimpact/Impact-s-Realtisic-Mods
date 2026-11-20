@@ -88,6 +88,7 @@ public final class VitalityServerConfig {
     public static final class ThirstSettings {
         public final ConfigValue<Double> exhaustionPerPoint;
         public final ConfigValue<Double> exhaustionMultiplier;
+        public final ConfigValue<Double> heavyPackMultiplier;
         public final ConfigValue<Integer> restingDrainTicks;
         public final ConfigValue<Double> hotDrainMultiplier;
         public final ConfigValue<Double> veryHotDrainMultiplier;
@@ -105,6 +106,8 @@ public final class VitalityServerConfig {
                     "Thirst exhaustion that costs 1 point of Hydration, or of thirst once Hydration is empty (vanilla hunger uses 4).");
             exhaustionMultiplier = builder.defineDouble("exhaustionMultiplier", 1.0, 0.0, MAXIMUM_MULTIPLIER,
                     "Thirst exhaustion from actions, times the hunger exhaustion the same action costs.");
+            heavyPackMultiplier = builder.defineDouble("heavyPackMultiplier", 1.1, 1.0, MAXIMUM_MULTIPLIER,
+                    "Thirst from exertion while wearing a pack in #impactsvitality:heavy_packs on your back (Inventory's Frame Pack).");
             restingDrainTicks = builder.defineInteger("restingDrainTicks", 6000, 1, MAXIMUM_TICKS,
                     "A small constant drain: 1 point of thirst this often, even at rest.");
             hotDrainMultiplier = builder.defineDouble("hotDrainMultiplier", 1.5, 1.0, MAXIMUM_MULTIPLIER, "Thirst drain while Hot.");
@@ -132,7 +135,9 @@ public final class VitalityServerConfig {
                 "minecraft:milk_bucket=6,3",
                 "minecraft:potion=3,1",
                 "minecraft:honey_bottle=2,0",
+                "#impactsfood:soups=6,2",
                 "#impactsvitality:soups=4,2",
+                "#impactsfood:boiled_foods=2,0",
                 "minecraft:melon_slice=2,1",
                 "#impactsvitality:juicy_foods=1,0",
                 "#impactsvitality:dry_foods=-1,0");
@@ -317,7 +322,7 @@ public final class VitalityServerConfig {
             overheatingDamage = builder.defineDouble("overheatingDamage", 1.0, 0.0, 100.0, "Damage while Overheating (heatstroke).");
             coldMiningSpeed = builder.defineDouble("coldMiningSpeed", 0.85, 0.0, 1.0, "Mining speed while Cold or colder.");
             foodTemperatures = builder.defineStringList("foodTemperatures", List.of(
-                    "impactsvitality:cold_water=-15", "minecraft:melon_slice=-15", "#impactsvitality:soups=15"),
+                    "impactsvitality:cold_water=-15", "minecraft:melon_slice=-15", "#impactsvitality:soups=15", "#impactsfood:toasted_foods=5"),
                     "Body temperature a drink or food changes right away, as item=points or #tag=points.");
         }
     }

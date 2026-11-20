@@ -8,12 +8,21 @@
 #
 #   tools/client-screenshot.sh <mod folder> <output.png> [step ...]
 #   tools/client-screenshot.sh impacts-inventory /tmp/hotbar.png "/gamemode survival" "/give @s iron_sword" key:f
+# A family setup's folder works too (test-setups/<name>), to see several mods together; run its GameTests first.
 set -u
 MOD_FOLDER=$1
 OUTPUT_FILE=$2
 shift 2
 REPOSITORY_ROOT=$(cd "$(dirname "$0")/.." && pwd)
-RUN_DIRECTORY="$REPOSITORY_ROOT/$MOD_FOLDER/forge/run"
+if [ -d "$REPOSITORY_ROOT/$MOD_FOLDER/forge" ]; then
+  RUN_DIRECTORY="$REPOSITORY_ROOT/$MOD_FOLDER/forge/run"
+  CLIENT_TASK=":$MOD_FOLDER:forge:runClientQuickPlay"
+  GAME_TEST_TASK=":$MOD_FOLDER:forge:runGameTestServer"
+else
+  RUN_DIRECTORY="$REPOSITORY_ROOT/$MOD_FOLDER/run"
+  CLIENT_TASK=":${MOD_FOLDER//\//:}:runClientQuickPlay"
+  GAME_TEST_TASK=":${MOD_FOLDER//\//:}:runGameTestServer"
+fi
 TEST_WORLD="$RUN_DIRECTORY/saves/ImpactsTest"
 CLIENT_LOG=$(mktemp)
 DISPLAY_NUMBER=:97
@@ -21,7 +30,7 @@ STARTUP_TIMEOUT_SECONDS=600
 
 if [ ! -d "$TEST_WORLD" ]; then
   if [ ! -d "$RUN_DIRECTORY/world" ]; then
-    echo "No test world yet: run ./gradlew :$MOD_FOLDER:forge:runGameTestServer first." >&2
+    echo "No test world yet: run ./gradlew $GAME_TEST_TASK first." >&2
     exit 1
   fi
   mkdir -p "$RUN_DIRECTORY/saves"
@@ -33,7 +42,7 @@ Xvfb "$DISPLAY_NUMBER" -screen 0 1280x720x24 > /dev/null 2>&1 &
 XVFB_PROCESS=$!
 export DISPLAY=$DISPLAY_NUMBER
 export LIBGL_ALWAYS_SOFTWARE=1
-(cd "$REPOSITORY_ROOT" && ./gradlew ":$MOD_FOLDER:forge:runClientQuickPlay" --max-workers=2 > "$CLIENT_LOG" 2>&1) &
+(cd "$REPOSITORY_ROOT" && ./gradlew "$CLIENT_TASK" --max-workers=2 > "$CLIENT_LOG" 2>&1) &
 GRADLE_PROCESS=$!
 
 stop_everything() {

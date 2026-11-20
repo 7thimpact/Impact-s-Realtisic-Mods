@@ -23,6 +23,8 @@ public final class VitalityTags {
     public static final TagKey<Item> COOLING_ARMOR = item("cooling_armor");
     /** Metal armor that makes both heat and cold worse: iron by default. */
     public static final TagKey<Item> CONDUCTIVE_ARMOR = item("conductive_armor");
+    /** Packs heavy enough to make exertion thirstier when worn on the back (Inventory's Frame Pack, as an optional entry). */
+    public static final TagKey<Item> HEAVY_PACKS = item("heavy_packs");
     /** Lib's shared tag: anything that works as a water bottle in recipes. */
     public static final TagKey<Item> WATER_BOTTLES = TagKey.create(Registries.ITEM, ResourceIds.of(ImpactsLib.MOD_ID, "water_bottles"));
 
