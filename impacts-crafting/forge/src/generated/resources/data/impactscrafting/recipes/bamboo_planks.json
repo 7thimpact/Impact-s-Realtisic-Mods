@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:bamboo_planks"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:bamboo_blocks"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:bamboo_planks"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

@@ -115,6 +115,14 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
         "backSlot", BackSlot.get(player)));
 ```
 
+`/impacts dump held` (the item in the main hand) and `/impacts dump block` (the block looked at, up to 6 blocks away) work the same way. Lib's own sections show the item's ID, count, NBT, tags, wood and uses, and the block's ID, state, tags, block entity data and whether it's heated or boiling. A section that returns an empty map is left out:
+
+```java
+ImpactsDump.registerItemSection("crafting", (stack, player) -> ImpactsDump.entries("tier", TierResolver.tierOf(stack).serializedName));
+ImpactsDump.registerBlockSection("crafting", (level, position, state) -> level.getBlockEntity(position) instanceof MyTable table
+        ? ImpactsDump.entries("usesLeft", table.usesLeft()) : Map.of());
+```
+
 ## Resource IDs and advancement triggers
 
 `ResourceIds.itemId(item)` and `ResourceIds.blockId(block)` give an item's or block's registry ID from loader-independent code.
@@ -223,7 +231,7 @@ A mod with mixins puts `<modid>.mixins.json` in its common resources. The build 
 
 ## Tool crafting (`impactslib:tool_crafting`)
 
-A crafting recipe, shaped (`pattern` + `key`) or shapeless (`ingredients`), whose `tools` stay in the grid in any slot and take `tool_damage` (default 1). A tool is anything with durability: vanilla damage, or Lib's uses.
+A crafting recipe, shaped (`pattern` + `key`) or shapeless (`ingredients`), whose `tools` stay in the grid in any slot and take `tool_damage` (default 1). A tool with durability (vanilla damage, or Lib's uses) wears; a tool without any (flint as a trimming tool) is used up. Only one item of a stacked tool is used each craft: a stack of 5 pebbles leaves 4 unused in the grid and the worn one goes to the inventory.
 
 ```json
 {
@@ -242,13 +250,23 @@ A crafting recipe, shaped (`pattern` + `key`) or shapeless (`ingredients`), whos
 - The `impactslib:tool_crafted` trigger takes optional `result`, `tool` and `byproduct` item predicates.
 - Other mods' special recipes get the same tool behavior from `ToolCrafting.damageTools(grid, isTool, damage)`.
 - Tool recipes stay out of the vanilla recipe book (it can't place tools); JEI shows them in Lib's category.
-- **Config overrides:** `ToolCrafting.registerOverrides(namespace, overrides)` lets a mod's config change the result count (`resultCount`) and byproduct chances (`byproductChance`, where 0 turns a byproduct off) of every tool recipe in its namespace. Food uses it for `cutting.yieldOverrides`, `cutting.byproductChanceOverrides` and `cutting.byproducts`.
+- **Config overrides:** `ToolCrafting.registerOverrides(namespace, overrides)` lets a mod's config change the result count (`resultCount`), byproduct chances (`byproductChance`, where 0 turns a byproduct off) and byproduct counts (`byproductCount`, optionally knowing the grid) of every tool recipe in its namespace. Food uses it for `cutting.yieldOverrides`, `cutting.byproductChanceOverrides` and `cutting.byproducts`; Crafting for Wood Scraps per craft, and none from nether wood.
 - **Craft listeners:** `ToolCrafting.onCrafted(craft -> ...)` runs on the server after every tool craft. The `CompletedToolCraft` record holds the player, the recipe, the result, the tools before and after (an empty stack for a tool that broke) and the byproducts given.
-- **Data generation:** `ToolCraftingRecipeBuilder.of(result, count)` (in Lib's Forge module) writes these recipes: `requires(...)` for shapeless ones, `pattern(...)` and `define(...)` for shaped ones, then `tool`, `toolDamage`, `byproduct`, `remainder`, `craftTicks`, `copyNbtFrom` and `save(output, id)`. Wrap the output with `ConditionalRecipes.withConditions` for conditions.
+- **Data generation:** `ToolCraftingRecipeBuilder.of(result, count)`, or `of(stack)` for a result with NBT (in Lib's Forge module), writes these recipes: `requires(...)` for shapeless ones, `pattern(...)` and `define(...)` for shaped ones, then `tool`, `toolDamage`, `byproduct`, `remainder`, `craftTicks`, `copyNbtFrom` and `save(output, id)`. Wrap the output with `ConditionalRecipes.withConditions` for conditions.
 
 ## Creative tabs
 
-`CreativeTabs.register(modId, iconSupplier, itemsSupplier)` registers the mod's tab as `<modId>:items` during mod construction, titled by the translation key `CreativeTabs.titleKey(modId)` (`itemGroup.<modId>`). The suppliers are read when the tab is filled.
+`CreativeTabs.register(modId, iconSupplier, itemsSupplier)` registers the mod's tab as `<modId>:items` during mod construction, titled by the translation key `CreativeTabs.titleKey(modId)` (`itemGroup.<modId>`). The suppliers are read when the tab is filled. `CreativeTabs.registerStacks(modId, iconSupplier, stacksSupplier)` takes stacks instead, for one entry per NBT variant (a per-wood part per wood).
+
+## Wood type data
+
+Per-wood parts store `{"wood": "minecraft:oak"}`, the namespaced wood type name (`com.impact.lib.wood.WoodData`):
+
+- `get(stack)`, `set(stack, wood)`, `of(item, wood)` and `tagFor(wood)` (the NBT, for recipe results).
+- `vanillaItem(wood, WoodKind.DOOR)`: the matching vanilla item, with bamboo's raft names; empty when the wood has none (nether woods have no boats).
+- `logTag(wood)` (`#minecraft:oak_logs`, `#minecraft:crimson_stems`, `#minecraft:bamboo_blocks`), `isFlammable(wood)` (false for crimson, warped and anything in `#minecraft:non_flammable_wood`), `displayName(wood)` (from `wood.<namespace>.<name>`, falling back to the name in title case).
+- `VANILLA_WOODS` and `allWoods()` (vanilla's, then every modded wood type registered as `modid:name`).
+- Data generation: `WoodIngredients.of(item, wood)` builds the `forge:partial_nbt` ingredient for one wood, so woods never mix in a recipe.
 
 ## Uses and configured durability
 

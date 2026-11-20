@@ -112,7 +112,7 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
                 remaining.set(slot, remainderFor(stack));
             }
         }
-        player.ifPresent(crafter -> ToolCrafting.finishCraft(crafter, this, getResultItem(crafter.level().registryAccess()), toolsBefore, toolsAfter));
+        player.ifPresent(crafter -> ToolCrafting.finishCraft(crafter, this, grid, getResultItem(crafter.level().registryAccess()), toolsBefore, toolsAfter));
         return remaining;
     }
 

@@ -75,7 +75,7 @@ public final class ToolCrafting {
         CRAFTED_LISTENERS.add(listener);
     }
 
-    /** Whether the stack can act as a tool: it has vanilla durability or Lib's uses. */
+    /** Whether the stack wears as a tool: it has vanilla durability or Lib's uses. Any other tool is used up instead. */
     public static boolean canBeTool(ItemStack stack) {
         return stack.isDamageableItem() || UsesDurability.isTracked(stack);
     }
@@ -113,9 +113,15 @@ public final class ToolCrafting {
         return LoaderPlatform.current().craftingPlayer();
     }
 
-    /** The tool after one craft: worn by the damage, or empty when it broke. */
+    /**
+     * One tool after one craft: worn by the damage, or empty when it broke. A tool without wear (flint as a trimming
+     * tool) is used up. Only one item of a stacked tool is used; the rest stays in the grid.
+     */
     static ItemStack wearTool(ItemStack tool, int damage, Player player) {
-        ItemStack worn = tool.copy();
+        ItemStack worn = tool.copyWithCount(1);
+        if (!canBeTool(worn)) {
+            return ItemStack.EMPTY;
+        }
         boolean hasBroken = UsesDurability.isTracked(worn)
                 ? UsesDurability.use(worn, damage)
                 : worn.hurt(damage, RandomSource.create(), player instanceof ServerPlayer serverPlayer ? serverPlayer : null);
@@ -131,7 +137,8 @@ public final class ToolCrafting {
     }
 
     /** Server side, once per craft: byproducts through Give or drop, the {@code impactslib:tool_crafted} trigger, the log line, the listeners. */
-    static void finishCraft(Player player, ToolCraftingRecipe recipe, ItemStack result, List<ItemStack> toolsBefore, List<ItemStack> toolsAfter) {
+    static void finishCraft(Player player, ToolCraftingRecipe recipe, CraftingContainer grid, ItemStack result, List<ItemStack> toolsBefore,
+                            List<ItemStack> toolsAfter) {
         if (!(player instanceof ServerPlayer serverPlayer)) {
             return;
         }
@@ -139,8 +146,9 @@ public final class ToolCrafting {
         List<ItemStack> givenByproducts = new ArrayList<>();
         for (Byproduct byproduct : recipe.byproducts()) {
             Byproduct configured = byproduct.withChance(overrides.byproductChance(recipe, byproduct));
-            if (configured.rolls(serverPlayer.getRandom())) {
-                ItemStack given = configured.stack().copy();
+            int count = overrides.byproductCount(recipe, byproduct, grid);
+            if (count > 0 && configured.rolls(serverPlayer.getRandom())) {
+                ItemStack given = configured.stack().copyWithCount(count);
                 givenByproducts.add(given.copy());
                 ImpactsItems.giveOrDrop(serverPlayer, given);
             }
@@ -158,7 +166,7 @@ public final class ToolCrafting {
     private static Optional<Integer> firstFreeToolSlot(CraftingContainer grid, Ingredient tool, Set<Integer> claimed) {
         for (int slot = 0; slot < grid.getContainerSize(); slot++) {
             ItemStack stack = grid.getItem(slot);
-            if (!claimed.contains(slot) && canBeTool(stack) && tool.test(stack)) {
+            if (!claimed.contains(slot) && !stack.isEmpty() && tool.test(stack)) {
                 return Optional.of(slot);
             }
         }

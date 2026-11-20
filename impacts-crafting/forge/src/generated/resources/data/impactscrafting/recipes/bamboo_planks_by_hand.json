@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:bamboo_planks_by_hand"
+    }
+  ],
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "minecraft:bamboo_blocks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bamboo_planks"
+  }
+}

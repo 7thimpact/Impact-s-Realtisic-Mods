@@ -3,6 +3,7 @@ package com.impact.realisticcrafting.forge.datagen;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.impact.lib.ResourceIds;
+import com.impact.lib.wood.WoodData;
 import com.impact.realisticcrafting.config.OverhaulCategory;
 import com.impact.realisticcrafting.forge.condition.OverhaulEnabledCondition;
 import net.minecraft.data.CachedOutput;
@@ -41,7 +42,8 @@ final class VanillaRecipeOverrides implements DataProvider {
     VanillaRecipeOverrides(PackOutput output, ExistingFileHelper existingFiles) {
         this.output = output;
         this.existingFiles = existingFiles;
-        replace(OverhaulCategory.WOOD, "crafting_table");
+        replace(OverhaulCategory.WOOD, "crafting_table", "stick");
+        WoodData.VANILLA_WOODS.forEach(wood -> replace(OverhaulCategory.WOOD, wood.getPath() + "_planks"));
     }
 
     private void replace(OverhaulCategory category, String... vanillaRecipeNames) {

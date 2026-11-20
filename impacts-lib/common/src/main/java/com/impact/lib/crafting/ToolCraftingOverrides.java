@@ -1,7 +1,9 @@
 package com.impact.lib.crafting;
 
+import net.minecraft.world.inventory.CraftingContainer;
+
 /**
- * Config-driven numbers for one mod's tool-crafting recipes (Food's cut yields and byproduct chances). A mod registers
+ * Config-driven numbers for one mod's tool-crafting recipes (Food's cut yields and byproduct chances, Crafting's Wood Scraps per craft). A mod registers
  * it for its recipe namespace with {@link ToolCrafting#registerOverrides}; recipes keep their JSON values otherwise.
  */
 public interface ToolCraftingOverrides {
@@ -13,5 +15,15 @@ public interface ToolCraftingOverrides {
     /** The chance of the byproduct, given the chance the recipe's JSON names. 0 turns the byproduct off. */
     default float byproductChance(ToolCraftingRecipe recipe, Byproduct byproduct) {
         return byproduct.chance();
+    }
+
+    /** How many of the byproduct to give, given the count the recipe's JSON names (Crafting's Wood Scraps per craft). */
+    default int byproductCount(ToolCraftingRecipe recipe, Byproduct byproduct) {
+        return byproduct.stack().getCount();
+    }
+
+    /** Like {@link #byproductCount(ToolCraftingRecipe, Byproduct)}, knowing what was in the grid (no scraps from nether wood). */
+    default int byproductCount(ToolCraftingRecipe recipe, Byproduct byproduct, CraftingContainer grid) {
+        return byproductCount(recipe, byproduct);
     }
 }

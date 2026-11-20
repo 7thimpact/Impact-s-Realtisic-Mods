@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:stone_hinge"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:shaped_stone"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactscrafting:stone_hinge"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:cherry_planks"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:cherry_logs"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:cherry_planks"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

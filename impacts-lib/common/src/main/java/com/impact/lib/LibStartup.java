@@ -9,6 +9,8 @@ import com.impact.lib.counter.ImpactsCounters;
 import com.impact.lib.crafting.ToolCrafting;
 import com.impact.lib.debug.LibLogCategories;
 import com.impact.lib.dump.ImpactsDump;
+import com.impact.lib.dump.LibBlockDumpSection;
+import com.impact.lib.dump.LibItemDumpSection;
 import com.impact.lib.dump.LibPlayerDumpSection;
 import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.grinding.Grinding;
@@ -31,6 +33,8 @@ public final class LibStartup {
     public static void onModConstruction() {
         LOG.registerCategories(LibLogCategories.ALL);
         ImpactsDump.registerPlayerSection(LibPlayerDumpSection.SECTION_NAME, new LibPlayerDumpSection());
+        ImpactsDump.registerItemSection(LibItemDumpSection.SECTION_NAME, new LibItemDumpSection());
+        ImpactsDump.registerBlockSection(LibBlockDumpSection.SECTION_NAME, new LibBlockDumpSection());
         LibCommonConfig commonConfig = LibCommonConfig.register();
         LibServerConfig.register();
         LibClientConfig.register();

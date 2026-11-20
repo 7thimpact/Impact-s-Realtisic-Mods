@@ -6,6 +6,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.crafting.ToolCrafting;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
@@ -24,8 +25,7 @@ public final class ToolCraftingRecipeBuilder {
     private static final int DEFAULT_TOOL_DAMAGE = 1;
     private static final float ALWAYS = 1.0F;
 
-    private final ItemLike result;
-    private final int resultCount;
+    private final ItemStack result;
     private final List<String> pattern = new ArrayList<>();
     private final Map<Character, Ingredient> key = new LinkedHashMap<>();
     private final List<Ingredient> ingredients = new ArrayList<>();
@@ -36,13 +36,17 @@ public final class ToolCraftingRecipeBuilder {
     private Integer craftTicks;
     private Ingredient nbtSource;
 
-    private ToolCraftingRecipeBuilder(ItemLike result, int resultCount) {
-        this.result = result;
-        this.resultCount = resultCount;
+    private ToolCraftingRecipeBuilder(ItemStack result) {
+        this.result = result.copy();
     }
 
     public static ToolCraftingRecipeBuilder of(ItemLike result, int resultCount) {
-        return new ToolCraftingRecipeBuilder(result, resultCount);
+        return new ToolCraftingRecipeBuilder(new ItemStack(result, resultCount));
+    }
+
+    /** A result with NBT, such as a per-wood part carrying its wood. */
+    public static ToolCraftingRecipeBuilder of(ItemStack result) {
+        return new ToolCraftingRecipeBuilder(result);
     }
 
     public static ToolCraftingRecipeBuilder of(ItemLike result) {
@@ -134,7 +138,7 @@ public final class ToolCraftingRecipeBuilder {
         if (toolDamage != DEFAULT_TOOL_DAMAGE) {
             json.addProperty("tool_damage", toolDamage);
         }
-        json.add("result", itemJson(result, resultCount));
+        json.add("result", resultJson());
         addArrayIfAny(json, "byproducts", byproducts);
         addArrayIfAny(json, "remainders", remainders);
         if (craftTicks != null) {
@@ -153,6 +157,15 @@ public final class ToolCraftingRecipeBuilder {
         JsonArray array = new JsonArray();
         entries.forEach(array::add);
         json.add(field, array);
+    }
+
+    // Forge reads a result's NBT from an "nbt" string.
+    private JsonObject resultJson() {
+        JsonObject resultObject = itemJson(result.getItem(), result.getCount());
+        if (result.hasTag()) {
+            resultObject.addProperty("nbt", result.getTag().toString());
+        }
+        return resultObject;
     }
 
     private static JsonObject itemJson(ItemLike item, int count) {

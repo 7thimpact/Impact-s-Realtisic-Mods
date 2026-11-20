@@ -28,12 +28,17 @@ public final class CreativeTabs {
      * is filled, after every registry is ready.
      */
     public static Supplier<CreativeModeTab> register(String modId, Supplier<ItemStack> icon, Supplier<List<? extends ItemLike>> items) {
+        return registerStacks(modId, icon, () -> items.get().stream().map(ItemStack::new).toList());
+    }
+
+    /** Like {@link #register}, with stacks, for items that need one entry per NBT variant (Crafting's per-wood parts). */
+    public static Supplier<CreativeModeTab> registerStacks(String modId, Supplier<ItemStack> icon, Supplier<List<ItemStack>> stacks) {
         LoaderPlatform platform = LoaderPlatform.current();
         return platform.registrar(modId).register(Registries.CREATIVE_MODE_TAB, TAB_PATH, () ->
                 platform.creativeTabBuilder()
                         .title(Component.translatable(titleKey(modId)))
                         .icon(icon)
-                        .displayItems((parameters, output) -> items.get().forEach(output::accept))
+                        .displayItems((parameters, output) -> stacks.get().forEach(output::accept))
                         .build());
     }
 }

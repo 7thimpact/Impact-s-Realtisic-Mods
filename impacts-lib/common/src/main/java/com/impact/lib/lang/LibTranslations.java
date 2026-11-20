@@ -1,5 +1,6 @@
 package com.impact.lib.lang;
 
+import com.impact.lib.wood.WoodData;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,6 +26,9 @@ public final class LibTranslations {
     public static final String DUMP_HEADER = "commands.impactslib.dump.header";
     public static final String DUMP_SECTION = "commands.impactslib.dump.section";
     public static final String DUMP_ENTRY = "commands.impactslib.dump.entry";
+    public static final String DUMP_HELD_HEADER = "commands.impactslib.dump.held_header";
+    public static final String DUMP_BLOCK_HEADER = "commands.impactslib.dump.block_header";
+    public static final String DUMP_NO_BLOCK = "commands.impactslib.dump.no_block";
 
     public static final String AUDIT_SUMMARY = "commands.impactslib.audit.summary";
     public static final String AUDIT_REPLACED = "commands.impactslib.audit.replaced";
@@ -69,6 +73,10 @@ public final class LibTranslations {
         english.put(DUMP_HEADER, "Impact dump for %s");
         english.put(DUMP_SECTION, "[%s]");
         english.put(DUMP_ENTRY, "  %s = %s");
+        english.put(DUMP_HELD_HEADER, "Impact dump of the item %s holds");
+        english.put(DUMP_BLOCK_HEADER, "Impact dump of the block at %s");
+        english.put(DUMP_NO_BLOCK, "Look at a block first.");
+        WoodData.VANILLA_WOODS.forEach(wood -> english.put(WoodData.nameKey(wood), WoodData.titleCase(wood.getPath())));
         english.put(AUDIT_SUMMARY, "%s vanilla recipes are replaced or turned off by Impact mods");
         english.put(AUDIT_REPLACED, "  %s: replaced by %s");
         english.put(AUDIT_TURNED_OFF, "  %s: turned off by %s");

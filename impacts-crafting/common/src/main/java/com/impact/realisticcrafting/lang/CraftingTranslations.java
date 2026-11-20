@@ -3,6 +3,8 @@ package com.impact.realisticcrafting.lang;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.CraftingPart;
+import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
 import com.impact.realisticcrafting.menu.CraftingStation;
 
@@ -34,6 +36,16 @@ public final class CraftingTranslations {
         english.put(MakeshiftTable.WOODEN.containerTitleKey(), "Makeshift Table");
         english.put(MakeshiftTable.STONE.containerTitleKey(), "Makeshift Stone Table");
         english.put(MakeshiftTableItem.USES_LEFT_KEY, "Uses left: %s / %s");
+        english.put(ITEM_KEY_PREFIX + "trimmed_planks", "Trimmed Planks");
+        english.put(ITEM_KEY_PREFIX + "trimmed_planks.wood", "%s Trimmed Planks");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.TRIMMED_STICK.path, "Trimmed Sticks");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.SHAPED_STONE.path, "Shaped Stone");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.STONE_HINGE.path, "Stone Hinge");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.TWINE.path, "Twine");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.STRING_CLUMP.path, "String Clump");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.WOOD_SCRAPS.path, "Wood Scraps");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.BONE_NEEDLE.path, "Bone Needle");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.FLINT_CHISEL.path, "Flint Chisel");
         english.put(CraftingStation.INVENTORY_GRID.needsTranslationKey(), "Needs your inventory grid");
         english.put(CraftingStation.MAKESHIFT_TABLE.needsTranslationKey(), "Needs a Makeshift Table");
         english.put(CraftingStation.MAKESHIFT_STONE_TABLE.needsTranslationKey(), "Needs a Makeshift Stone Table");

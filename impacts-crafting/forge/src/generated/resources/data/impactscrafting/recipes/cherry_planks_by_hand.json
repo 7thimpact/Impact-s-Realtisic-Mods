@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:cherry_planks_by_hand"
+    }
+  ],
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "minecraft:cherry_logs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cherry_planks"
+  }
+}

@@ -2,13 +2,17 @@ package com.impact.realisticcrafting;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
+import com.impact.lib.crafting.ToolCrafting;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.config.CraftingClientConfig;
 import com.impact.realisticcrafting.config.CraftingCommonConfig;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.config.OverhaulCategory;
+import com.impact.realisticcrafting.debug.CraftingDumpSections;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
+import com.impact.realisticcrafting.item.CraftingFuels;
 import com.impact.realisticcrafting.menu.CraftingMenus;
+import com.impact.realisticcrafting.recipe.CraftingToolCraftingOverrides;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
@@ -33,7 +37,12 @@ public final class CraftingStartup {
         CraftingItems.register();
         CraftingMenus.register();
         CraftingWorldgen.register();
-        ImpactsLib.onModsReady(impactMods -> logStartup());
+        CraftingDumpSections.register();
+        ToolCrafting.registerOverrides(CraftingMod.MOD_ID, new CraftingToolCraftingOverrides());
+        ImpactsLib.onModsReady(impactMods -> {
+            CraftingFuels.register();
+            logStartup();
+        });
     }
 
     private static void logStartup() {

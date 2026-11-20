@@ -6,6 +6,7 @@ import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.CraftingStartup;
 import com.impact.realisticcrafting.forge.client.CraftingForgeClient;
 import com.impact.realisticcrafting.forge.condition.OverhaulEnabledCondition;
+import com.impact.realisticcrafting.forge.condition.RecipeEnabledCondition;
 import com.impact.realisticcrafting.forge.datagen.CraftingDataGenerators;
 import com.impact.realisticcrafting.forge.loot.PebbleLootModifier;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -36,6 +37,7 @@ public final class ImpactsCraftingForge {
         // Forge asks for condition serializers to be registered while recipe serializers register.
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
             CraftingHelper.register(OverhaulEnabledCondition.Serializer.INSTANCE);
+            CraftingHelper.register(RecipeEnabledCondition.Serializer.INSTANCE);
         }
     }
 }

@@ -121,11 +121,11 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 
 ## 5. Impact's Realistic Crafting, plus Lib's crafting systems
 
-- [ ] **Lib systems for this step:** `WoodData`, and `/impacts dump held` and `/impacts dump block`
+- [x] **Lib systems for this step:** `WoodData`, and `/impacts dump held` and `/impacts dump block`
 - [ ] IRC milestones from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
   - [x] 1 Skeleton: configs (with a worldgen dimension list and biome blacklist), debug categories, the Stone Pebble (64 unused, 1 once worn), loose pebbles in worldgen (surface and cave features, a biome modifier for Overworld biomes), pebbles from gravel and stone (a global loot modifier, plus a break handler for stone broken by hand), the `impactscrafting:overhaul_enabled` recipe condition, and the `crafting-alone` and `crafting-with-srf` setups
   - [x] 2 Makeshift Table and tiers: both makeshift tables (3×3 grid through vanilla's crafting menu, three wear stages, uses kept on the item, falling apart like an anvil), the tier tags and `TierResolver`, the tier check in every crafting grid (the 2×2 included) with a "Needs a ..." hint over the refused result, the vanilla Crafting Table recipe switched off
-  - [ ] 3 Tool crafting and starting parts
+  - [x] 3 Tool crafting and starting parts: planks (1 by hand, 2 with a trimming tool) and sticks (vanilla's shape plus a trimming tool) replacing vanilla's, per-wood Trimmed Planks (tinted and named by wood), Trimmed Sticks, Shaped Stone, Stone Hinge, Twine, String Clump, Wood Scraps (a config count per craft, none from nether wood, fuel and compost), the Bone Needle and Flint Chisel; wooden parts burn
   - [ ] 4 Tools: hammering and the 10 wooden and stone tools
   - [ ] 5 Timed crafting in every grid
   - [ ] 6 Wood and stone branches

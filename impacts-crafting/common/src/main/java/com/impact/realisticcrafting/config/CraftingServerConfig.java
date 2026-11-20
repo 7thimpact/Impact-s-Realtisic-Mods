@@ -22,6 +22,8 @@ public final class CraftingServerConfig {
     public final TableSettings tables;
     public final TableTierSettings tableTiers;
     public final TierSettings tiers;
+    public final WoodScrapSettings woodScraps;
+    public final ConfigValue<Boolean> isFuelOn;
     public final ConfigFile file;
 
     private CraftingServerConfig(ConfigSpecBuilder builder) {
@@ -39,6 +41,12 @@ public final class CraftingServerConfig {
         builder.popSection();
         builder.pushSection("tiers", "Items whose tier the tier tags don't set. IDs or #tags.");
         tiers = new TierSettings(builder);
+        builder.popSection();
+        builder.pushSection("woodScraps", "Wood Scraps: the byproduct of every wood trimming or cutting recipe.");
+        woodScraps = new WoodScrapSettings(builder);
+        builder.popSection();
+        builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
+        isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
         builder.popSection();
         file = builder.register();
     }
@@ -82,9 +90,13 @@ public final class CraftingServerConfig {
 
     public static final class DurabilitySettings {
         public final ConfigValue<Integer> pebbleUses;
+        public final ConfigValue<Integer> needleUses;
+        public final ConfigValue<Integer> flintChiselUses;
 
         private DurabilitySettings(ConfigSpecBuilder builder) {
             pebbleUses = builder.defineInteger("pebble", 32, 1, MAXIMUM_USES, "Uses of a Stone Pebble.");
+            needleUses = builder.defineInteger("needle", 64, 1, MAXIMUM_USES, "Uses of a Bone Needle.");
+            flintChiselUses = builder.defineInteger("flintChisel", 48, 1, MAXIMUM_USES, "Uses of a Flint Chisel.");
         }
     }
 
@@ -125,6 +137,18 @@ public final class CraftingServerConfig {
         private TierSettings(ConfigSpecBuilder builder) {
             extraStone = builder.defineStringList("extraStone", List.of(), "Items that count as stone tier (the Makeshift Stone Table).");
             extraAdvanced = builder.defineStringList("extraAdvanced", List.of(), "Items that count as advanced tier (the Crafting Table).");
+        }
+    }
+
+    public static final class WoodScrapSettings {
+        public final ConfigValue<Integer> perCraft;
+        public final ConfigValue<Integer> burnTicks;
+        public final ConfigValue<Double> compostChance;
+
+        private WoodScrapSettings(ConfigSpecBuilder builder) {
+            perCraft = builder.defineInteger("perCraft", 1, 0, 64, "Wood Scraps each wood trimming or cutting craft gives (0 for none).");
+            burnTicks = builder.defineInteger("burnTicks", 100, 0, 32000, "How long Wood Scraps burn, in ticks.");
+            compostChance = builder.defineDouble("compostChance", 0.3, 0.0, 1.0, "Chance that Wood Scraps raise a composter's level.");
         }
     }
 }
