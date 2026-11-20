@@ -107,7 +107,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts of milestone 10 happen here, the IRC parts in step 5 and the SRF part in step 6.
 
 - [x] 1 Skeleton: the three configs (need, piece and gear switches in common; every number in server; units and HUD in client), the `impactsvitality:feature_enabled` condition, debug categories, the player attachment with thirst, temperature and air parts, the `impactsvitality:main` channel syncing it, the `vitality-alone` setup
-- [ ] 2 Thirst: the bar, drain, HUD through Lib's layout, dehydration damage
+- [x] 2 Thirst: the bar with Hydration, exhaustion from every action that costs food (not from the Hunger effect), the resting drain, Peaceful refill, the Parched effect, dehydration damage on starvation rules with the `impactsvitality:dehydration` damage type (and the other three damage types), no sprinting at 6 or less, the droplet row through Lib's layout (shakes when low, green while Parched)
 - [ ] 3 Drinks and water gear
 - [ ] 4 Health cap
 - [ ] 5 Ambient temperature

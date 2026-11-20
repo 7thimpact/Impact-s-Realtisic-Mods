@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.impact.realisticvitality.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "impactsvitality.refmap.json",
+  "mixins": [
+    "MobEffectMixin",
+    "PlayerMixin"
+  ],
+  "client": [
+    "client.LocalPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

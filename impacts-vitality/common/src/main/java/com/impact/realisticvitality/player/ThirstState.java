@@ -18,6 +18,9 @@ public final class ThirstState {
     private float exhaustion;
     private int restingTicks;
     private int damageTicks;
+    // Not saved: only used to log changes.
+    private int loggedStep = -1;
+    private boolean wasParched;
 
     public int level() {
         return level;
@@ -40,28 +43,40 @@ public final class ThirstState {
         hydration = Math.max(0.0F, Math.min(newHydration, level));
     }
 
-    public void addExhaustion(float amount) {
-        exhaustion = Math.max(0.0F, exhaustion + amount);
-    }
-
-    void setExhaustion(float newExhaustion) {
+    public void setExhaustion(float newExhaustion) {
         exhaustion = Math.max(0.0F, newExhaustion);
     }
 
-    int restingTicks() {
+    public int restingTicks() {
         return restingTicks;
     }
 
-    void setRestingTicks(int ticks) {
+    public void setRestingTicks(int ticks) {
         restingTicks = ticks;
     }
 
-    int damageTicks() {
+    public int damageTicks() {
         return damageTicks;
     }
 
-    void setDamageTicks(int ticks) {
+    public void setDamageTicks(int ticks) {
         damageTicks = ticks;
+    }
+
+    public int loggedStep() {
+        return loggedStep;
+    }
+
+    public void setLoggedStep(int step) {
+        loggedStep = step;
+    }
+
+    public boolean wasParched() {
+        return wasParched;
+    }
+
+    public void setWasParched(boolean isParched) {
+        wasParched = isParched;
     }
 
     CompoundTag save() {

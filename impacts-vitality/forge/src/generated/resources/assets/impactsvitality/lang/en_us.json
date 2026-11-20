@@ -1,3 +1,12 @@
 {
-  "advancements.impactsvitality.tab": "Realistic Vitality"
+  "advancements.impactsvitality.tab": "Realistic Vitality",
+  "death.attack.impactsvitality.dehydration": "%1$s died of thirst",
+  "death.attack.impactsvitality.dehydration.player": "%1$s died of thirst while fighting %2$s",
+  "death.attack.impactsvitality.fumes": "%1$s choked on lava fumes",
+  "death.attack.impactsvitality.fumes.player": "%1$s choked on lava fumes while fighting %2$s",
+  "death.attack.impactsvitality.heatstroke": "%1$s died of heatstroke",
+  "death.attack.impactsvitality.heatstroke.player": "%1$s died of heatstroke while fighting %2$s",
+  "death.attack.impactsvitality.thin_air": "%1$s ran out of air on the mountaintop",
+  "death.attack.impactsvitality.thin_air.player": "%1$s ran out of air while fighting %2$s",
+  "effect.impactsvitality.parched": "Parched"
 }

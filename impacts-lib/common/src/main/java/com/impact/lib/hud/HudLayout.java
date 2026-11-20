@@ -58,6 +58,16 @@ public final class HudLayout {
         return rowTop;
     }
 
+    /** Where the right-hand rows (hunger, air, Vitality's thirst) end on the right, as vanilla draws them, plus the configured shift. */
+    public static int rightRowsRightEdge(int screenWidth) {
+        return screenWidth / 2 + VANILLA_HOTBAR_WIDTH / 2 + rowOffsetX();
+    }
+
+    /** Where the left-hand rows (health, armor) start on the left, as vanilla draws them, plus the configured shift. */
+    public static int leftRowsLeftEdge(int screenWidth) {
+        return screenWidth / 2 - VANILLA_HOTBAR_WIDTH / 2 + rowOffsetX();
+    }
+
     /** The configured shift for Impact rows (client config {@code hud.rowOffsetX}). */
     public static int rowOffsetX() {
         return LibClientConfig.get().hud.rowOffsetX.get();

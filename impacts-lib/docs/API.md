@@ -124,7 +124,7 @@ ImpactsDump.registerPlayerSection("inventory", player -> ImpactsDump.entries(
 
 ## GameTests with a logged-in player
 
-`MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block.
+`MockPlayers.joinWorld(helper.getLevel())` joins a mock player through a real login, so login hooks run. Vanilla's `makeMockServerPlayerInLevel` fails under Forge, because its connection has no network channel. Always call `MockPlayers.leaveWorld(player)` in a `finally` block. A joining player can't be hurt for 3 seconds, and a mock player never ticks that protection away: call `MockPlayers.endSpawnProtection(player)` before a test that expects damage.
 
 **Config values in tests:** never `set` a config value in a GameTest. Saving the file makes Forge reload it on another thread, which can put a test's value back after the test ends (and keep it in the test world's file). Use `ConfigOverrides.withValue(value, override, () -> check)`, which holds the value in memory only (`ConfigValue.overrideInMemory` and `clearOverride`).
 
@@ -170,6 +170,7 @@ CraftingProgress.get(menu).ifPresent(progress -> {
 HudLayout.publishHotbarBounds("impactsinventory", (width, height) -> new HudBounds(...));   // Inventory
 HudBounds hotbar = HudLayout.hotbarBounds(screenWidth, screenHeight);                      // Vitality's gauge
 int thirstRowTop = HudLayout.claimRightRow(screenHeight, ROW_HEIGHT);                    // above hunger
+int thirstRowRight = HudLayout.rightRowsRightEdge(screenWidth);                          // where hunger ends on the right
 ```
 
 Rows stack on Forge's own left and right row heights, so they never overlap vanilla's bars or each other. Lib's client config can shift every Impact row (`hud.rowOffsetX`, `hud.rowOffsetY`).

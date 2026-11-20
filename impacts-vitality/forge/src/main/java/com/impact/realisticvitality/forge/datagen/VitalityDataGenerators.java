@@ -2,12 +2,15 @@ package com.impact.realisticvitality.forge.datagen;
 
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.lang.VitalityTranslations;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-/** Vitality's generated data. Run with {@code runData}. */
+import java.util.concurrent.CompletableFuture;
+
+/** Vitality's generated data: translations, damage types and their tags. Run with {@code runData}. */
 public final class VitalityDataGenerators {
     private static final String ENGLISH_LOCALE = "en_us";
 
@@ -23,5 +26,8 @@ public final class VitalityDataGenerators {
                 VitalityTranslations.ENGLISH.forEach(this::add);
             }
         });
+        CompletableFuture<HolderLookup.Provider> lookupWithDamageTypes = VitalityDamageTypeData.withDamageTypes(event.getLookupProvider());
+        generator.addProvider(event.includeServer(), VitalityDamageTypeData.damageTypes(output, lookupWithDamageTypes));
+        generator.addProvider(event.includeServer(), new VitalityDamageTypeData.Tags(output, lookupWithDamageTypes, event.getExistingFileHelper()));
     }
 }

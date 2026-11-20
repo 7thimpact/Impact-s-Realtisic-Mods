@@ -1,5 +1,6 @@
 package com.impact.lib.gametest;
 
+import com.impact.lib.mixin.ServerPlayerSpawnProtectionAccessor;
 import com.mojang.authlib.GameProfile;
 import io.netty.channel.embedded.EmbeddedChannel;
 import net.minecraft.network.Connection;
@@ -30,6 +31,11 @@ public final class MockPlayers {
         new EmbeddedChannel(connection);
         server.getPlayerList().placeNewPlayer(connection, player);
         return player;
+    }
+
+    /** A joining player can't be hurt for 3 seconds, counted down by ticks a mock player never runs. This ends it now. */
+    public static void endSpawnProtection(ServerPlayer player) {
+        ((ServerPlayerSpawnProtectionAccessor) player).impactslib$setSpawnInvulnerableTicks(0);
     }
 
     public static void leaveWorld(ServerPlayer player) {
