@@ -13,6 +13,8 @@ public final class TemperatureState {
     private int wetTicks;
     // Not saved: worked out again within a second.
     private float ambient = Float.NaN;
+    private int damageSeconds;
+    private String loggedState = "none";
 
     public float body() {
         return body;
@@ -29,6 +31,24 @@ public final class TemperatureState {
 
     public void setAmbient(float fahrenheit) {
         ambient = fahrenheit;
+    }
+
+    /** Seconds spent Freezing or Overheating since the last damage. Not saved. */
+    public int damageSeconds() {
+        return damageSeconds;
+    }
+
+    public void setDamageSeconds(int seconds) {
+        damageSeconds = seconds;
+    }
+
+    /** The body state last written to the log. Not saved. */
+    public String loggedState() {
+        return loggedState;
+    }
+
+    public void setLoggedState(String state) {
+        loggedState = state;
     }
 
     public int wetTicks() {

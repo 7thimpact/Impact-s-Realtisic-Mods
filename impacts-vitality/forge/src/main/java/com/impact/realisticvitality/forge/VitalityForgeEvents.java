@@ -3,19 +3,26 @@ package com.impact.realisticvitality.forge;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.client.ClientVitality;
+import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.health.HealthCap;
 import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityPlayerTicks;
+import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.player.VitalitySync;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.temperature.BlockTemperatures;
+import com.impact.realisticvitality.temperature.BodyState;
+import com.impact.realisticvitality.temperature.DryFoods;
+import com.impact.realisticvitality.temperature.TemperatureTicks;
 import com.impact.realisticvitality.thirst.BottleFilling;
 import com.impact.realisticvitality.thirst.Drinking;
 import com.impact.realisticvitality.thirst.Sipping;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
@@ -43,6 +50,31 @@ final class VitalityForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onRightClickEmpty);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onLivingHeal);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onTagsUpdated);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onItemUseStart);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onBreakSpeed);
+    }
+
+    // Both sides refuse, each with its own copy of the body temperature, so the client never starts the eating animation.
+    private static void onItemUseStart(LivingEntityUseItemEvent.Start event) {
+        if (!(event.getEntity() instanceof Player player) || !DryFoods.isTooHotToEat(bodyTemperature(player), event.getItem())) {
+            return;
+        }
+        event.setCanceled(true);
+        if (player instanceof ServerPlayer serverPlayer) {
+            DryFoods.onRefused(serverPlayer, event.getItem());
+        }
+    }
+
+    // Mining is predicted on the client, so both sides slow it the same way.
+    private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+        boolean isCold = TemperatureTicks.isOn() && BodyState.of(bodyTemperature(event.getEntity())).isColdOrWorse();
+        if (isCold) {
+            event.setNewSpeed(event.getNewSpeed() * VitalityServerConfig.get().temperature.coldMiningSpeed.get().floatValue());
+        }
+    }
+
+    private static float bodyTemperature(Player player) {
+        return player.level().isClientSide ? ClientVitality.state().bodyTemperature() : VitalityState.of(player).temperature.body();
     }
 
     private static void onTagsUpdated(TagsUpdatedEvent event) {

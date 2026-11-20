@@ -11,7 +11,7 @@ import com.impact.realisticvitality.player.VitalityState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 
-/** Temperature's per-tick work for a player: the Wet timer every tick, and the ambient reading once a second. */
+/** Temperature's per-tick work for a player: the Wet timer every tick; the ambient reading and body temperature once a second. */
 public final class TemperatureTicks {
     private static final ImpactsLog LOG = ImpactsLog.of(VitalityMod.MOD_ID);
     private static final int TICKS_PER_READING = 20;
@@ -36,6 +36,7 @@ public final class TemperatureTicks {
         AmbientReading reading = AmbientTemperature.at(player.level(), bodyPosition(player), player.isInWater());
         temperature.setAmbient((float) reading.total());
         logReading(player, reading);
+        BodyTemperature.tickSecond(player, temperature.ambient());
     }
 
     /** Water, rain or a bubble column soak you; out of them you dry off over {@code temperature.wetTicks}. */

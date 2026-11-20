@@ -31,6 +31,7 @@ public final class VitalityTranslations {
     public static final String PACK_WORN_ON_CHEST = "tooltip.impactsvitality.hydration_pack.chest";
     public static final String SIP_PACK_KEY = "key.impactsvitality.sip_pack";
     public static final String KEY_CATEGORY = "key.categories.impactsvitality";
+    public static final String TOO_HOT_TO_EAT = "message.impactsvitality.too_hot_to_eat";
     private static final Map<WaterContainer, String> CONTAINER_NAMES = new EnumMap<>(Map.of(
             WaterContainer.WOODEN_CUP, "Wooden Cup",
             WaterContainer.WATERSKIN, "Waterskin",
@@ -85,6 +86,7 @@ public final class VitalityTranslations {
         english.put(PACK_WORN_ON_CHEST, "Wear it in the chest slot and sip with %s");
         english.put(SIP_PACK_KEY, "Sip from Hydration Pack");
         english.put(KEY_CATEGORY, "Impact's Realistic Vitality");
+        english.put(TOO_HOT_TO_EAT, "Too hot to eat anything dry.");
         for (ResourceKey<DamageType> damageType : VitalityDamageTypes.ALL) {
             String deathKey = DEATH_PREFIX + VitalityDamageTypes.messageId(damageType);
             english.put(deathKey, DEATH_MESSAGES.get(damageType));

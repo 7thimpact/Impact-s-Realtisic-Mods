@@ -10,6 +10,8 @@ import com.impact.realisticvitality.player.ThirstState;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityDamageTypes;
 import com.impact.realisticvitality.registry.VitalityEffects;
+import com.impact.realisticvitality.temperature.BodyState;
+import com.impact.realisticvitality.temperature.TemperatureTicks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
@@ -61,9 +63,12 @@ public final class ThirstDrain {
         addExhaustion(player, (float) (perLevel * (amplifier + 1)));
     }
 
+    /** Adds thirst exhaustion, made heavier by heat: 1.5 times while Hot, twice while Very Hot or Overheating. */
     public static void addExhaustion(Player player, float amount) {
-        ThirstState thirst = VitalityState.of(player).thirst;
-        thirst.setExhaustion(Math.min(MAXIMUM_EXHAUSTION, thirst.exhaustion() + amount));
+        VitalityState state = VitalityState.of(player);
+        double heat = TemperatureTicks.isOn() ? BodyState.of(state.temperature.body()).thirstMultiplier() : 1.0;
+        ThirstState thirst = state.thirst;
+        thirst.setExhaustion(Math.min(MAXIMUM_EXHAUSTION, thirst.exhaustion() + (float) (amount * heat)));
     }
 
     /** One server tick of thirst for one player. */

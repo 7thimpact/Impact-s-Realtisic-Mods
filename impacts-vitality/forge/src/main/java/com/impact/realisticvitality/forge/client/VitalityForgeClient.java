@@ -1,6 +1,8 @@
 package com.impact.realisticvitality.forge.client;
 
 import com.impact.realisticvitality.client.ClientVitality;
+import com.impact.realisticvitality.client.FrostOverlay;
+import com.impact.realisticvitality.client.TemperatureGauge;
 import com.impact.realisticvitality.client.ThirstHud;
 import com.impact.realisticvitality.lang.VitalityTranslations;
 import com.impact.realisticvitality.network.VitalityNetwork;
@@ -25,6 +27,8 @@ import org.lwjgl.glfw.GLFW;
 /** Vitality's client-only hooks on Forge. Loaded only on the physical client. */
 public final class VitalityForgeClient {
     private static final String THIRST_OVERLAY = "thirst_level";
+    private static final String GAUGE_OVERLAY = "temperature_gauge";
+    private static final String FROST_OVERLAY = "temperature_frost";
     private static final int LIQUID_LAYER = 0;
     private static final int NO_TINT = -1;
     private static final KeyMapping SIP_PACK_KEY = new KeyMapping(VitalityTranslations.SIP_PACK_KEY, KeyConflictContext.IN_GAME,
@@ -49,6 +53,14 @@ public final class VitalityForgeClient {
                 ThirstHud.render(graphics, screenWidth, screenHeight, gui.getGuiTicks());
             }
         });
+        event.registerAbove(VanillaGuiOverlay.EXPERIENCE_BAR.id(), GAUGE_OVERLAY, (gui, graphics, partialTick, screenWidth, screenHeight) -> {
+            if (!gui.getMinecraft().options.hideGui && gui.shouldDrawSurvivalElements()) {
+                gui.setupOverlayRenderState(true, false);
+                TemperatureGauge.render(graphics, screenWidth, screenHeight, gui.getGuiTicks(), partialTick);
+            }
+        });
+        event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), FROST_OVERLAY,
+                (gui, graphics, partialTick, screenWidth, screenHeight) -> FrostOverlay.render(graphics, screenWidth, screenHeight));
     }
 
     /** The same test Forge uses for the hunger row: hidden in creative, with the HUD off, and on a mount that shows its health. */

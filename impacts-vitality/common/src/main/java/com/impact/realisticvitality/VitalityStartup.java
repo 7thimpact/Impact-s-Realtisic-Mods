@@ -2,7 +2,9 @@ package com.impact.realisticvitality;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
+import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticvitality.command.VitalityCommand;
 import com.impact.realisticvitality.config.VitalityClientConfig;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
@@ -23,7 +25,7 @@ public final class VitalityStartup {
     private VitalityStartup() {
     }
 
-    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects, blocks, items and the network channel. */
+    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects, blocks, items, the network channel and the {@code /impacts vitality} command. */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(VitalityMod.MOD_ID);
         LOG.registerCategories(VitalityLogCategories.ALL);
@@ -36,6 +38,7 @@ public final class VitalityStartup {
         VitalityItems.register();
         VitalityRecipeSerializers.register();
         VitalityNetwork.create();
+        ImpactsCommands.addSubcommand(VitalityCommand::build);
         ImpactsLib.onModsReady(impactMods -> {
             BottleFilling.registerInteractions();
             logStartup();

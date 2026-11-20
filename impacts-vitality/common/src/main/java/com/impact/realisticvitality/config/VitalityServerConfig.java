@@ -239,6 +239,19 @@ public final class VitalityServerConfig {
         public final ConfigValue<Double> unlistedColdSource;
         public final ConfigValue<Double> waterDrop;
         public final ConfigValue<Integer> wetTicks;
+        public final ConfigValue<Double> comfortableFrom;
+        public final ConfigValue<Double> comfortableTo;
+        public final ConfigValue<Double> degreesPerInsulation;
+        public final ConfigValue<Double> driftDegreesPerPoint;
+        public final ConfigValue<Double> recoveryPerSecond;
+        public final ConfigValue<Double> warmAt;
+        public final ConfigValue<Double> hotAt;
+        public final ConfigValue<Double> veryHotAt;
+        public final ConfigValue<Integer> damageIntervalSeconds;
+        public final ConfigValue<Double> freezingDamage;
+        public final ConfigValue<Double> overheatingDamage;
+        public final ConfigValue<Double> coldMiningSpeed;
+        public final ConfigValue<List<String>> foodTemperatures;
 
         private TemperatureSettings(ConfigSpecBuilder builder) {
             biomeBase = builder.defineDouble("biomeBase", 30.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "Ambient °F = biomeBase + biomeScale x the biome's vanilla temperature.");
@@ -277,6 +290,23 @@ public final class VitalityServerConfig {
             unlistedColdSource = builder.defineDouble("unlistedColdSource", 5.0, 0.0, MAXIMUM_DEGREES, "°F taken away by a cold source not in blockTemps.");
             waterDrop = builder.defineDouble("waterDrop", 20.0, 0.0, MAXIMUM_DEGREES, "Standing in water counts as this much colder.");
             wetTicks = builder.defineInteger("wetTicks", 600, 0, MAXIMUM_TICKS, "Ticks you stay Wet after water, rain or pouring a drink over yourself.");
+            comfortableFrom = builder.defineDouble("comfortableFrom", 50.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "The cold edge of the comfortable ambient range, °F.");
+            comfortableTo = builder.defineDouble("comfortableTo", 80.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "The hot edge of the comfortable ambient range, °F.");
+            degreesPerInsulation = builder.defineDouble("degreesPerInsulation", 3.0, 0.0, MAXIMUM_DEGREES,
+                    "Each point of warmth lowers the cold edge, and each point of cooling raises the hot edge, by this many °F.");
+            driftDegreesPerPoint = builder.defineDouble("driftDegreesPerPoint", 10.0, 0.1, MAXIMUM_DEGREES,
+                    "Outside the comfortable range, body temperature moves 1 point per second for every this many °F beyond it.");
+            recoveryPerSecond = builder.defineDouble("recoveryPerSecond", 2.0, 0.0, 100.0, "Inside the range, body temperature returns to 0 by this much per second.");
+            warmAt = builder.defineDouble("warmAt", 25.0, 0.0, 100.0, "Body temperature where Warm (and, below zero, Chilly) starts.");
+            hotAt = builder.defineDouble("hotAt", 50.0, 0.0, 100.0, "Body temperature where Hot (and Cold) starts.");
+            veryHotAt = builder.defineDouble("veryHotAt", 75.0, 0.0, 100.0, "Body temperature where Very Hot (and Very Cold) starts. Overheating and Freezing are at 100.");
+            damageIntervalSeconds = builder.defineInteger("damageIntervalSeconds", 3, 1, 3600, "Seconds between freezing or heat damage.");
+            freezingDamage = builder.defineDouble("freezingDamage", 1.0, 0.0, 100.0, "Damage while Freezing (vanilla's freeze damage).");
+            overheatingDamage = builder.defineDouble("overheatingDamage", 1.0, 0.0, 100.0, "Damage while Overheating (heatstroke).");
+            coldMiningSpeed = builder.defineDouble("coldMiningSpeed", 0.85, 0.0, 1.0, "Mining speed while Cold or colder.");
+            foodTemperatures = builder.defineStringList("foodTemperatures", List.of(
+                    "impactsvitality:cold_water=-15", "minecraft:melon_slice=-15", "#impactsvitality:soups=15"),
+                    "Body temperature a drink or food changes right away, as item=points or #tag=points.");
         }
     }
 

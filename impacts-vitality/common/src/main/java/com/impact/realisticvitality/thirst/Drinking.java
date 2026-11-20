@@ -8,6 +8,8 @@ import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.player.ThirstState;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityEffects;
+import com.impact.realisticvitality.temperature.BodyTemperature;
+import com.impact.realisticvitality.temperature.TemperatureTicks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,9 +25,15 @@ public final class Drinking {
     private Drinking() {
     }
 
-    /** Called when any item finishes being used (eaten or drunk), with the stack as it was before. */
+    /** Called when any item finishes being used (eaten or drunk), with the stack as it was before: thirst, then warmth or cooling. */
     public static void onUseFinished(LivingEntity entity, ItemStack used) {
-        if (!(entity instanceof ServerPlayer player) || !ThirstDrain.isOn()) {
+        if (!(entity instanceof ServerPlayer player)) {
+            return;
+        }
+        if (TemperatureTicks.isOn()) {
+            BodyTemperature.onConsumed(player, DrinkValues.asDrink(used));
+        }
+        if (!ThirstDrain.isOn()) {
             return;
         }
         Optional<DrinkValue> value = DrinkValues.of(used);

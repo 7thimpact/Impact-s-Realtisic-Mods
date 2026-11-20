@@ -25,7 +25,7 @@ public final class DrinkValues {
     }
 
     public static Optional<DrinkValue> of(ItemStack stack) {
-        ItemStack lookedUp = standIn(stack);
+        ItemStack lookedUp = asDrink(stack);
         VitalityServerConfig.DrinkSettings settings = VitalityServerConfig.get().drinks;
         return firstMatch(settings.overrides.get(), lookedUp).or(() -> firstMatch(settings.values.get(), lookedUp));
     }
@@ -46,8 +46,8 @@ public final class DrinkValues {
         return stack.is(Items.POTION) && PotionUtils.getPotion(stack) == Potions.WATER;
     }
 
-    // A drink is looked up as what it holds: a vanilla water bottle as Unclean Water, a container as a bottle of its water or its soup.
-    private static ItemStack standIn(ItemStack stack) {
+    /** What a drink counts as: a vanilla water bottle as Unclean Water, a container as a bottle of its water or its soup, anything else as itself. */
+    public static ItemStack asDrink(ItemStack stack) {
         if (isVanillaWaterBottle(stack)) {
             return VitalityItems.bottle(BottledWater.UNCLEAN);
         }

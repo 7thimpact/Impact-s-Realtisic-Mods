@@ -26,6 +26,7 @@
   "itemGroup.impactsvitality": "Impact's Realistic Vitality",
   "key.categories.impactsvitality": "Impact's Realistic Vitality",
   "key.impactsvitality.sip_pack": "Sip from Hydration Pack",
+  "message.impactsvitality.too_hot_to_eat": "Too hot to eat anything dry.",
   "tooltip.impactsvitality.container.drinks": "%s/%s drinks of %s",
   "tooltip.impactsvitality.container.empty": "Empty (holds %s drinks)",
   "tooltip.impactsvitality.container.keeps_temperature": "Keeps Cold Water cold and soups warm",
