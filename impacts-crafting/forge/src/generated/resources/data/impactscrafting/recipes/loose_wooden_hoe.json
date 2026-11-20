@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:loose_wooden_hoe"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "impactscrafting:wooden_hoe_head"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "H",
+    "S",
+    "S"
+  ],
+  "result": {
+    "item": "impactscrafting:loose_wooden_hoe"
+  },
+  "show_notification": true
+}

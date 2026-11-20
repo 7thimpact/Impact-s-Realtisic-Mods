@@ -3,9 +3,9 @@ package com.impact.realisticcrafting.forge.datagen;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.impact.lib.ResourceIds;
-import com.impact.lib.wood.WoodData;
 import com.impact.realisticcrafting.config.OverhaulCategory;
 import com.impact.realisticcrafting.forge.condition.OverhaulEnabledCondition;
+import com.impact.realisticcrafting.recipe.VanillaRecipeReplacements;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -20,14 +20,13 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Switches off the vanilla recipes Crafting replaces. Each is vanilla's own recipe file, copied as it is, under the
- * condition "not {@code overhaul_enabled}" for its category and ID: it loads again when the category is off or the ID
- * is in {@code recipes.keepVanilla}.
+ * Writes a switched-off copy of each vanilla recipe Crafting replaces ({@link VanillaRecipeReplacements}): vanilla's
+ * own file, under the condition "not {@code overhaul_enabled}" for its category and ID, so it loads again when the
+ * category is off or the ID is in {@code recipes.keepVanilla}. The recipe manager also drops these recipes in code,
+ * since a pack loaded after Crafting's (Forge's own copies) would otherwise win.
  */
 final class VanillaRecipeOverrides implements DataProvider {
     private static final String MINECRAFT_NAMESPACE = "minecraft";
@@ -37,27 +36,17 @@ final class VanillaRecipeOverrides implements DataProvider {
 
     private final PackOutput output;
     private final ExistingFileHelper existingFiles;
-    private final Map<String, OverhaulCategory> replacedRecipes = new LinkedHashMap<>();
-
     VanillaRecipeOverrides(PackOutput output, ExistingFileHelper existingFiles) {
         this.output = output;
         this.existingFiles = existingFiles;
-        replace(OverhaulCategory.WOOD, "crafting_table", "stick");
-        WoodData.VANILLA_WOODS.forEach(wood -> replace(OverhaulCategory.WOOD, wood.getPath() + "_planks"));
-    }
-
-    private void replace(OverhaulCategory category, String... vanillaRecipeNames) {
-        for (String recipeName : vanillaRecipeNames) {
-            replacedRecipes.put(recipeName, category);
-        }
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
         Path recipesFolder = output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(MINECRAFT_NAMESPACE).resolve(RECIPES_FOLDER);
-        CompletableFuture<?>[] writes = replacedRecipes.entrySet().stream()
-                .map(entry -> DataProvider.saveStable(cache, conditionalCopy(entry.getKey(), entry.getValue()),
-                        recipesFolder.resolve(entry.getKey() + JSON_EXTENSION)))
+        CompletableFuture<?>[] writes = VanillaRecipeReplacements.all().entrySet().stream()
+                .map(entry -> DataProvider.saveStable(cache, conditionalCopy(entry.getKey().getPath(), entry.getValue()),
+                        recipesFolder.resolve(entry.getKey().getPath() + JSON_EXTENSION)))
                 .toArray(CompletableFuture[]::new);
         return CompletableFuture.allOf(writes);
     }

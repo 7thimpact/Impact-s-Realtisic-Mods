@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "impactscrafting.refmap.json",
   "mixins": [
-    "CraftingMenuTierMixin"
+    "CraftingMenuTierMixin",
+    "RecipeManagerMixin"
   ],
   "client": [
   ],

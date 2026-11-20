@@ -12,7 +12,9 @@ import com.impact.realisticcrafting.debug.CraftingDumpSections;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
 import com.impact.realisticcrafting.item.CraftingFuels;
 import com.impact.realisticcrafting.menu.CraftingMenus;
+import com.impact.realisticcrafting.recipe.CraftingRecipeTypes;
 import com.impact.realisticcrafting.recipe.CraftingToolCraftingOverrides;
+import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
@@ -36,11 +38,13 @@ public final class CraftingStartup {
         CraftingBlocks.register();
         CraftingItems.register();
         CraftingMenus.register();
+        CraftingRecipeTypes.register();
         CraftingWorldgen.register();
         CraftingDumpSections.register();
         ToolCrafting.registerOverrides(CraftingMod.MOD_ID, new CraftingToolCraftingOverrides());
         ImpactsLib.onModsReady(impactMods -> {
             CraftingFuels.register();
+            CraftingItems.looseItems().forEach(Hammering::registerHoldAction);
             logStartup();
         });
     }

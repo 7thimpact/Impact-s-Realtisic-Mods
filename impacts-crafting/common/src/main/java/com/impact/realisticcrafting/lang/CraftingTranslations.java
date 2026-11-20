@@ -5,12 +5,18 @@ import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
+import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
+import com.impact.realisticcrafting.item.ToolKind;
+import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.menu.CraftingStation;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /** Crafting's translation keys and their English text. Data generation writes {@link #ENGLISH} to en_us.json. */
 public final class CraftingTranslations {
@@ -23,6 +29,12 @@ public final class CraftingTranslations {
     public static final Map<String, String> ENGLISH = buildEnglish();
 
     private CraftingTranslations() {
+    }
+
+    // wooden_pickaxe_head -> Wooden Pickaxe Head
+    private static String titleCase(String path) {
+        return Arrays.stream(path.split("_")).map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1))
+                .collect(Collectors.joining(" "));
     }
 
     private static Map<String, String> buildEnglish() {
@@ -46,6 +58,13 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.WOOD_SCRAPS.path, "Wood Scraps");
         english.put(ITEM_KEY_PREFIX + CraftingTool.BONE_NEEDLE.path, "Bone Needle");
         english.put(ITEM_KEY_PREFIX + CraftingTool.FLINT_CHISEL.path, "Flint Chisel");
+        english.put(LooseItem.HAMMER_HINT_KEY, "Hammer with a pebble in your off hand.");
+        for (ToolMaterial material : ToolMaterial.values()) {
+            for (ToolKind kind : ToolKind.values()) {
+                english.put(ITEM_KEY_PREFIX + kind.partPath(material), titleCase(kind.partPath(material)));
+                english.put(ITEM_KEY_PREFIX + kind.loosePath(material), titleCase(kind.loosePath(material)));
+            }
+        }
         english.put(CraftingStation.INVENTORY_GRID.needsTranslationKey(), "Needs your inventory grid");
         english.put(CraftingStation.MAKESHIFT_TABLE.needsTranslationKey(), "Needs a Makeshift Table");
         english.put(CraftingStation.MAKESHIFT_STONE_TABLE.needsTranslationKey(), "Needs a Makeshift Stone Table");

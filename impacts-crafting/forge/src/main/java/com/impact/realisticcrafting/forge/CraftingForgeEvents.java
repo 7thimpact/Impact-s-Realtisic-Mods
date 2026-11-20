@@ -1,12 +1,15 @@
 package com.impact.realisticcrafting.forge;
 
 import com.impact.realisticcrafting.loot.PebbleDrops;
+import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 
 /** Crafting's game events on Forge's event bus. */
@@ -17,6 +20,17 @@ final class CraftingForgeEvents {
     static void register() {
         // Last, so a break another mod cancels never drops a pebble.
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, CraftingForgeEvents::onBlockBroken);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onServerStarted);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onDatapackSync);
+    }
+
+    // Other mods' loose items get the hammering action once recipes load, and again after every /reload.
+    private static void onServerStarted(ServerStartedEvent event) {
+        Hammering.registerHoldActions(event.getServer().getRecipeManager());
+    }
+
+    private static void onDatapackSync(OnDatapackSyncEvent event) {
+        Hammering.registerHoldActions(event.getPlayerList().getServer().getRecipeManager());
     }
 
     // Stone broken by hand rolls no loot at all, so its pebble comes from here instead of the loot modifier.

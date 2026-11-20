@@ -43,6 +43,7 @@ final class CraftingRecipes extends RecipeProvider {
                 .unlockedBy("has_smooth_stone", has(Items.SMOOTH_STONE))
                 .save(CraftingPartRecipes.overhaulRecipe(output, OverhaulCategory.STONE), id(MakeshiftTable.STONE.path));
         CraftingPartRecipes.build(output);
+        CraftingToolRecipes.build(output);
     }
 
     private static ResourceLocation id(String path) {

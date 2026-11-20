@@ -3,11 +3,13 @@ package com.impact.realisticcrafting.forge.client;
 import com.impact.realisticcrafting.client.RefusedCraftHint;
 import com.impact.realisticcrafting.client.WoodTints;
 import com.impact.realisticcrafting.menu.CraftingMenus;
+import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +30,7 @@ public final class CraftingForgeClient {
         modEventBus.addListener(CraftingForgeClient::onClientSetup);
         modEventBus.addListener(CraftingForgeClient::onItemColors);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onScreenRendered);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onRecipesUpdated);
     }
 
     private static void onClientSetup(FMLClientSetupEvent event) {
@@ -37,6 +40,11 @@ public final class CraftingForgeClient {
     // Per-wood parts tint their sprite (layer 0) by the wood.
     private static void onItemColors(RegisterColorHandlersEvent.Item event) {
         event.register((stack, layer) -> layer == 0 ? WoodTints.tintOf(stack) : WOODLESS_TINT, CraftingItems.trimmedPlanks());
+    }
+
+    // The client needs the hammering action for other mods' loose items too, to hold them.
+    private static void onRecipesUpdated(RecipesUpdatedEvent event) {
+        Hammering.registerHoldActions(event.getRecipeManager());
     }
 
     private static void onScreenRendered(ScreenEvent.Render.Post event) {

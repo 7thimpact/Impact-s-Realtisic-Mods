@@ -23,6 +23,7 @@ public final class CraftingServerConfig {
     public final TableTierSettings tableTiers;
     public final TierSettings tiers;
     public final WoodScrapSettings woodScraps;
+    public final HammeringSettings hammering;
     public final ConfigValue<Boolean> isFuelOn;
     public final ConfigFile file;
 
@@ -44,6 +45,9 @@ public final class CraftingServerConfig {
         builder.popSection();
         builder.pushSection("woodScraps", "Wood Scraps: the byproduct of every wood trimming or cutting recipe.");
         woodScraps = new WoodScrapSettings(builder);
+        builder.popSection();
+        builder.pushSection("hammering", "Finishing loose items with a hammer in the off hand.");
+        hammering = new HammeringSettings(builder);
         builder.popSection();
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
@@ -149,6 +153,17 @@ public final class CraftingServerConfig {
             perCraft = builder.defineInteger("perCraft", 1, 0, 64, "Wood Scraps each wood trimming or cutting craft gives (0 for none).");
             burnTicks = builder.defineInteger("burnTicks", 100, 0, 32000, "How long Wood Scraps burn, in ticks.");
             compostChance = builder.defineDouble("compostChance", 0.3, 0.0, 1.0, "Chance that Wood Scraps raise a composter's level.");
+        }
+    }
+
+    public static final class HammeringSettings {
+        public final ConfigValue<Integer> hammerUseTicks;
+        public final ConfigValue<Integer> ironHammerUseTicks;
+
+        private HammeringSettings(ConfigSpecBuilder builder) {
+            hammerUseTicks = builder.defineInteger("hammerUseTicks", 40, 1, 1200, "Ticks of holding right-click to hammer a loose item.");
+            ironHammerUseTicks = builder.defineInteger("ironHammerUseTicks", 20, 1, 1200,
+                    "The same with the Iron Hammer (recipes with their own time are scaled alike).");
         }
     }
 }

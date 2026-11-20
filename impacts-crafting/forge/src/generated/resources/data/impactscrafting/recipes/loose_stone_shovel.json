@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:loose_stone_shovel"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "impactscrafting:stone_shovel_head"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "H",
+    "S",
+    "S"
+  ],
+  "result": {
+    "item": "impactscrafting:loose_stone_shovel"
+  },
+  "show_notification": true
+}
