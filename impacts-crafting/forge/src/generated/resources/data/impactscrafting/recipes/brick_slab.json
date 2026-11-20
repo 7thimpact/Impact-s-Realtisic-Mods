@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:brick_slab"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:brick_slab"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

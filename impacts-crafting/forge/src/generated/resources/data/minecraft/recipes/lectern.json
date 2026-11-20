@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:lectern"
+      }
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bookshelf"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    "SSS",
+    " B ",
+    " S "
+  ],
+  "result": {
+    "item": "minecraft:lectern"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:oar"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:trimmed_planks"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "P",
+    "S",
+    "S"
+  ],
+  "result": {
+    "item": "impactscrafting:oar"
+  },
+  "show_notification": true
+}

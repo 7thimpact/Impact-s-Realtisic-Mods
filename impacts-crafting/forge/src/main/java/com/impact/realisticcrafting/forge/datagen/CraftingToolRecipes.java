@@ -34,7 +34,7 @@ final class CraftingToolRecipes {
     }
 
     static void build(Consumer<FinishedRecipe> output) {
-        Consumer<FinishedRecipe> combatOutput = CraftingPartRecipes.overhaulRecipe(output, OverhaulCategory.COMBAT);
+        Consumer<FinishedRecipe> combatOutput = CraftingRecipeOutputs.overhaulRecipe(output, OverhaulCategory.COMBAT);
         for (ToolMaterial material : ToolMaterial.values()) {
             Item part = material == ToolMaterial.WOODEN ? CraftingItems.trimmedPlanks() : CraftingItems.part(CraftingPart.SHAPED_STONE);
             for (ToolKind kind : ToolKind.values()) {

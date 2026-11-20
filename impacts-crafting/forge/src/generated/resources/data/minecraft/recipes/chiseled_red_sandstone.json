@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:chiseled_red_sandstone"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:red_sandstone_slab"
+    }
+  },
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "result": {
+    "item": "minecraft:chiseled_red_sandstone"
+  },
+  "show_notification": true
+}

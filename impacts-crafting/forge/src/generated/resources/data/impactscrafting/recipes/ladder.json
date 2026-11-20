@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:ladder"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    "T": {
+      "item": "impactscrafting:twine"
+    }
+  },
+  "pattern": [
+    "S S",
+    "STS",
+    "S S"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:ladder"
+  },
+  "show_notification": true
+}

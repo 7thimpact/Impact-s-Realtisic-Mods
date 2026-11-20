@@ -82,15 +82,37 @@ public final class ToolCrafting {
 
     /** The grid slot each tool sits in, one per tool ingredient, or nothing when one is missing. */
     public static Optional<Set<Integer>> findToolSlots(CraftingContainer grid, List<Ingredient> tools) {
-        Set<Integer> claimed = new HashSet<>();
-        for (Ingredient tool : tools) {
-            Optional<Integer> slot = firstFreeToolSlot(grid, tool, claimed);
-            if (slot.isEmpty()) {
-                return Optional.empty();
-            }
-            claimed.add(slot.get());
+        return findToolSlots(grid, tools, toolSlots -> true);
+    }
+
+    /**
+     * The grid slots the tools sit in, chosen so the rest of the grid fits: when an item could be the tool or an
+     * ingredient (flint is a trimming tool and the Flint Arrowhead's ingredient), every way of picking the tools is
+     * tried until {@code restFits} accepts one.
+     */
+    public static Optional<Set<Integer>> findToolSlots(CraftingContainer grid, List<Ingredient> tools, Predicate<Set<Integer>> restFits) {
+        return pickToolSlots(grid, tools, 0, new HashSet<>(), restFits);
+    }
+
+    private static Optional<Set<Integer>> pickToolSlots(CraftingContainer grid, List<Ingredient> tools, int toolIndex, Set<Integer> claimed,
+                                                        Predicate<Set<Integer>> restFits) {
+        if (toolIndex == tools.size()) {
+            return restFits.test(claimed) ? Optional.of(Set.copyOf(claimed)) : Optional.empty();
         }
-        return Optional.of(claimed);
+        Ingredient tool = tools.get(toolIndex);
+        for (int slot = 0; slot < grid.getContainerSize(); slot++) {
+            ItemStack stack = grid.getItem(slot);
+            if (claimed.contains(slot) || stack.isEmpty() || !tool.test(stack)) {
+                continue;
+            }
+            claimed.add(slot);
+            Optional<Set<Integer>> picked = pickToolSlots(grid, tools, toolIndex + 1, claimed, restFits);
+            claimed.remove(slot);
+            if (picked.isPresent()) {
+                return picked;
+            }
+        }
+        return Optional.empty();
     }
 
     /**
@@ -163,13 +185,4 @@ public final class ToolCrafting {
         CRAFTED_LISTENERS.forEach(listener -> listener.accept(craft));
     }
 
-    private static Optional<Integer> firstFreeToolSlot(CraftingContainer grid, Ingredient tool, Set<Integer> claimed) {
-        for (int slot = 0; slot < grid.getContainerSize(); slot++) {
-            ItemStack stack = grid.getItem(slot);
-            if (!claimed.contains(slot) && !stack.isEmpty() && tool.test(stack)) {
-                return Optional.of(slot);
-            }
-        }
-        return Optional.empty();
-    }
 }

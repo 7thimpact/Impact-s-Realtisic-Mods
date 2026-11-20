@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:lever"
+    }
+  ],
+  "criteria": {
+    "has_stone_hinge": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_hinge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:lever"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_stone_hinge",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:lever"
+    ]
+  },
+  "sends_telemetry_event": false
+}

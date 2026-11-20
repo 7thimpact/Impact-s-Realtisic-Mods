@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:diorite_wall"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diorite"
+    }
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:diorite_wall"
+  },
+  "show_notification": true
+}

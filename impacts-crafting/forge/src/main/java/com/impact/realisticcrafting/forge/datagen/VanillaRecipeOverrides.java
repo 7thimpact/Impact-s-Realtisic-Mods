@@ -45,6 +45,7 @@ final class VanillaRecipeOverrides implements DataProvider {
     public CompletableFuture<?> run(CachedOutput cache) {
         Path recipesFolder = output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(MINECRAFT_NAMESPACE).resolve(RECIPES_FOLDER);
         CompletableFuture<?>[] writes = VanillaRecipeReplacements.all().entrySet().stream()
+                .filter(entry -> hasVanillaRecipe(entry.getKey().getPath()))
                 .map(entry -> DataProvider.saveStable(cache, conditionalCopy(entry.getKey().getPath(), entry.getValue()),
                         recipesFolder.resolve(entry.getKey().getPath() + JSON_EXTENSION)))
                 .toArray(CompletableFuture[]::new);
@@ -57,6 +58,11 @@ final class VanillaRecipeOverrides implements DataProvider {
         ICondition replaced = new OverhaulEnabledCondition(category, recipeId);
         recipe.add(CONDITIONS_KEY, CraftingHelper.serialize(new ICondition[]{new NotCondition(replaced)}));
         return recipe;
+    }
+
+    // The list is built from vanilla's block families, so a family variant without a recipe of its own name is skipped.
+    private boolean hasVanillaRecipe(String recipeName) {
+        return existingFiles.exists(ResourceIds.of(MINECRAFT_NAMESPACE, RECIPES_FOLDER + recipeName + JSON_EXTENSION), PackType.SERVER_DATA);
     }
 
     private JsonObject readVanillaRecipe(String recipeName) {

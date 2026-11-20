@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:lever"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:cobblestone/normal"
+    },
+    "X": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "result": {
+    "item": "minecraft:lever"
+  },
+  "show_notification": true
+}

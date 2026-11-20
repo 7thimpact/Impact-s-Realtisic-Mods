@@ -1,0 +1,35 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:acacia_button"
+    }
+  ],
+  "key": {
+    "P": {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:trimmed_planks",
+      "nbt": "{wood:\"minecraft:acacia\"}"
+    }
+  },
+  "pattern": [
+    "P ",
+    " P"
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:acacia_button"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

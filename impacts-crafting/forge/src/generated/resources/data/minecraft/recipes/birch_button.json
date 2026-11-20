@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:birch_button"
+      }
+    }
+  ],
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "minecraft:birch_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:birch_button"
+  }
+}

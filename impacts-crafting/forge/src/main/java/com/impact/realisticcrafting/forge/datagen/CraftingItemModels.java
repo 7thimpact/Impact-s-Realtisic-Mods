@@ -6,6 +6,7 @@ import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
+import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
@@ -21,11 +22,15 @@ final class CraftingItemModels extends ItemModelProvider {
     }
 
     private static final String HANDHELD_PARENT = "item/handheld";
+    private static final String GENERATED_PARENT = "item/generated";
 
     @Override
     protected void registerModels() {
         basicItem(CraftingItems.stonePebble());
-        basicItem(CraftingItems.trimmedPlanks());
+        Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).forEach(this::basicItem);
+        basicItem(CraftingItems.woodenBucket());
+        basicItem(CraftingItems.woodenWaterBucket());
+        withExistingParent("loose_boat", GENERATED_PARENT).texture("layer0", mcLoc("item/oak_boat")).texture("layer1", modLoc("item/loose_binding"));
         Arrays.stream(CraftingPart.values()).map(CraftingItems::part).forEach(this::basicItem);
         Arrays.stream(CraftingTool.values()).map(CraftingItems::tool).forEach(this::handheld);
         for (ToolMaterial material : ToolMaterial.values()) {

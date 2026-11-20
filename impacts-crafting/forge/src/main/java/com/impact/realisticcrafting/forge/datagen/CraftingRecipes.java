@@ -33,7 +33,7 @@ final class CraftingRecipes extends RecipeProvider {
                 .pattern("PP")
                 .define('P', ItemTags.PLANKS)
                 .unlockedBy("has_planks", has(ItemTags.PLANKS))
-                .save(CraftingPartRecipes.overhaulRecipe(output, OverhaulCategory.WOOD), id(MakeshiftTable.WOODEN.path));
+                .save(CraftingRecipeOutputs.overhaulRecipe(output, OverhaulCategory.WOOD), id(MakeshiftTable.WOODEN.path));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, CraftingItems.table(MakeshiftTable.STONE))
                 .pattern("FF")
                 .pattern("SS")
@@ -41,9 +41,11 @@ final class CraftingRecipes extends RecipeProvider {
                 .define('F', Items.FLINT)
                 .define('S', Items.SMOOTH_STONE)
                 .unlockedBy("has_smooth_stone", has(Items.SMOOTH_STONE))
-                .save(CraftingPartRecipes.overhaulRecipe(output, OverhaulCategory.STONE), id(MakeshiftTable.STONE.path));
+                .save(CraftingRecipeOutputs.overhaulRecipe(output, OverhaulCategory.STONE), id(MakeshiftTable.STONE.path));
         CraftingPartRecipes.build(output);
         CraftingToolRecipes.build(output);
+        CraftingWoodRecipes.build(output);
+        CraftingStoneRecipes.build(output);
     }
 
     private static ResourceLocation id(String path) {

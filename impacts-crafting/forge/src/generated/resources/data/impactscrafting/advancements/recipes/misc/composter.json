@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:composter"
+    }
+  ],
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:composter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wooden_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:wooden_bucket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wooden_bucket",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:composter"
+    ]
+  },
+  "sends_telemetry_event": false
+}

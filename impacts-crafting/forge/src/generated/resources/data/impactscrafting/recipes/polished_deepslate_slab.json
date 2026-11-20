@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:polished_deepslate_slab"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:polished_deepslate"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:polished_deepslate_slab"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:chiseled_nether_bricks"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:nether_brick_slab"
+    }
+  },
+  "pattern": [
+    "X",
+    "X"
+  ],
+  "result": {
+    "item": "minecraft:chiseled_nether_bricks"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

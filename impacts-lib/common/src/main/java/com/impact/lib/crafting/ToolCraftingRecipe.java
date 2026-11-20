@@ -79,13 +79,12 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
 
     @Override
     public boolean matches(CraftingContainer grid, Level level) {
-        Optional<Set<Integer>> toolSlots = ToolCrafting.findToolSlots(grid, tools);
-        return toolSlots.isPresent() && shape.matches(gridWithout(grid, toolSlots.get()), level);
+        return toolSlotsFor(grid).isPresent();
     }
 
     @Override
     public ItemStack assemble(CraftingContainer grid, RegistryAccess registryAccess) {
-        Set<Integer> toolSlots = ToolCrafting.findToolSlots(grid, tools).orElse(Set.of());
+        Set<Integer> toolSlots = toolSlotsFor(grid).orElse(Set.of());
         ItemStack result = withConfiguredCount(shape.assemble(gridWithout(grid, toolSlots), registryAccess));
         nbtSource.flatMap(source -> firstMatching(grid, toolSlots, source))
                 .filter(ItemStack::hasTag)
@@ -96,7 +95,7 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
     /** Tools come back damaged (or break), ingredients leave their remainders, and the crafting player gets the byproducts. */
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingContainer grid) {
-        Set<Integer> toolSlots = ToolCrafting.findToolSlots(grid, tools).orElse(Set.of());
+        Set<Integer> toolSlots = toolSlotsFor(grid).orElse(Set.of());
         Optional<Player> player = ToolCrafting.craftingPlayer();
         NonNullList<ItemStack> remaining = NonNullList.withSize(grid.getContainerSize(), ItemStack.EMPTY);
         List<ItemStack> toolsBefore = new ArrayList<>();
@@ -172,6 +171,11 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
             return remainder.get().result().copy();
         }
         return LoaderPlatform.current().craftingRemainder(stack);
+    }
+
+    // Vanilla's shaped and shapeless recipes don't read the level when matching.
+    private Optional<Set<Integer>> toolSlotsFor(CraftingContainer grid) {
+        return ToolCrafting.findToolSlots(grid, tools, toolSlots -> shape.matches(gridWithout(grid, toolSlots), null));
     }
 
     private static Optional<ItemStack> firstMatching(CraftingContainer grid, Set<Integer> toolSlots, Ingredient source) {

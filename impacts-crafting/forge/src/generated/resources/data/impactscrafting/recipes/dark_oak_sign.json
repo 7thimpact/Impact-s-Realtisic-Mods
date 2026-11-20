@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:dark_oak_sign"
+    }
+  ],
+  "key": {
+    "P": {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:dark_oak\"}"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "P",
+    "S"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:dark_oak_sign"
+  },
+  "show_notification": true
+}

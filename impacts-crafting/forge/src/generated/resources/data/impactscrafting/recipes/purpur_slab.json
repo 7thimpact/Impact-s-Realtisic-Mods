@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:purpur_slab"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:purpur_block"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:purpur_slab"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

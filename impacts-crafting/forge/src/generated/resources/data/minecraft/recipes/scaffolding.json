@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:scaffolding"
+      }
+    }
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:bamboo"
+    },
+    "~": {
+      "tag": "forge:string"
+    }
+  },
+  "pattern": [
+    "I~I",
+    "I I",
+    "I I"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:scaffolding"
+  },
+  "show_notification": true
+}

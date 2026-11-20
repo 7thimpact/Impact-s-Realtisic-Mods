@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:dark_oak_loose_boat"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:boat_hull",
+      "nbt": "{wood:\"minecraft:dark_oak\"}"
+    },
+    {
+      "item": "impactscrafting:oar"
+    },
+    {
+      "item": "impactscrafting:oar"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:loose_boat",
+    "nbt": "{wood:\"minecraft:dark_oak\"}"
+  }
+}

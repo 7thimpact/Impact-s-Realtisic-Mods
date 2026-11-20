@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:cherry_stairs"
+      }
+    }
+  ],
+  "group": "wooden_stairs",
+  "key": {
+    "#": {
+      "item": "minecraft:cherry_planks"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:cherry_stairs"
+  },
+  "show_notification": true
+}

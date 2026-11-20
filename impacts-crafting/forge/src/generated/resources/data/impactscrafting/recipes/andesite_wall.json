@@ -1,0 +1,28 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:andesite_wall"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:andesite"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:andesite_wall"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

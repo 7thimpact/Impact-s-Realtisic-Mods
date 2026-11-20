@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 
 /**
  * Finds crafting recipes that could match the same grid, where at least one of them is an Impact recipe (an Impact
- * recipe against vanilla, SRF or another Impact mod). Shaped recipes compare cell by cell (mirrored too); shapeless and
- * tool recipes compare as bags of ingredients. Two ingredients collide when some item fits both.
+ * recipe against vanilla, SRF or another Impact mod). Shaped recipes compare cell by cell (mirrored too), and shaped tool
+ * recipes also need tools that collide; anything shapeless compares as a bag of ingredients. Two ingredients collide
+ * when some item fits both.
  */
 public final class RecipeConflictChecker {
     private RecipeConflictChecker() {
@@ -54,7 +55,10 @@ public final class RecipeConflictChecker {
 
     static boolean canMatchSameGrid(GridSignature first, GridSignature second) {
         if (first.isShaped() && second.isShaped()) {
-            return sameSizeGrid(first, second) && (cellsCollide(first, second, false) || cellsCollide(first, second, true));
+            boolean shapesCollide = sameSizeGrid(first, second) && (cellsCollide(first, second, false) || cellsCollide(first, second, true));
+            boolean toolsCollide = first.tools().size() == second.tools().size()
+                    && bagsCollide(first.tools(), second.tools(), new boolean[second.tools().size()], 0);
+            return shapesCollide && toolsCollide;
         }
         return bagsCollide(first.filledChoices(), second.filledChoices(), new boolean[second.filledChoices().size()], 0);
     }

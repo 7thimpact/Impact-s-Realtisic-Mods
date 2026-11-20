@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:oak_fence_gate"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:oak\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:oak\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:oak\"}"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    }
+  ],
+  "result": {
+    "item": "minecraft:oak_fence_gate"
+  }
+}

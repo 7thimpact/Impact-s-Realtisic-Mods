@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:end_stone_bricks"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:end_stone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:end_stone_bricks"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

@@ -26,6 +26,7 @@ public final class CraftingServerConfig {
     public final HammeringSettings hammering;
     public final TimedCraftingSettings timedCrafting;
     public final ConfigValue<Boolean> isFuelOn;
+    public final ConfigValue<Integer> woodenBucketUses;
     public final ConfigFile file;
 
     private CraftingServerConfig(ConfigSpecBuilder builder) {
@@ -53,6 +54,8 @@ public final class CraftingServerConfig {
         builder.pushSection("timedCrafting", "Every crafting grid takes time, by how deep the recipe sits in the crafting tree.");
         timedCrafting = new TimedCraftingSettings(builder);
         builder.popSection();
+        woodenBucketUses = builder.defineInteger("woodenBucketUses", 32, 1, MAXIMUM_USES,
+                "Uses of a Wooden Bucket. Each scoop and each pour costs 1.");
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
         builder.popSection();

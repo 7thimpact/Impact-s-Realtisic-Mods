@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:smooth_red_sandstone_stairs"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:smooth_red_sandstone"
+    }
+  },
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:smooth_red_sandstone_stairs"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:flint_chisel"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
+import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.menu.CraftingStation;
 
 import java.util.Arrays;
@@ -48,14 +49,27 @@ public final class CraftingTranslations {
         english.put(MakeshiftTable.WOODEN.containerTitleKey(), "Makeshift Table");
         english.put(MakeshiftTable.STONE.containerTitleKey(), "Makeshift Stone Table");
         english.put(MakeshiftTableItem.USES_LEFT_KEY, "Uses left: %s / %s");
-        english.put(ITEM_KEY_PREFIX + "trimmed_planks", "Trimmed Planks");
-        english.put(ITEM_KEY_PREFIX + "trimmed_planks.wood", "%s Trimmed Planks");
+        for (WoodPart part : WoodPart.values()) {
+            english.put(ITEM_KEY_PREFIX + part.path, titleCase(part.path));
+            english.put(ITEM_KEY_PREFIX + part.path + ".wood", "%s " + titleCase(part.path));
+        }
+        english.put(ITEM_KEY_PREFIX + "loose_boat", "Loose Boat");
+        english.put(ITEM_KEY_PREFIX + "loose_boat.wood", "%s Loose Boat");
+        english.put(ITEM_KEY_PREFIX + "wooden_bucket", "Wooden Bucket");
+        english.put(ITEM_KEY_PREFIX + "wooden_water_bucket", "Water-filled Wooden Bucket");
         english.put(ITEM_KEY_PREFIX + CraftingPart.TRIMMED_STICK.path, "Trimmed Sticks");
         english.put(ITEM_KEY_PREFIX + CraftingPart.SHAPED_STONE.path, "Shaped Stone");
         english.put(ITEM_KEY_PREFIX + CraftingPart.STONE_HINGE.path, "Stone Hinge");
         english.put(ITEM_KEY_PREFIX + CraftingPart.TWINE.path, "Twine");
         english.put(ITEM_KEY_PREFIX + CraftingPart.STRING_CLUMP.path, "String Clump");
         english.put(ITEM_KEY_PREFIX + CraftingPart.WOOD_SCRAPS.path, "Wood Scraps");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.CHEST_TOP.path, "Chest Top");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.OAR.path, "Oar");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.STONE_CASING.path, "Stone Casing");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.STONE_BASE.path, "Stone Base");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.MORTAR.path, "Mortar");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.LEATHER_STRIP.path, "Leather Strip");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.FLINT_ARROWHEAD.path, "Flint Arrowhead");
         english.put(ITEM_KEY_PREFIX + CraftingTool.BONE_NEEDLE.path, "Bone Needle");
         english.put(ITEM_KEY_PREFIX + CraftingTool.FLINT_CHISEL.path, "Flint Chisel");
         english.put(LooseItem.HAMMER_HINT_KEY, "Hammer with a pebble in your off hand.");

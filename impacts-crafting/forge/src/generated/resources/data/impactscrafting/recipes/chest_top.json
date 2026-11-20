@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:chest_top"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  },
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "result": {
+    "item": "impactscrafting:chest_top"
+  },
+  "show_notification": true
+}

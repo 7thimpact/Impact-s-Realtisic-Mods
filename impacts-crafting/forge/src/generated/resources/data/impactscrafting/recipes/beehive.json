@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:beehive"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "impactscrafting:wooden_bucket"
+    },
+    {
+      "item": "impactscrafting:chest_top"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    },
+    {
+      "item": "minecraft:honeycomb"
+    }
+  ],
+  "result": {
+    "item": "minecraft:beehive"
+  }
+}

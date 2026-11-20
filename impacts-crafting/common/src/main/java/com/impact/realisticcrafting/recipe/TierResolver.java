@@ -1,15 +1,20 @@
 package com.impact.realisticcrafting.recipe;
 
+import com.impact.lib.ResourceIds;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.config.ItemEntries;
 import com.impact.realisticcrafting.menu.CraftingTier;
 import com.impact.realisticcrafting.registry.CraftingTags;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -21,6 +26,8 @@ import java.util.WeakHashMap;
 public final class TierResolver {
     // Keyed by the recipe object, so a data pack reload (new recipes, new tags) starts over on its own.
     private static final Map<Recipe<?>, CraftingTier> RECIPE_TIERS = Collections.synchronizedMap(new WeakHashMap<>());
+    // Forge files bricks under its ingots tag, but they're fired clay, not ore.
+    private static final List<TagKey<Item>> FIRED_CLAY_INGOTS = List.of(forgeItemTag("ingots/brick"), forgeItemTag("ingots/nether_brick"));
 
     private TierResolver() {
     }
@@ -37,6 +44,9 @@ public final class TierResolver {
         if (ItemEntries.contains(settings.extraStone.get(), stack) || stack.is(CraftingTags.TIER_STONE)) {
             return CraftingTier.STONE;
         }
+        if (FIRED_CLAY_INGOTS.stream().anyMatch(stack::is)) {
+            return CraftingTier.NON_METAL;
+        }
         return stack.is(CraftingTags.TIER_ADVANCED) ? CraftingTier.ADVANCED : CraftingTier.NON_METAL;
     }
 
@@ -45,6 +55,10 @@ public final class TierResolver {
                 .map(TierResolver::tierOf)
                 .reduce(CraftingTier::lowest)
                 .orElse(CraftingTier.NON_METAL);
+    }
+
+    private static TagKey<Item> forgeItemTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceIds.of("forge", path));
     }
 
     /** Forgets every recipe's tier, for when the tier lists in the config change. */

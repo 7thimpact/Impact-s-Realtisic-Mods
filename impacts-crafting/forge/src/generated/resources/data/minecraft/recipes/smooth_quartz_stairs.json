@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:smooth_quartz_stairs"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:smooth_quartz"
+    }
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:smooth_quartz_stairs"
+  },
+  "show_notification": true
+}

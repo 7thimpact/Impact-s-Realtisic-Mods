@@ -11,7 +11,14 @@ public enum CraftingPart {
     STONE_HINGE("stone_hinge", () -> 0),
     TWINE("twine", () -> 0),
     STRING_CLUMP("string_clump", () -> 0),
-    WOOD_SCRAPS("wood_scraps", () -> CraftingServerConfig.get().woodScraps.burnTicks.get());
+    WOOD_SCRAPS("wood_scraps", () -> CraftingServerConfig.get().woodScraps.burnTicks.get()),
+    CHEST_TOP("chest_top", () -> 600),
+    OAR("oar", () -> 200),
+    STONE_CASING("stone_casing", () -> 0),
+    STONE_BASE("stone_base", () -> 0),
+    MORTAR("mortar", () -> 0),
+    LEATHER_STRIP("leather_strip", () -> 0),
+    FLINT_ARROWHEAD("flint_arrowhead", () -> 0);
 
     public final String path;
     private final IntSupplier burnTicks;

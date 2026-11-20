@@ -4,16 +4,20 @@ import com.google.gson.JsonElement;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.wood.WoodData;
+import com.impact.lib.wood.WoodKind;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.config.CraftingCommonConfig;
 import com.impact.realisticcrafting.config.OverhaulCategory;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +28,12 @@ import java.util.Map;
 public final class VanillaRecipeReplacements {
     private static final String MINECRAFT_NAMESPACE = "minecraft";
     private static final ImpactsLog LOG = ImpactsLog.of(CraftingMod.MOD_ID);
+    private static final List<WoodKind> WOOD_CATALOG_KINDS = List.of(WoodKind.SLAB, WoodKind.STAIRS, WoodKind.FENCE, WoodKind.FENCE_GATE,
+            WoodKind.DOOR, WoodKind.TRAPDOOR, WoodKind.SIGN, WoodKind.BUTTON, WoodKind.PRESSURE_PLATE, WoodKind.BOAT);
+    private static final String[] WOOD_CATALOG_RECIPES = {"bowl", "chest", "barrel", "composter", "beehive", "bookshelf", "chiseled_bookshelf",
+            "lectern", "loom", "cartography_table", "fletching_table", "painting", "item_frame", "armor_stand", "campfire", "ladder", "scaffolding"};
+    private static final String[] STONE_CATALOG_RECIPES = {"stone_bricks", "end_stone_bricks", "bricks", "nether_bricks", "red_nether_bricks",
+            "mud_bricks", "flower_pot", "furnace", "smoker", "grindstone", "lever", "white_concrete_powder"};
     private static final Map<ResourceLocation, OverhaulCategory> REPLACED = buildReplaced();
 
     private VanillaRecipeReplacements() {
@@ -58,7 +68,20 @@ public final class VanillaRecipeReplacements {
                 put(replaced, OverhaulCategory.COMBAT, kind.vanillaPath(material));
             }
         }
+        for (ResourceLocation wood : WoodData.VANILLA_WOODS) {
+            WOOD_CATALOG_KINDS.forEach(kind -> WoodData.vanillaItem(wood, kind).ifPresent(item -> putItem(replaced, OverhaulCategory.WOOD, item)));
+        }
+        put(replaced, OverhaulCategory.WOOD, WOOD_CATALOG_RECIPES);
+        put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);
+        for (BlockFamily family : StoneFamilies.all()) {
+            StoneFamilies.chiseledVariants(family).values().forEach(block -> putItem(replaced, OverhaulCategory.STONE, block.asItem()));
+        }
         return Collections.unmodifiableMap(replaced);
+    }
+
+    // Vanilla names these recipes after the item they make.
+    private static void putItem(Map<ResourceLocation, OverhaulCategory> replaced, OverhaulCategory category, Item item) {
+        replaced.put(ResourceIds.itemId(item), category);
     }
 
     private static void put(Map<ResourceLocation, OverhaulCategory> replaced, OverhaulCategory category, String... recipeNames) {

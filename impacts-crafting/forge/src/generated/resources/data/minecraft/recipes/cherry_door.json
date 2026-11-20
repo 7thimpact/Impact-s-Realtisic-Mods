@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:cherry_door"
+      }
+    }
+  ],
+  "group": "wooden_door",
+  "key": {
+    "#": {
+      "item": "minecraft:cherry_planks"
+    }
+  },
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:cherry_door"
+  },
+  "show_notification": true
+}

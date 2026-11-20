@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:grindstone"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:stone_base"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:grindstone"
+  }
+}

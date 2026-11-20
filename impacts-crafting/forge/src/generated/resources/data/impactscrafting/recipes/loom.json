@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:loom"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_frame"
+    },
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:loom"
+  }
+}

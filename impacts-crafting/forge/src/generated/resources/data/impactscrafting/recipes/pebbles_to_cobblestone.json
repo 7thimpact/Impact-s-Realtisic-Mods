@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:pebbles_to_cobblestone"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:stone_pebble"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "result": {
+    "item": "minecraft:cobblestone"
+  },
+  "show_notification": true
+}

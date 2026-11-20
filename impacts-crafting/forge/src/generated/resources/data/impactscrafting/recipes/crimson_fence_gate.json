@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:crimson_fence_gate"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:crimson\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:crimson\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:crimson\"}"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    }
+  ],
+  "result": {
+    "item": "minecraft:crimson_fence_gate"
+  }
+}

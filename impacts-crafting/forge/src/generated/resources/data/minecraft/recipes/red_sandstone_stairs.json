@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:red_sandstone_stairs"
+      }
+    }
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "minecraft:red_sandstone"
+      },
+      {
+        "item": "minecraft:chiseled_red_sandstone"
+      },
+      {
+        "item": "minecraft:cut_red_sandstone"
+      }
+    ]
+  },
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:red_sandstone_stairs"
+  },
+  "show_notification": true
+}

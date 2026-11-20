@@ -68,6 +68,8 @@ public final class CraftingTableGameTests {
         assertTier(helper, Items.DIAMOND, CraftingTier.ADVANCED);
         assertTier(helper, Items.OAK_PLANKS, CraftingTier.NON_METAL);
         assertTier(helper, Items.COAL, CraftingTier.NON_METAL);
+        assertTier(helper, Items.BRICK, CraftingTier.NON_METAL);
+        assertTier(helper, Items.NETHER_BRICK, CraftingTier.NON_METAL);
         assertTier(helper, Items.IRON_CHESTPLATE, CraftingTier.NON_METAL);
         helper.succeed();
     }

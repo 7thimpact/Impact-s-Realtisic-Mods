@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:cherry_trapdoor"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:cherry\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:cherry\"}"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:cherry_trapdoor"
+  }
+}

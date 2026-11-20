@@ -1,0 +1,35 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:crimson_button"
+    }
+  ],
+  "key": {
+    "P": {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:trimmed_planks",
+      "nbt": "{wood:\"minecraft:crimson\"}"
+    }
+  },
+  "pattern": [
+    "P ",
+    " P"
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:crimson_button"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

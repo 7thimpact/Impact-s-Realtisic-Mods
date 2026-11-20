@@ -1,0 +1,21 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:spruce_boat_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "type": "forge:partial_nbt",
+    "item": "impactscrafting:loose_boat",
+    "nbt": "{wood:\"minecraft:spruce\"}"
+  },
+  "result": {
+    "item": "minecraft:spruce_boat"
+  }
+}

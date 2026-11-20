@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:ladder"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "# #",
+    "###",
+    "# #"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:ladder"
+  },
+  "show_notification": true
+}

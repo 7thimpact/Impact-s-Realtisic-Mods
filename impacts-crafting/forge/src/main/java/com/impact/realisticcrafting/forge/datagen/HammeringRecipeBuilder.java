@@ -24,7 +24,11 @@ final class HammeringRecipeBuilder {
     }
 
     static HammeringRecipeBuilder of(ItemLike input, Ingredient hammer, ItemLike result) {
-        return new HammeringRecipeBuilder(Ingredient.of(input), hammer, result);
+        return of(Ingredient.of(input), hammer, result);
+    }
+
+    static HammeringRecipeBuilder of(Ingredient input, Ingredient hammer, ItemLike result) {
+        return new HammeringRecipeBuilder(input, hammer, result);
     }
 
     void save(Consumer<FinishedRecipe> output, ResourceLocation recipeId) {
