@@ -27,15 +27,19 @@ public final class DrinkValues {
     }
 
     public static Optional<DrinkValue> of(ItemStack stack) {
-        ItemStack lookedUp = isVanillaWaterBottle(stack) ? uncleanWaterStandIn() : stack;
+        ItemStack lookedUp = standIn(stack);
         VitalityServerConfig.DrinkSettings settings = VitalityServerConfig.get().drinks;
         return firstMatch(settings.overrides.get(), lookedUp).or(() -> firstMatch(settings.values.get(), lookedUp));
     }
 
-    /** The purity a drink carries: Vitality's own water, or a vanilla water bottle, which is unclean. */
+    /** The purity a drink carries: Vitality's water, a container's water, or a vanilla water bottle (unclean). Soups have none. */
     public static Optional<WaterPurity> purityOf(ItemStack stack) {
         if (isVanillaWaterBottle(stack)) {
             return Optional.of(WaterPurity.UNCLEAN);
+        }
+        Optional<ContainerContents> contents = WaterContainers.containerOf(stack).map(container -> ContainerContents.read(stack));
+        if (contents.isPresent()) {
+            return contents.filter(held -> !held.isEmpty() && held.kind() != ContainerContents.Kind.SOUP).map(ContainerContents::purity);
         }
         return VitalityItems.bottledWater(stack).map(water -> water.purity);
     }
@@ -44,8 +48,20 @@ public final class DrinkValues {
         return stack.is(Items.POTION) && PotionUtils.getPotion(stack) == Potions.WATER;
     }
 
-    private static ItemStack uncleanWaterStandIn() {
-        return VitalityItems.bottle(BottledWater.UNCLEAN);
+    // A drink is looked up as what it holds: a vanilla water bottle as Unclean Water, a container as a bottle of its water or its soup.
+    private static ItemStack standIn(ItemStack stack) {
+        if (isVanillaWaterBottle(stack)) {
+            return VitalityItems.bottle(BottledWater.UNCLEAN);
+        }
+        if (WaterContainers.containerOf(stack).isEmpty()) {
+            return stack;
+        }
+        ContainerContents contents = ContainerContents.read(stack);
+        return switch (contents.kind()) {
+            case COLD_WATER -> VitalityItems.bottle(BottledWater.COLD);
+            case SOUP -> contents.soup().flatMap(ResourceIds::item).map(ItemStack::new).orElse(ItemStack.EMPTY);
+            case WATER -> contents.isEmpty() ? ItemStack.EMPTY : VitalityItems.bottle(BottledWater.filledWith(contents.purity()));
+        };
     }
 
     private static Optional<DrinkValue> firstMatch(List<String> entries, ItemStack stack) {

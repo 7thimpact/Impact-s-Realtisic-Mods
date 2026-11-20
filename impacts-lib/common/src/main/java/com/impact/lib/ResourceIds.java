@@ -3,6 +3,7 @@ package com.impact.lib;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Optional;
@@ -29,6 +30,12 @@ public final class ResourceIds {
     @SuppressWarnings("deprecation")
     public static ResourceLocation itemId(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);
+    }
+
+    /** The item registered under the ID, or nothing for an unknown ID (never air). */
+    @SuppressWarnings("deprecation")
+    public static Optional<Item> item(ResourceLocation itemId) {
+        return BuiltInRegistries.ITEM.getOptional(itemId).filter(item -> item != Items.AIR);
     }
 
     @SuppressWarnings("deprecation")

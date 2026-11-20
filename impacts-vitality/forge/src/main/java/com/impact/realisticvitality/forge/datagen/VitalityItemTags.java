@@ -1,9 +1,11 @@
 package com.impact.realisticvitality.forge.datagen;
 
 import com.impact.lib.ResourceIds;
+import com.impact.lib.backslot.BackSlot;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
+import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -27,9 +29,10 @@ final class VitalityItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider lookup) {
-        Item[] waterBottles = VitalityItems.creativeTabItems().toArray(Item[]::new);
+        Item[] waterBottles = VitalityItems.waterBottles().toArray(Item[]::new);
         tag(VitalityTags.WATER_BOTTLES).add(waterBottles);
-        tag(VitalityTags.DRINKS).add(waterBottles);
+        tag(VitalityTags.DRINKS).add(waterBottles).add(VitalityItems.containers().toArray(Item[]::new));
+        tag(BackSlot.BACK_SLOT_ITEMS).add(VitalityItems.container(WaterContainer.HYDRATION_PACK));
         tag(VitalityTags.DRY_FOODS).add(Items.BREAD, Items.COOKIE, Items.DRIED_KELP)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "dried_foods"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "dough_bun"))

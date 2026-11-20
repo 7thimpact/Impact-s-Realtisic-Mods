@@ -51,7 +51,7 @@ public final class BottleFilling {
     private BottleFilling() {
     }
 
-    /** Once every mod is ready: takes over glass bottles at water cauldrons and dispensers, and lets cauldrons take Vitality's water. */
+    /** Once every mod is ready: takes over glass bottles at water cauldrons and dispensers, fills containers at cauldrons, and lets cauldrons take Vitality's water. */
     public static void registerInteractions() {
         vanillaCauldronFill = CauldronInteraction.WATER.get(Items.GLASS_BOTTLE);
         CauldronInteraction.WATER.put(Items.GLASS_BOTTLE, BottleFilling::fillFromCauldron);
@@ -59,6 +59,9 @@ public final class BottleFilling {
             Item waterItem = VitalityItems.waterBottle(water);
             CauldronInteraction.EMPTY.put(waterItem, BottleFilling::pourIntoEmptyCauldron);
             CauldronInteraction.WATER.put(waterItem, BottleFilling::pourIntoWaterCauldron);
+        }
+        for (WaterContainer container : WaterContainer.values()) {
+            CauldronInteraction.WATER.put(VitalityItems.container(container), WaterContainers::fillFromCauldron);
         }
         DispenseItemBehavior vanillaDispense = DispenserBlockAccessor.impactsvitality$behaviors().get(Items.GLASS_BOTTLE);
         DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, (source, stack) -> dispense(source, stack, vanillaDispense));

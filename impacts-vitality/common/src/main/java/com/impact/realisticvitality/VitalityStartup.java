@@ -12,6 +12,7 @@ import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityEffects;
 import com.impact.realisticvitality.registry.VitalityItems;
+import com.impact.realisticvitality.registry.VitalityRecipeSerializers;
 import com.impact.realisticvitality.thirst.BottleFilling;
 
 /** Vitality's startup steps that don't depend on the mod loader. */
@@ -31,6 +32,7 @@ public final class VitalityStartup {
         VitalityState.register();
         VitalityEffects.register();
         VitalityItems.register();
+        VitalityRecipeSerializers.register();
         VitalityNetwork.create();
         ImpactsLib.onModsReady(impactMods -> {
             BottleFilling.registerInteractions();

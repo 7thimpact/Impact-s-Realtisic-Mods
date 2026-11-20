@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "insulated_flask"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "impactsvitality:canteen"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    " G ",
+    "WCW",
+    " G "
+  ],
+  "result": {
+    "item": "impactsvitality:insulated_flask"
+  },
+  "show_notification": true
+}

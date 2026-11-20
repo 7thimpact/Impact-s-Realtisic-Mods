@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "hydration_pack"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "impactsvitality:canteen"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "DCD",
+    "L L"
+  ],
+  "result": {
+    "item": "impactsvitality:hydration_pack"
+  },
+  "show_notification": true
+}

@@ -2,23 +2,33 @@ package com.impact.realisticvitality.forge.client;
 
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.client.ThirstHud;
+import com.impact.realisticvitality.lang.VitalityTranslations;
+import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.thirst.BottledWater;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import org.lwjgl.glfw.GLFW;
 
 /** Vitality's client-only hooks on Forge. Loaded only on the physical client. */
 public final class VitalityForgeClient {
     private static final String THIRST_OVERLAY = "thirst_level";
     private static final int LIQUID_LAYER = 0;
     private static final int NO_TINT = -1;
+    private static final KeyMapping SIP_PACK_KEY = new KeyMapping(VitalityTranslations.SIP_PACK_KEY, KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_V, VitalityTranslations.KEY_CATEGORY);
 
     private VitalityForgeClient() {
     }
@@ -26,7 +36,9 @@ public final class VitalityForgeClient {
     public static void register(IEventBus modEventBus) {
         modEventBus.addListener(VitalityForgeClient::onRegisterOverlays);
         modEventBus.addListener(VitalityForgeClient::onRegisterItemColors);
+        modEventBus.addListener(VitalityForgeClient::onRegisterKeys);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onLoggingOut);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onClientTick);
     }
 
     // Right after hunger, so thirst sits directly above it and vanilla's air bubbles stack above thirst.
@@ -51,6 +63,19 @@ public final class VitalityForgeClient {
     private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
         for (BottledWater water : BottledWater.values()) {
             event.register((stack, layer) -> layer == LIQUID_LAYER ? water.liquidColor : NO_TINT, VitalityItems.waterBottle(water));
+        }
+    }
+
+    private static void onRegisterKeys(RegisterKeyMappingsEvent event) {
+        event.register(SIP_PACK_KEY);
+    }
+
+    private static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+        while (SIP_PACK_KEY.consumeClick()) {
+            VitalityNetwork.sendPackSip();
         }
     }
 

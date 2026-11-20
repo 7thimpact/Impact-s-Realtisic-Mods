@@ -6,8 +6,12 @@ import com.impact.lib.config.ConfigType;
 import com.impact.lib.config.ConfigValue;
 import com.impact.lib.config.ImpactsConfig;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.thirst.WaterContainer;
 
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Vitality's SERVER file: {@code <world>/serverconfig/impactslib/impactsvitality-server.toml}, synced to clients. Every
@@ -22,6 +26,8 @@ public final class VitalityServerConfig {
     public final ThirstSettings thirst;
     public final DrinkSettings drinks;
     public final PuritySettings purity;
+    public final ContainerSettings containers;
+    public final TemperatureSettings temperature;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
@@ -34,6 +40,12 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("purity", "Where water comes out clean, unclean or salty.");
         purity = new PuritySettings(builder);
+        builder.popSection();
+        builder.pushSection("containers", "Drink containers: how many drinks each holds and how the Tidebound Canteen refills.");
+        containers = new ContainerSettings(builder);
+        builder.popSection();
+        builder.pushSection("temperature", "Ambient and body temperature.");
+        temperature = new TemperatureSettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -121,6 +133,37 @@ public final class VitalityServerConfig {
         private PuritySettings(ConfigSpecBuilder builder) {
             saltWaterBiomes = builder.defineStringList("saltWaterBiomes", List.of("#minecraft:is_ocean", "#minecraft:is_beach"),
                     "Biomes (or #biome tags) where water is salty. Water anywhere else is unclean until boiled.");
+        }
+    }
+
+    public static final class ContainerSettings {
+        private static final int MAXIMUM_DRINKS = 1000;
+
+        public final Map<WaterContainer, ConfigValue<Integer>> capacities;
+        public final ConfigValue<Integer> cupPurifyingTicks;
+        public final ConfigValue<Integer> tideboundRefillTicks;
+        public final ConfigValue<Integer> tideboundWetRefillTicks;
+
+        private ContainerSettings(ConfigSpecBuilder builder) {
+            Map<WaterContainer, ConfigValue<Integer>> containerCapacities = new EnumMap<>(WaterContainer.class);
+            for (WaterContainer container : WaterContainer.values()) {
+                containerCapacities.put(container, builder.defineInteger(container.gear.configKey + "Drinks", container.defaultCapacity, 1, MAXIMUM_DRINKS,
+                        "Drinks the " + container.itemPath + " holds."));
+            }
+            capacities = Collections.unmodifiableMap(containerCapacities);
+            cupPurifyingTicks = builder.defineInteger("cupPurifyingTicks", 300, 1, MAXIMUM_TICKS, "Ticks a filled Wooden Cup takes to purify on a campfire.");
+            tideboundRefillTicks = builder.defineInteger("tideboundRefillTicks", 400, 1, MAXIMUM_TICKS,
+                    "Ticks between the Tidebound Canteen's refills (1 drink of purified water).");
+            tideboundWetRefillTicks = builder.defineInteger("tideboundWetRefillTicks", 100, 1, MAXIMUM_TICKS,
+                    "Ticks between its refills while it's in rain or water.");
+        }
+    }
+
+    public static final class TemperatureSettings {
+        public final ConfigValue<Integer> wetTicks;
+
+        private TemperatureSettings(ConfigSpecBuilder builder) {
+            wetTicks = builder.defineInteger("wetTicks", 600, 0, MAXIMUM_TICKS, "Ticks you stay Wet after water, rain or pouring a drink over yourself.");
         }
     }
 
