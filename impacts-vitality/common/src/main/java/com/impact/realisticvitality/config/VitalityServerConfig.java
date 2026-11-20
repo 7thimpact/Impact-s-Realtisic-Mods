@@ -30,6 +30,7 @@ public final class VitalityServerConfig {
     public final WaterBlockSettings waterBlocks;
     public final FilterSettings filters;
     public final TemperatureSettings temperature;
+    public final InsulationSettings insulation;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
@@ -54,6 +55,9 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("temperature", "Ambient and body temperature.");
         temperature = new TemperatureSettings(builder);
+        builder.popSection();
+        builder.pushSection("insulation", "Points of warmth and cooling from armor, linings and clothing. Each point moves an edge of the comfortable range.");
+        insulation = new InsulationSettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -307,6 +311,43 @@ public final class VitalityServerConfig {
             foodTemperatures = builder.defineStringList("foodTemperatures", List.of(
                     "impactsvitality:cold_water=-15", "minecraft:melon_slice=-15", "#impactsvitality:soups=15"),
                     "Body temperature a drink or food changes right away, as item=points or #tag=points.");
+        }
+    }
+
+    public static final class InsulationSettings {
+        private static final double MAXIMUM_POINTS = 100.0;
+        private static final int MAXIMUM_MATERIALS = 64;
+
+        public final ConfigValue<Double> warmArmorWarmth;
+        public final ConfigValue<Double> warmArmorChestWarmth;
+        public final ConfigValue<Double> coolingArmorCooling;
+        public final ConfigValue<Double> conductiveArmorPenalty;
+        public final ConfigValue<Double> woolLiningWarmth;
+        public final ConfigValue<Double> furLiningWarmth;
+        public final ConfigValue<Double> leatherLiningCooling;
+        public final ConfigValue<Integer> woolLiningMaterials;
+        public final ConfigValue<Integer> furLiningMaterials;
+        public final ConfigValue<Integer> leatherLiningMaterials;
+        public final ConfigValue<Integer> anvilLiningLevels;
+        public final ConfigValue<Double> strawHatCooling;
+        public final ConfigValue<Double> wetCooling;
+
+        private InsulationSettings(ConfigSpecBuilder builder) {
+            warmArmorWarmth = builder.defineDouble("warmArmorWarmth", 2.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Warmth per piece of #impactsvitality:warm_armor (leather).");
+            warmArmorChestWarmth = builder.defineDouble("warmArmorChestWarmth", 3.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Warmth of a warm chestplate.");
+            coolingArmorCooling = builder.defineDouble("coolingArmorCooling", 1.0, -MAXIMUM_POINTS, MAXIMUM_POINTS,
+                    "Cooling per piece of #impactsvitality:cooling_armor (chainmail breathes).");
+            conductiveArmorPenalty = builder.defineDouble("conductiveArmorPenalty", 1.0, -MAXIMUM_POINTS, MAXIMUM_POINTS,
+                    "Warmth and cooling lost per piece of #impactsvitality:conductive_armor (iron: metal makes heat and cold worse).");
+            woolLiningWarmth = builder.defineDouble("woolLiningWarmth", 2.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Warmth of a Wool Lining.");
+            furLiningWarmth = builder.defineDouble("furLiningWarmth", 3.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Warmth of a Fur Lining.");
+            leatherLiningCooling = builder.defineDouble("leatherLiningCooling", 2.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Cooling of a Leather Lining.");
+            woolLiningMaterials = builder.defineInteger("woolLiningMaterials", 3, 1, MAXIMUM_MATERIALS, "Wool a Wool Lining takes.");
+            furLiningMaterials = builder.defineInteger("furLiningMaterials", 4, 1, MAXIMUM_MATERIALS, "Rabbit hide a Fur Lining takes.");
+            leatherLiningMaterials = builder.defineInteger("leatherLiningMaterials", 3, 1, MAXIMUM_MATERIALS, "Leather a Leather Lining takes.");
+            anvilLiningLevels = builder.defineInteger("anvilLiningLevels", 1, 0, 40, "Experience levels to sew a lining in at an anvil (without Crafting).");
+            strawHatCooling = builder.defineDouble("strawHatCooling", 4.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Cooling of a worn Straw Hat, in the sun only.");
+            wetCooling = builder.defineDouble("wetCooling", 6.0, -MAXIMUM_POINTS, MAXIMUM_POINTS, "Cooling while Wet.");
         }
     }
 

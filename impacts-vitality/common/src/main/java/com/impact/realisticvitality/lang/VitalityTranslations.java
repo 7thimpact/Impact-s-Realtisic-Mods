@@ -3,6 +3,7 @@ package com.impact.realisticvitality.lang;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.registry.VitalityDamageTypes;
+import com.impact.realisticvitality.temperature.ArmorLining;
 import com.impact.realisticvitality.thirst.BottledWater;
 import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.resources.ResourceKey;
@@ -32,6 +33,11 @@ public final class VitalityTranslations {
     public static final String SIP_PACK_KEY = "key.impactsvitality.sip_pack";
     public static final String KEY_CATEGORY = "key.categories.impactsvitality";
     public static final String TOO_HOT_TO_EAT = "message.impactsvitality.too_hot_to_eat";
+    private static final String LINING_TOOLTIP_PREFIX = "tooltip.impactsvitality.lining.";
+    private static final Map<ArmorLining, String> LINING_NAMES = new EnumMap<>(Map.of(
+            ArmorLining.WOOL, "Wool Lining: warmer",
+            ArmorLining.FUR, "Fur Lining: much warmer",
+            ArmorLining.LEATHER, "Leather Lining: cooler"));
     private static final Map<WaterContainer, String> CONTAINER_NAMES = new EnumMap<>(Map.of(
             WaterContainer.WOODEN_CUP, "Wooden Cup",
             WaterContainer.WATERSKIN, "Waterskin",
@@ -62,6 +68,10 @@ public final class VitalityTranslations {
     private VitalityTranslations() {
     }
 
+    public static String liningTooltip(ArmorLining lining) {
+        return LINING_TOOLTIP_PREFIX + lining.serializedName;
+    }
+
     public static String itemName(BottledWater water) {
         return ITEM_KEY_PREFIX + water.itemPath;
     }
@@ -87,6 +97,9 @@ public final class VitalityTranslations {
         english.put(SIP_PACK_KEY, "Sip from Hydration Pack");
         english.put(KEY_CATEGORY, "Impact's Realistic Vitality");
         english.put(TOO_HOT_TO_EAT, "Too hot to eat anything dry.");
+        LINING_NAMES.forEach((lining, text) -> english.put(liningTooltip(lining), text));
+        english.put(ITEM_KEY_PREFIX + "straw_hat", "Straw Hat");
+        english.put(ITEM_KEY_PREFIX + "thermometer", "Thermometer");
         for (ResourceKey<DamageType> damageType : VitalityDamageTypes.ALL) {
             String deathKey = DEATH_PREFIX + VitalityDamageTypes.messageId(damageType);
             english.put(deathKey, DEATH_MESSAGES.get(damageType));

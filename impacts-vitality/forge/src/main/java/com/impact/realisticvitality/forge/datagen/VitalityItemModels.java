@@ -29,5 +29,7 @@ final class VitalityItemModels extends ItemModelProvider {
             basicItem(VitalityItems.container(container));
         }
         basicItem(VitalityItems.charcoalFilter());
+        basicItem(VitalityItems.strawHat());
+        basicItem(VitalityItems.thermometer());
     }
 }

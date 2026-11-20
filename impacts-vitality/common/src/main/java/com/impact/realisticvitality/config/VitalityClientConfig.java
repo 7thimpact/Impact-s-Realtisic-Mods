@@ -36,10 +36,13 @@ public final class VitalityClientConfig {
     public static final class DisplaySettings {
         public final ConfigValue<TemperatureUnit> units;
         public final ConfigValue<Boolean> isDropletShakeOn;
+        public final ConfigValue<Double> readoutScale;
 
         private DisplaySettings(ConfigSpecBuilder builder) {
             units = builder.defineEnum("units", TemperatureUnit.FAHRENHEIT, "Units of the ambient temperature readout.");
             isDropletShakeOn = builder.defineBoolean("dropletShake", true, "Thirst droplets shake when thirst is low.");
+            readoutScale = builder.defineDouble("readoutScale", 0.5, 0.25, 2.0,
+                    "Text size of the Thermometer's readout under the temperature gauge (0.5 fits between the health and hunger rows).");
         }
     }
 }

@@ -4,11 +4,15 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.hud.HudBounds;
 import com.impact.lib.hud.HudLayout;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.config.TemperatureUnit;
+import com.impact.realisticvitality.config.VitalityClientConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.player.TemperatureState;
+import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.temperature.BodyState;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +21,8 @@ import net.minecraft.util.Mth;
 /**
  * The body temperature gauge: a round dial centered just above the hotbar, between the health and hunger columns. Its
  * face is blue when cold, white when comfortable and red when hot; a needle swings from left (−100) over the top to
- * right (+100), and a ring pulses at Cold, Hot and beyond. It centers on the hotbar bounds Lib publishes.
+ * right (+100), and a ring pulses at Cold, Hot and beyond. Carrying a Thermometer adds the ambient readout under it.
+ * It centers on the hotbar bounds Lib publishes.
  */
 public final class TemperatureGauge {
     private static final ResourceLocation TEXTURE = ResourceIds.of(VitalityMod.MOD_ID, "textures/gui/temperature_gauge.png");
@@ -36,6 +41,8 @@ public final class TemperatureGauge {
     private static final int COMFORTABLE_COLOR = 0xFFFFFF;
     private static final int HOT_COLOR = 0xFF3A2A;
     private static final float PULSE_TICKS = 20.0F;
+    private static final int READOUT_COLOR = 0xFFFFFF;
+    private static final String NO_READING = "--";
 
     private TemperatureGauge() {
     }
@@ -48,8 +55,14 @@ public final class TemperatureGauge {
         HudBounds hotbar = HudLayout.hotbarBounds(screenWidth, screenHeight);
         int dialLeft = hotbar.left() + hotbar.width() / 2 - DIAL_SIZE / 2;
         int levelRoom = player.experienceLevel > 0 ? LEVEL_NUMBER_HEIGHT : 0;
-        int dialTop = hotbar.top() - EXPERIENCE_BAR_GAP - levelRoom - DIAL_SIZE;
+        boolean hasThermometer = player.getInventory().hasAnyMatching(stack -> stack.is(VitalityItems.thermometer()));
+        float readoutScale = VitalityClientConfig.get().display.readoutScale.get().floatValue();
+        int readoutRoom = hasThermometer ? Mth.ceil(Minecraft.getInstance().font.lineHeight * readoutScale) : 0;
+        int dialTop = hotbar.top() - EXPERIENCE_BAR_GAP - levelRoom - readoutRoom - DIAL_SIZE;
         float body = ClientVitality.state().bodyTemperature();
+        if (hasThermometer) {
+            drawReadout(graphics, dialLeft + DIAL_SIZE / 2, dialTop + DIAL_SIZE, readoutScale);
+        }
         drawDial(graphics, dialLeft, dialTop, body);
         drawNeedle(graphics, dialLeft + DIAL_SIZE / 2, dialTop + DIAL_SIZE / 2, body);
         if (BodyState.of(body).isWarning()) {
@@ -62,6 +75,19 @@ public final class TemperatureGauge {
         float share = Mth.clamp(Math.abs(body) / TemperatureState.HOTTEST, 0.0F, 1.0F);
         int extreme = body < 0 ? COLD_COLOR : HOT_COLOR;
         return blend(COMFORTABLE_COLOR, extreme, share);
+    }
+
+    // The ambient temperature in the units the client config asks for, centered under the dial.
+    private static void drawReadout(GuiGraphics graphics, int centerX, int top, float scale) {
+        float ambient = ClientVitality.state().ambientTemperature();
+        TemperatureUnit unit = VitalityClientConfig.get().display.units.get();
+        String readout = Float.isNaN(ambient) ? NO_READING + unit.symbol : Math.round(unit.fromFahrenheit(ambient)) + unit.symbol;
+        Font font = Minecraft.getInstance().font;
+        graphics.pose().pushPose();
+        graphics.pose().translate(centerX, top, 0.0F);
+        graphics.pose().scale(scale, scale, 1.0F);
+        graphics.drawString(font, readout, -font.width(readout) / 2, 0, READOUT_COLOR, true);
+        graphics.pose().popPose();
     }
 
     private static void drawDial(GuiGraphics graphics, int left, int top, float body) {

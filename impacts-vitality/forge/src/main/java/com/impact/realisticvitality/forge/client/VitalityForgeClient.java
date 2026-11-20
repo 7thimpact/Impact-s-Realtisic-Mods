@@ -2,6 +2,7 @@ package com.impact.realisticvitality.forge.client;
 
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.client.FrostOverlay;
+import com.impact.realisticvitality.client.LiningTooltips;
 import com.impact.realisticvitality.client.TemperatureGauge;
 import com.impact.realisticvitality.client.ThirstHud;
 import com.impact.realisticvitality.lang.VitalityTranslations;
@@ -21,6 +22,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import org.lwjgl.glfw.GLFW;
 
@@ -43,6 +45,7 @@ public final class VitalityForgeClient {
         modEventBus.addListener(VitalityForgeClient::onRegisterKeys);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onLoggingOut);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onClientTick);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onItemTooltip);
     }
 
     // Right after hunger, so thirst sits directly above it and vanilla's air bubbles stack above thirst.
@@ -89,6 +92,10 @@ public final class VitalityForgeClient {
         while (SIP_PACK_KEY.consumeClick()) {
             VitalityNetwork.sendPackSip();
         }
+    }
+
+    private static void onItemTooltip(ItemTooltipEvent event) {
+        LiningTooltips.addLines(event.getItemStack(), event.getToolTip());
     }
 
     private static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {

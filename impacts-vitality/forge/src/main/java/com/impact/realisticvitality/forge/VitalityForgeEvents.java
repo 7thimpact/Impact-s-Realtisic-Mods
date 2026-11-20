@@ -12,22 +12,28 @@ import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.player.VitalitySync;
 import com.impact.realisticvitality.registry.VitalityItems;
+import com.impact.realisticvitality.temperature.ArmorLining;
 import com.impact.realisticvitality.temperature.BlockTemperatures;
 import com.impact.realisticvitality.temperature.BodyState;
 import com.impact.realisticvitality.temperature.DryFoods;
+import com.impact.realisticvitality.temperature.Linings;
 import com.impact.realisticvitality.temperature.TemperatureTicks;
 import com.impact.realisticvitality.thirst.BottleFilling;
 import com.impact.realisticvitality.thirst.Drinking;
 import com.impact.realisticvitality.thirst.Sipping;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -52,6 +58,29 @@ final class VitalityForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onTagsUpdated);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onItemUseStart);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onBreakSpeed);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onAnvilUpdate);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onAnvilRepair);
+    }
+
+    // Without Crafting, linings are sewn at an anvil. The armor keeps all its NBT; the player's new name, if any, applies too.
+    private static void onAnvilUpdate(AnvilUpdateEvent event) {
+        Linings.anvilResult(event.getLeft(), event.getRight()).ifPresent(lining -> {
+            ItemStack output = lining.lined();
+            String newName = event.getName();
+            if (newName != null && !newName.isBlank() && !newName.equals(event.getLeft().getHoverName().getString())) {
+                output.setHoverName(Component.literal(newName));
+            }
+            event.setOutput(output);
+            event.setCost(lining.levels());
+            event.setMaterialCost(lining.materialCount());
+        });
+    }
+
+    private static void onAnvilRepair(AnvilRepairEvent event) {
+        boolean isNewLining = ArmorLining.of(event.getOutput()).isPresent() && !ArmorLining.of(event.getOutput()).equals(ArmorLining.of(event.getLeft()));
+        if (isNewLining) {
+            Linings.logSewn(event.getEntity(), event.getOutput(), "anvil");
+        }
     }
 
     // Both sides refuse, each with its own copy of the body temperature, so the client never starts the eating animation.

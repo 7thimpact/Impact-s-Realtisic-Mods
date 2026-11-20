@@ -17,6 +17,12 @@ public final class VitalityTags {
     public static final TagKey<Item> SOUPS = item("soups");
     /** Fruit and vegetables that give a little thirst. */
     public static final TagKey<Item> JUICY_FOODS = item("juicy_foods");
+    /** Armor that keeps you warm: leather by default. */
+    public static final TagKey<Item> WARM_ARMOR = item("warm_armor");
+    /** Armor that breathes and cools: chainmail by default. */
+    public static final TagKey<Item> COOLING_ARMOR = item("cooling_armor");
+    /** Metal armor that makes both heat and cold worse: iron by default. */
+    public static final TagKey<Item> CONDUCTIVE_ARMOR = item("conductive_armor");
     /** Lib's shared tag: anything that works as a water bottle in recipes. */
     public static final TagKey<Item> WATER_BOTTLES = TagKey.create(Registries.ITEM, ResourceIds.of(ImpactsLib.MOD_ID, "water_bottles"));
 

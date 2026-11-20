@@ -39,5 +39,8 @@ final class VitalityItemTags extends ItemTagsProvider {
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "flatbread"));
         tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW);
         tag(VitalityTags.JUICY_FOODS).add(Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.APPLE, Items.CARROT, Items.BEETROOT);
+        tag(VitalityTags.WARM_ARMOR).add(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
+        tag(VitalityTags.COOLING_ARMOR).add(Items.CHAINMAIL_HELMET, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_LEGGINGS, Items.CHAINMAIL_BOOTS);
+        tag(VitalityTags.CONDUCTIVE_ARMOR).add(Items.IRON_HELMET, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS, Items.IRON_BOOTS);
     }
 }

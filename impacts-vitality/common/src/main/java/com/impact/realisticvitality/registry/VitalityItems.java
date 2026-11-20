@@ -6,11 +6,13 @@ import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.item.CharcoalFilterItem;
 import com.impact.realisticvitality.item.HydrationPackItem;
+import com.impact.realisticvitality.item.StrawArmorMaterial;
 import com.impact.realisticvitality.item.WaterBottleItem;
 import com.impact.realisticvitality.item.WaterContainerItem;
 import com.impact.realisticvitality.thirst.BottledWater;
 import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -28,6 +30,8 @@ public final class VitalityItems {
     private static final Map<BottledWater, Supplier<WaterBottleItem>> WATER_BOTTLES = new EnumMap<>(BottledWater.class);
     private static final Map<WaterContainer, Supplier<WaterContainerItem>> CONTAINERS = new EnumMap<>(WaterContainer.class);
     private static volatile Supplier<CharcoalFilterItem> charcoalFilter;
+    private static volatile Supplier<ArmorItem> strawHat;
+    private static volatile Supplier<Item> thermometer;
 
     private VitalityItems() {
     }
@@ -42,6 +46,8 @@ public final class VitalityItems {
             CONTAINERS.put(container, registrar.register(Registries.ITEM, container.itemPath, () -> newContainerItem(container)));
         }
         charcoalFilter = registrar.register(Registries.ITEM, "charcoal_filter", CharcoalFilterItem::new);
+        strawHat = registrar.register(Registries.ITEM, "straw_hat", () -> new ArmorItem(StrawArmorMaterial.INSTANCE, ArmorItem.Type.HELMET, new Item.Properties()));
+        thermometer = registrar.register(Registries.ITEM, "thermometer", () -> new Item(new Item.Properties().stacksTo(1)));
         CreativeTabs.register(VitalityMod.MOD_ID, () -> bottle(BottledWater.PURIFIED), VitalityItems::creativeTabItems);
     }
 
@@ -61,6 +67,15 @@ public final class VitalityItems {
         return charcoalFilter.get();
     }
 
+    public static ArmorItem strawHat() {
+        return strawHat.get();
+    }
+
+    /** Carried anywhere in the inventory, it adds the ambient readout under the temperature gauge. */
+    public static Item thermometer() {
+        return thermometer.get();
+    }
+
     public static List<Item> waterBottles() {
         return Arrays.stream(BottledWater.values()).map(VitalityItems::waterBottle).collect(Collectors.toList());
     }
@@ -78,6 +93,8 @@ public final class VitalityItems {
         items.addAll(containers());
         VitalityBlocks.all().forEach(block -> items.add(block.asItem()));
         items.add(charcoalFilter());
+        items.add(strawHat());
+        items.add(thermometer());
         return items;
     }
 

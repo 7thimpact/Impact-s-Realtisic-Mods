@@ -112,7 +112,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] 4 Health cap: the fuller bar must be at 18 for natural regeneration, the emptier bar caps it at full, three-quarters or half of max health, fast regeneration needs both bars full and both saturations, regeneration exhaustion is split between hunger and thirst, and `healthCap.capAllHealing` caps every heal
 - [x] 5 Ambient temperature: biome formula and overrides, Nether offset and flat End, cooling with height, caves drifting to 55°F (75°F at the bottom), smooth night and midday sun, rain and snow under open sky, nearby hot and cold blocks (closer counts more, capped), water, the Wet timer; read once a second per player and synced for the HUD
 - [x] 6 Body temperature: drift toward ±100 outside the comfortable range (1 point a second per 10°F) and back to 0 inside it, the nine bands with their effects (Slowness, slower mining, no sprinting, Weakness, Nausea, freezing and heat damage every 3 seconds, none on Peaceful), heat multiplying thirst drain, Cold Water, melon and soups changing body temperature, the dry-food rule, the gauge (pulsing at Cold and Hot) and the frost overlay; `/impacts vitality show|set` for testing
-- [ ] 7 Insulation
+- [x] 7 Insulation: warm, cooling and conductive armor tags (leather, chainmail, iron), Wool, Fur and Leather Linings sewn at an anvil without Crafting (keeping the armor's NBT; the Bone Needle recipe comes with Crafting in step 5), lining tooltips, the Straw Hat (cooling in the sun), being Wet, and the Thermometer's ambient readout under the gauge
 - [ ] 8 Air
 - [ ] 9 Breathing gear
 - [ ] 10 Integration: IRF and IRI parts here; IRC parts in step 5; SRF heat entries in step 6

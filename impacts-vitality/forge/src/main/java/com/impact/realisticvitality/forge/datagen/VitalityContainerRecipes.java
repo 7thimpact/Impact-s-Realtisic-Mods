@@ -128,6 +128,22 @@ final class VitalityContainerRecipes {
                 .define('I', Items.IRON_BARS)
                 .unlockedBy("has_charcoal_filter", has(VitalityItems.charcoalFilter()))
                 .save(gearOutput(output, VitalityGear.WATER_FILTER));
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, VitalityItems.strawHat())
+                .pattern("WWW")
+                .pattern("W W")
+                .define('W', Items.WHEAT)
+                .unlockedBy("has_wheat", has(Items.WHEAT))
+                .save(gearOutput(output, VitalityGear.STRAW_HAT));
+        // A glass tube with a redstone bulb, on an iron backing.
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, VitalityItems.thermometer())
+                .pattern("G")
+                .pattern("I")
+                .pattern("R")
+                .define('G', Items.GLASS)
+                .define('I', Items.IRON_INGOT)
+                .define('R', Items.REDSTONE)
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .save(gearOutput(output, VitalityGear.THERMOMETER));
         // The same with or without Crafting: it needs no Crafting parts.
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VitalityBlocks.copperStill())
                 .pattern("CGC")
