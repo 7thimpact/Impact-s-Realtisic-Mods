@@ -108,7 +108,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 
 - [x] 1 Skeleton: the three configs (need, piece and gear switches in common; every number in server; units and HUD in client), the `impactsvitality:feature_enabled` condition, debug categories, the player attachment with thirst, temperature and air parts, the `impactsvitality:main` channel syncing it, the `vitality-alone` setup
 - [x] 2 Thirst: the bar with Hydration, exhaustion from every action that costs food (not from the Hunger effect), the resting drain, Peaceful refill, the Parched effect, dehydration damage on starvation rules with the `impactsvitality:dehydration` damage type (and the other three damage types), no sprinting at 6 or less, the droplet row through Lib's layout (shakes when low, green while Parched)
-- [ ] 3 Drinks and water gear
+- [ ] 3 Drinks and water gear. Part 1 done: the four waters (purity picked up from water blocks, cauldrons and dispensers; ocean and beach biomes are salty; a boiling cauldron gives Purified Water), the drink table for drinks and foods (`drinks.values` and `drinks.overrides`, items or tags), the Parched roll, a vanilla water bottle drinking as Unclean Water, sipping, purifying by furnace, smoker and campfire, Cold Water, brewing, mud and cauldron pouring with IRV water, `#impactslib:water_bottles`. Next: the containers, then the Rain Barrel, Water Filter and Copper Still
 - [ ] 4 Health cap
 - [ ] 5 Ambient temperature
 - [ ] 6 Body temperature

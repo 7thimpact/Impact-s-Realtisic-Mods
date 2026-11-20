@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "impactsvitality.refmap.json",
   "mixins": [
+    "DispenserBlockAccessor",
     "MobEffectMixin",
     "PlayerMixin"
   ],

@@ -2,9 +2,12 @@ package com.impact.realisticvitality.forge.client;
 
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.client.ThirstHud;
+import com.impact.realisticvitality.registry.VitalityItems;
+import com.impact.realisticvitality.thirst.BottledWater;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -14,12 +17,15 @@ import net.minecraftforge.eventbus.api.IEventBus;
 /** Vitality's client-only hooks on Forge. Loaded only on the physical client. */
 public final class VitalityForgeClient {
     private static final String THIRST_OVERLAY = "thirst_level";
+    private static final int LIQUID_LAYER = 0;
+    private static final int NO_TINT = -1;
 
     private VitalityForgeClient() {
     }
 
     public static void register(IEventBus modEventBus) {
         modEventBus.addListener(VitalityForgeClient::onRegisterOverlays);
+        modEventBus.addListener(VitalityForgeClient::onRegisterItemColors);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeClient::onLoggingOut);
     }
 
@@ -39,6 +45,13 @@ public final class VitalityForgeClient {
         Entity vehicle = minecraft.player == null ? null : minecraft.player.getVehicle();
         boolean isMounted = vehicle != null && vehicle.showVehicleHealth();
         return !isMounted && !minecraft.options.hideGui && gui.shouldDrawSurvivalElements();
+    }
+
+    // The liquid layer (layer 0, vanilla's potion overlay) takes each water's color; the glass stays untinted.
+    private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
+        for (BottledWater water : BottledWater.values()) {
+            event.register((stack, layer) -> layer == LIQUID_LAYER ? water.liquidColor : NO_TINT, VitalityItems.waterBottle(water));
+        }
     }
 
     private static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {

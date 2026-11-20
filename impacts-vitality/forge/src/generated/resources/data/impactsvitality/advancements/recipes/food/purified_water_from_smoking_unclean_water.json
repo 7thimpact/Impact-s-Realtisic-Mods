@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ],
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsvitality:purified_water_from_smoking_unclean_water"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_unclean_water": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsvitality:unclean_water"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_unclean_water",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsvitality:purified_water_from_smoking_unclean_water"
+    ]
+  },
+  "sends_telemetry_event": false
+}

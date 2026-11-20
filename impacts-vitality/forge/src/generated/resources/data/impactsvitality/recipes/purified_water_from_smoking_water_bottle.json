@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ],
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "type": "forge:partial_nbt",
+    "item": "minecraft:potion",
+    "nbt": "{Potion:\"minecraft:water\"}"
+  },
+  "result": "impactsvitality:purified_water"
+}

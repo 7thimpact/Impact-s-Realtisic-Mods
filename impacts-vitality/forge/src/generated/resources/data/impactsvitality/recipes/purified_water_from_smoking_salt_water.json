@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ],
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactsvitality:salt_water"
+  },
+  "result": "impactsvitality:purified_water"
+}

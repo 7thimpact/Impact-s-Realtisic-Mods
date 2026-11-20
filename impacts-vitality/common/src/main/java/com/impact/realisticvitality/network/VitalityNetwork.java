@@ -5,6 +5,7 @@ import com.impact.lib.network.NetworkChannel;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.client.ClientVitality;
+import com.impact.realisticvitality.thirst.Sipping;
 import net.minecraft.server.level.ServerPlayer;
 
 /** Vitality's {@code impactsvitality:main} channel. */
@@ -20,6 +21,11 @@ public final class VitalityNetwork {
         channel = LoaderPlatform.current().createChannel(ResourceIds.of(VitalityMod.MOD_ID, "main"), PROTOCOL_VERSION);
         channel.registerClientbound(VitalityStateMessage.class, VitalityStateMessage.CODEC, message -> ClientVitality.onState(message));
         channel.registerClientbound(NeedSwitchesMessage.class, NeedSwitchesMessage.CODEC, message -> ClientVitality.onNeedSwitches(message));
+        channel.registerServerbound(SipMessage.class, SipMessage.CODEC, (message, sender) -> Sipping.trySip(sender));
+    }
+
+    public static void sendSip() {
+        channel.sendToServer(new SipMessage());
     }
 
     public static void sendState(ServerPlayer player, VitalityStateMessage message) {

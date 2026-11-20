@@ -11,6 +11,8 @@ import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityEffects;
+import com.impact.realisticvitality.registry.VitalityItems;
+import com.impact.realisticvitality.thirst.BottleFilling;
 
 /** Vitality's startup steps that don't depend on the mod loader. */
 public final class VitalityStartup {
@@ -19,7 +21,7 @@ public final class VitalityStartup {
     private VitalityStartup() {
     }
 
-    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects and the network channel. */
+    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects, items and the network channel. */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(VitalityMod.MOD_ID);
         LOG.registerCategories(VitalityLogCategories.ALL);
@@ -28,8 +30,12 @@ public final class VitalityStartup {
         VitalityClientConfig.register();
         VitalityState.register();
         VitalityEffects.register();
+        VitalityItems.register();
         VitalityNetwork.create();
-        ImpactsLib.onModsReady(impactMods -> logStartup());
+        ImpactsLib.onModsReady(impactMods -> {
+            BottleFilling.registerInteractions();
+            logStartup();
+        });
     }
 
     private static void logStartup() {

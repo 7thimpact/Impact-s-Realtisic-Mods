@@ -7,6 +7,8 @@ import com.impact.lib.config.ConfigValue;
 import com.impact.lib.config.ImpactsConfig;
 import com.impact.realisticvitality.VitalityMod;
 
+import java.util.List;
+
 /**
  * Vitality's SERVER file: {@code <world>/serverconfig/impactslib/impactsvitality-server.toml}, synced to clients. Every
  * gameplay number in the spec, with the spec's value as its default. Each need's numbers arrive with that need.
@@ -18,12 +20,20 @@ public final class VitalityServerConfig {
     private static volatile VitalityServerConfig registered;
 
     public final ThirstSettings thirst;
+    public final DrinkSettings drinks;
+    public final PuritySettings purity;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
     private VitalityServerConfig(ConfigSpecBuilder builder) {
         builder.pushSection("thirst", "The thirst bar: 20 points, with Hydration that drains first, as hunger has saturation.");
         thirst = new ThirstSettings(builder);
+        builder.popSection();
+        builder.pushSection("drinks", "What each drink and food does to thirst, as item=thirst,hydration (or #tag=thirst,hydration).");
+        drinks = new DrinkSettings(builder);
+        builder.popSection();
+        builder.pushSection("purity", "Where water comes out clean, unclean or salty.");
+        purity = new PuritySettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -54,6 +64,7 @@ public final class VitalityServerConfig {
         public final ConfigValue<Integer> parchedTicks;
         public final ConfigValue<Double> parchedExhaustionPerTick;
         public final ConfigValue<Integer> sipThirst;
+        public final ConfigValue<Integer> sipCooldownTicks;
         public final ConfigValue<Double> dehydrationDamage;
         public final ConfigValue<Integer> dehydrationIntervalTicks;
 
@@ -72,8 +83,44 @@ public final class VitalityServerConfig {
             parchedExhaustionPerTick = builder.defineDouble("parchedExhaustionPerTick", 0.005, 0.0, 1.0,
                     "Thirst exhaustion Parched adds each tick, per level (as Hunger does for food).");
             sipThirst = builder.defineInteger("sipThirst", 1, 0, THIRST_BAR, "Thirst a sip from a water source restores.");
+            sipCooldownTicks = builder.defineInteger("sipCooldownTicks", 20, 0, MAXIMUM_TICKS,
+                    "Ticks between sips from a water source, so holding the button doesn't drink a lake in a second.");
             dehydrationDamage = builder.defineDouble("dehydrationDamage", 1.0, 0.0, 100.0, "Damage at 0 thirst, on vanilla's starvation rules.");
             dehydrationIntervalTicks = builder.defineInteger("dehydrationIntervalTicks", 80, 1, MAXIMUM_TICKS, "Ticks between dehydration damage.");
+        }
+    }
+
+    public static final class DrinkSettings {
+        /** The spec's drink table. Items and tags are checked in this order; the first match wins. */
+        public static final List<String> SPEC_VALUES = List.of(
+                "impactsvitality:unclean_water=4,1",
+                "impactsvitality:salt_water=-2,0",
+                "impactsvitality:purified_water=6,4",
+                "impactsvitality:cold_water=6,4",
+                "minecraft:milk_bucket=6,3",
+                "minecraft:potion=3,1",
+                "minecraft:honey_bottle=2,0",
+                "#impactsvitality:soups=4,2",
+                "minecraft:melon_slice=2,1",
+                "#impactsvitality:juicy_foods=1,0",
+                "#impactsvitality:dry_foods=-1,0");
+
+        public final ConfigValue<List<String>> values;
+        public final ConfigValue<List<String>> overrides;
+
+        private DrinkSettings(ConfigSpecBuilder builder) {
+            values = builder.defineStringList("values", SPEC_VALUES,
+                    "Thirst and Hydration per drink or bite. A vanilla water bottle drinks as Unclean Water.");
+            overrides = builder.defineStringList("overrides", List.of(), "Extra item=thirst,hydration entries that win over the values above.");
+        }
+    }
+
+    public static final class PuritySettings {
+        public final ConfigValue<List<String>> saltWaterBiomes;
+
+        private PuritySettings(ConfigSpecBuilder builder) {
+            saltWaterBiomes = builder.defineStringList("saltWaterBiomes", List.of("#minecraft:is_ocean", "#minecraft:is_beach"),
+                    "Biomes (or #biome tags) where water is salty. Water anywhere else is unclean until boiled.");
         }
     }
 

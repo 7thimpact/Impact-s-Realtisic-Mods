@@ -21,6 +21,7 @@ public final class ThirstState {
     // Not saved: only used to log changes.
     private int loggedStep = -1;
     private boolean wasParched;
+    private long lastSipGameTime = Long.MIN_VALUE / 2;
 
     public int level() {
         return level;
@@ -69,6 +70,15 @@ public final class ThirstState {
 
     public void setLoggedStep(int step) {
         loggedStep = step;
+    }
+
+    /** Not saved: a sip cooldown is short enough to forget. */
+    public long lastSipGameTime() {
+        return lastSipGameTime;
+    }
+
+    public void setLastSipGameTime(long gameTime) {
+        lastSipGameTime = gameTime;
     }
 
     public boolean wasParched() {

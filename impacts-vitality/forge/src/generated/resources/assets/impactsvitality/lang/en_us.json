@@ -8,5 +8,10 @@
   "death.attack.impactsvitality.heatstroke.player": "%1$s died of heatstroke while fighting %2$s",
   "death.attack.impactsvitality.thin_air": "%1$s ran out of air on the mountaintop",
   "death.attack.impactsvitality.thin_air.player": "%1$s ran out of air while fighting %2$s",
-  "effect.impactsvitality.parched": "Parched"
+  "effect.impactsvitality.parched": "Parched",
+  "item.impactsvitality.cold_water": "Cold Water",
+  "item.impactsvitality.purified_water": "Purified Water",
+  "item.impactsvitality.salt_water": "Salt Water",
+  "item.impactsvitality.unclean_water": "Unclean Water",
+  "itemGroup.impactsvitality": "Impact's Realistic Vitality"
 }
