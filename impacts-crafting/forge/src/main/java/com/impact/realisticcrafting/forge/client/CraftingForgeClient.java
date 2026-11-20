@@ -59,7 +59,8 @@ public final class CraftingForgeClient {
         if (screen instanceof DrawsOwnCraftingProgress) {
             return;
         }
-        CraftingProgress.get(screen.getMenu()).ifPresent(progress -> CraftingArrows.renderArrow(event.getGuiGraphics(), screen, progress));
+        CraftingProgress.get(screen.getMenu()).ifPresent(progress ->
+                CraftingArrows.renderArrow(event.getGuiGraphics(), screen, screen.getGuiLeft(), screen.getGuiTop(), progress));
     }
 
     // The faded cover goes over the output's item, which is drawn after the background.

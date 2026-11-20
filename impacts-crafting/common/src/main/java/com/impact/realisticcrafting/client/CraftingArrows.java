@@ -24,13 +24,12 @@ public final class CraftingArrows {
     private CraftingArrows() {
     }
 
-    /** In the screen's background pass, at screen coordinates. */
-    public static void renderArrow(GuiGraphics graphics, AbstractContainerScreen<?> screen, CraftingProgress.Progress progress) {
+    /** In the screen's background pass, at screen coordinates from the screen's corner ({@code guiLeft}, {@code guiTop}). */
+    public static void renderArrow(GuiGraphics graphics, AbstractContainerScreen<?> screen, int guiLeft, int guiTop, CraftingProgress.Progress progress) {
         if (screen instanceof CraftingScreen) {
-            CraftingProgressRenderer.renderArrow(graphics, screen.getGuiLeft() + TABLE_ARROW_X, screen.getGuiTop() + TABLE_ARROW_Y, progress);
+            CraftingProgressRenderer.renderArrow(graphics, guiLeft + TABLE_ARROW_X, guiTop + TABLE_ARROW_Y, progress);
         } else if (screen instanceof InventoryScreen) {
-            CraftingProgressRenderer.renderInventoryArrow(graphics, screen.getGuiLeft() + INVENTORY_ARROW_X, screen.getGuiTop() + INVENTORY_ARROW_Y,
-                    progress);
+            CraftingProgressRenderer.renderInventoryArrow(graphics, guiLeft + INVENTORY_ARROW_X, guiTop + INVENTORY_ARROW_Y, progress);
         }
     }
 
