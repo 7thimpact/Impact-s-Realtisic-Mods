@@ -11,8 +11,15 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 
-/** Crafting's config numbers for its tool-crafting recipes: Wood Scraps per craft, and none from nether wood. */
+/** Crafting's numbers for its tool-crafting recipes: the Iron Saw's double yields, Wood Scraps per craft, and none from nether wood. */
 public final class CraftingToolCraftingOverrides implements ToolCraftingOverrides {
+    private static final int SAW_YIELD_MULTIPLIER = 2;
+
+    @Override
+    public int resultCount(ToolCraftingRecipe recipe, int recipeCount, CraftingContainer grid) {
+        return SawYields.isDoubled(recipe.getId(), grid) ? recipeCount * SAW_YIELD_MULTIPLIER : recipeCount;
+    }
+
     @Override
     public int byproductCount(ToolCraftingRecipe recipe, Byproduct byproduct, CraftingContainer grid) {
         if (!byproduct.stack().is(CraftingItems.part(CraftingPart.WOOD_SCRAPS))) {

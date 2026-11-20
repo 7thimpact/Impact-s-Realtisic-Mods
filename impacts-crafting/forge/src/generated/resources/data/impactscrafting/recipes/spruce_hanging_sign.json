@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:spruce_hanging_sign"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:spruce\"}"
+    },
+    {
+      "item": "minecraft:chain"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:spruce_hanging_sign"
+  }
+}

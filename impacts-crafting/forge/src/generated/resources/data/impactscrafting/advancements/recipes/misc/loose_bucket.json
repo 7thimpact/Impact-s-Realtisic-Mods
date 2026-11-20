@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:loose_bucket"
+    }
+  ],
+  "criteria": {
+    "has_iron_plate": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactscrafting:iron_plates"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:loose_bucket"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_plate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:loose_bucket"
+    ]
+  },
+  "sends_telemetry_event": false
+}

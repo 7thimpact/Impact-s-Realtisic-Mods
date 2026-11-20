@@ -5,6 +5,7 @@ import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
+import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
 import com.impact.realisticcrafting.item.ToolKind;
@@ -72,6 +73,18 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.FLINT_ARROWHEAD.path, "Flint Arrowhead");
         english.put(ITEM_KEY_PREFIX + CraftingTool.BONE_NEEDLE.path, "Bone Needle");
         english.put(ITEM_KEY_PREFIX + CraftingTool.FLINT_CHISEL.path, "Flint Chisel");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.IRON_CHISEL.path, "Iron Chisel");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.IRON_SAW.path, "Iron Saw");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.IRON_HAMMER.path, "Iron Hammer");
+        english.put(ITEM_KEY_PREFIX + CraftingTool.IRON_TWEEZERS.path, "Iron Tweezers");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_PLATE.path, "Iron Plate");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_ROD.path, "Iron Rod");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_RIVETS.path, "Iron Rivets");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_HINGE.path, "Iron Hinge");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_WHEEL.path, "Iron Wheel");
+        for (LooseIron looseIron : LooseIron.values()) {
+            english.put(ITEM_KEY_PREFIX + looseIron.path, titleCase(looseIron.path));
+        }
         english.put(LooseItem.HAMMER_HINT_KEY, "Hammer with a pebble in your off hand.");
         for (ToolMaterial material : ToolMaterial.values()) {
             for (ToolKind kind : ToolKind.values()) {

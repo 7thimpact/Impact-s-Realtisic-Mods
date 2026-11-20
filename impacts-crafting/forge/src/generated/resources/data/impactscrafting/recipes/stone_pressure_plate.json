@@ -19,8 +19,13 @@
     "item": "minecraft:stone_pressure_plate"
   },
   "tools": [
-    {
-      "item": "impactscrafting:flint_chisel"
-    }
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
   ]
 }

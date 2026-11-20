@@ -1,0 +1,22 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:iron_plate"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:iron_plate"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_hammer"
+    }
+  ]
+}

@@ -18,7 +18,12 @@ public enum CraftingPart {
     STONE_BASE("stone_base", () -> 0),
     MORTAR("mortar", () -> 0),
     LEATHER_STRIP("leather_strip", () -> 0),
-    FLINT_ARROWHEAD("flint_arrowhead", () -> 0);
+    FLINT_ARROWHEAD("flint_arrowhead", () -> 0),
+    IRON_PLATE("iron_plate", () -> 0),
+    IRON_ROD("iron_rod", () -> 0),
+    IRON_RIVETS("iron_rivets", () -> 0),
+    IRON_HINGE("iron_hinge", () -> 0),
+    IRON_WHEEL("iron_wheel", () -> 0);
 
     public final String path;
     private final IntSupplier burnTicks;

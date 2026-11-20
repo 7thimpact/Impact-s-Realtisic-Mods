@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:hopper"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "item": "minecraft:chest"
+    }
+  ],
+  "result": {
+    "item": "minecraft:hopper"
+  }
+}

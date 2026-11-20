@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:iron_wheel"
+    }
+  ],
+  "key": {
+    "P": {
+      "tag": "impactscrafting:iron_plates"
+    },
+    "R": {
+      "tag": "impactscrafting:iron_rods"
+    }
+  },
+  "pattern": [
+    " R ",
+    "RPR",
+    " R "
+  ],
+  "result": {
+    "item": "impactscrafting:iron_wheel"
+  },
+  "show_notification": true
+}

@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
+import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
@@ -30,6 +31,10 @@ final class CraftingItemModels extends ItemModelProvider {
         Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).forEach(this::basicItem);
         basicItem(CraftingItems.woodenBucket());
         basicItem(CraftingItems.woodenWaterBucket());
+        for (LooseIron looseIron : LooseIron.values()) {
+            withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", mcLoc(looseIron.vanillaSprite))
+                    .texture("layer1", modLoc("item/loose_binding"));
+        }
         withExistingParent("loose_boat", GENERATED_PARENT).texture("layer0", mcLoc("item/oak_boat")).texture("layer1", modLoc("item/loose_binding"));
         Arrays.stream(CraftingPart.values()).map(CraftingItems::part).forEach(this::basicItem);
         Arrays.stream(CraftingTool.values()).map(CraftingItems::tool).forEach(this::handheld);

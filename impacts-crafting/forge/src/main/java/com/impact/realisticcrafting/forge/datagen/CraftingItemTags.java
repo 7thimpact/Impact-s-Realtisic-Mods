@@ -1,6 +1,8 @@
 package com.impact.realisticcrafting.forge.datagen;
 
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.item.CraftingPart;
+import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.core.HolderLookup;
@@ -26,12 +28,17 @@ final class CraftingItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider lookup) {
-        tag(CraftingTags.TIER_STONE).addTags(Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_COPPER, Tags.Items.NUGGETS_IRON,
+        tag(CraftingTags.TIER_STONE).add(CraftingItems.tool(CraftingTool.IRON_SAW), CraftingItems.tool(CraftingTool.IRON_HAMMER),
+                CraftingItems.tool(CraftingTool.IRON_TWEEZERS), CraftingItems.tool(CraftingTool.IRON_CHISEL), CraftingItems.part(CraftingPart.IRON_PLATE),
+                CraftingItems.part(CraftingPart.IRON_ROD), CraftingItems.part(CraftingPart.IRON_RIVETS), CraftingItems.part(CraftingPart.IRON_HINGE),
+                CraftingItems.part(CraftingPart.IRON_WHEEL)).addTags(Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_COPPER, Tags.Items.NUGGETS_IRON,
                 Tags.Items.RAW_MATERIALS_IRON, Tags.Items.RAW_MATERIALS_COPPER, Tags.Items.ORES_IRON, Tags.Items.ORES_COPPER,
                 Tags.Items.STORAGE_BLOCKS_IRON, Tags.Items.STORAGE_BLOCKS_COPPER, Tags.Items.STORAGE_BLOCKS_RAW_IRON,
                 Tags.Items.STORAGE_BLOCKS_RAW_COPPER, Tags.Items.DUSTS_REDSTONE, Tags.Items.STORAGE_BLOCKS_REDSTONE);
-        tag(CraftingTags.TRIMMING_TOOLS).add(CraftingItems.stonePebble(), Items.FLINT);
-        tag(CraftingTags.HAMMERS).add(CraftingItems.stonePebble());
+        tag(CraftingTags.TRIMMING_TOOLS).add(CraftingItems.stonePebble(), Items.FLINT, CraftingItems.tool(CraftingTool.IRON_SAW));
+        tag(CraftingTags.HAMMERS).add(CraftingItems.stonePebble(), CraftingItems.tool(CraftingTool.IRON_HAMMER));
+        tag(CraftingTags.IRON_PLATES).add(CraftingItems.part(CraftingPart.IRON_PLATE));
+        tag(CraftingTags.IRON_RODS).add(CraftingItems.part(CraftingPart.IRON_ROD));
         tag(CraftingTags.BASE_MATERIALS).addTags(ItemTags.LOGS, ItemTags.WOOL, Tags.Items.INGOTS, Tags.Items.GEMS, Tags.Items.RAW_MATERIALS,
                 Tags.Items.LEATHER).add(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE, Items.STONE, Items.STRING);
         tag(CraftingTags.LOOSE_TOOLS).add(CraftingItems.looseItems().toArray(Item[]::new));

@@ -46,7 +46,11 @@ final class CraftingRecipeOutputs {
     }
 
     static Ingredient chisels() {
-        return Ingredient.of(CraftingItems.tool(CraftingTool.FLINT_CHISEL));
+        return Ingredient.of(CraftingItems.tool(CraftingTool.FLINT_CHISEL), CraftingItems.tool(CraftingTool.IRON_CHISEL));
+    }
+
+    static Ingredient tool(CraftingTool tool) {
+        return Ingredient.of(CraftingItems.tool(tool));
     }
 
     static Ingredient boneNeedles() {

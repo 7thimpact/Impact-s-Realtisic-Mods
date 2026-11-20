@@ -20,8 +20,13 @@
     "item": "minecraft:smooth_sandstone_slab"
   },
   "tools": [
-    {
-      "item": "impactscrafting:flint_chisel"
-    }
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
   ]
 }

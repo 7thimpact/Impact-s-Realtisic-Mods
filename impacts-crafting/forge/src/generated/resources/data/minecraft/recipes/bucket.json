@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "iron",
+        "recipe": "minecraft:bucket"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "pattern": [
+    "# #",
+    " # "
+  ],
+  "result": {
+    "item": "minecraft:bucket"
+  },
+  "show_notification": true
+}

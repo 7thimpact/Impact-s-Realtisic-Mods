@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:mangrove_hanging_sign"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:mangrove\"}"
+    },
+    {
+      "item": "minecraft:chain"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:mangrove_hanging_sign"
+  }
+}

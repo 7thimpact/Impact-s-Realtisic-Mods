@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:tripwire_hook"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:tripwire_hook"
+  }
+}

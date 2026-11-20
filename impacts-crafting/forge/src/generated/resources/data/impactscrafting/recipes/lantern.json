@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:lantern"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:torch"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    }
+  ],
+  "result": {
+    "item": "minecraft:lantern"
+  }
+}

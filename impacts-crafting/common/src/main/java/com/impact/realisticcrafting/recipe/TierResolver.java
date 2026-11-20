@@ -1,6 +1,7 @@
 package com.impact.realisticcrafting.recipe;
 
 import com.impact.lib.ResourceIds;
+import com.impact.lib.crafting.ToolCraftingRecipe;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.config.ItemEntries;
 import com.impact.realisticcrafting.menu.CraftingTier;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.WeakHashMap;
 /**
  * The tier of items and recipes. An item's tier comes from the config's extra lists first, then the tier tags. An
  * ingredient takes the lowest tier among the items it accepts (the cheapest way to fill it), and a recipe the highest
- * tier among its ingredients, tools included. Recipes without an ingredient list are non-metal.
+ * tier among its ingredients, tool ingredients included. Recipes without an ingredient list are non-metal.
  */
 public final class TierResolver {
     // Keyed by the recipe object, so a data pack reload (new recipes, new tags) starts over on its own.
@@ -66,8 +68,13 @@ public final class TierResolver {
         RECIPE_TIERS.clear();
     }
 
+    // Tool ingredients count too: a recipe that needs the Iron Saw needs the Stone Table.
     private static CraftingTier computeTier(Recipe<?> recipe) {
-        return recipe.getIngredients().stream()
+        List<Ingredient> ingredients = new ArrayList<>(recipe.getIngredients());
+        if (recipe instanceof ToolCraftingRecipe toolRecipe) {
+            ingredients.addAll(toolRecipe.tools());
+        }
+        return ingredients.stream()
                 .filter(ingredient -> !ingredient.isEmpty())
                 .map(TierResolver::tierOf)
                 .reduce(CraftingTier::highest)

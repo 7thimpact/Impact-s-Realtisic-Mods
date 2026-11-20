@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:chain"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:iron_rivets"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    }
+  ],
+  "result": {
+    "item": "minecraft:chain"
+  }
+}

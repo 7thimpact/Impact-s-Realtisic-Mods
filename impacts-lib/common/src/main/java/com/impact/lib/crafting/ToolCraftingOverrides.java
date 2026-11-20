@@ -12,6 +12,11 @@ public interface ToolCraftingOverrides {
         return recipeCount;
     }
 
+    /** Like {@link #resultCount(ToolCraftingRecipe, int)}, knowing what's in the grid (Crafting's Iron Saw doubles some yields). */
+    default int resultCount(ToolCraftingRecipe recipe, int recipeCount, CraftingContainer grid) {
+        return resultCount(recipe, recipeCount);
+    }
+
     /** The chance of the byproduct, given the chance the recipe's JSON names. 0 turns the byproduct off. */
     default float byproductChance(ToolCraftingRecipe recipe, Byproduct byproduct) {
         return byproduct.chance();

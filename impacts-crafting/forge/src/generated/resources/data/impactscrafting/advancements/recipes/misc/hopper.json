@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:hopper"
+    }
+  ],
+  "criteria": {
+    "has_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bucket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:hopper"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_bucket",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:hopper"
+    ]
+  },
+  "sends_telemetry_event": false
+}

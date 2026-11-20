@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:iron_tweezers"
+    }
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "N": {
+      "tag": "forge:nuggets/iron"
+    }
+  },
+  "pattern": [
+    " I ",
+    "N N"
+  ],
+  "result": {
+    "item": "impactscrafting:iron_tweezers"
+  },
+  "show_notification": true
+}

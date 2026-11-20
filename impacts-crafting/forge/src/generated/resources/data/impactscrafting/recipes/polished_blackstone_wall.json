@@ -21,8 +21,13 @@
     "item": "minecraft:polished_blackstone_wall"
   },
   "tools": [
-    {
-      "item": "impactscrafting:flint_chisel"
-    }
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
   ]
 }

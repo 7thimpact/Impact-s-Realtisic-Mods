@@ -85,7 +85,7 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
     @Override
     public ItemStack assemble(CraftingContainer grid, RegistryAccess registryAccess) {
         Set<Integer> toolSlots = toolSlotsFor(grid).orElse(Set.of());
-        ItemStack result = withConfiguredCount(shape.assemble(gridWithout(grid, toolSlots), registryAccess));
+        ItemStack result = withConfiguredCount(shape.assemble(gridWithout(grid, toolSlots), registryAccess), grid);
         nbtSource.flatMap(source -> firstMatching(grid, toolSlots, source))
                 .filter(ItemStack::hasTag)
                 .ifPresent(source -> result.setTag(source.getTag().copy()));
@@ -158,11 +158,15 @@ public final class ToolCraftingRecipe implements CraftingRecipe {
 
     // The owning mod's config can change how many items a craft gives (see ToolCraftingOverrides).
     private ItemStack withConfiguredCount(ItemStack result) {
-        int configuredCount = ToolCrafting.overridesFor(this).resultCount(this, result.getCount());
-        if (configuredCount == result.getCount()) {
-            return result;
-        }
-        return result.copyWithCount(configuredCount);
+        return withCount(result, ToolCrafting.overridesFor(this).resultCount(this, result.getCount()));
+    }
+
+    private ItemStack withConfiguredCount(ItemStack result, CraftingContainer grid) {
+        return withCount(result, ToolCrafting.overridesFor(this).resultCount(this, result.getCount(), grid));
+    }
+
+    private static ItemStack withCount(ItemStack result, int count) {
+        return count == result.getCount() ? result : result.copyWithCount(count);
     }
 
     private ItemStack remainderFor(ItemStack stack) {

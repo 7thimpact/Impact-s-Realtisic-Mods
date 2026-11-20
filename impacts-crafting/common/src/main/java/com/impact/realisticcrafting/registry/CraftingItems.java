@@ -10,6 +10,7 @@ import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.CraftingToolItem;
+import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.LooseWoodItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
@@ -45,6 +46,7 @@ public final class CraftingItems {
     private static volatile Supplier<WoodenBucketItem> woodenBucket;
     private static volatile Supplier<WoodenWaterBucketItem> woodenWaterBucket;
     private static volatile Supplier<LooseWoodItem> looseBoat;
+    private static final Map<LooseIron, Supplier<LooseItem>> LOOSE_IRON = new EnumMap<>(LooseIron.class);
 
     private CraftingItems() {
     }
@@ -62,6 +64,9 @@ public final class CraftingItems {
         woodenBucket = registrar.register(Registries.ITEM, "wooden_bucket", WoodenBucketItem::new);
         woodenWaterBucket = registrar.register(Registries.ITEM, "wooden_water_bucket", WoodenWaterBucketItem::new);
         looseBoat = registrar.register(Registries.ITEM, "loose_boat", LooseWoodItem::new);
+        for (LooseIron looseIron : LooseIron.values()) {
+            LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path, () -> new LooseItem(LooseItem.HammerKnock.METAL)));
+        }
         for (CraftingPart part : CraftingPart.values()) {
             PARTS.put(part, registrar.register(Registries.ITEM, part.path, () -> new Item(new Item.Properties())));
         }
@@ -102,6 +107,10 @@ public final class CraftingItems {
         return looseBoat.get();
     }
 
+    public static LooseItem looseIron(LooseIron looseIron) {
+        return LOOSE_IRON.get(looseIron).get();
+    }
+
     /** Woods that get boats (and so a Boat Hull and a loose boat): every wood except crimson and warped. */
     public static List<ResourceLocation> boatWoods() {
         return WoodData.allWoods().stream().filter(wood -> WoodData.vanillaItem(wood, WoodKind.BOAT).isPresent()).toList();
@@ -131,6 +140,7 @@ public final class CraftingItems {
             Arrays.stream(ToolKind.values()).map(kind -> looseTool(material, kind)).forEach(looseItems::add);
         }
         looseItems.add(looseBoat());
+        Arrays.stream(LooseIron.values()).map(CraftingItems::looseIron).forEach(looseItems::add);
         return looseItems;
     }
 
@@ -158,6 +168,7 @@ public final class CraftingItems {
         stacks.add(new ItemStack(woodenBucket()));
         stacks.add(new ItemStack(woodenWaterBucket()));
         boatWoods().forEach(wood -> stacks.add(WoodData.of(looseBoat(), wood)));
+        Arrays.stream(LooseIron.values()).map(looseIron -> new ItemStack(looseIron(looseIron))).forEach(stacks::add);
         for (ToolMaterial material : ToolMaterial.values()) {
             Arrays.stream(ToolKind.values()).map(kind -> new ItemStack(toolPart(material, kind))).forEach(stacks::add);
             Arrays.stream(ToolKind.values()).map(kind -> new ItemStack(looseTool(material, kind))).forEach(stacks::add);

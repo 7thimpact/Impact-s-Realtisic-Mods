@@ -103,11 +103,15 @@ public final class CraftingServerConfig {
         public final ConfigValue<Integer> pebbleUses;
         public final ConfigValue<Integer> needleUses;
         public final ConfigValue<Integer> flintChiselUses;
+        public final ConfigValue<Integer> ironChiselUses;
+        public final ConfigValue<Integer> ironToolUses;
 
         private DurabilitySettings(ConfigSpecBuilder builder) {
             pebbleUses = builder.defineInteger("pebble", 32, 1, MAXIMUM_USES, "Uses of a Stone Pebble.");
             needleUses = builder.defineInteger("needle", 64, 1, MAXIMUM_USES, "Uses of a Bone Needle.");
             flintChiselUses = builder.defineInteger("flintChisel", 48, 1, MAXIMUM_USES, "Uses of a Flint Chisel.");
+            ironChiselUses = builder.defineInteger("ironChisel", 192, 1, MAXIMUM_USES, "Uses of an Iron Chisel.");
+            ironToolUses = builder.defineInteger("ironTools", 128, 1, MAXIMUM_USES, "Uses of the Iron Saw, Iron Hammer and Iron Tweezers.");
         }
     }
 

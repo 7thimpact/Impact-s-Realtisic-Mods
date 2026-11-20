@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:stonecutter"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:stone_base"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    }
+  ],
+  "result": {
+    "item": "minecraft:stonecutter"
+  }
+}

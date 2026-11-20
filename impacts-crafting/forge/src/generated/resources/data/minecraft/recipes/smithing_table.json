@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:smithing_table"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "@": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "pattern": [
+    "@@",
+    "##",
+    "##"
+  ],
+  "result": {
+    "item": "minecraft:smithing_table"
+  },
+  "show_notification": true
+}

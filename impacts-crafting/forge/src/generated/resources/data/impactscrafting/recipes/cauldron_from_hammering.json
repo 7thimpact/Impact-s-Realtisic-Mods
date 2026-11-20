@@ -1,0 +1,19 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:cauldron_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "item": "impactscrafting:loose_cauldron"
+  },
+  "result": {
+    "item": "minecraft:cauldron"
+  }
+}
