@@ -127,7 +127,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 2 Makeshift Table and tiers: both makeshift tables (3×3 grid through vanilla's crafting menu, three wear stages, uses kept on the item, falling apart like an anvil), the tier tags and `TierResolver`, the tier check in every crafting grid (the 2×2 included) with a "Needs a ..." hint over the refused result, the vanilla Crafting Table recipe switched off
   - [x] 3 Tool crafting and starting parts: planks (1 by hand, 2 with a trimming tool) and sticks (vanilla's shape plus a trimming tool) replacing vanilla's, per-wood Trimmed Planks (tinted and named by wood), Trimmed Sticks, Shaped Stone, Stone Hinge, Twine, String Clump, Wood Scraps (a config count per craft, none from nether wood, fuel and compost), the Bone Needle and Flint Chisel; wooden parts burn
   - [x] 4 Tools: the `impactscrafting:hammering` recipe type and Lib hold-to-use action (loose item in the main hand, hammer in the off hand, effects every 10 ticks), loose items, the 10 heads and blades, the 10 loose tools hammered into vanilla's wooden and stone tools, vanilla's tool recipes switched off
-  - [ ] 5 Timed crafting in every grid
+  - [x] 5 Timed crafting in every grid: the depth table built from the live recipes at start and after every reload, craft times (10 ticks per depth, capped at 100, fallback 20, recipe overrides, mod multipliers, `craft_ticks`), a synced timer on vanilla's crafting and inventory menus (and the makeshift tables), the output locked and faded until done, shift-click repeats, and Lib's arrow drawn over vanilla's screens
   - [ ] 6 Wood and stone branches
   - [ ] 7 Iron branch
   - [ ] 8 Grinder recipes

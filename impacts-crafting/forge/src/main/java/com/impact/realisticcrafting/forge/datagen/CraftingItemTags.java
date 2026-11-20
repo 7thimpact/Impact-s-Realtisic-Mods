@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
@@ -31,6 +32,8 @@ final class CraftingItemTags extends ItemTagsProvider {
                 Tags.Items.STORAGE_BLOCKS_RAW_COPPER, Tags.Items.DUSTS_REDSTONE, Tags.Items.STORAGE_BLOCKS_REDSTONE);
         tag(CraftingTags.TRIMMING_TOOLS).add(CraftingItems.stonePebble(), Items.FLINT);
         tag(CraftingTags.HAMMERS).add(CraftingItems.stonePebble());
+        tag(CraftingTags.BASE_MATERIALS).addTags(ItemTags.LOGS, ItemTags.WOOL, Tags.Items.INGOTS, Tags.Items.GEMS, Tags.Items.RAW_MATERIALS,
+                Tags.Items.LEATHER).add(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE, Items.STONE, Items.STRING);
         tag(CraftingTags.LOOSE_TOOLS).add(CraftingItems.looseItems().toArray(Item[]::new));
         tag(CraftingTags.TIER_ADVANCED).addTags(Tags.Items.ORES, Tags.Items.RAW_MATERIALS, Tags.Items.INGOTS, Tags.Items.NUGGETS,
                 Tags.Items.GEMS, Tags.Items.DUSTS, Tags.Items.STORAGE_BLOCKS);

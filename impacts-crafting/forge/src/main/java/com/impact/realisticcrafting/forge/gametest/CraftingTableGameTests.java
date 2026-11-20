@@ -52,6 +52,7 @@ public final class CraftingTableGameTests {
     private static final int RESULT_SLOT = 0;
     private static final int TEST_CONTAINER_ID = 1;
     private static final int PLANKS_PER_BARE_LOG = 1;
+    private static final int LONG_ENOUGH_FOR_THREE_CRAFTS = 100;
 
     private CraftingTableGameTests() {
     }
@@ -158,15 +159,20 @@ public final class CraftingTableGameTests {
             BlockPos position = placeTable(helper, MakeshiftTable.WOODEN, BlockPos.ZERO);
             try {
                 TieredCraftingMenu table = openTable(player, position, MakeshiftTable.WOODEN);
+                player.containerMenu = table;
                 table.grid().setItem(0, new ItemStack(Items.OAK_LOG, 4));
+                CraftingTestGrids.finishCraft(table, player);
                 table.clicked(RESULT_SLOT, 0, ClickType.PICKUP, player);
                 helper.assertTrue(table.getCarried().getCount() == PLANKS_PER_BARE_LOG, "Taking the result gives a bare log's 1 planks");
                 helper.assertTrue(tableEntity(level, position).usesSpent() == 1, "and spends one of the table's uses");
                 table.setCarried(ItemStack.EMPTY);
+                CraftingTestGrids.finishCraft(table, player);
                 table.clicked(RESULT_SLOT, 0, ClickType.QUICK_MOVE, player);
+                CraftingTestGrids.runTicks(player, LONG_ENOUGH_FOR_THREE_CRAFTS);
                 helper.assertTrue(tableEntity(level, position).usesSpent() == 4, "Shift-clicking spends one use per craft (3 more logs)");
                 helper.assertTrue(player.getInventory().countItem(Items.OAK_PLANKS) == 3 * PLANKS_PER_BARE_LOG, "and moves every craft to the inventory");
             } finally {
+                player.containerMenu = player.inventoryMenu;
                 player.getInventory().clearContent();
                 removeTable(level, position);
             }
@@ -182,6 +188,7 @@ public final class CraftingTableGameTests {
                 tableEntity(level, position).setUsesSpent(MakeshiftTable.WOODEN.maxUses() - 1);
                 TieredCraftingMenu table = openTable(player, position, MakeshiftTable.WOODEN);
                 table.grid().setItem(0, new ItemStack(Items.OAK_LOG, 2));
+                CraftingTestGrids.finishCraft(table, player);
                 table.clicked(RESULT_SLOT, 0, ClickType.PICKUP, player);
                 helper.assertTrue(level.getBlockState(position).isAir(), "The last use breaks the table");
                 helper.assertTrue(table.grid().isEmpty() && table.getSlot(RESULT_SLOT).getItem().isEmpty(), "Its grid is emptied");

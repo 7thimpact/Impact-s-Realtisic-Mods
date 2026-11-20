@@ -3,6 +3,7 @@ package com.impact.realisticcrafting.forge.gametest;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.menu.TieredCraftingMenu;
+import com.impact.realisticcrafting.timing.CraftTimers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +19,7 @@ import java.util.function.BiConsumer;
 final class CraftingTestGrids {
     static final int RESULT_SLOT = 0;
     private static final int TEST_CONTAINER_ID = 1;
+    private static final int LONGEST_CRAFT_TICKS = 400;
 
     private CraftingTestGrids() {
     }
@@ -30,9 +32,11 @@ final class CraftingTestGrids {
         try {
             TieredCraftingMenu menu = new TieredCraftingMenu(TEST_CONTAINER_ID, player.getInventory(),
                     ContainerLevelAccess.create(helper.getLevel(), position), table);
+            player.containerMenu = menu;
             check.accept(player, menu);
             menu.grid().clearContent();
         } finally {
+            player.containerMenu = player.inventoryMenu;
             helper.getLevel().setBlockAndUpdate(position, Blocks.AIR.defaultBlockState());
             MockPlayers.leaveWorld(player);
         }
@@ -43,9 +47,27 @@ final class CraftingTestGrids {
         for (int slot = 0; slot < gridStacks.length; slot++) {
             menu.getSlot(RESULT_SLOT + 1 + slot).set(gridStacks[slot]);
         }
+        finishCraft(menu, player);
         menu.clicked(RESULT_SLOT, 0, ClickType.PICKUP, player);
         ItemStack taken = menu.getCarried();
         menu.setCarried(ItemStack.EMPTY);
         return taken;
+    }
+
+    /** Runs the menu's craft timer to the end, as the server's player ticks would (a mock player doesn't tick). */
+    static void finishCraft(AbstractContainerMenu menu, ServerPlayer player) {
+        AbstractContainerMenu openBefore = player.containerMenu;
+        player.containerMenu = menu;
+        for (int tick = 0; tick < LONGEST_CRAFT_TICKS && CraftTimers.isOutputLocked(menu); tick++) {
+            CraftTimers.tick(player);
+        }
+        player.containerMenu = openBefore;
+    }
+
+    /** Runs the open menu's timers for a number of ticks. */
+    static void runTicks(ServerPlayer player, int ticks) {
+        for (int tick = 0; tick < ticks; tick++) {
+            CraftTimers.tick(player);
+        }
     }
 }

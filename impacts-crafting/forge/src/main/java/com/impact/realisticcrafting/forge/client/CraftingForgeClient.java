@@ -1,5 +1,8 @@
 package com.impact.realisticcrafting.forge.client;
 
+import com.impact.lib.client.DrawsOwnCraftingProgress;
+import com.impact.lib.crafting.CraftingProgress;
+import com.impact.realisticcrafting.client.CraftingArrows;
 import com.impact.realisticcrafting.client.RefusedCraftHint;
 import com.impact.realisticcrafting.client.WoodTints;
 import com.impact.realisticcrafting.menu.CraftingMenus;
@@ -9,6 +12,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraftforge.client.event.ContainerScreenEvent;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
@@ -31,6 +35,8 @@ public final class CraftingForgeClient {
         modEventBus.addListener(CraftingForgeClient::onItemColors);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onScreenRendered);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onRecipesUpdated);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onContainerBackground);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onContainerForeground);
     }
 
     private static void onClientSetup(FMLClientSetupEvent event) {
@@ -45,6 +51,24 @@ public final class CraftingForgeClient {
     // The client needs the hammering action for other mods' loose items too, to hold them.
     private static void onRecipesUpdated(RecipesUpdatedEvent event) {
         Hammering.registerHoldActions(event.getRecipeManager());
+    }
+
+    // The arrow sits in the screen's background, under the slots; screens that draw it themselves (Inventory's) are skipped.
+    private static void onContainerBackground(ContainerScreenEvent.Render.Background event) {
+        AbstractContainerScreen<?> screen = event.getContainerScreen();
+        if (screen instanceof DrawsOwnCraftingProgress) {
+            return;
+        }
+        CraftingProgress.get(screen.getMenu()).ifPresent(progress -> CraftingArrows.renderArrow(event.getGuiGraphics(), screen, progress));
+    }
+
+    // The faded cover goes over the output's item, which is drawn after the background.
+    private static void onContainerForeground(ContainerScreenEvent.Render.Foreground event) {
+        AbstractContainerScreen<?> screen = event.getContainerScreen();
+        if (screen instanceof DrawsOwnCraftingProgress) {
+            return;
+        }
+        CraftingProgress.get(screen.getMenu()).ifPresent(progress -> CraftingArrows.renderFadedOutput(event.getGuiGraphics(), screen, progress));
     }
 
     private static void onScreenRendered(ScreenEvent.Render.Post event) {

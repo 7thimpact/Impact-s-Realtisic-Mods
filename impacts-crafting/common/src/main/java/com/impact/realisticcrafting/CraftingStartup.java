@@ -2,6 +2,7 @@ package com.impact.realisticcrafting;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
+import com.impact.lib.crafting.CraftingProgress;
 import com.impact.lib.crafting.ToolCrafting;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.config.CraftingClientConfig;
@@ -17,6 +18,7 @@ import com.impact.realisticcrafting.recipe.CraftingToolCraftingOverrides;
 import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.timing.CraftTimers;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
 
 import java.util.Arrays;
@@ -42,6 +44,7 @@ public final class CraftingStartup {
         CraftingWorldgen.register();
         CraftingDumpSections.register();
         ToolCrafting.registerOverrides(CraftingMod.MOD_ID, new CraftingToolCraftingOverrides());
+        CraftingProgress.registerSource(CraftingMod.MOD_ID, CraftTimers::progressOf);
         ImpactsLib.onModsReady(impactMods -> {
             CraftingFuels.register();
             CraftingItems.looseItems().forEach(Hammering::registerHoldAction);

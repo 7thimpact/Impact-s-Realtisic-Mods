@@ -24,6 +24,7 @@ public final class CraftingServerConfig {
     public final TierSettings tiers;
     public final WoodScrapSettings woodScraps;
     public final HammeringSettings hammering;
+    public final TimedCraftingSettings timedCrafting;
     public final ConfigValue<Boolean> isFuelOn;
     public final ConfigFile file;
 
@@ -48,6 +49,9 @@ public final class CraftingServerConfig {
         builder.popSection();
         builder.pushSection("hammering", "Finishing loose items with a hammer in the off hand.");
         hammering = new HammeringSettings(builder);
+        builder.popSection();
+        builder.pushSection("timedCrafting", "Every crafting grid takes time, by how deep the recipe sits in the crafting tree.");
+        timedCrafting = new TimedCraftingSettings(builder);
         builder.popSection();
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
@@ -164,6 +168,31 @@ public final class CraftingServerConfig {
             hammerUseTicks = builder.defineInteger("hammerUseTicks", 40, 1, 1200, "Ticks of holding right-click to hammer a loose item.");
             ironHammerUseTicks = builder.defineInteger("ironHammerUseTicks", 20, 1, 1200,
                     "The same with the Iron Hammer (recipes with their own time are scaled alike).");
+        }
+    }
+
+    public static final class TimedCraftingSettings {
+        public final ConfigValue<Boolean> isOn;
+        public final ConfigValue<Integer> ticksPerDepth;
+        public final ConfigValue<Integer> maxTicks;
+        public final ConfigValue<Integer> fallbackTicks;
+        public final ConfigValue<Boolean> timesInventoryGrid;
+        public final ConfigValue<Boolean> timesMakeshiftTables;
+        public final ConfigValue<Boolean> timesCraftingTable;
+        public final ConfigValue<List<String>> recipeOverrides;
+        public final ConfigValue<List<String>> modMultipliers;
+
+        private TimedCraftingSettings(ConfigSpecBuilder builder) {
+            isOn = builder.defineBoolean("enabled", true, "Crafting grids take time.");
+            ticksPerDepth = builder.defineInteger("ticksPerDepth", 10, 0, 1200, "Ticks per level of depth in the crafting tree.");
+            maxTicks = builder.defineInteger("maxTicks", 100, 0, 6000, "The longest a craft takes, in ticks.");
+            fallbackTicks = builder.defineInteger("fallbackTicks", 20, 0, 6000,
+                    "Ticks for recipes the depth table can't place (special recipes, loops with no base material).");
+            timesInventoryGrid = builder.defineBoolean("inventoryGrid", true, "The 2x2 inventory grid is timed.");
+            timesMakeshiftTables = builder.defineBoolean("makeshiftTables", true, "The makeshift tables are timed.");
+            timesCraftingTable = builder.defineBoolean("craftingTable", true, "The Crafting Table (and other mods' grids) is timed.");
+            recipeOverrides = builder.defineStringList("recipeOverrides", List.of(), "Fixed times for single recipes: recipe=ticks.");
+            modMultipliers = builder.defineStringList("modMultipliers", List.of(), "Time multipliers for a mod's recipes: modid=1.0.");
         }
     }
 }
