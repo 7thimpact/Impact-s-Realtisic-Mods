@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "shulker_air_tank"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsvitality:air_tank"
+    },
+    {
+      "item": "minecraft:shulker_shell"
+    },
+    {
+      "item": "minecraft:shulker_shell"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:shulker_air_tank"
+  }
+}

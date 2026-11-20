@@ -68,6 +68,9 @@ public interface LoaderPlatform {
     /** What an item leaves in a crafting grid after a craft (a milk bucket leaves a bucket), or an empty stack. */
     ItemStack craftingRemainder(ItemStack stack);
 
+    /** How long the item burns as furnace fuel, in ticks, counting every mod's fuels (0 when it isn't fuel). */
+    int burnTicks(ItemStack stack);
+
     /** Posts Lib's water-filled event on the loader's own event bus. */
     void postWaterFilled(WaterFilled event);
 

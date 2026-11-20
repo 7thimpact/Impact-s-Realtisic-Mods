@@ -1,6 +1,8 @@
 package com.impact.realisticvitality.forge.datagen;
 
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.air.AirTank;
+import com.impact.realisticvitality.air.BreathingMask;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.thirst.BottledWater;
 import com.impact.realisticvitality.thirst.WaterContainer;
@@ -31,5 +33,13 @@ final class VitalityItemModels extends ItemModelProvider {
         basicItem(VitalityItems.charcoalFilter());
         basicItem(VitalityItems.strawHat());
         basicItem(VitalityItems.thermometer());
+        for (BreathingMask mask : BreathingMask.values()) {
+            basicItem(VitalityItems.mask(mask));
+        }
+        for (AirTank tank : AirTank.values()) {
+            basicItem(VitalityItems.tank(tank));
+        }
+        basicItem(VitalityItems.airBladder());
+        basicItem(VitalityItems.bottledAir());
     }
 }

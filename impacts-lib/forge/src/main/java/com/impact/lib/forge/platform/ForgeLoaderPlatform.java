@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -111,6 +112,11 @@ public final class ForgeLoaderPlatform implements LoaderPlatform {
     @Override
     public ItemStack craftingRemainder(ItemStack stack) {
         return stack.hasCraftingRemainingItem() ? stack.getCraftingRemainingItem() : ItemStack.EMPTY;
+    }
+
+    @Override
+    public int burnTicks(ItemStack stack) {
+        return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     }
 
     @Override

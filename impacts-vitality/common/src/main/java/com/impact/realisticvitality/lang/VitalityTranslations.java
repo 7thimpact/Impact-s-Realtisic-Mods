@@ -34,6 +34,23 @@ public final class VitalityTranslations {
     public static final String KEY_CATEGORY = "key.categories.impactsvitality";
     public static final String TOO_HOT_TO_EAT = "message.impactsvitality.too_hot_to_eat";
     private static final String LINING_TOOLTIP_PREFIX = "tooltip.impactsvitality.lining.";
+    public static final String MASK_DAMP = "tooltip.impactsvitality.mask.damp";
+    public static final String MASK_DRY = "tooltip.impactsvitality.mask.dry";
+    public static final String MASK_FILTER = "tooltip.impactsvitality.mask.filter";
+    public static final String MASK_NO_FILTER = "tooltip.impactsvitality.mask.no_filter";
+    public static final String MASK_NEVER_SMOKE = "tooltip.impactsvitality.mask.never_smoke";
+    public static final String TANK_AIR = "tooltip.impactsvitality.tank.air";
+    public static final String TANK_NEEDS_RESPIRATOR = "tooltip.impactsvitality.tank.needs_respirator";
+    public static final String BLADDER_USES = "tooltip.impactsvitality.air_bladder.uses";
+    private static final Map<String, String> BREATHING_ITEM_NAMES = Map.of(
+            "cloth_mask", "Cloth Mask",
+            "respirator", "Respirator",
+            "rebreather", "Rebreather",
+            "netherite_rebreather", "Netherite Rebreather",
+            "air_tank", "Air Tank",
+            "shulker_air_tank", "Shulker Air Tank",
+            "air_bladder", "Air Bladder",
+            "bottled_air", "Bottled Air");
     private static final Map<ArmorLining, String> LINING_NAMES = new EnumMap<>(Map.of(
             ArmorLining.WOOL, "Wool Lining: warmer",
             ArmorLining.FUR, "Fur Lining: much warmer",
@@ -87,6 +104,7 @@ public final class VitalityTranslations {
         english.put(BLOCK_KEY_PREFIX + "rain_barrel", "Rain Barrel");
         english.put(BLOCK_KEY_PREFIX + "water_filter", "Water Filter");
         english.put(BLOCK_KEY_PREFIX + "copper_still", "Copper Still");
+        english.put(BLOCK_KEY_PREFIX + "air_compressor", "Air Compressor");
         english.put(CONTAINER_EMPTY, "Empty (holds %s drinks)");
         english.put(CONTAINER_DRINKS, "%s/%s drinks of %s");
         english.put(CONTAINER_SOUP, "Soup");
@@ -99,6 +117,15 @@ public final class VitalityTranslations {
         english.put(TOO_HOT_TO_EAT, "Too hot to eat anything dry.");
         LINING_NAMES.forEach((lining, text) -> english.put(liningTooltip(lining), text));
         english.put(ITEM_KEY_PREFIX + "straw_hat", "Straw Hat");
+        BREATHING_ITEM_NAMES.forEach((path, name) -> english.put(ITEM_KEY_PREFIX + path, name));
+        english.put(MASK_DAMP, "Damp: halves smoke for %s more seconds");
+        english.put(MASK_DRY, "Dry: use it on water to dampen it");
+        english.put(MASK_FILTER, "Charcoal Filter: %s seconds of smoke left");
+        english.put(MASK_NO_FILTER, "No filter: put a Charcoal Filter in it in a crafting grid");
+        english.put(MASK_NEVER_SMOKE, "Smoke never affects you");
+        english.put(TANK_AIR, "Air: %s of %s seconds");
+        english.put(TANK_NEEDS_RESPIRATOR, "Supplies thin air while you wear a Respirator or Rebreather");
+        english.put(BLADDER_USES, "%s of %s breaths: fill it in good air, use it in thin air");
         english.put(ITEM_KEY_PREFIX + "thermometer", "Thermometer");
         for (ResourceKey<DamageType> damageType : VitalityDamageTypes.ALL) {
             String deathKey = DEATH_PREFIX + VitalityDamageTypes.messageId(damageType);

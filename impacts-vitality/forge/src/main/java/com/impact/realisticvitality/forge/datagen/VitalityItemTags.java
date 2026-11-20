@@ -3,6 +3,7 @@ package com.impact.realisticvitality.forge.datagen;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.air.AirTank;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
 import com.impact.realisticvitality.thirst.WaterContainer;
@@ -32,7 +33,8 @@ final class VitalityItemTags extends ItemTagsProvider {
         Item[] waterBottles = VitalityItems.waterBottles().toArray(Item[]::new);
         tag(VitalityTags.WATER_BOTTLES).add(waterBottles);
         tag(VitalityTags.DRINKS).add(waterBottles).add(VitalityItems.containers().toArray(Item[]::new));
-        tag(BackSlot.BACK_SLOT_ITEMS).add(VitalityItems.container(WaterContainer.HYDRATION_PACK));
+        tag(BackSlot.BACK_SLOT_ITEMS).add(VitalityItems.container(WaterContainer.HYDRATION_PACK), VitalityItems.tank(AirTank.AIR_TANK),
+                VitalityItems.tank(AirTank.SHULKER_AIR_TANK));
         tag(VitalityTags.DRY_FOODS).add(Items.BREAD, Items.COOKIE, Items.DRIED_KELP)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "dried_foods"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "dough_bun"))

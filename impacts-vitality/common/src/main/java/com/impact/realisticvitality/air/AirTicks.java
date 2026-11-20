@@ -39,6 +39,8 @@ public final class AirTicks {
         AirState air = VitalityState.of(player).air;
         if ((player.tickCount + player.getId()) % TICKS_PER_READING == 0) {
             updateQuality(player, air, AirQualities.around(player.level(), player.getBoundingBox()));
+            boolean isDrainingWithoutGear = !player.isUnderWater() && AirProtection.bubbleTicksWithoutGear(player, air.quality()).isPresent();
+            BreathingGear.tickSecond(player, air.quality(), isDrainingWithoutGear);
         }
         OptionalInt bubbleTicks = player.isUnderWater() ? OptionalInt.empty() : AirProtection.bubbleTicks(player, air.quality());
         if (bubbleTicks.isEmpty()) {

@@ -31,6 +31,11 @@ final class VitalityBlockStates extends BlockStateProvider {
         ModelFile copperStill = cube("copper_still", "copper_still_top");
         getVariantBuilder(VitalityBlocks.copperStill()).forAllStates(state -> ConfiguredModel.builder().modelFile(copperStill).build());
         simpleBlockItem(VitalityBlocks.copperStill(), copperStill);
+        ModelFile compressor = models().cube("air_compressor", modLoc("block/air_compressor_bottom"), modLoc("block/air_compressor_top"),
+                modLoc("block/air_compressor_front"), modLoc("block/air_compressor_side"), modLoc("block/air_compressor_side"),
+                modLoc("block/air_compressor_side")).texture("particle", modLoc("block/air_compressor_side"));
+        getVariantBuilder(VitalityBlocks.airCompressor()).forAllStates(state -> ConfiguredModel.builder().modelFile(compressor).build());
+        simpleBlockItem(VitalityBlocks.airCompressor(), compressor);
     }
 
     // Each block's side and bottom textures share its first word set, e.g. rain_barrel_side and rain_barrel_bottom.

@@ -3,6 +3,7 @@ package com.impact.realisticvitality.forge;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.air.BreathingGear;
 import com.impact.realisticvitality.air.DimensionAirQualities;
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.config.VitalityServerConfig;
@@ -150,8 +151,12 @@ final class VitalityForgeEvents {
         }
     }
 
+    // A glass bottle fills with water when it's aimed at water, and otherwise bottles good air.
     private static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         InteractionResult result = BottleFilling.fillFromWorld(event.getLevel(), event.getEntity(), event.getHand());
+        if (result == InteractionResult.PASS) {
+            result = BreathingGear.tryBottleAir(event.getLevel(), event.getEntity(), event.getHand());
+        }
         if (result != InteractionResult.PASS) {
             event.setCanceled(true);
             event.setCancellationResult(result);

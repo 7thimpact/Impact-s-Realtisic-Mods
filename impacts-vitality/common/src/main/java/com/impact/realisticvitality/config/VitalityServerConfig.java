@@ -32,6 +32,7 @@ public final class VitalityServerConfig {
     public final TemperatureSettings temperature;
     public final InsulationSettings insulation;
     public final AirSettings air;
+    public final BreathingSettings breathing;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
@@ -62,6 +63,9 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("air", "Breathing outside water: thin air up high and deep down, smoke in the Nether and near lava.");
         air = new AirSettings(builder);
+        builder.popSection();
+        builder.pushSection("breathing", "Breathing gear: masks, filters, bladders, bottled air and air tanks.");
+        breathing = new BreathingSettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -390,6 +394,37 @@ public final class VitalityServerConfig {
             doesWaterBreathingProtect = builder.defineBoolean("waterBreathingProtects", true, "Water Breathing and Conduit Power protect against bad air.");
             respirationSlowingPerLevel = builder.defineDouble("respirationSlowingPerLevel", 1.0 / 3.0, 0.0, 1.0,
                     "Each level of Respiration slows bubble loss by this share (a third: Respiration III stops it).");
+        }
+    }
+
+    public static final class BreathingSettings {
+        private static final int MAXIMUM_USES = 64;
+        private static final int MAXIMUM_TANK_TICKS = 1_728_000;
+
+        public final ConfigValue<Integer> clothMaskDampTicks;
+        public final ConfigValue<Double> dampMaskSmokeSlowing;
+        public final ConfigValue<Integer> airBladderUses;
+        public final ConfigValue<Integer> airBladderBubbles;
+        public final ConfigValue<Integer> bottledAirBubbles;
+        public final ConfigValue<Integer> airTankTicks;
+        public final ConfigValue<Integer> shulkerAirTankTicks;
+        public final ConfigValue<Integer> tankRefillTicks;
+        public final ConfigValue<Double> rebreatherFilterMultiplier;
+        public final ConfigValue<Double> rebreatherTankMultiplier;
+        public final ConfigValue<Integer> compressorRefillTicks;
+
+        private BreathingSettings(ConfigSpecBuilder builder) {
+            clothMaskDampTicks = builder.defineInteger("clothMaskDampTicks", 2400, 1, MAXIMUM_TICKS, "Ticks a dampened Cloth Mask stays damp while worn.");
+            dampMaskSmokeSlowing = builder.defineDouble("dampMaskSmokeSlowing", 2.0, 1.0, 100.0, "A damp mask makes smoky air take bubbles this many times slower.");
+            airBladderUses = builder.defineInteger("airBladderUses", 3, 1, MAXIMUM_USES, "Uses an Air Bladder holds per fill.");
+            airBladderBubbles = builder.defineInteger("airBladderBubbles", 4, 1, 10, "Bubbles one use of an Air Bladder gives back in thin air.");
+            bottledAirBubbles = builder.defineInteger("bottledAirBubbles", 5, 1, 10, "Bubbles a Bottled Air gives back.");
+            airTankTicks = builder.defineInteger("airTankTicks", 3600, 1, MAXIMUM_TANK_TICKS, "Ticks of thin air an Air Tank supplies (3 minutes).");
+            shulkerAirTankTicks = builder.defineInteger("shulkerAirTankTicks", 18000, 1, MAXIMUM_TANK_TICKS, "Ticks a Shulker Air Tank supplies (15 minutes).");
+            tankRefillTicks = builder.defineInteger("tankRefillTicks", 600, 1, MAXIMUM_TICKS, "Ticks an empty tank takes to refill in good air (30 seconds).");
+            rebreatherFilterMultiplier = builder.defineDouble("rebreatherFilterMultiplier", 2.0, 1.0, 100.0, "Filters last this many times longer in a Rebreather.");
+            rebreatherTankMultiplier = builder.defineDouble("rebreatherTankMultiplier", 2.0, 1.0, 100.0, "Air Tanks last this many times longer with a Rebreather.");
+            compressorRefillTicks = builder.defineInteger("compressorRefillTicks", 100, 1, MAXIMUM_TICKS, "Ticks the Air Compressor takes to fill a tank (5 seconds).");
         }
     }
 

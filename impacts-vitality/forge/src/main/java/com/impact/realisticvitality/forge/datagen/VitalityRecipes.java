@@ -26,7 +26,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 
 import java.util.function.Consumer;
 
-/** Vitality's recipes: purifying any water bottle by smelting, smoking or a campfire, Cold Water, and the drink containers. */
+/** Vitality's recipes: purifying any water bottle, Cold Water, the drink containers, water blocks, clothing and breathing gear. */
 final class VitalityRecipes extends RecipeProvider {
     private static final float PURIFYING_EXPERIENCE = 0.1F;
     private static final int FURNACE_TICKS = 200;
@@ -49,6 +49,7 @@ final class VitalityRecipes extends RecipeProvider {
                 .unlockedBy("has_purified_water", has(VitalityItems.waterBottle(BottledWater.PURIFIED)))
                 .save(thirstOutput);
         VitalityContainerRecipes.build(output);
+        VitalityBreathingRecipes.build(output);
     }
 
     private static void purifying(Consumer<FinishedRecipe> output, Ingredient water, String waterName) {

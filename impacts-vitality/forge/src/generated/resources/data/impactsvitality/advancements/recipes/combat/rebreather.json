@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "rebreather"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "criteria": {
+    "has_respirator": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsvitality:respirator"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsvitality:rebreather"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_respirator",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsvitality:rebreather"
+    ]
+  },
+  "sends_telemetry_event": false
+}

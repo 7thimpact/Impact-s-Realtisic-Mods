@@ -4,6 +4,12 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.air.AirTank;
+import com.impact.realisticvitality.air.BreathingMask;
+import com.impact.realisticvitality.item.AirBladderItem;
+import com.impact.realisticvitality.item.AirTankItem;
+import com.impact.realisticvitality.item.BottledAirItem;
+import com.impact.realisticvitality.item.BreathingMaskItem;
 import com.impact.realisticvitality.item.CharcoalFilterItem;
 import com.impact.realisticvitality.item.HydrationPackItem;
 import com.impact.realisticvitality.item.StrawArmorMaterial;
@@ -32,6 +38,10 @@ public final class VitalityItems {
     private static volatile Supplier<CharcoalFilterItem> charcoalFilter;
     private static volatile Supplier<ArmorItem> strawHat;
     private static volatile Supplier<Item> thermometer;
+    private static final Map<BreathingMask, Supplier<BreathingMaskItem>> MASKS = new EnumMap<>(BreathingMask.class);
+    private static final Map<AirTank, Supplier<AirTankItem>> TANKS = new EnumMap<>(AirTank.class);
+    private static volatile Supplier<AirBladderItem> airBladder;
+    private static volatile Supplier<BottledAirItem> bottledAir;
 
     private VitalityItems() {
     }
@@ -48,6 +58,14 @@ public final class VitalityItems {
         charcoalFilter = registrar.register(Registries.ITEM, "charcoal_filter", CharcoalFilterItem::new);
         strawHat = registrar.register(Registries.ITEM, "straw_hat", () -> new ArmorItem(StrawArmorMaterial.INSTANCE, ArmorItem.Type.HELMET, new Item.Properties()));
         thermometer = registrar.register(Registries.ITEM, "thermometer", () -> new Item(new Item.Properties().stacksTo(1)));
+        for (BreathingMask mask : BreathingMask.values()) {
+            MASKS.put(mask, registrar.register(Registries.ITEM, mask.itemPath, () -> new BreathingMaskItem(mask, maskProperties(mask))));
+        }
+        for (AirTank tank : AirTank.values()) {
+            TANKS.put(tank, registrar.register(Registries.ITEM, tank.itemPath, () -> new AirTankItem(tank, new Item.Properties())));
+        }
+        airBladder = registrar.register(Registries.ITEM, "air_bladder", AirBladderItem::new);
+        bottledAir = registrar.register(Registries.ITEM, "bottled_air", BottledAirItem::new);
         CreativeTabs.register(VitalityMod.MOD_ID, () -> bottle(BottledWater.PURIFIED), VitalityItems::creativeTabItems);
     }
 
@@ -76,6 +94,22 @@ public final class VitalityItems {
         return thermometer.get();
     }
 
+    public static BreathingMaskItem mask(BreathingMask mask) {
+        return MASKS.get(mask).get();
+    }
+
+    public static AirTankItem tank(AirTank tank) {
+        return TANKS.get(tank).get();
+    }
+
+    public static AirBladderItem airBladder() {
+        return airBladder.get();
+    }
+
+    public static BottledAirItem bottledAir() {
+        return bottledAir.get();
+    }
+
     public static List<Item> waterBottles() {
         return Arrays.stream(BottledWater.values()).map(VitalityItems::waterBottle).collect(Collectors.toList());
     }
@@ -95,7 +129,17 @@ public final class VitalityItems {
         items.add(charcoalFilter());
         items.add(strawHat());
         items.add(thermometer());
+        Arrays.stream(BreathingMask.values()).map(VitalityItems::mask).forEach(items::add);
+        items.add(airBladder());
+        items.add(bottledAir());
+        Arrays.stream(AirTank.values()).map(VitalityItems::tank).forEach(items::add);
         return items;
+    }
+
+    // The Netherite Rebreather survives fire and lava, like netherite gear.
+    private static Item.Properties maskProperties(BreathingMask mask) {
+        Item.Properties properties = new Item.Properties();
+        return mask == BreathingMask.NETHERITE_REBREATHER ? properties.fireResistant() : properties;
     }
 
     private static WaterContainerItem newContainerItem(WaterContainer container) {

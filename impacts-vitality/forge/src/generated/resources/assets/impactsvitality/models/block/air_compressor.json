@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "impactsvitality:block/air_compressor_bottom",
+    "east": "impactsvitality:block/air_compressor_side",
+    "north": "impactsvitality:block/air_compressor_front",
+    "particle": "impactsvitality:block/air_compressor_side",
+    "south": "impactsvitality:block/air_compressor_side",
+    "up": "impactsvitality:block/air_compressor_top",
+    "west": "impactsvitality:block/air_compressor_side"
+  }
+}
