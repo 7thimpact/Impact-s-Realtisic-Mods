@@ -11,7 +11,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality (IRC parts in step 5) |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Done on its own (milestone 10's IRC parts land in step 5) |
-| 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Planned |
+| 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | In progress (milestone 1 done) |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
 | 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
 | 8 | NeoForge 1.20.1 | S | Planned |
@@ -122,7 +122,21 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 ## 5. Impact's Realistic Crafting, plus Lib's crafting systems
 
 - [ ] **Lib systems for this step:** `WoodData`, and `/impacts dump held` and `/impacts dump block`
-- [ ] IRC milestones 1 to 13 from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
+- [ ] IRC milestones from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
+  - [x] 1 Skeleton: configs (with a worldgen dimension list and biome blacklist), debug categories, the Stone Pebble (64 unused, 1 once worn), loose pebbles in worldgen (surface and cave features, a biome modifier for Overworld biomes), pebbles from gravel and stone (a global loot modifier, plus a break handler for stone broken by hand), the `impactscrafting:overhaul_enabled` recipe condition, and the `crafting-alone` and `crafting-with-srf` setups
+  - [ ] 2 Makeshift Table and tiers
+  - [ ] 3 Tool crafting and starting parts
+  - [ ] 4 Tools: hammering and the 10 wooden and stone tools
+  - [ ] 5 Timed crafting in every grid
+  - [ ] 6 Wood and stone branches
+  - [ ] 7 Iron branch
+  - [ ] 8 Grinder recipes
+  - [ ] 9 Dye Vat
+  - [ ] 10 Beds
+  - [ ] 11 Redstone and transport
+  - [ ] 12 Combat, leather, textiles
+  - [ ] 13 Polish
+  - [ ] 14 Audit (the SRF part is in step 6)
 - [ ] **"With IRC" features:**
   - IRI milestone 8: pack recipes with IRC parts, IRC's crafting arrow in IRI's screen
   - IRF milestone 10: recipe switching, stone boiling
