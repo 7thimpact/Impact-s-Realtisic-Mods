@@ -2,11 +2,13 @@ package com.impact.realisticvitality.health;
 
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.player.ThirstState;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.thirst.ThirstDrain;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -142,6 +144,9 @@ public final class HealthCap {
             return;
         }
         state.health.setCapped(true);
+        if (player instanceof ServerPlayer serverPlayer) {
+            VitalityTriggers.HEALTH_CAPPED.trigger(serverPlayer);
+        }
         LOG.debug(VitalityLogCategories.HEALTH, "regeneration capped", "player", player.getScoreboardName(),
                 "hunger", food.getFoodLevel(), "thirst", state.thirst.level(), "cap", limit, "health", player.getHealth());
     }

@@ -3,6 +3,7 @@ package com.impact.realisticvitality.temperature;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.config.VitalityFeatures;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.lang.VitalityTranslations;
@@ -27,6 +28,7 @@ public final class DryFoods {
     /** Tells the player why, on the action bar, and logs it. */
     public static void onRefused(ServerPlayer player, ItemStack food) {
         player.displayClientMessage(Component.translatable(VitalityTranslations.TOO_HOT_TO_EAT), true);
+        VitalityTriggers.DRY_FOOD_REFUSED.trigger(player);
         LOG.debug(VitalityLogCategories.FOOD, "dry food refused", "player", player.getScoreboardName(), "item", ResourceIds.itemId(food.getItem()));
     }
 }

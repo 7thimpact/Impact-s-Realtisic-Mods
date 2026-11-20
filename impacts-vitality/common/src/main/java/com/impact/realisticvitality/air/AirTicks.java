@@ -2,6 +2,7 @@ package com.impact.realisticvitality.air;
 
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.config.VitalityServerConfig;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Map;
 import java.util.OptionalInt;
 
 /**
@@ -77,6 +79,9 @@ public final class AirTicks {
         }
         air.setDrainTicks(0);
         player.setAirSupply(Math.max(0, player.getAirSupply() - AIR_PER_BUBBLE));
+        VitalityTriggers.AIR_LOST.trigger(player, Map.of(
+                "cause", air.quality().isSmoke ? "fumes" : "thin",
+                "without_gear", VitalityTriggers.fact(BreathingGear.hasNoAirSupport(player))));
     }
 
     private static void hurtWhenOut(ServerPlayer player, AirState air) {

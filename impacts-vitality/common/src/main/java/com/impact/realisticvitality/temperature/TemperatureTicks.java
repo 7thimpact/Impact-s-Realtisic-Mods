@@ -2,6 +2,7 @@ package com.impact.realisticvitality.temperature;
 
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityAchievements;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.config.VitalityServerConfig;
@@ -37,6 +38,7 @@ public final class TemperatureTicks {
         temperature.setAmbient((float) reading.total());
         logReading(player, reading);
         BodyTemperature.tickSecond(player, temperature.ambient());
+        VitalityAchievements.onSecond(player);
     }
 
     /** Water, rain or a bubble column soak you; out of them you dry off over {@code temperature.wetTicks}. */

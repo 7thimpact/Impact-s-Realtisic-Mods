@@ -1,12 +1,15 @@
 package com.impact.realisticvitality.lang;
 
+import com.impact.lib.advancement.ImpactsAdvancementBuilder;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityAdvancements;
 import com.impact.realisticvitality.registry.VitalityDamageTypes;
 import com.impact.realisticvitality.temperature.ArmorLining;
 import com.impact.realisticvitality.thirst.BottledWater;
 import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 
 import java.util.Collections;
@@ -80,6 +83,33 @@ public final class VitalityTranslations {
             VitalityDamageTypes.THIN_AIR, "%1$s ran out of air while fighting %2$s",
             VitalityDamageTypes.FUMES, "%1$s choked on lava fumes while fighting %2$s");
 
+    private static final Map<ResourceLocation, String[]> ADVANCEMENT_TEXTS = Map.ofEntries(
+            Map.entry(VitalityAdvancements.STAY_HYDRATED, new String[] {"Stay Hydrated", "Drink any water"}),
+            Map.entry(VitalityAdvancements.SOMETHING_IN_THE_WATER, new String[] {"Something in the Water", "Get Parched from unclean water"}),
+            Map.entry(VitalityAdvancements.WORTH_ITS_SALT, new String[] {"Worth Its Salt", "Drink salt water"}),
+            Map.entry(VitalityAdvancements.CLEAN_LIVING, new String[] {"Clean Living", "Drink Purified Water"}),
+            Map.entry(VitalityAdvancements.SKIN_IN_THE_GAME, new String[] {"Skin in the Game", "Craft a Waterskin"}),
+            Map.entry(VitalityAdvancements.HALF_MEASURES, new String[] {"Half Measures", "Stop healing at the limit because hunger or thirst is low"}),
+            Map.entry(VitalityAdvancements.WELL_WATERED, new String[] {"Well Watered", "Drink 500 times"}),
+            Map.entry(VitalityAdvancements.COLD_FEET, new String[] {"Cold Feet", "Become Cold"}),
+            Map.entry(VitalityAdvancements.ALBERT_AND_EINSTEIN, new String[] {"Albert and Einstein", "Catch on fire while Cold"}),
+            Map.entry(VitalityAdvancements.BUNDLE_UP, new String[] {"Bundle Up", "Wear 4 armor pieces with Wool or Fur Linings"}),
+            Map.entry(VitalityAdvancements.TAKING_THE_TEMPERATURE, new String[] {"Taking the Temperature", "Craft a Thermometer"}),
+            Map.entry(VitalityAdvancements.DRY_SPELL, new String[] {"Dry Spell", "Try to eat something dry while Hot"}),
+            Map.entry(VitalityAdvancements.SO_HOT, new String[] {"It's getting hot in here! (so hot!)", "Reach Overheating, the dangerous end of hot"}),
+            Map.entry(VitalityAdvancements.HAT_TRICK, new String[] {"Hat Trick", "Wear a Straw Hat in a desert at noon"}),
+            Map.entry(VitalityAdvancements.BREATHTAKING, new String[] {"Breathtaking", "Lose air to thin air on a mountain"}),
+            Map.entry(VitalityAdvancements.IS_IT_WORTH_IT, new String[] {"Is it worth it?",
+                    "Go down near bedrock with no air support: no mask, Air Tank, Bottled Air or breathing effect"}),
+            Map.entry(VitalityAdvancements.UP_IN_SMOKE, new String[] {"Up in Smoke", "Lose air to lava fumes"}),
+            Map.entry(VitalityAdvancements.MASKED_UP, new String[] {"Masked Up", "Wear a Respirator with a filter in the Nether"}),
+            Map.entry(VitalityAdvancements.IT_FEELS_LIKE_NOTHING, new String[] {"It feels like… nothing", "Enter the End"}),
+            Map.entry(VitalityAdvancements.INTO_THIN_AIR, new String[] {"Into Thin Air", "Use an Air Tank in the End"}),
+            Map.entry(VitalityAdvancements.PEAK_CONDITION, new String[] {"Peak Condition",
+                    "Stand above Y 300 with full thirst, full air and a Comfortable body temperature"}),
+            Map.entry(VitalityAdvancements.IN_BALANCE, new String[] {"In Balance",
+                    "Spend a whole day with thirst above 3 droplets, air never empty, and never Cold or Hot"}));
+
     public static final Map<String, String> ENGLISH = buildEnglish();
 
     private VitalityTranslations() {
@@ -96,6 +126,10 @@ public final class VitalityTranslations {
     private static Map<String, String> buildEnglish() {
         Map<String, String> english = new LinkedHashMap<>();
         english.put(ADVANCEMENT_TAB, "Realistic Vitality");
+        ADVANCEMENT_TEXTS.forEach((advancementId, titleAndDescription) -> {
+            english.put(ImpactsAdvancementBuilder.titleKey(advancementId), titleAndDescription[0]);
+            english.put(ImpactsAdvancementBuilder.descriptionKey(advancementId), titleAndDescription[1]);
+        });
         english.put(PARCHED, "Parched");
         english.put(CREATIVE_TAB, "Impact's Realistic Vitality");
         WATER_NAMES.forEach((water, name) -> english.put(itemName(water), name));

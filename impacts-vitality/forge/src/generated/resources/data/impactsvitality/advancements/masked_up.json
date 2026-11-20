@@ -1,0 +1,44 @@
+{
+  "parent": "impactsvitality:up_in_smoke",
+  "criteria": {
+    "filtered_in_the_nether": {
+      "conditions": {
+        "gear": "filtered_mask",
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:the_nether"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "impactsvitality:gear_used"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.masked_up.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:respirator",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.masked_up.title"
+    }
+  },
+  "requirements": [
+    [
+      "filtered_in_the_nether"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

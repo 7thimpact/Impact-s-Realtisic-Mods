@@ -1,0 +1,30 @@
+{
+  "parent": "impactsvitality:stay_hydrated",
+  "criteria": {
+    "dry_food_refused": {
+      "conditions": {},
+      "trigger": "impactsvitality:dry_food_refused"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.dry_spell.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:bread"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.dry_spell.title"
+    }
+  },
+  "requirements": [
+    [
+      "dry_food_refused"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

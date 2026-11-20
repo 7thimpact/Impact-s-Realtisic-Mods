@@ -1,0 +1,32 @@
+{
+  "parent": "impactsvitality:stay_hydrated",
+  "criteria": {
+    "became_cold": {
+      "conditions": {
+        "cold_or_worse": "true"
+      },
+      "trigger": "impactsvitality:temperature_state"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.cold_feet.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:snowball"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.cold_feet.title"
+    }
+  },
+  "requirements": [
+    [
+      "became_cold"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

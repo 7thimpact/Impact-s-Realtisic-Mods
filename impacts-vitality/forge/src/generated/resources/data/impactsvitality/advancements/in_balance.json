@@ -1,0 +1,33 @@
+{
+  "parent": "impactsvitality:bundle_up",
+  "criteria": {
+    "a_day_in_balance": {
+      "conditions": {},
+      "trigger": "impactsvitality:in_balance"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.in_balance.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:clock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.in_balance.title"
+    }
+  },
+  "requirements": [
+    [
+      "a_day_in_balance"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

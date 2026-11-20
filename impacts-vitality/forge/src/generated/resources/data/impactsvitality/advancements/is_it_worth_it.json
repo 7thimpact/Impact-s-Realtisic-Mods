@@ -1,0 +1,47 @@
+{
+  "parent": "impactsvitality:breathtaking",
+  "criteria": {
+    "deep_without_air_support": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "max": -58.0
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "without_gear": "true"
+      },
+      "trigger": "impactsvitality:air_lost"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.is_it_worth_it.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bedrock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.is_it_worth_it.title"
+    }
+  },
+  "requirements": [
+    [
+      "deep_without_air_support"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

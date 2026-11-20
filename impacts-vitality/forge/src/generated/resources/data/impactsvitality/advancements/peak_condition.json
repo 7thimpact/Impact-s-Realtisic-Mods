@@ -1,0 +1,53 @@
+{
+  "parent": "impactsvitality:into_thin_air",
+  "criteria": {
+    "at_the_peak": {
+      "conditions": {
+        "air_full": "true",
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "position": {
+                  "y": {
+                    "min": 300.0
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "state": "comfortable",
+        "thirst_full": "true"
+      },
+      "trigger": "impactsvitality:temperature_state"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.peak_condition.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:elytra",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.peak_condition.title"
+    }
+  },
+  "requirements": [
+    [
+      "at_the_peak"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

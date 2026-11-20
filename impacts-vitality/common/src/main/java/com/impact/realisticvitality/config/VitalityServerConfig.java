@@ -33,6 +33,7 @@ public final class VitalityServerConfig {
     public final InsulationSettings insulation;
     public final AirSettings air;
     public final BreathingSettings breathing;
+    public final CounterSettings counters;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
 
@@ -66,6 +67,9 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("breathing", "Breathing gear: masks, filters, bladders, bottled air and air tanks.");
         breathing = new BreathingSettings(builder);
+        builder.popSection();
+        builder.pushSection("counters", "How long the counting achievements take.");
+        counters = new CounterSettings(builder);
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
@@ -430,6 +434,17 @@ public final class VitalityServerConfig {
             rebreatherFilterMultiplier = builder.defineDouble("rebreatherFilterMultiplier", 2.0, 1.0, 100.0, "Filters last this many times longer in a Rebreather.");
             rebreatherTankMultiplier = builder.defineDouble("rebreatherTankMultiplier", 2.0, 1.0, 100.0, "Air Tanks last this many times longer with a Rebreather.");
             compressorRefillTicks = builder.defineInteger("compressorRefillTicks", 100, 1, MAXIMUM_TICKS, "Ticks the Air Compressor takes to fill a tank (5 seconds).");
+        }
+    }
+
+    public static final class CounterSettings {
+        public final ConfigValue<Integer> wellWateredDrinks;
+        public final ConfigValue<Integer> inBalanceSeconds;
+
+        private CounterSettings(ConfigSpecBuilder builder) {
+            wellWateredDrinks = builder.defineInteger("wellWateredDrinks", 500, 1, 1_000_000, "Drinks for \"Well Watered\".");
+            inBalanceSeconds = builder.defineInteger("inBalanceSeconds", 1200, 1, 1_000_000,
+                    "Seconds in a row in balance for \"In Balance\" (a whole Minecraft day is 1200).");
         }
     }
 

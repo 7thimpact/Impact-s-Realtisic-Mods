@@ -1,0 +1,32 @@
+{
+  "parent": "impactsvitality:breathtaking",
+  "criteria": {
+    "lost_air_to_fumes": {
+      "conditions": {
+        "cause": "fumes"
+      },
+      "trigger": "impactsvitality:air_lost"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.up_in_smoke.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.up_in_smoke.title"
+    }
+  },
+  "requirements": [
+    [
+      "lost_air_to_fumes"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

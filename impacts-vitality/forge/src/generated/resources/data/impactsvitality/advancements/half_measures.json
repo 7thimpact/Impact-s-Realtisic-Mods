@@ -1,0 +1,30 @@
+{
+  "parent": "impactsvitality:stay_hydrated",
+  "criteria": {
+    "health_capped": {
+      "conditions": {},
+      "trigger": "impactsvitality:health_capped"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.half_measures.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.half_measures.title"
+    }
+  },
+  "requirements": [
+    [
+      "health_capped"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

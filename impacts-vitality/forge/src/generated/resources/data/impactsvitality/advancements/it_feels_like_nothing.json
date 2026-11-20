@@ -1,0 +1,32 @@
+{
+  "parent": "impactsvitality:breathtaking",
+  "criteria": {
+    "entered_the_end": {
+      "conditions": {
+        "to": "minecraft:the_end"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.it_feels_like_nothing.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:end_stone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.it_feels_like_nothing.title"
+    }
+  },
+  "requirements": [
+    [
+      "entered_the_end"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

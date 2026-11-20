@@ -3,6 +3,8 @@ package com.impact.realisticvitality.thirst;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityAchievements;
+import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.player.ThirstState;
@@ -14,7 +16,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 
+import java.util.Map;
 import java.util.Optional;
 
 /** Applies drinks and foods to thirst once they are finished: thirst, Hydration, and the Parched roll for unclean water. */
@@ -41,7 +45,8 @@ public final class Drinking {
             return;
         }
         String itemId = ResourceIds.itemId(used.getItem()).toString();
-        String category = used.isEdible() ? VitalityLogCategories.FOOD : VitalityLogCategories.DRINK;
+        // Drinks are what's drunk (water, milk, honey, potions), whatever food they also give; everything else is eaten.
+        String category = used.getUseAnimation() == UseAnim.DRINK ? VitalityLogCategories.DRINK : VitalityLogCategories.FOOD;
         drink(player, value.get(), DrinkValues.purityOf(used), itemId, category);
     }
 
@@ -54,6 +59,13 @@ public final class Drinking {
         thirst.setHydration(hydrationBefore + value.hydration());
         boolean isParched = purity.filter(WaterPurity::canMakeParched).isPresent() && rollParched(player);
         String event = logCategory.equals(VitalityLogCategories.FOOD) ? "food thirst" : "drink";
+        if (logCategory.equals(VitalityLogCategories.DRINK)) {
+            VitalityTriggers.DRANK.trigger(player, Map.of(
+                    "water", VitalityTriggers.fact(purity.isPresent()),
+                    "purity", purity.map(drinkPurity -> drinkPurity.serializedName).orElse(NO_PURITY),
+                    "parched", VitalityTriggers.fact(isParched)));
+            VitalityAchievements.onDrink(player);
+        }
         LOG.debug(logCategory, event, "player", player.getScoreboardName(), "item", source,
                 "purity", purity.map(drinkPurity -> drinkPurity.serializedName).orElse(NO_PURITY),
                 "thirst", thirst.level() - thirstBefore, "hydration", thirst.hydration() - hydrationBefore, "parched", isParched);

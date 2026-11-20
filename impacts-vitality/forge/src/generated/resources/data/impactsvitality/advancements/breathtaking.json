@@ -1,0 +1,48 @@
+{
+  "parent": "impactsvitality:stay_hydrated",
+  "criteria": {
+    "lost_air_on_a_mountain": {
+      "conditions": {
+        "cause": "thin",
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:overworld",
+                "position": {
+                  "y": {
+                    "min": 160.0
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "impactsvitality:air_lost"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.breathtaking.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:air_bladder"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.breathtaking.title"
+    }
+  },
+  "requirements": [
+    [
+      "lost_air_on_a_mountain"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

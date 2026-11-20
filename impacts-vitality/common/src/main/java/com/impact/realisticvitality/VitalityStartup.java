@@ -4,6 +4,7 @@ import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
 import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.command.VitalityCommand;
 import com.impact.realisticvitality.config.VitalityClientConfig;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
@@ -41,6 +42,7 @@ public final class VitalityStartup {
         ImpactsCommands.addSubcommand(VitalityCommand::build);
         ImpactsLib.onModsReady(impactMods -> {
             BottleFilling.registerInteractions();
+            VitalityTriggers.registerAll();
             logStartup();
         });
     }

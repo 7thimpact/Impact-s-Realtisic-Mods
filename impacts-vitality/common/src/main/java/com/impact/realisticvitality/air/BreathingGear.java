@@ -3,6 +3,7 @@ package com.impact.realisticvitality.air;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.advancement.VitalityAchievements;
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.config.VitalityCommonConfig;
 import com.impact.realisticvitality.config.VitalityGear;
@@ -65,6 +66,13 @@ public final class BreathingGear {
         return found[0];
     }
 
+    /** No breathing gear at all: no mask, no Air Tank or Bottled Air carried, and no breathing effect ("Is it worth it?"). */
+    public static boolean hasNoAirSupport(Player player) {
+        boolean carriesAir = player.getInventory().hasAnyMatching(stack -> stack.getItem() instanceof AirTankItem || stack.is(VitalityItems.bottledAir()))
+                || BackSlot.get(player).getItem() instanceof AirTankItem;
+        return wornMask(player).isEmpty() && !carriesAir && !AirProtection.hasBreathingEffect(player);
+    }
+
     /** The air around the player, as this side knows it. */
     public static AirQuality qualityFor(Player player) {
         return player.level().isClientSide ? ClientVitality.state().airQuality() : VitalityState.of(player).air.quality();
@@ -77,6 +85,9 @@ public final class BreathingGear {
         mask.filter(worn -> worn == BreathingMask.CLOTH_MASK).ifPresent(worn -> dryMask(player, head));
         if (quality.isSmoke && isDrainingWithoutGear) {
             mask.filter(worn -> worn.takesFilter).ifPresent(worn -> wearFilter(player, head, worn));
+            if (mask.filter(worn -> worn.takesFilter).isPresent() && MaskFilters.hasWorkingFilter(head)) {
+                VitalityAchievements.gearUsed(player, "filtered_mask");
+            }
         }
         if (quality == AirQuality.GOOD) {
             refillTanks(player);
@@ -159,6 +170,7 @@ public final class BreathingGear {
             }
             breathed[0] = true;
             setAir(tank, air - used);
+            VitalityAchievements.gearUsed(player, "air_tank");
             if (air - used <= 0) {
                 logGear(player, "tank empty", "tank", ((AirTankItem) tank.getItem()).tank.itemPath);
             }
