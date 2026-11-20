@@ -2,6 +2,9 @@ package com.impact.realisticcrafting.lang;
 
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.MakeshiftTableItem;
+import com.impact.realisticcrafting.menu.CraftingStation;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -26,6 +29,15 @@ public final class CraftingTranslations {
         english.put(ADVANCEMENT_TAB, "Realistic Crafting");
         english.put(ITEM_KEY_PREFIX + "stone_pebble", "Stone Pebble");
         english.put(BLOCK_KEY_PREFIX + "loose_pebble", "Loose Pebbles");
+        english.put(BLOCK_KEY_PREFIX + MakeshiftTable.WOODEN.path, "Makeshift Table");
+        english.put(BLOCK_KEY_PREFIX + MakeshiftTable.STONE.path, "Makeshift Stone Table");
+        english.put(MakeshiftTable.WOODEN.containerTitleKey(), "Makeshift Table");
+        english.put(MakeshiftTable.STONE.containerTitleKey(), "Makeshift Stone Table");
+        english.put(MakeshiftTableItem.USES_LEFT_KEY, "Uses left: %s / %s");
+        english.put(CraftingStation.INVENTORY_GRID.needsTranslationKey(), "Needs your inventory grid");
+        english.put(CraftingStation.MAKESHIFT_TABLE.needsTranslationKey(), "Needs a Makeshift Table");
+        english.put(CraftingStation.MAKESHIFT_STONE_TABLE.needsTranslationKey(), "Needs a Makeshift Stone Table");
+        english.put(CraftingStation.CRAFTING_TABLE.needsTranslationKey(), "Needs a Crafting Table");
         return Collections.unmodifiableMap(english);
     }
 }

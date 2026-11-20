@@ -1,0 +1,17 @@
+{
+  "values": [
+    "#forge:ingots/iron",
+    "#forge:ingots/copper",
+    "#forge:nuggets/iron",
+    "#forge:raw_materials/iron",
+    "#forge:raw_materials/copper",
+    "#forge:ores/iron",
+    "#forge:ores/copper",
+    "#forge:storage_blocks/iron",
+    "#forge:storage_blocks/copper",
+    "#forge:storage_blocks/raw_iron",
+    "#forge:storage_blocks/raw_copper",
+    "#forge:dusts/redstone",
+    "#forge:storage_blocks/redstone"
+  ]
+}

@@ -1,6 +1,15 @@
 {
   "advancements.impactscrafting.tab": "Realistic Crafting",
   "block.impactscrafting.loose_pebble": "Loose Pebbles",
+  "block.impactscrafting.makeshift_stone_table": "Makeshift Stone Table",
+  "block.impactscrafting.makeshift_table": "Makeshift Table",
+  "container.impactscrafting.makeshift_stone_table": "Makeshift Stone Table",
+  "container.impactscrafting.makeshift_table": "Makeshift Table",
   "item.impactscrafting.stone_pebble": "Stone Pebble",
-  "itemGroup.impactscrafting": "Impact's Realistic Crafting"
+  "itemGroup.impactscrafting": "Impact's Realistic Crafting",
+  "tooltip.impactscrafting.needs.crafting_table": "Needs a Crafting Table",
+  "tooltip.impactscrafting.needs.inventory_grid": "Needs your inventory grid",
+  "tooltip.impactscrafting.needs.makeshift_stone_table": "Needs a Makeshift Stone Table",
+  "tooltip.impactscrafting.needs.makeshift_table": "Needs a Makeshift Table",
+  "tooltip.impactscrafting.uses_left": "Uses left: %s / %s"
 }

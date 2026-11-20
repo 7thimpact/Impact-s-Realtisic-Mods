@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:makeshift_stone_table"
+    }
+  ],
+  "key": {
+    "F": {
+      "item": "minecraft:flint"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "FF",
+    "SS",
+    "SS"
+  ],
+  "result": {
+    "item": "impactscrafting:makeshift_stone_table"
+  },
+  "show_notification": true
+}

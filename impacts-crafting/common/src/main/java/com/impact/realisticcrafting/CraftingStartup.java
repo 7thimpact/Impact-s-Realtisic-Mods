@@ -8,6 +8,7 @@ import com.impact.realisticcrafting.config.CraftingCommonConfig;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.config.OverhaulCategory;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
+import com.impact.realisticcrafting.menu.CraftingMenus;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
@@ -30,6 +31,7 @@ public final class CraftingStartup {
         CraftingClientConfig.register();
         CraftingBlocks.register();
         CraftingItems.register();
+        CraftingMenus.register();
         CraftingWorldgen.register();
         ImpactsLib.onModsReady(impactMods -> logStartup());
     }

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:makeshift_table"
+    }
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "PP",
+    "PP"
+  ],
+  "result": {
+    "item": "impactscrafting:makeshift_table"
+  },
+  "show_notification": true
+}

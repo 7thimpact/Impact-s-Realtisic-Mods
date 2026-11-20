@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:crafting_table"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "item": "minecraft:crafting_table"
+  },
+  "show_notification": false
+}
