@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:black_dye_from_wither_rose"
+      }
+    }
+  ],
+  "group": "black_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:wither_rose"
+    }
+  ],
+  "result": {
+    "item": "minecraft:black_dye"
+  }
+}

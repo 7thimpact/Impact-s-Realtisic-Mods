@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:stone_grinding_stick"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "impactscrafting:shaped_stone"
+    },
+    "T": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "S",
+    "T"
+  ],
+  "result": {
+    "item": "impactslib:stone_grinding_stick"
+  },
+  "show_notification": true
+}

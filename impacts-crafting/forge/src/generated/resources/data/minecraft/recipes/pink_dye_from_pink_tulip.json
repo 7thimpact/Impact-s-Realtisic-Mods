@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:pink_dye_from_pink_tulip"
+      }
+    }
+  ],
+  "group": "pink_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:pink_tulip"
+    }
+  ],
+  "result": {
+    "item": "minecraft:pink_dye"
+  }
+}

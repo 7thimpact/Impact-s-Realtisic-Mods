@@ -1,0 +1,20 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/blaze_powder_from_blaze_rod"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:blaze_rod"
+    }
+  ],
+  "min_tier": "stone",
+  "result": {
+    "count": 2,
+    "item": "minecraft:blaze_powder"
+  }
+}

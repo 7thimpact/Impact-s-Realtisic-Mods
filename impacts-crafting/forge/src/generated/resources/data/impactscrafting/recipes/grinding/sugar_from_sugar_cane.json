@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/sugar_from_sugar_cane"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:sugar_cane"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:sugar"
+  }
+}

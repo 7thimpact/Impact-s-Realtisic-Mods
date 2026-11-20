@@ -1,0 +1,20 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/magenta_dye_from_lilac"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:lilac"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "count": 2,
+    "item": "minecraft:magenta_dye"
+  }
+}

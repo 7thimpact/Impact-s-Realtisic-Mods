@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:light_blue_dye_from_blue_orchid"
+      }
+    }
+  ],
+  "group": "light_blue_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:blue_orchid"
+    }
+  ],
+  "result": {
+    "item": "minecraft:light_blue_dye"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:white_dye"
+      }
+    }
+  ],
+  "group": "white_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "item": "minecraft:white_dye"
+  }
+}

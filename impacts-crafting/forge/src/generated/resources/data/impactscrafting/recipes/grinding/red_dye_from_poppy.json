@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/red_dye_from_poppy"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:poppy"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:red_dye"
+  }
+}

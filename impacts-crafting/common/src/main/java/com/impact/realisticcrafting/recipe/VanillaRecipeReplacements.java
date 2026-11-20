@@ -40,6 +40,16 @@ public final class VanillaRecipeReplacements {
     private static final String[] STONE_CATALOG_RECIPES = {"stone_bricks", "end_stone_bricks", "bricks", "nether_bricks", "red_nether_bricks",
             "mud_bricks", "flower_pot", "furnace", "smoker", "grindstone", "lever", "white_concrete_powder", "blast_furnace", "stonecutter",
             "glass_pane", "glass_bottle"};
+    // Every dye and powder comes from a grinder; green and lime dye stay smelted.
+    private static final String[] GROUND_RECIPES = {"white_dye", "white_dye_from_lily_of_the_valley", "light_gray_dye_from_azure_bluet",
+            "light_gray_dye_from_oxeye_daisy", "light_gray_dye_from_white_tulip", "light_gray_dye_from_black_white_dye", "light_gray_dye_from_gray_white_dye",
+            "black_dye", "black_dye_from_wither_rose", "brown_dye", "red_dye_from_poppy", "red_dye_from_tulip", "red_dye_from_beetroot",
+            "red_dye_from_rose_bush", "orange_dye_from_orange_tulip", "orange_dye_from_torchflower", "orange_dye_from_red_yellow",
+            "yellow_dye_from_dandelion", "yellow_dye_from_sunflower", "blue_dye", "blue_dye_from_cornflower", "light_blue_dye_from_blue_orchid",
+            "light_blue_dye_from_blue_white_dye", "magenta_dye_from_allium", "magenta_dye_from_lilac", "magenta_dye_from_purple_and_pink",
+            "magenta_dye_from_blue_red_pink", "magenta_dye_from_blue_red_white_dye", "pink_dye_from_pink_tulip", "pink_dye_from_pink_petals",
+            "pink_dye_from_peony", "pink_dye_from_red_white_dye", "cyan_dye", "cyan_dye_from_pitcher_plant", "purple_dye", "lime_dye", "gray_dye",
+            "bone_meal", "sugar_from_sugar_cane", "blaze_powder"};
     private static final Map<ResourceLocation, OverhaulCategory> REPLACED = buildReplaced();
 
     private VanillaRecipeReplacements() {
@@ -80,6 +90,7 @@ public final class VanillaRecipeReplacements {
         put(replaced, OverhaulCategory.WOOD, WOOD_CATALOG_RECIPES);
         WoodData.VANILLA_WOODS.forEach(wood -> WoodData.vanillaItem(wood, WoodKind.HANGING_SIGN).ifPresent(item -> putItem(replaced, OverhaulCategory.WOOD, item)));
         put(replaced, OverhaulCategory.IRON, IRON_CATALOG_RECIPES);
+        put(replaced, OverhaulCategory.DYES, GROUND_RECIPES);
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.STONE, color.getName() + "_stained_glass_pane"));
         put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);
         for (BlockFamily family : StoneFamilies.all()) {

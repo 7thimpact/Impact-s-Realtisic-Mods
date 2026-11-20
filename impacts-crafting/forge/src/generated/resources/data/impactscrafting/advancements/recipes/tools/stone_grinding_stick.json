@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:stone_grinding_stick"
+    }
+  ],
+  "criteria": {
+    "has_shaped_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:shaped_stone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:stone_grinding_stick"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_shaped_stone",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:stone_grinding_stick"
+    ]
+  },
+  "sends_telemetry_event": false
+}
