@@ -109,7 +109,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] 1 Skeleton: the three configs (need, piece and gear switches in common; every number in server; units and HUD in client), the `impactsvitality:feature_enabled` condition, debug categories, the player attachment with thirst, temperature and air parts, the `impactsvitality:main` channel syncing it, the `vitality-alone` setup
 - [x] 2 Thirst: the bar with Hydration, exhaustion from every action that costs food (not from the Hunger effect), the resting drain, Peaceful refill, the Parched effect, dehydration damage on starvation rules with the `impactsvitality:dehydration` damage type (and the other three damage types), no sprinting at 6 or less, the droplet row through Lib's layout (shakes when low, green while Parched)
 - [x] 3 Drinks and water gear: the four waters with purity from water blocks, cauldrons and dispensers, the drink table for drinks and foods, Parched, sipping, purifying by furnace, smoker and campfire, Cold Water, brewing, mud, cauldron pouring, `#impactslib:water_bottles`; the six containers (filling, drinking, pouring over yourself, grid filling, the cup on a campfire, the flask's Cold Water and soups, Tidebound refills, the Hydration Pack and its key); the Rain Barrel, the Water Filter with the Charcoal Filter, and the hopper-fed Copper Still
-- [ ] 4 Health cap
+- [x] 4 Health cap: the fuller bar must be at 18 for natural regeneration, the emptier bar caps it at full, three-quarters or half of max health, fast regeneration needs both bars full and both saturations, regeneration exhaustion is split between hunger and thirst, and `healthCap.capAllHealing` caps every heal
 - [ ] 5 Ambient temperature
 - [ ] 6 Body temperature
 - [ ] 7 Insulation

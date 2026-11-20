@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
+import com.impact.realisticvitality.health.HealthCap;
 import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalitySync;
@@ -17,6 +18,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -37,6 +39,16 @@ final class VitalityForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, VitalityForgeEvents::onRightClickItem);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onRightClickEmpty);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onLivingHeal);
+    }
+
+    private static void onLivingHeal(LivingHealEvent event) {
+        float limited = HealthCap.limitHealing(event.getEntity(), event.getAmount());
+        if (limited <= 0.0F) {
+            event.setCanceled(true);
+            return;
+        }
+        event.setAmount(limited);
     }
 
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {

@@ -23,6 +23,7 @@ public final class VitalityState implements PlayerAttachmentData {
     public final ThirstState thirst = new ThirstState();
     public final TemperatureState temperature = new TemperatureState();
     public final AirState air = new AirState();
+    public final HealthState health = new HealthState();
 
     /** Called once, during mod construction. */
     public static void register() {
