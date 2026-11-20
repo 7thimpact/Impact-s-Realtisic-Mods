@@ -15,6 +15,7 @@ import com.impact.realisticvitality.thirst.ThirstDrain;
 import com.impact.realisticvitality.thirst.VesselFilling;
 import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -22,11 +23,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -45,6 +49,7 @@ public final class VitalityIntegrationGameTests {
     private static final String EMPTY_TEMPLATE = VitalitySkeletonGameTests.EMPTY_TEMPLATE;
     private static final int HALF_THIRST = 10;
     private static final float TOLERANCE = 0.001F;
+    private static final String SRF_MOD_ID = "realisticforgingores";
 
     private VitalityIntegrationGameTests() {
     }
@@ -135,6 +140,30 @@ public final class VitalityIntegrationGameTests {
         helper.assertTrue(BackSlot.accepts(new ItemStack(VitalityItems.tank(AirTank.SHULKER_AIR_TANK))), "So does a Shulker Air Tank");
         helper.assertTrue(BackSlot.accepts(new ItemStack(VitalityItems.container(WaterContainer.HYDRATION_PACK))), "And the Hydration Pack");
         helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void cauldronsLeaveSrfOreToSrf(GameTestHelper helper) {
+        Optional<Item> srfOre = ResourceIds.item(ResourceIds.of(SRF_MOD_ID, "rawgoldore"));
+        if (srfOre.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos cauldron = helper.absolutePos(BlockPos.ZERO);
+        BlockState fullCauldron = Blocks.WATER_CAULDRON.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3);
+        level.setBlockAndUpdate(cauldron, fullCauldron);
+        withPlayer(helper, player -> {
+            ItemStack ore = new ItemStack(srfOre.get());
+            player.setItemInHand(InteractionHand.MAIN_HAND, ore);
+            InteractionResult result = CauldronInteraction.WATER.get(ore.getItem()).interact(fullCauldron, level, cauldron, player, InteractionHand.MAIN_HAND, ore);
+            helper.assertTrue(result == InteractionResult.PASS, "Vitality's cauldron entries leave SRF's ore alone");
+            helper.assertTrue(level.getBlockState(cauldron).getValue(LayeredCauldronBlock.LEVEL) == 3, "and the water stays");
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
+            CauldronInteraction.WATER.get(Items.GLASS_BOTTLE).interact(fullCauldron, level, cauldron, player, InteractionHand.MAIN_HAND,
+                    player.getMainHandItem());
+            helper.assertTrue(player.getMainHandItem().is(VitalityItems.waterBottle(BottledWater.UNCLEAN)), "Bottles still fill with SRF installed");
+        });
     }
 
     private static Optional<Item> firstInTag(String namespace, String path) {

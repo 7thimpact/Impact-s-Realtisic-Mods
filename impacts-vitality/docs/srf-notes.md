@@ -17,3 +17,8 @@ The "no tools" version adds no armor. Vanilla iron armor stays, and `#impactsvit
 ## Water and bottles
 
 SRF never uses glass bottles and never changes a cauldron's water level. Vitality replacing the glass-bottle entry in `CauldronInteraction.WATER` doesn't affect SRF, because SRF works through events, not `CauldronInteraction`.
+
+## Checked (Vitality milestone 10)
+
+- No heat entries are needed: SRF 4.1.6 ("no tools") has no hot blocks. If the full version adds a forge, add it to `#impactslib:heat_sources` as an optional entry.
+- The `vitality-with-srf` setup checks that Vitality's cauldron entries leave SRF's raw gold ore alone and bottles still fill with SRF installed.
