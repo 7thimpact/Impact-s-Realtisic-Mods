@@ -4,6 +4,7 @@ import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.item.CharcoalFilterItem;
 import com.impact.realisticvitality.item.HydrationPackItem;
 import com.impact.realisticvitality.item.WaterBottleItem;
 import com.impact.realisticvitality.item.WaterContainerItem;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public final class VitalityItems {
     private static final Map<BottledWater, Supplier<WaterBottleItem>> WATER_BOTTLES = new EnumMap<>(BottledWater.class);
     private static final Map<WaterContainer, Supplier<WaterContainerItem>> CONTAINERS = new EnumMap<>(WaterContainer.class);
+    private static volatile Supplier<CharcoalFilterItem> charcoalFilter;
 
     private VitalityItems() {
     }
@@ -39,6 +41,7 @@ public final class VitalityItems {
         for (WaterContainer container : WaterContainer.values()) {
             CONTAINERS.put(container, registrar.register(Registries.ITEM, container.itemPath, () -> newContainerItem(container)));
         }
+        charcoalFilter = registrar.register(Registries.ITEM, "charcoal_filter", CharcoalFilterItem::new);
         CreativeTabs.register(VitalityMod.MOD_ID, () -> bottle(BottledWater.PURIFIED), VitalityItems::creativeTabItems);
     }
 
@@ -52,6 +55,10 @@ public final class VitalityItems {
 
     public static WaterContainerItem container(WaterContainer container) {
         return CONTAINERS.get(container).get();
+    }
+
+    public static CharcoalFilterItem charcoalFilter() {
+        return charcoalFilter.get();
     }
 
     public static List<Item> waterBottles() {
@@ -69,6 +76,8 @@ public final class VitalityItems {
     public static List<Item> creativeTabItems() {
         List<Item> items = new ArrayList<>(waterBottles());
         items.addAll(containers());
+        VitalityBlocks.all().forEach(block -> items.add(block.asItem()));
+        items.add(charcoalFilter());
         return items;
     }
 

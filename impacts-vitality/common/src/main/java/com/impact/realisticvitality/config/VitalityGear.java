@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.config;
 
+import java.util.List;
 import java.util.Locale;
 
 /** Every piece of water, breathing and clothing gear, each with its own switch in the common file (it turns off its recipe). */
@@ -17,7 +18,7 @@ public enum VitalityGear {
     AIR_BLADDER("airBladder", VitalityNeed.AIR),
     BOTTLED_AIR("bottledAir", VitalityNeed.AIR),
     RESPIRATOR("respirator", VitalityNeed.AIR),
-    CHARCOAL_FILTER("charcoalFilter", VitalityNeed.AIR),
+    CHARCOAL_FILTER("charcoalFilter", VitalityNeed.AIR, VitalityNeed.THIRST),
     AIR_TANK("airTank", VitalityNeed.AIR),
     REBREATHER("rebreather", VitalityNeed.AIR),
     NETHERITE_REBREATHER("netheriteRebreather", VitalityNeed.AIR),
@@ -30,12 +31,12 @@ public enum VitalityGear {
     public final String configKey;
     /** The item's registry path, which is also the name the {@code impactsvitality:feature_enabled} condition uses. */
     public final String itemPath;
-    /** The need the gear answers; turning the need off turns its gear off too. */
-    public final VitalityNeed need;
+    /** The needs the gear answers; it stays on while any of them is on (the Charcoal Filter serves the Respirator and the Water Filter). */
+    public final List<VitalityNeed> needs;
 
-    VitalityGear(String configKey, VitalityNeed need) {
+    VitalityGear(String configKey, VitalityNeed... needs) {
         this.configKey = configKey;
-        this.need = need;
+        this.needs = List.of(needs);
         this.itemPath = name().toLowerCase(Locale.ROOT);
     }
 }

@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "rain_barrel"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:barrel"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "P P",
+    " P ",
+    " B "
+  ],
+  "result": {
+    "item": "impactsvitality:rain_barrel"
+  },
+  "show_notification": true
+}

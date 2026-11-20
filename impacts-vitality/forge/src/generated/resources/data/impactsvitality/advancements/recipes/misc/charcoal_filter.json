@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "charcoal_filter"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "criteria": {
+    "has_charcoal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:charcoal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsvitality:charcoal_filter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_charcoal",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsvitality:charcoal_filter"
+    ]
+  },
+  "sends_telemetry_event": false
+}

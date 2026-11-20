@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filtering=false": {
+      "model": "impactsvitality:block/water_filter"
+    },
+    "filtering=true": {
+      "model": "impactsvitality:block/water_filter"
+    }
+  }
+}

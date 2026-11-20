@@ -4,8 +4,10 @@ import com.google.gson.JsonObject;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.forge.datagen.ConditionalRecipes;
 import com.impact.realisticvitality.VitalityMod;
+import com.impact.realisticvitality.config.VitalityGear;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.forge.condition.FeatureEnabledCondition;
+import com.impact.realisticvitality.registry.VitalityBlocks;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityRecipeSerializers;
 import com.impact.realisticvitality.thirst.ContainerContents;
@@ -30,8 +32,8 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import java.util.function.Consumer;
 
 /**
- * The drink containers' recipes without Crafting installed (the versions made from Crafting's parts arrive with
- * Crafting), the Wooden Cup purifying on a campfire, and filling containers from bottles in a grid.
+ * The drink containers', water blocks' and Charcoal Filter's recipes without Crafting installed (the versions made from
+ * Crafting's parts arrive with Crafting), the Wooden Cup purifying on a campfire, and filling containers from bottles in a grid.
  */
 final class VitalityContainerRecipes {
     private static final float CUP_PURIFYING_EXPERIENCE = 0.1F;
@@ -96,15 +98,58 @@ final class VitalityContainerRecipes {
                 .define('C', container(WaterContainer.CANTEEN))
                 .unlockedBy("has_canteen", has(container(WaterContainer.CANTEEN)))
                 .save(gearOutput(output, WaterContainer.HYDRATION_PACK));
+        waterBlockRecipes(output);
+    }
+
+    private static void waterBlockRecipes(Consumer<FinishedRecipe> output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, VitalityItems.charcoalFilter())
+                .pattern("SWS")
+                .pattern(" C ")
+                .define('S', Items.STRING)
+                .define('W', ItemTags.WOOL)
+                .define('C', Items.CHARCOAL)
+                .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+                .save(gearOutput(output, VitalityGear.CHARCOAL_FILTER));
+        // The barrel with a funnel of planks on top.
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VitalityBlocks.rainBarrel())
+                .pattern("P P")
+                .pattern(" P ")
+                .pattern(" B ")
+                .define('P', ItemTags.PLANKS)
+                .define('B', Items.BARREL)
+                .unlockedBy("has_barrel", has(Items.BARREL))
+                .save(gearOutput(output, VitalityGear.RAIN_BARREL));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VitalityBlocks.waterFilter())
+                .pattern("F")
+                .pattern("B")
+                .pattern("I")
+                .define('F', VitalityItems.charcoalFilter())
+                .define('B', Items.BARREL)
+                .define('I', Items.IRON_BARS)
+                .unlockedBy("has_charcoal_filter", has(VitalityItems.charcoalFilter()))
+                .save(gearOutput(output, VitalityGear.WATER_FILTER));
+        // The same with or without Crafting: it needs no Crafting parts.
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, VitalityBlocks.copperStill())
+                .pattern("CGC")
+                .pattern("CUC")
+                .define('C', Items.COPPER_INGOT)
+                .define('G', Items.GLASS)
+                .define('U', Items.CAULDRON)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .save(conditional(output, FeatureEnabledCondition.of(VitalityGear.COPPER_STILL.itemPath)));
     }
 
     // The Tidebound Canteen needs no Crafting parts, so its recipe stays the same with Crafting installed.
     private static Consumer<FinishedRecipe> gearOutput(Consumer<FinishedRecipe> output, WaterContainer container) {
-        FeatureEnabledCondition gearSwitch = FeatureEnabledCondition.of(container.gear.itemPath);
         if (container == WaterContainer.TIDEBOUND_CANTEEN) {
-            return conditional(output, gearSwitch);
+            return conditional(output, FeatureEnabledCondition.of(container.gear.itemPath));
         }
-        return conditional(output, gearSwitch, ConditionalRecipes.modNotLoaded(VitalityMod.CRAFTING_MOD_ID));
+        return gearOutput(output, container.gear);
+    }
+
+    /** Gear made from vanilla materials while Crafting isn't installed; with Crafting, its version made from Crafting's parts loads. */
+    private static Consumer<FinishedRecipe> gearOutput(Consumer<FinishedRecipe> output, VitalityGear gear) {
+        return conditional(output, FeatureEnabledCondition.of(gear.itemPath), ConditionalRecipes.modNotLoaded(VitalityMod.CRAFTING_MOD_ID));
     }
 
     private static void cupPurifying(Consumer<FinishedRecipe> output, WaterPurity purity) {

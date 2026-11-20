@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "impactsvitality:block/copper_still"
+    },
+    "lit=true": {
+      "model": "impactsvitality:block/copper_still"
+    }
+  }
+}

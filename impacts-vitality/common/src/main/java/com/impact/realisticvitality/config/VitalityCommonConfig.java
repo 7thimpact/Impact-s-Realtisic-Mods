@@ -58,9 +58,9 @@ public final class VitalityCommonConfig {
         return needs.get(need).get();
     }
 
-    /** A gear item is on when its own switch and its need's switch both are. */
+    /** A gear item is on when its own switch is, and the switch of a need it answers. */
     public boolean isOn(VitalityGear gearItem) {
-        return gear.get(gearItem).get() && isOn(gearItem.need);
+        return gear.get(gearItem).get() && gearItem.needs.stream().anyMatch(this::isOn);
     }
 
     private static Map<VitalityNeed, ConfigValue<Boolean>> defineNeeds(ConfigSpecBuilder builder) {

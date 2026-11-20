@@ -21,6 +21,7 @@ public final class VitalityTranslations {
     public static final String PARCHED = "effect." + VitalityMod.MOD_ID + ".parched";
     public static final String CREATIVE_TAB = CreativeTabs.titleKey(VitalityMod.MOD_ID);
     private static final String ITEM_KEY_PREFIX = "item." + VitalityMod.MOD_ID + ".";
+    private static final String BLOCK_KEY_PREFIX = "block." + VitalityMod.MOD_ID + ".";
     public static final String CONTAINER_EMPTY = "tooltip.impactsvitality.container.empty";
     public static final String CONTAINER_DRINKS = "tooltip.impactsvitality.container.drinks";
     public static final String CONTAINER_SOUP = "tooltip.impactsvitality.container.soup";
@@ -71,6 +72,10 @@ public final class VitalityTranslations {
         english.put(CREATIVE_TAB, "Impact's Realistic Vitality");
         WATER_NAMES.forEach((water, name) -> english.put(itemName(water), name));
         CONTAINER_NAMES.forEach((container, name) -> english.put(ITEM_KEY_PREFIX + container.itemPath, name));
+        english.put(ITEM_KEY_PREFIX + "charcoal_filter", "Charcoal Filter");
+        english.put(BLOCK_KEY_PREFIX + "rain_barrel", "Rain Barrel");
+        english.put(BLOCK_KEY_PREFIX + "water_filter", "Water Filter");
+        english.put(BLOCK_KEY_PREFIX + "copper_still", "Copper Still");
         english.put(CONTAINER_EMPTY, "Empty (holds %s drinks)");
         english.put(CONTAINER_DRINKS, "%s/%s drinks of %s");
         english.put(CONTAINER_SOUP, "Soup");

@@ -10,6 +10,7 @@ import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityState;
+import com.impact.realisticvitality.registry.VitalityBlocks;
 import com.impact.realisticvitality.registry.VitalityEffects;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityRecipeSerializers;
@@ -22,7 +23,7 @@ public final class VitalityStartup {
     private VitalityStartup() {
     }
 
-    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects, items and the network channel. */
+    /** Mod construction: registers with Lib, then the log categories, config files, the player state, effects, blocks, items and the network channel. */
     public static void onModConstruction() {
         ImpactsLib.registerImpactMod(VitalityMod.MOD_ID);
         LOG.registerCategories(VitalityLogCategories.ALL);
@@ -31,6 +32,7 @@ public final class VitalityStartup {
         VitalityClientConfig.register();
         VitalityState.register();
         VitalityEffects.register();
+        VitalityBlocks.register();
         VitalityItems.register();
         VitalityRecipeSerializers.register();
         VitalityNetwork.create();

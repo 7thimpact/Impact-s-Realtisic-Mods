@@ -27,6 +27,8 @@ public final class VitalityServerConfig {
     public final DrinkSettings drinks;
     public final PuritySettings purity;
     public final ContainerSettings containers;
+    public final WaterBlockSettings waterBlocks;
+    public final FilterSettings filters;
     public final TemperatureSettings temperature;
     public final HealthCapSettings healthCap;
     public final ConfigFile file;
@@ -43,6 +45,12 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("containers", "Drink containers: how many drinks each holds and how the Tidebound Canteen refills.");
         containers = new ContainerSettings(builder);
+        builder.popSection();
+        builder.pushSection("waterBlocks", "The Rain Barrel, Water Filter and Copper Still.");
+        waterBlocks = new WaterBlockSettings(builder);
+        builder.popSection();
+        builder.pushSection("filters", "Charcoal Filters, shared by the Water Filter and the Respirator.");
+        filters = new FilterSettings(builder);
         builder.popSection();
         builder.pushSection("temperature", "Ambient and body temperature.");
         temperature = new TemperatureSettings(builder);
@@ -129,8 +137,10 @@ public final class VitalityServerConfig {
 
     public static final class PuritySettings {
         public final ConfigValue<List<String>> saltWaterBiomes;
+        public final ConfigValue<Boolean> isRainClean;
 
         private PuritySettings(ConfigSpecBuilder builder) {
+            isRainClean = builder.defineBoolean("rainIsClean", true, "Rain Barrel water counts as purified (otherwise unclean).");
             saltWaterBiomes = builder.defineStringList("saltWaterBiomes", List.of("#minecraft:is_ocean", "#minecraft:is_beach"),
                     "Biomes (or #biome tags) where water is salty. Water anywhere else is unclean until boiled.");
         }
@@ -156,6 +166,45 @@ public final class VitalityServerConfig {
                     "Ticks between the Tidebound Canteen's refills (1 drink of purified water).");
             tideboundWetRefillTicks = builder.defineInteger("tideboundWetRefillTicks", 100, 1, MAXIMUM_TICKS,
                     "Ticks between its refills while it's in rain or water.");
+        }
+    }
+
+    public static final class WaterBlockSettings {
+        private static final int MAXIMUM_DRINKS = 1000;
+
+        public final ConfigValue<Integer> bucketDrinks;
+        public final ConfigValue<Integer> rainBarrelTicksPerDrink;
+        public final ConfigValue<Integer> rainBarrelDrinks;
+        public final ConfigValue<Integer> waterFilterTicksPerDrink;
+        public final ConfigValue<Integer> waterFilterDrinks;
+        public final ConfigValue<Integer> waterFilterWearPerDrink;
+        public final ConfigValue<Integer> copperStillTicksPerBucket;
+        public final ConfigValue<Integer> copperStillDrinks;
+
+        private WaterBlockSettings(ConfigSpecBuilder builder) {
+            bucketDrinks = builder.defineInteger("bucketDrinks", 4, 1, MAXIMUM_DRINKS, "Drinks in a bucket of water.");
+            rainBarrelTicksPerDrink = builder.defineInteger("rainBarrelTicksPerDrink", 1200, 1, MAXIMUM_TICKS,
+                    "Ticks of rain under open sky for the Rain Barrel to collect 1 drink.");
+            rainBarrelDrinks = builder.defineInteger("rainBarrelDrinks", 16, 1, MAXIMUM_DRINKS, "Drinks a Rain Barrel holds.");
+            waterFilterTicksPerDrink = builder.defineInteger("waterFilterTicksPerDrink", 600, 1, MAXIMUM_TICKS,
+                    "Ticks for the Water Filter to drip 1 drink of purified water.");
+            waterFilterDrinks = builder.defineInteger("waterFilterDrinks", 16, 1, MAXIMUM_DRINKS,
+                    "Drinks the Water Filter holds on each side (water poured in, purified water dripped out).");
+            waterFilterWearPerDrink = builder.defineInteger("waterFilterWearPerDrink", 10, 0, MAXIMUM_TICKS,
+                    "Charcoal Filter life each filtered drink uses up (a filter has 600: 10 minutes of smoky air in a Respirator).");
+            copperStillTicksPerBucket = builder.defineInteger("copperStillTicksPerBucket", 1200, 1, MAXIMUM_TICKS,
+                    "Ticks for a heated Copper Still to purify a bucket of water.");
+            copperStillDrinks = builder.defineInteger("copperStillDrinks", 16, 1, MAXIMUM_DRINKS,
+                    "Drinks the Copper Still holds on each side (water to distil, purified water).");
+        }
+    }
+
+    public static final class FilterSettings {
+        public final ConfigValue<Integer> charcoalFilterLife;
+
+        private FilterSettings(ConfigSpecBuilder builder) {
+            charcoalFilterLife = builder.defineInteger("charcoalFilterLife", 600, 1, MAXIMUM_TICKS,
+                    "A Charcoal Filter's life: seconds of smoky air in a Respirator. The Water Filter uses it up too.");
         }
     }
 

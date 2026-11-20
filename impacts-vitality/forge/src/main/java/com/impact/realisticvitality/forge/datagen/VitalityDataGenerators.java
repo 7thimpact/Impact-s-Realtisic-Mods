@@ -10,7 +10,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-/** Vitality's generated data: translations, item models, tags, recipes and damage types. Run with {@code runData}. */
+/** Vitality's generated data: translations, item and block models, tags, loot tables, recipes and damage types. Run with {@code runData}. */
 public final class VitalityDataGenerators {
     private static final String ENGLISH_LOCALE = "en_us";
 
@@ -27,6 +27,9 @@ public final class VitalityDataGenerators {
             }
         });
         generator.addProvider(event.includeClient(), new VitalityItemModels(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new VitalityBlockStates(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new VitalityBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), VitalityLootTables.create(output));
         generator.addProvider(event.includeServer(), new VitalityItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new VitalityRecipes(output));
         CompletableFuture<HolderLookup.Provider> lookupWithDamageTypes = VitalityDamageTypeData.withDamageTypes(event.getLookupProvider());

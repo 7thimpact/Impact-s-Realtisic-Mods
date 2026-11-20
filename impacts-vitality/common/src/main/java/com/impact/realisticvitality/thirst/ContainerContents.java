@@ -79,7 +79,11 @@ public record ContainerContents(int drinks, Kind kind, WaterPurity purity, Optio
     }
 
     public ContainerContents minusOneDrink() {
-        return drinks <= 1 ? EMPTY : new ContainerContents(drinks - 1, kind, purity, soup);
+        return minusDrinks(1);
+    }
+
+    public ContainerContents minusDrinks(int takenDrinks) {
+        return drinks <= takenDrinks ? EMPTY : new ContainerContents(drinks - takenDrinks, kind, purity, soup);
     }
 
     public enum Kind {

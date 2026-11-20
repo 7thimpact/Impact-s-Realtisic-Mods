@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "water_filter"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "criteria": {
+    "has_charcoal_filter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsvitality:charcoal_filter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsvitality:water_filter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_charcoal_filter",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsvitality:water_filter"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -28,5 +28,6 @@ final class VitalityItemModels extends ItemModelProvider {
         for (WaterContainer container : WaterContainer.values()) {
             basicItem(VitalityItems.container(container));
         }
+        basicItem(VitalityItems.charcoalFilter());
     }
 }

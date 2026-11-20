@@ -1,5 +1,8 @@
 {
   "advancements.impactsvitality.tab": "Realistic Vitality",
+  "block.impactsvitality.copper_still": "Copper Still",
+  "block.impactsvitality.rain_barrel": "Rain Barrel",
+  "block.impactsvitality.water_filter": "Water Filter",
   "death.attack.impactsvitality.dehydration": "%1$s died of thirst",
   "death.attack.impactsvitality.dehydration.player": "%1$s died of thirst while fighting %2$s",
   "death.attack.impactsvitality.fumes": "%1$s choked on lava fumes",
@@ -10,6 +13,7 @@
   "death.attack.impactsvitality.thin_air.player": "%1$s ran out of air while fighting %2$s",
   "effect.impactsvitality.parched": "Parched",
   "item.impactsvitality.canteen": "Canteen",
+  "item.impactsvitality.charcoal_filter": "Charcoal Filter",
   "item.impactsvitality.cold_water": "Cold Water",
   "item.impactsvitality.hydration_pack": "Hydration Pack",
   "item.impactsvitality.insulated_flask": "Insulated Flask",
