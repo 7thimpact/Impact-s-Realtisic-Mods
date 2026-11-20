@@ -3,9 +3,10 @@ package com.impact.realisticvitality.forge.client;
 import com.impact.realisticvitality.client.AirQualityIcon;
 import com.impact.realisticvitality.client.ClientVitality;
 import com.impact.realisticvitality.client.FrostOverlay;
-import com.impact.realisticvitality.client.LiningTooltips;
+import com.impact.realisticvitality.client.NeedSounds;
 import com.impact.realisticvitality.client.TemperatureGauge;
 import com.impact.realisticvitality.client.ThirstHud;
+import com.impact.realisticvitality.client.VitalityTooltips;
 import com.impact.realisticvitality.lang.VitalityTranslations;
 import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.registry.VitalityItems;
@@ -101,10 +102,11 @@ public final class VitalityForgeClient {
         while (SIP_PACK_KEY.consumeClick()) {
             VitalityNetwork.sendPackSip();
         }
+        NeedSounds.tick();
     }
 
     private static void onItemTooltip(ItemTooltipEvent event) {
-        LiningTooltips.addLines(event.getItemStack(), event.getToolTip());
+        VitalityTooltips.addLines(event.getItemStack(), event.getToolTip());
     }
 
     private static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {

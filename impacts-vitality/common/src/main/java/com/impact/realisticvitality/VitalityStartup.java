@@ -17,6 +17,7 @@ import com.impact.realisticvitality.registry.VitalityBlocks;
 import com.impact.realisticvitality.registry.VitalityEffects;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityRecipeSerializers;
+import com.impact.realisticvitality.registry.VitalitySounds;
 import com.impact.realisticvitality.thirst.BottleFilling;
 
 /** Vitality's startup steps that don't depend on the mod loader. */
@@ -35,6 +36,7 @@ public final class VitalityStartup {
         VitalityClientConfig.register();
         VitalityState.register();
         VitalityEffects.register();
+        VitalitySounds.register();
         VitalityBlocks.register();
         VitalityItems.register();
         VitalityRecipeSerializers.register();

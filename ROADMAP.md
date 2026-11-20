@@ -117,7 +117,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] 9 Breathing gear: the Cloth Mask (damp from water, halves smoke), Air Bladder, Bottled Air, Respirator and Charcoal Filters (fitted in a grid, worn down by smoke), Air Tank (thin air with a Respirator on, from the inventory or back slot, refilling in good air), Rebreather (filters and tanks last twice as long), Air Compressor (fuel fills a tank in 5 seconds), Netherite Rebreather (smithing; smoke never affects you) and Shulker Air Tank
 - [ ] 10 Integration. IRF and IRI parts done: bottles and containers fill from Food's campfire bucket through Lib's new water vessels (purified while it boils), Food's soups, boiled, toasted and dried foods in the drink and food-temperature tables, the Frame Pack (`#impactsvitality:heavy_packs`) adding 10% to exertion thirst, tanks and the Hydration Pack in Inventory's back slot, the HUD lined up with Inventory's two-slot hotbar, and the `food-and-vitality` and `inventory-and-vitality` setups. IRC parts in step 5; SRF heat entries in step 6
 - [x] 11 Achievements: all 22 in the "Realistic Vitality" tab, Vitality's six triggers (`drank`, `temperature_state`, `air_lost`, `health_capped`, `dry_food_refused`, `gear_used`), and Lib counters behind "Well Watered" and "In Balance"
-- [ ] 12 Polish
+- [x] 12 Polish: JEI info pages (water and purity, sipping, containers, water blocks, breathing gear, the Thermometer, the Straw Hat, linings), tooltips, English text for everything, and panting, shivering and coughing sounds with subtitles (client config `display.needSounds`)
 
 ## 5. Impact's Realistic Crafting, plus Lib's crafting systems
 

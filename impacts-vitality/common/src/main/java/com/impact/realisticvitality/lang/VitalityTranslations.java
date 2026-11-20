@@ -5,6 +5,7 @@ import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.advancement.VitalityAdvancements;
 import com.impact.realisticvitality.registry.VitalityDamageTypes;
+import com.impact.realisticvitality.registry.VitalitySounds;
 import com.impact.realisticvitality.temperature.ArmorLining;
 import com.impact.realisticvitality.thirst.BottledWater;
 import com.impact.realisticvitality.thirst.WaterContainer;
@@ -37,6 +38,45 @@ public final class VitalityTranslations {
     public static final String KEY_CATEGORY = "key.categories.impactsvitality";
     public static final String TOO_HOT_TO_EAT = "message.impactsvitality.too_hot_to_eat";
     private static final String LINING_TOOLTIP_PREFIX = "tooltip.impactsvitality.lining.";
+    private static final String WATER_TOOLTIP_PREFIX = "tooltip.impactsvitality.water.";
+    public static final String CHARCOAL_FILTER_TOOLTIP = "tooltip.impactsvitality.charcoal_filter";
+    public static final String STRAW_HAT_TOOLTIP = "tooltip.impactsvitality.straw_hat";
+    public static final String THERMOMETER_TOOLTIP = "tooltip.impactsvitality.thermometer";
+    public static final String BOTTLED_AIR_TOOLTIP = "tooltip.impactsvitality.bottled_air";
+    private static final String SUBTITLE_PREFIX = "subtitles.impactsvitality.";
+    private static final String JEI_INFO_PREFIX = "jei.impactsvitality.info.";
+    private static final Map<BottledWater, String> WATER_TOOLTIPS = new EnumMap<>(Map.of(
+            BottledWater.UNCLEAN, "May make you Parched. Boil or smelt it to purify it",
+            BottledWater.SALT, "Makes thirst worse. Boil or smelt it to purify it",
+            BottledWater.PURIFIED, "Clean drinking water. Brews like a water bottle",
+            BottledWater.COLD, "Purified and chilled: cools you right down"));
+    private static final Map<String, String> SUBTITLES = Map.of(
+            VitalitySounds.PANT, "Player pants",
+            VitalitySounds.SHIVER, "Player shivers",
+            VitalitySounds.COUGH, "Player coughs");
+    /** JEI info pages, by page name. Each page is a translation key under jei.impactsvitality.info. */
+    public static final Map<String, String> JEI_PAGES = Map.ofEntries(
+            Map.entry("water", "Every bottle of water picks up its purity when it's filled. Water from oceans and beaches is salty; water anywhere else is unclean, unless it comes from a boiling pot. Smelt, smoke or campfire any water bottle to purify it."),
+            Map.entry("sipping", "With an empty hand, sneak-use water to take a sip: 1 thirst of unclean water."),
+            Map.entry("containers", "Use a container on water to fill it, use it to drink one drink, and sneak-use it to pour one over yourself and cool off. Put water bottles in a crafting grid with it to pour them in. Mixing waters makes it as bad as the worst."),
+            Map.entry("wooden_cup", "Set a filled Wooden Cup on a campfire to purify its water."),
+            Map.entry("insulated_flask", "Keeps Cold Water cold. Pour bowls of soup into it in a crafting grid to keep them warm."),
+            Map.entry("tidebound_canteen", "Fills itself with purified water, faster in rain or water."),
+            Map.entry("hydration_pack", "Wear it on your back (or in the chest slot) and press the Sip key to drink without holding it."),
+            Map.entry("rain_barrel", "Collects a drink of clean water for every minute of rain falling on it, up to 16."),
+            Map.entry("water_filter", "Pour in unclean or salt water and put a Charcoal Filter in it: it drips out purified water. Sneak-use with an empty hand to take the filter out."),
+            Map.entry("copper_still", "With a heat source under it, purifies water from buckets and bottles, a bucket a minute. Hoppers feed it water and glass bottles from above and take the purified water from below."),
+            Map.entry("charcoal_filter", "Fits a Respirator or Rebreather (in a crafting grid) and the Water Filter. Smoke and filtering wear it down."),
+            Map.entry("cloth_mask", "Use it on water to dampen it: a damp mask halves smoke for 2 minutes."),
+            Map.entry("respirator", "With a Charcoal Filter fitted, smoky air counts as good air. Wearing it lets an Air Tank supply you."),
+            Map.entry("netherite_rebreather", "Smoke never affects you, and it needs no filter."),
+            Map.entry("air_bladder", "Use it in good air to fill it, then in thin air to get back 4 bubbles. 3 uses per fill."),
+            Map.entry("bottled_air", "Use a glass bottle in good air to bottle it. Breathe it in for 5 bubbles."),
+            Map.entry("air_tank", "Carried anywhere (or on your back) with a Respirator on, it supplies air in thin air. It refills in good air."),
+            Map.entry("air_compressor", "Use a tank on it, then any furnace fuel: it fills the tank in 5 seconds, even in thin air."),
+            Map.entry("thermometer", "Carry it anywhere in your inventory to see the temperature under the gauge."),
+            Map.entry("straw_hat", "Shade: in the sun it widens the hot side of your comfortable range."),
+            Map.entry("linings", "Sew a lining into any armor at an anvil: 3 wool for warmth, 4 rabbit hide for more warmth, or 3 leather to stay cool. The armor keeps its enchantments and damage."));
     public static final String MASK_DAMP = "tooltip.impactsvitality.mask.damp";
     public static final String MASK_DRY = "tooltip.impactsvitality.mask.dry";
     public static final String MASK_FILTER = "tooltip.impactsvitality.mask.filter";
@@ -115,6 +155,18 @@ public final class VitalityTranslations {
     private VitalityTranslations() {
     }
 
+    public static String waterTooltip(BottledWater water) {
+        return WATER_TOOLTIP_PREFIX + water.itemPath;
+    }
+
+    public static String subtitle(String soundPath) {
+        return SUBTITLE_PREFIX + soundPath;
+    }
+
+    public static String jeiInfo(String page) {
+        return JEI_INFO_PREFIX + page;
+    }
+
     public static String liningTooltip(ArmorLining lining) {
         return LINING_TOOLTIP_PREFIX + lining.serializedName;
     }
@@ -150,6 +202,13 @@ public final class VitalityTranslations {
         english.put(KEY_CATEGORY, "Impact's Realistic Vitality");
         english.put(TOO_HOT_TO_EAT, "Too hot to eat anything dry.");
         LINING_NAMES.forEach((lining, text) -> english.put(liningTooltip(lining), text));
+        WATER_TOOLTIPS.forEach((water, text) -> english.put(waterTooltip(water), text));
+        english.put(CHARCOAL_FILTER_TOOLTIP, "Fits a Respirator, Rebreather or Water Filter");
+        english.put(STRAW_HAT_TOOLTIP, "Shade: cooler in the sun");
+        english.put(THERMOMETER_TOOLTIP, "Carry it to see the temperature");
+        english.put(BOTTLED_AIR_TOOLTIP, "Breathe it in for 5 bubbles");
+        SUBTITLES.forEach((soundPath, text) -> english.put(subtitle(soundPath), text));
+        JEI_PAGES.forEach((page, text) -> english.put(jeiInfo(page), text));
         english.put(ITEM_KEY_PREFIX + "straw_hat", "Straw Hat");
         BREATHING_ITEM_NAMES.forEach((path, name) -> english.put(ITEM_KEY_PREFIX + path, name));
         english.put(MASK_DAMP, "Damp: halves smoke for %s more seconds");
