@@ -9,6 +9,7 @@ import com.impact.realisticvitality.network.VitalityNetwork;
 import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalitySync;
 import com.impact.realisticvitality.registry.VitalityItems;
+import com.impact.realisticvitality.temperature.BlockTemperatures;
 import com.impact.realisticvitality.thirst.BottleFilling;
 import com.impact.realisticvitality.thirst.Drinking;
 import com.impact.realisticvitality.thirst.Sipping;
@@ -16,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -40,6 +42,11 @@ final class VitalityForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onRightClickEmpty);
         MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onLivingHeal);
+        MinecraftForge.EVENT_BUS.addListener(VitalityForgeEvents::onTagsUpdated);
+    }
+
+    private static void onTagsUpdated(TagsUpdatedEvent event) {
+        BlockTemperatures.clearCache();
     }
 
     private static void onLivingHeal(LivingHealEvent event) {

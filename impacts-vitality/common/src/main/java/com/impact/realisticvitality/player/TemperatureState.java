@@ -11,6 +11,8 @@ public final class TemperatureState {
 
     private float body;
     private int wetTicks;
+    // Not saved: worked out again within a second.
+    private float ambient = Float.NaN;
 
     public float body() {
         return body;
@@ -18,6 +20,15 @@ public final class TemperatureState {
 
     public void setBody(float newBody) {
         body = Math.max(COLDEST, Math.min(HOTTEST, newBody));
+    }
+
+    /** The ambient temperature where the player stands, in °F, or NaN until the first reading. */
+    public float ambient() {
+        return ambient;
+    }
+
+    public void setAmbient(float fahrenheit) {
+        ambient = fahrenheit;
     }
 
     public int wetTicks() {

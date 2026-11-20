@@ -1,7 +1,7 @@
 package com.impact.realisticvitality.thirst;
 
 import com.impact.lib.ImpactsLib;
-import com.impact.lib.ResourceIds;
+import com.impact.realisticvitality.config.TaggedEntries;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -12,8 +12,6 @@ import net.minecraft.world.level.biome.Biome;
 
 /** Where water comes out purified (boiling, says Lib), salty (ocean and beach biomes) or unclean (anywhere else). */
 public final class WaterSources {
-    private static final String TAG_PREFIX = "#";
-
     private WaterSources() {
     }
 
@@ -30,15 +28,7 @@ public final class WaterSources {
     }
 
     public static boolean isSalty(Holder<Biome> biome) {
-        return VitalityServerConfig.get().purity.saltWaterBiomes.get().stream().anyMatch(entry -> matches(entry.trim(), biome));
-    }
-
-    private static boolean matches(String entry, Holder<Biome> biome) {
-        if (entry.startsWith(TAG_PREFIX)) {
-            return ResourceIds.tryParse(entry.substring(TAG_PREFIX.length()))
-                    .map(tagId -> biome.is(TagKey.create(Registries.BIOME, tagId)))
-                    .orElse(false);
-        }
-        return ResourceIds.tryParse(entry).map(biome::is).orElse(false);
+        return TaggedEntries.contains(VitalityServerConfig.get().purity.saltWaterBiomes.get(), biome::is,
+                tagId -> biome.is(TagKey.create(Registries.BIOME, tagId)));
     }
 }

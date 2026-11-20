@@ -209,9 +209,73 @@ public final class VitalityServerConfig {
     }
 
     public static final class TemperatureSettings {
+        private static final double MAXIMUM_DEGREES = 1000.0;
+        private static final int MAXIMUM_HEIGHT = 2048;
+
+        public final ConfigValue<Double> biomeBase;
+        public final ConfigValue<Double> biomeScale;
+        public final ConfigValue<List<String>> biomeOverrides;
+        public final ConfigValue<List<String>> dimensionOffsets;
+        public final ConfigValue<List<String>> dimensionFixed;
+        public final ConfigValue<Integer> coolingAboveY;
+        public final ConfigValue<Double> blocksPerDegreeAbove;
+        public final ConfigValue<Integer> undergroundBelowY;
+        public final ConfigValue<Double> undergroundTemperature;
+        public final ConfigValue<Integer> undergroundBlendBlocks;
+        public final ConfigValue<Integer> deepBelowY;
+        public final ConfigValue<Integer> deepestY;
+        public final ConfigValue<Double> deepTemperature;
+        public final ConfigValue<Double> nightDrop;
+        public final ConfigValue<Double> desertNightDrop;
+        public final ConfigValue<List<String>> desertBiomes;
+        public final ConfigValue<Double> rainDrop;
+        public final ConfigValue<Double> snowDrop;
+        public final ConfigValue<Double> sunBonus;
+        public final ConfigValue<Integer> blockRadius;
+        public final ConfigValue<Double> blockHeatCap;
+        public final ConfigValue<Double> blockColdCap;
+        public final ConfigValue<List<String>> blockTemps;
+        public final ConfigValue<Double> unlistedHeatSource;
+        public final ConfigValue<Double> unlistedColdSource;
+        public final ConfigValue<Double> waterDrop;
         public final ConfigValue<Integer> wetTicks;
 
         private TemperatureSettings(ConfigSpecBuilder builder) {
+            biomeBase = builder.defineDouble("biomeBase", 30.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "Ambient °F = biomeBase + biomeScale x the biome's vanilla temperature.");
+            biomeScale = builder.defineDouble("biomeScale", 40.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "See biomeBase. Plains (0.8) is 62°F, desert (2.0) 110°F.");
+            biomeOverrides = builder.defineStringList("biomeOverrides", List.of(), "Per-biome base °F that replaces the formula, as biome=°F.");
+            dimensionOffsets = builder.defineStringList("dimensionOffsets", List.of("minecraft:the_nether=40"),
+                    "°F added to a dimension's biomes, as dimension=°F.");
+            dimensionFixed = builder.defineStringList("dimensionFixed", List.of("minecraft:the_end=20"),
+                    "Dimensions with one flat ambient °F (before nearby blocks and water), as dimension=°F.");
+            coolingAboveY = builder.defineInteger("coolingAboveY", 100, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Above this height it gets colder.");
+            blocksPerDegreeAbove = builder.defineDouble("blocksPerDegreeAbove", 4.0, 0.1, MAXIMUM_DEGREES, "Blocks of height per 1°F colder above coolingAboveY.");
+            undergroundBelowY = builder.defineInteger("undergroundBelowY", 50, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT,
+                    "Below this, with no sky above, the air drifts toward undergroundTemperature.");
+            undergroundTemperature = builder.defineDouble("undergroundTemperature", 55.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "The steady cave °F.");
+            undergroundBlendBlocks = builder.defineInteger("undergroundBlendBlocks", 20, 1, MAXIMUM_HEIGHT,
+                    "Blocks below undergroundBelowY until the surface weather is gone and only the cave °F is left.");
+            deepBelowY = builder.defineInteger("deepBelowY", 0, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Below this the caves warm up toward deepTemperature.");
+            deepestY = builder.defineInteger("deepestY", -64, -MAXIMUM_HEIGHT, MAXIMUM_HEIGHT, "Where the caves reach deepTemperature.");
+            deepTemperature = builder.defineDouble("deepTemperature", 75.0, -MAXIMUM_DEGREES, MAXIMUM_DEGREES, "The °F of the deepest caves.");
+            nightDrop = builder.defineDouble("nightDrop", 15.0, 0.0, MAXIMUM_DEGREES, "°F colder at midnight.");
+            desertNightDrop = builder.defineDouble("desertNightDrop", 35.0, 0.0, MAXIMUM_DEGREES, "°F colder at midnight in deserts and badlands.");
+            desertBiomes = builder.defineStringList("desertBiomes", List.of("minecraft:desert", "#minecraft:is_badlands"),
+                    "Biomes (or #biome tags) with cold desert nights.");
+            rainDrop = builder.defineDouble("rainDrop", 10.0, 0.0, MAXIMUM_DEGREES, "°F colder in rain under open sky.");
+            snowDrop = builder.defineDouble("snowDrop", 15.0, 0.0, MAXIMUM_DEGREES, "°F colder in snowfall under open sky.");
+            sunBonus = builder.defineDouble("sunBonus", 10.0, 0.0, MAXIMUM_DEGREES, "°F warmer at midday under open, clear sky.");
+            blockRadius = builder.defineInteger("blockRadius", 5, 0, 16, "How far nearby hot and cold blocks reach. Closer blocks count more.");
+            blockHeatCap = builder.defineDouble("blockHeatCap", 40.0, 0.0, MAXIMUM_DEGREES, "The most °F nearby hot blocks add together.");
+            blockColdCap = builder.defineDouble("blockColdCap", 40.0, 0.0, MAXIMUM_DEGREES, "The most °F nearby cold blocks take away together.");
+            blockTemps = builder.defineStringList("blockTemps", List.of(
+                    "minecraft:lava=25", "minecraft:lava_cauldron=25", "#minecraft:fire=15", "#minecraft:campfires=15",
+                    "minecraft:furnace=10", "minecraft:smoker=10", "minecraft:blast_furnace=10", "minecraft:magma_block=8",
+                    "minecraft:blue_ice=-20", "minecraft:packed_ice=-15", "minecraft:ice=-10", "minecraft:powder_snow=-10", "minecraft:snow_block=-5"),
+                    "°F a hot (#impactslib:heat_sources, when lit) or cold (#impactslib:cold_sources) block gives right next to you, as block=°F or #tag=°F.");
+            unlistedHeatSource = builder.defineDouble("unlistedHeatSource", 10.0, 0.0, MAXIMUM_DEGREES, "°F from a heat source not in blockTemps.");
+            unlistedColdSource = builder.defineDouble("unlistedColdSource", 5.0, 0.0, MAXIMUM_DEGREES, "°F taken away by a cold source not in blockTemps.");
+            waterDrop = builder.defineDouble("waterDrop", 20.0, 0.0, MAXIMUM_DEGREES, "Standing in water counts as this much colder.");
             wetTicks = builder.defineInteger("wetTicks", 600, 0, MAXIMUM_TICKS, "Ticks you stay Wet after water, rain or pouring a drink over yourself.");
         }
     }

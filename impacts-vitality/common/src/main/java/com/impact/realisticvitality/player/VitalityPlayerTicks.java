@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.player;
 
+import com.impact.realisticvitality.temperature.TemperatureTicks;
 import com.impact.realisticvitality.thirst.ThirstDrain;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -13,6 +14,7 @@ public final class VitalityPlayerTicks {
             return;
         }
         ThirstDrain.tick(player);
+        TemperatureTicks.tick(player);
         VitalitySync.sendIfChanged(player);
     }
 }

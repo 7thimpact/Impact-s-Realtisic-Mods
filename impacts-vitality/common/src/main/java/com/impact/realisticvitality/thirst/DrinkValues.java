@@ -1,6 +1,7 @@
 package com.impact.realisticvitality.thirst;
 
 import com.impact.lib.ResourceIds;
+import com.impact.realisticvitality.config.TaggedEntries;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.registry.VitalityItems;
 import net.minecraft.core.registries.Registries;
@@ -20,9 +21,6 @@ import java.util.Optional;
  * ({@code #impactsvitality:dry_foods=-1,0}). A vanilla water bottle is not a potion here: it drinks as Unclean Water.
  */
 public final class DrinkValues {
-    private static final String TAG_PREFIX = "#";
-    private static final String KEY_SEPARATOR = "=";
-
     private DrinkValues() {
     }
 
@@ -65,22 +63,8 @@ public final class DrinkValues {
     }
 
     private static Optional<DrinkValue> firstMatch(List<String> entries, ItemStack stack) {
-        for (String entry : entries) {
-            String[] keyAndValue = entry.split(KEY_SEPARATOR, 2);
-            if (keyAndValue.length == 2 && matches(keyAndValue[0].trim(), stack)) {
-                return DrinkValue.parse(keyAndValue[1]);
-            }
-        }
-        return Optional.empty();
-    }
-
-    private static boolean matches(String key, ItemStack stack) {
-        if (key.startsWith(TAG_PREFIX)) {
-            return ResourceIds.tryParse(key.substring(TAG_PREFIX.length()))
-                    .map(tagId -> stack.is(TagKey.create(Registries.ITEM, tagId)))
-                    .orElse(false);
-        }
-        Optional<ResourceLocation> itemId = ResourceIds.tryParse(key);
-        return itemId.isPresent() && ResourceIds.itemId(stack.getItem()).equals(itemId.get());
+        ResourceLocation itemId = ResourceIds.itemId(stack.getItem());
+        return TaggedEntries.findValue(entries, itemId::equals, tagId -> stack.is(TagKey.create(Registries.ITEM, tagId)))
+                .flatMap(DrinkValue::parse);
     }
 }
