@@ -91,6 +91,16 @@ public final class VanillaRecipeReplacements {
         WoodData.VANILLA_WOODS.forEach(wood -> WoodData.vanillaItem(wood, WoodKind.HANGING_SIGN).ifPresent(item -> putItem(replaced, OverhaulCategory.WOOD, item)));
         put(replaced, OverhaulCategory.IRON, IRON_CATALOG_RECIPES);
         put(replaced, OverhaulCategory.DYES, GROUND_RECIPES);
+        put(replaced, OverhaulCategory.DYES, "armor_dye", "shulker_box_coloring");
+        for (DyeColor color : DyeColor.values()) {
+            String name = color.getName();
+            put(replaced, OverhaulCategory.DYES, "dye_" + name + "_wool", "dye_" + name + "_carpet", "dye_" + name + "_bed", name + "_stained_glass",
+                    name + "_stained_glass_pane_from_glass_pane", name + "_terracotta", name + "_candle");
+            if (color != DyeColor.WHITE) {
+                put(replaced, OverhaulCategory.DYES, name + "_concrete_powder");
+            }
+        }
+        put(replaced, OverhaulCategory.TEXTILES, "paper");
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.STONE, color.getName() + "_stained_glass_pane"));
         put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);
         for (BlockFamily family : StoneFamilies.all()) {

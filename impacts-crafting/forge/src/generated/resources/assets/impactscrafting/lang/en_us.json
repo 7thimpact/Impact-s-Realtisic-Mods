@@ -1,5 +1,6 @@
 {
   "advancements.impactscrafting.tab": "Realistic Crafting",
+  "block.impactscrafting.dye_vat": "Dye Vat",
   "block.impactscrafting.loose_pebble": "Loose Pebbles",
   "block.impactscrafting.makeshift_stone_table": "Makeshift Stone Table",
   "block.impactscrafting.makeshift_table": "Makeshift Table",
@@ -42,6 +43,7 @@
   "item.impactscrafting.loose_wooden_sword": "Loose Wooden Sword",
   "item.impactscrafting.mortar": "Mortar",
   "item.impactscrafting.oar": "Oar",
+  "item.impactscrafting.paper_pulp": "Paper Pulp",
   "item.impactscrafting.shaped_stone": "Shaped Stone",
   "item.impactscrafting.stone_axe_head": "Stone Axe Head",
   "item.impactscrafting.stone_base": "Stone Base",

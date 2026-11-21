@@ -1,6 +1,7 @@
 package com.impact.realisticcrafting.forge.datagen;
 
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.block.DyeVatBlock;
 import com.impact.realisticcrafting.block.LoosePebbleBlock;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.block.MakeshiftTableBlock;
@@ -51,12 +52,47 @@ final class CraftingBlockStates extends BlockStateProvider {
                 .toList();
         getVariantBuilder(CraftingBlocks.loosePebble()).forAllStatesExcept(state -> quarterTurns(clusterModels.get(state.getValue(LoosePebbleBlock.VARIANT))),
                 LoosePebbleBlock.WATERLOGGED);
+        ModelFile emptyVat = dyeVatModel(false);
+        ModelFile filledVat = dyeVatModel(true);
+        getVariantBuilder(CraftingBlocks.dyeVat()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(state.getValue(DyeVatBlock.FILLED) ? filledVat : emptyVat).build());
+        simpleBlockItem(CraftingBlocks.dyeVat(), emptyVat);
         for (MakeshiftTable table : MakeshiftTable.values()) {
             List<ModelFile> wearModels = IntStream.rangeClosed(TableWear.NEW, TableWear.FALLING_APART).mapToObj(wear -> tableModel(table, wear)).toList();
             getVariantBuilder(table.block()).forAllStates(state -> ConfiguredModel.builder()
                     .modelFile(wearModels.get(state.getValue(MakeshiftTableBlock.WEAR))).build());
             simpleBlockItem(table.block(), wearModels.get(TableWear.NEW));
         }
+    }
+
+    // A wooden tub with two twine hoops; filled, a water surface sits inside it, tinted by the vat's color (tint 0).
+    private ModelFile dyeVatModel(boolean isFilled) {
+        BlockModelBuilder model = models().withExistingParent("block/dye_vat" + (isFilled ? "_filled" : ""), mcLoc("block/block"))
+                .renderType("translucent")
+                .texture("particle", modLoc("block/dye_vat_side"))
+                .texture("side", modLoc("block/dye_vat_side"))
+                .texture("top", modLoc("block/dye_vat_top"))
+                .texture("bottom", modLoc("block/dye_vat_bottom"))
+                .texture("inside", modLoc("block/dye_vat_inside"))
+                .texture("water", mcLoc("block/water_still"));
+        model.element().from(1, 0, 1).to(15, 2, 15).allFaces((direction, face) -> face.texture(direction.getAxis() == Direction.Axis.Y
+                ? (direction == Direction.UP ? "#inside" : "#bottom") : "#side").cullface(direction == Direction.DOWN ? Direction.DOWN : null)).end();
+        addVatWall(model, 1, 1, 15, 3);
+        addVatWall(model, 1, 13, 15, 15);
+        addVatWall(model, 1, 3, 3, 13);
+        addVatWall(model, 13, 3, 15, 13);
+        if (isFilled) {
+            model.element().from(3, 2, 3).to(13, 13, 13)
+                    .face(Direction.UP).texture("#water").tintindex(0).end()
+                    .end();
+        }
+        return model;
+    }
+
+    private static void addVatWall(BlockModelBuilder model, int fromX, int fromZ, int toX, int toZ) {
+        model.element().from(fromX, 2, fromZ).to(toX, 14, toZ)
+                .allFaces((direction, face) -> face.texture(direction.getAxis() == Direction.Axis.Y ? "#top" : "#side"))
+                .end();
     }
 
     // A thick top on four legs. The top's faces use the top texture; its edges and the legs use the side texture.

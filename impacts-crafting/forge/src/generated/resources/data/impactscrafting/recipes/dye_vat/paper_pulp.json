@@ -1,0 +1,19 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:dye_vat/paper_pulp"
+    }
+  ],
+  "dip_ticks": 20,
+  "input": {
+    "item": "minecraft:sugar_cane"
+  },
+  "results": {
+    "none": {
+      "item": "impactscrafting:paper_pulp"
+    }
+  }
+}

@@ -45,6 +45,7 @@ public final class CraftingTranslations {
         english.put(ADVANCEMENT_TAB, "Realistic Crafting");
         english.put(ITEM_KEY_PREFIX + "stone_pebble", "Stone Pebble");
         english.put(BLOCK_KEY_PREFIX + "loose_pebble", "Loose Pebbles");
+        english.put(BLOCK_KEY_PREFIX + "dye_vat", "Dye Vat");
         english.put(BLOCK_KEY_PREFIX + MakeshiftTable.WOODEN.path, "Makeshift Table");
         english.put(BLOCK_KEY_PREFIX + MakeshiftTable.STONE.path, "Makeshift Stone Table");
         english.put(MakeshiftTable.WOODEN.containerTitleKey(), "Makeshift Table");
@@ -82,6 +83,7 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_RIVETS.path, "Iron Rivets");
         english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_HINGE.path, "Iron Hinge");
         english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_WHEEL.path, "Iron Wheel");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.PAPER_PULP.path, "Paper Pulp");
         for (LooseIron looseIron : LooseIron.values()) {
             english.put(ITEM_KEY_PREFIX + looseIron.path, titleCase(looseIron.path));
         }

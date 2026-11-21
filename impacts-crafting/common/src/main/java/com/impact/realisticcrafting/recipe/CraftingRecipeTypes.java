@@ -16,6 +16,9 @@ public final class CraftingRecipeTypes {
     public static final ResourceLocation HAMMERING_ID = ResourceIds.of(CraftingMod.MOD_ID, "hammering");
     private static volatile Supplier<RecipeType<HammeringRecipe>> hammering;
     private static volatile Supplier<HammeringRecipe.Serializer> hammeringSerializer;
+    public static final ResourceLocation VAT_DYEING_ID = ResourceIds.of(CraftingMod.MOD_ID, "vat_dyeing");
+    private static volatile Supplier<RecipeType<VatDyeingRecipe>> vatDyeing;
+    private static volatile Supplier<VatDyeingRecipe.Serializer> vatDyeingSerializer;
 
     private CraftingRecipeTypes() {
     }
@@ -25,6 +28,8 @@ public final class CraftingRecipeTypes {
         ModRegistrar registrar = LoaderPlatform.current().registrar(CraftingMod.MOD_ID);
         hammering = registrar.register(Registries.RECIPE_TYPE, HAMMERING_ID.getPath(), () -> named(HAMMERING_ID));
         hammeringSerializer = registrar.register(Registries.RECIPE_SERIALIZER, HAMMERING_ID.getPath(), HammeringRecipe.Serializer::new);
+        vatDyeing = registrar.register(Registries.RECIPE_TYPE, VAT_DYEING_ID.getPath(), () -> named(VAT_DYEING_ID));
+        vatDyeingSerializer = registrar.register(Registries.RECIPE_SERIALIZER, VAT_DYEING_ID.getPath(), VatDyeingRecipe.Serializer::new);
     }
 
     public static RecipeType<HammeringRecipe> hammering() {
@@ -33,6 +38,14 @@ public final class CraftingRecipeTypes {
 
     public static HammeringRecipe.Serializer hammeringSerializer() {
         return hammeringSerializer.get();
+    }
+
+    public static RecipeType<VatDyeingRecipe> vatDyeing() {
+        return vatDyeing.get();
+    }
+
+    public static VatDyeingRecipe.Serializer vatDyeingSerializer() {
+        return vatDyeingSerializer.get();
     }
 
     // Vanilla's own recipe types are this simple; Forge's RecipeType.simple isn't available to loader-independent code.

@@ -48,6 +48,7 @@ final class CraftingRecipes extends RecipeProvider {
         CraftingStoneRecipes.build(output);
         CraftingIronRecipes.build(output);
         CraftingGrindingRecipes.build(output);
+        CraftingDyeVatRecipes.build(output);
     }
 
     private static ResourceLocation id(String path) {

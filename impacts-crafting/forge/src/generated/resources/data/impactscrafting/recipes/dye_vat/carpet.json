@@ -1,0 +1,63 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/carpet"
+    }
+  ],
+  "input": {
+    "tag": "minecraft:wool_carpets"
+  },
+  "results": {
+    "black": {
+      "item": "minecraft:black_carpet"
+    },
+    "blue": {
+      "item": "minecraft:blue_carpet"
+    },
+    "brown": {
+      "item": "minecraft:brown_carpet"
+    },
+    "cyan": {
+      "item": "minecraft:cyan_carpet"
+    },
+    "gray": {
+      "item": "minecraft:gray_carpet"
+    },
+    "green": {
+      "item": "minecraft:green_carpet"
+    },
+    "light_blue": {
+      "item": "minecraft:light_blue_carpet"
+    },
+    "light_gray": {
+      "item": "minecraft:light_gray_carpet"
+    },
+    "lime": {
+      "item": "minecraft:lime_carpet"
+    },
+    "magenta": {
+      "item": "minecraft:magenta_carpet"
+    },
+    "orange": {
+      "item": "minecraft:orange_carpet"
+    },
+    "pink": {
+      "item": "minecraft:pink_carpet"
+    },
+    "purple": {
+      "item": "minecraft:purple_carpet"
+    },
+    "red": {
+      "item": "minecraft:red_carpet"
+    },
+    "white": {
+      "item": "minecraft:white_carpet"
+    },
+    "yellow": {
+      "item": "minecraft:yellow_carpet"
+    }
+  }
+}

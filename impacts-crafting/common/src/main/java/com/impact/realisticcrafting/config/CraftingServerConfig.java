@@ -25,6 +25,7 @@ public final class CraftingServerConfig {
     public final WoodScrapSettings woodScraps;
     public final HammeringSettings hammering;
     public final TimedCraftingSettings timedCrafting;
+    public final DyeVatSettings dyeVat;
     public final ConfigValue<Boolean> isFuelOn;
     public final ConfigValue<Integer> woodenBucketUses;
     public final ConfigFile file;
@@ -56,6 +57,9 @@ public final class CraftingServerConfig {
         builder.popSection();
         woodenBucketUses = builder.defineInteger("woodenBucketUses", 32, 1, MAXIMUM_USES,
                 "Uses of a Wooden Bucket. Each scoop and each pour costs 1.");
+        builder.pushSection("dyeVat", "The Dye Vat, where all dyeing happens.");
+        dyeVat = new DyeVatSettings(builder);
+        builder.popSection();
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
         builder.popSection();
@@ -200,6 +204,22 @@ public final class CraftingServerConfig {
             timesCraftingTable = builder.defineBoolean("craftingTable", true, "The Crafting Table (and other mods' grids) is timed.");
             recipeOverrides = builder.defineStringList("recipeOverrides", List.of(), "Fixed times for single recipes: recipe=ticks.");
             modMultipliers = builder.defineStringList("modMultipliers", List.of(), "Time multipliers for a mod's recipes: modid=1.0.");
+        }
+    }
+
+    public static final class DyeVatSettings {
+        public final ConfigValue<Integer> chargesPerDye;
+        public final ConfigValue<Integer> capacity;
+        public final ConfigValue<Integer> dipTicks;
+        public final ConfigValue<Integer> rainFillTicks;
+        public final ConfigValue<Integer> paperPulpTicks;
+
+        private DyeVatSettings(ConfigSpecBuilder builder) {
+            chargesPerDye = builder.defineInteger("vatChargesPerDye", 8, 1, 1024, "Charges each dye adds to the vat.");
+            capacity = builder.defineInteger("capacity", 32, 1, 4096, "The most charges a vat holds.");
+            dipTicks = builder.defineInteger("dipTicks", 10, 1, 1200, "Ticks to dip one item.");
+            rainFillTicks = builder.defineInteger("rainFillTicks", 1200, 1, 72000, "Ticks of rain falling on an empty vat to fill it.");
+            paperPulpTicks = builder.defineInteger("paperPulpTicks", 20, 1, 1200, "Ticks to soak one sugar cane into Paper Pulp.");
         }
     }
 }

@@ -41,6 +41,7 @@ final class CraftingLootTables {
             for (MakeshiftTable table : MakeshiftTable.values()) {
                 add(table.block(), keepingUses(table.block()));
             }
+            dropSelf(CraftingBlocks.dyeVat());
         }
 
         // The table drops itself carrying its uses spent; an unused table's item has no tag, so fresh tables stack.
@@ -53,7 +54,7 @@ final class CraftingLootTables {
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return List.of(CraftingBlocks.loosePebble(), MakeshiftTable.WOODEN.block(), MakeshiftTable.STONE.block());
+            return List.of(CraftingBlocks.loosePebble(), MakeshiftTable.WOODEN.block(), MakeshiftTable.STONE.block(), CraftingBlocks.dyeVat());
         }
     }
 }

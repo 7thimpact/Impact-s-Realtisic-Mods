@@ -34,6 +34,7 @@ public final class CraftingFuels {
             FuelRegistry.register(item, stack -> isOn() ? item.burnTicks(stack) : 0);
         }
         registerWhenOn(CraftingItems.woodenBucket(), () -> WOODEN_BUCKET_BURN_TICKS);
+        registerWhenOn(CraftingItems.dyeVat(), () -> WOODEN_BUCKET_BURN_TICKS);
         FuelRegistry.register(CraftingItems.looseBoat(), stack -> isOn() && isFlammableWood(stack) ? LOOSE_BOAT_BURN_TICKS : 0);
         registerWhenOn(CraftingItems.table(MakeshiftTable.WOODEN), () -> MAKESHIFT_TABLE_BURN_TICKS);
         for (ToolKind kind : ToolKind.values()) {

@@ -82,8 +82,8 @@ public final class WoodenWaterBucketItem extends Item {
         return InteractionResultHolder.sidedSuccess(emptied(held, player, level, pourAt), level.isClientSide());
     }
 
-    /** The bucket after pouring: one more use spent, only the uses tag kept, or nothing when it wore out. */
-    static ItemStack emptied(ItemStack filled, Player player, Level level, BlockPos pouredAt) {
+    /** The bucket after pouring (or filling a Dye Vat): one more use spent, only the uses tag kept, or nothing when it wore out. */
+    public static ItemStack emptied(ItemStack filled, Player player, Level level, BlockPos pouredAt) {
         int spent = UsesDurability.usesSpent(filled) + 1;
         boolean isWornOut = spent >= CraftingServerConfig.get().woodenBucketUses.get();
         if (isWornOut) {

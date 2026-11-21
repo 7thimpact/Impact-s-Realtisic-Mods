@@ -23,6 +23,7 @@ import com.impact.realisticcrafting.item.WoodenBucketItem;
 import com.impact.realisticcrafting.item.WoodenWaterBucketItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -46,6 +47,7 @@ public final class CraftingItems {
     private static volatile Supplier<WoodenBucketItem> woodenBucket;
     private static volatile Supplier<WoodenWaterBucketItem> woodenWaterBucket;
     private static volatile Supplier<LooseWoodItem> looseBoat;
+    private static volatile Supplier<BlockItem> dyeVat;
     private static final Map<LooseIron, Supplier<LooseItem>> LOOSE_IRON = new EnumMap<>(LooseIron.class);
 
     private CraftingItems() {
@@ -64,6 +66,7 @@ public final class CraftingItems {
         woodenBucket = registrar.register(Registries.ITEM, "wooden_bucket", WoodenBucketItem::new);
         woodenWaterBucket = registrar.register(Registries.ITEM, "wooden_water_bucket", WoodenWaterBucketItem::new);
         looseBoat = registrar.register(Registries.ITEM, "loose_boat", LooseWoodItem::new);
+        dyeVat = registrar.register(Registries.ITEM, "dye_vat", () -> new BlockItem(CraftingBlocks.dyeVat(), new Item.Properties()));
         for (LooseIron looseIron : LooseIron.values()) {
             LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path, () -> new LooseItem(LooseItem.HammerKnock.METAL)));
         }
@@ -101,6 +104,10 @@ public final class CraftingItems {
 
     public static WoodenWaterBucketItem woodenWaterBucket() {
         return woodenWaterBucket.get();
+    }
+
+    public static BlockItem dyeVat() {
+        return dyeVat.get();
     }
 
     public static LooseWoodItem looseBoat() {
@@ -167,6 +174,7 @@ public final class CraftingItems {
         Arrays.stream(CraftingPart.values()).map(part -> new ItemStack(part(part))).forEach(stacks::add);
         stacks.add(new ItemStack(woodenBucket()));
         stacks.add(new ItemStack(woodenWaterBucket()));
+        stacks.add(new ItemStack(dyeVat()));
         boatWoods().forEach(wood -> stacks.add(WoodData.of(looseBoat(), wood)));
         Arrays.stream(LooseIron.values()).map(looseIron -> new ItemStack(looseIron(looseIron))).forEach(stacks::add);
         for (ToolMaterial material : ToolMaterial.values()) {

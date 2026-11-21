@@ -3,11 +3,13 @@ package com.impact.realisticcrafting.forge.client;
 import com.impact.lib.client.DrawsOwnCraftingProgress;
 import com.impact.lib.crafting.CraftingProgress;
 import com.impact.realisticcrafting.client.CraftingArrows;
+import com.impact.realisticcrafting.client.DyeVatColors;
 import com.impact.realisticcrafting.client.RefusedCraftHint;
 import com.impact.realisticcrafting.client.WoodTints;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.menu.CraftingMenus;
 import com.impact.realisticcrafting.recipe.Hammering;
+import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -37,6 +39,7 @@ public final class CraftingForgeClient {
     public static void register(IEventBus modEventBus) {
         modEventBus.addListener(CraftingForgeClient::onClientSetup);
         modEventBus.addListener(CraftingForgeClient::onItemColors);
+        modEventBus.addListener(CraftingForgeClient::onBlockColors);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onScreenRendered);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onRecipesUpdated);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onContainerBackground);
@@ -75,6 +78,12 @@ public final class CraftingForgeClient {
             return;
         }
         CraftingProgress.get(screen.getMenu()).ifPresent(progress -> CraftingArrows.renderFadedOutput(event.getGuiGraphics(), screen, progress));
+    }
+
+    // The vat's water takes its dye color.
+    private static void onBlockColors(RegisterColorHandlersEvent.Block event) {
+        event.register((state, level, position, tintIndex) -> level == null || position == null ? DyeVatColors.PLAIN_WATER
+                : DyeVatColors.colorAt(level.getBlockEntity(position)), CraftingBlocks.dyeVat());
     }
 
     private static void onScreenRendered(ScreenEvent.Render.Post event) {

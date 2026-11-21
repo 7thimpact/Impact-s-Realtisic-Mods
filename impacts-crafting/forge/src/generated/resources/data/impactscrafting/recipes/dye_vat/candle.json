@@ -1,0 +1,63 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/candle"
+    }
+  ],
+  "input": {
+    "tag": "minecraft:candles"
+  },
+  "results": {
+    "black": {
+      "item": "minecraft:black_candle"
+    },
+    "blue": {
+      "item": "minecraft:blue_candle"
+    },
+    "brown": {
+      "item": "minecraft:brown_candle"
+    },
+    "cyan": {
+      "item": "minecraft:cyan_candle"
+    },
+    "gray": {
+      "item": "minecraft:gray_candle"
+    },
+    "green": {
+      "item": "minecraft:green_candle"
+    },
+    "light_blue": {
+      "item": "minecraft:light_blue_candle"
+    },
+    "light_gray": {
+      "item": "minecraft:light_gray_candle"
+    },
+    "lime": {
+      "item": "minecraft:lime_candle"
+    },
+    "magenta": {
+      "item": "minecraft:magenta_candle"
+    },
+    "orange": {
+      "item": "minecraft:orange_candle"
+    },
+    "pink": {
+      "item": "minecraft:pink_candle"
+    },
+    "purple": {
+      "item": "minecraft:purple_candle"
+    },
+    "red": {
+      "item": "minecraft:red_candle"
+    },
+    "white": {
+      "item": "minecraft:white_candle"
+    },
+    "yellow": {
+      "item": "minecraft:yellow_candle"
+    }
+  }
+}

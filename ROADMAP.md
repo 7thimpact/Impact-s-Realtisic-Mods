@@ -131,7 +131,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 6 Wood and stone branches: Wooden Panel, Wooden Frame, Fence Post and Boat Hull per wood, Chest Top, Oar, both Wooden Buckets (scoop and pour with shared wear, the water-filled event), Stone Casing, Stone Base, Mortar, Leather Strip and Flint Arrowhead, every non-iron wood catalog row (doors to boats), every stone family's chiseled variants from vanilla's block families, brick blocks with Mortar and the non-iron stone machines; about 270 vanilla recipes switched off
   - [x] 7 Iron branch: Iron Saw, Hammer, Tweezers and Chisel; Iron Plate, Rod, Rivets, Hinge and Wheel (with the `iron_plates` and `iron_rods` tags and the stone tier tag); the Crafting Table from 4 planks and the 3 iron tools; the plain iron goods (loose bucket, cauldron, iron door, minecart and blast furnace hammered); hanging signs, the smithing table, stonecutter, glass panes and bottles; the Iron Saw's double wood yields
   - [x] 8 Grinder recipes: Lib's four grinders from Crafting's parts, 28 dye and powder grinds and 9 dye mixes on Lib's grinding type, vanilla's grid dye, bone meal, sugar and blaze powder recipes switched off
-  - [ ] 9 Dye Vat
+  - [x] 9 Dye Vat: the block (water from either water bucket or rain, dye in 8-charge doses up to 32, mixing, tinted water), dipping one item per 10 ticks while right-click is held (wool, carpet, terracotta, glass, panes, concrete powder, candles, shulker boxes, and leather-style items the vanilla way), washing in plain water, Paper Pulp and paper, the `impactscrafting:vat_dyeing` recipe type; every grid dyeing recipe switched off
   - [ ] 10 Beds
   - [ ] 11 Redstone and transport
   - [ ] 12 Combat, leather, textiles
