@@ -1,0 +1,30 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:leather_boots"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:leather_boots",
+    "nbt": "{Damage:0}"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "impactscrafting:tools_of_the_trade",
+  "criteria": {
+    "crafted_crafting_table": {
+      "conditions": {
+        "recipe_id": "impactscrafting:crafting_table"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.the_real_deal.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:crafting_table"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.the_real_deal.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_crafting_table"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

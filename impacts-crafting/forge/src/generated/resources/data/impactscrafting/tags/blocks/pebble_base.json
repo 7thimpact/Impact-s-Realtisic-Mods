@@ -8,6 +8,12 @@
     "minecraft:andesite",
     "minecraft:tuff",
     "minecraft:calcite",
-    "minecraft:mossy_cobblestone"
+    "minecraft:mossy_cobblestone",
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#minecraft:terracotta",
+    "minecraft:gravel",
+    "minecraft:sandstone",
+    "minecraft:red_sandstone"
   ]
 }

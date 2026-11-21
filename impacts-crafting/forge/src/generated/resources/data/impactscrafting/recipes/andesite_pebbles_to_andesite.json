@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:andesite_pebbles_to_andesite"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:andesite_pebble"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "result": {
+    "item": "minecraft:andesite"
+  },
+  "show_notification": true
+}

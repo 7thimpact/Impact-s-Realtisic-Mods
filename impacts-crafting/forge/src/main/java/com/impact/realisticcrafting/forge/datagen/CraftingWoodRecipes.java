@@ -90,13 +90,11 @@ final class CraftingWoodRecipes {
             ShapedRecipeBuilder hullRecipe = ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, CraftingItems.woodPart(WoodPart.BOAT_HULL))
                     .pattern("P P").pattern(" P ").define('P', panel).unlockedBy("has_panel", has(CraftingItems.woodPart(WoodPart.WOODEN_PANEL)));
             NbtResultRecipe.of(hullRecipe, WoodData.tagFor(woodType)).save(parts, id(name + "_boat_hull"));
+            // The boat is assembled from its parts: the hull and a pair of oars.
             Ingredient hull = WoodIngredients.of(CraftingItems.woodPart(WoodPart.BOAT_HULL), woodType);
-            ShapelessRecipeBuilder looseBoatRecipe = ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, CraftingItems.looseBoat())
-                    .requires(hull).requires(CraftingItems.part(CraftingPart.OAR)).requires(CraftingItems.part(CraftingPart.OAR))
-                    .unlockedBy("has_hull", has(CraftingItems.woodPart(WoodPart.BOAT_HULL)));
-            NbtResultRecipe.of(looseBoatRecipe, WoodData.tagFor(woodType)).save(wood, id(name + "_loose_boat"));
-            HammeringRecipeBuilder.of(WoodIngredients.of(CraftingItems.looseBoat(), woodType), Ingredient.of(CraftingTags.HAMMERS), boat.get())
-                    .save(wood, id(name + "_boat_from_hammering"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, boat.get()).requires(hull)
+                    .requires(CraftingItems.part(CraftingPart.OAR)).requires(CraftingItems.part(CraftingPart.OAR))
+                    .unlockedBy("has_hull", has(CraftingItems.woodPart(WoodPart.BOAT_HULL))).save(wood, id(name + "_boat"));
         }
     }
 
@@ -147,6 +145,9 @@ final class CraftingWoodRecipes {
                 .unlockedBy("has_stone_base", has(CraftingItems.part(CraftingPart.STONE_BASE))).save(wood, id("armor_stand"));
         shaped(Items.CAMPFIRE, 1).pattern(" S ").pattern("SCS").pattern("LLL").define('S', trimmedStick).define('C', ItemTags.COALS)
                 .define('L', ItemTags.LOGS).unlockedBy("has_trimmed_stick", has(trimmedStick)).save(wood, id("campfire"));
+        shaped(Items.SOUL_CAMPFIRE, 1).pattern(" S ").pattern("SCS").pattern("LLL").define('S', trimmedStick)
+                .define('C', ItemTags.SOUL_FIRE_BASE_BLOCKS).define('L', ItemTags.LOGS).unlockedBy("has_trimmed_stick", has(trimmedStick))
+                .save(wood, id("soul_campfire"));
         shaped(Items.LADDER, 3).pattern("S S").pattern("STS").pattern("S S").define('S', trimmedStick).define('T', twine)
                 .unlockedBy("has_twine", has(twine)).save(wood, id("ladder"));
         shaped(Items.SCAFFOLDING, 6).pattern("BTB").pattern("B B").pattern("B B").define('B', Items.BAMBOO).define('T', twine)

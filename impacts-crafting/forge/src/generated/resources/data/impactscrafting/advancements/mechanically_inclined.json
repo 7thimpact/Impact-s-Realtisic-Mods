@@ -1,0 +1,38 @@
+{
+  "parent": "impactscrafting:tools_of_the_trade",
+  "criteria": {
+    "has_mechanism": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:redstone_mechanism"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.mechanically_inclined.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:redstone_mechanism"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.mechanically_inclined.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mechanism"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

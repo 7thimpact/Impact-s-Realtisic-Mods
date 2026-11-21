@@ -2,6 +2,7 @@ package com.impact.realisticcrafting.menu;
 
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.advancement.CraftingAchievements;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.block.MakeshiftTableBlockEntity;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
@@ -95,6 +96,7 @@ public final class TieredCraftingMenu extends CraftingMenu {
         level.levelEvent(LevelEvent.SOUND_ANVIL_BROKEN, position, 0);
         LOG.debug(CraftingLogCategories.WEAR, "table fell apart", "player", player.getScoreboardName(), "table", table.path,
                 "pos", position.toShortString());
+        CraftingAchievements.onTableBroken(player);
     }
 
     // Vanilla's result slot, swapped for one that reports each craft taken (shift-clicking takes one craft at a time).

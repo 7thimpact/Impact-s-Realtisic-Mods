@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:fishing_rod"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    "T": {
+      "item": "impactscrafting:twine"
+    }
+  },
+  "pattern": [
+    "  S",
+    " ST",
+    "S  "
+  ],
+  "result": {
+    "item": "minecraft:fishing_rod"
+  },
+  "show_notification": true
+}

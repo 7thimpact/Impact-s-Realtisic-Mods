@@ -39,7 +39,10 @@ public final class BodyTemperature {
     /** One second's drift toward what the ambient temperature calls for, then the band's effects. */
     public static void tickSecond(ServerPlayer player, float ambient) {
         TemperatureState temperature = VitalityState.of(player).temperature;
-        temperature.setBody(temperature.body() + driftPerSecond(temperature.body(), ambient, Insulations.of(player)));
+        float drift = driftPerSecond(temperature.body(), ambient, Insulations.of(player));
+        // Water carries heat away (or brings it) much faster than air.
+        float speed = player.isInWater() ? VitalityServerConfig.get().temperature.waterSpeedMultiplier.get().floatValue() : 1.0F;
+        temperature.setBody(temperature.body() + drift * speed);
         BodyState state = BodyState.of(temperature.body());
         logStateChange(player, temperature, state);
         applyEffects(player, state);

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:unfired_bucket_mold"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "pattern": [
+    "C C",
+    "CCC"
+  ],
+  "result": {
+    "item": "impactscrafting:unfired_bucket_mold"
+  },
+  "show_notification": true
+}

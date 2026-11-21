@@ -5,6 +5,8 @@ import com.impact.lib.StartupSummary;
 import com.impact.lib.crafting.CraftingProgress;
 import com.impact.lib.crafting.ToolCrafting;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.realisticcrafting.advancement.CraftingAchievements;
+import com.impact.realisticcrafting.advancement.CraftingTriggers;
 import com.impact.realisticcrafting.config.CraftingClientConfig;
 import com.impact.realisticcrafting.config.CraftingCommonConfig;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
@@ -18,6 +20,7 @@ import com.impact.realisticcrafting.recipe.CraftingToolCraftingOverrides;
 import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 import com.impact.realisticcrafting.timing.CraftTimers;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
 
@@ -41,12 +44,15 @@ public final class CraftingStartup {
         CraftingItems.register();
         CraftingMenus.register();
         CraftingRecipeTypes.register();
+        CraftingSounds.register();
         CraftingWorldgen.register();
         CraftingDumpSections.register();
         ToolCrafting.registerOverrides(CraftingMod.MOD_ID, new CraftingToolCraftingOverrides());
         CraftingProgress.registerSource(CraftingMod.MOD_ID, CraftTimers::progressOf);
+        CraftingAchievements.register();
         ImpactsLib.onModsReady(impactMods -> {
             CraftingFuels.register();
+            CraftingTriggers.registerAll();
             CraftingItems.looseItems().forEach(Hammering::registerHoldAction);
             logStartup();
         });

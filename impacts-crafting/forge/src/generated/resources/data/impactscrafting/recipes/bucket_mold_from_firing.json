@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:bucket_mold_from_firing"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "impactscrafting:unfired_bucket_mold"
+  },
+  "result": "impactscrafting:bucket_mold"
+}

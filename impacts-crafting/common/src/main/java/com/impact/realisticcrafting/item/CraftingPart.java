@@ -26,7 +26,9 @@ public enum CraftingPart {
     IRON_WHEEL("iron_wheel", () -> 0),
     PAPER_PULP("paper_pulp", () -> 0),
     REDSTONE_MECHANISM("redstone_mechanism", () -> 0),
-    PISTON_HEAD("piston_head", () -> 0);
+    PISTON_HEAD("piston_head", () -> 0),
+    BOW_STAVE("bow_stave", () -> 200),
+    LEATHER_PANEL("leather_panel", () -> 0);
 
     public final String path;
     private final IntSupplier burnTicks;

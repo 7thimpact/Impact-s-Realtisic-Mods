@@ -134,9 +134,9 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 9 Dye Vat: the block (water from either water bucket or rain, dye in 8-charge doses up to 32, mixing, tinted water), dipping one item per 10 ticks while right-click is held (wool, carpet, terracotta, glass, panes, concrete powder, candles, shulker boxes, and leather-style items the vanilla way), washing in plain water, Paper Pulp and paper, the `impactscrafting:vat_dyeing` recipe type; every grid dyeing recipe switched off
   - [x] 10 Beds: the Bed Frame (placed like a bed), Comforter and 16 Sheets; building a bed in three layers (a sheet on a bare frame refused with a hint), recoloring a finished bed with another sheet, beds (village beds too) dropping their three parts (`bedsDropParts`), sheets dipped in the Dye Vat; vanilla's bed recipes switched off
   - [x] 11 Redstone and transport: the Redstone Mechanism and Piston Head; the redstone torch, repeater, piston (hammered), dropper, dispenser, note block, compass and TNT; the comparator, daylight detector, observer and jukebox at the Crafting Table tier; rails, the sticky piston and the gold and glowstone recipes stay vanilla
-  - [ ] 12 Combat, leather, textiles
-  - [ ] 13 Polish
-  - [ ] 14 Audit (the SRF part is in step 6)
+  - [x] 12 Combat, leather, textiles: the Bow Stave (with a Wood Scrap), bow, arrows, crossbow, fishing rod and leads; the loose shield (hammered); the Leather Panel and leather armor, horse armor and books sewn with the Bone Needle; carpet cut with shears (Stone Table), 16 Banner Cloths (dyeable in the vat) and banners, candles, and wool from String Clumps; vanilla's recipes for all of these switched off
+  - [x] 13 Polish: the 26-achievement "Realistic Crafting" tab (Crafting's triggers, Lib counters checked against the config, Lib's `hold_action` with an item predicate and a grind listener), JEI Hammering and Dye Vat categories with info pages, wood subtypes and every crafting recipe's table and time, next-step tooltips on every item, Crafting's own sound events with subtitles, and Dye Vat particles
+  - [x] 14 Audit (the SRF part is in step 6): the in-game recipe audit labels every vanilla crafting recipe (0 unlabeled, 0 conflicts), the tree check GameTest, endgame materials in the advanced tier, and Crafting versions of the soul campfire, smooth stone slab and bamboo sticks
 - [ ] **"With IRC" features:**
   - IRI milestone 8: pack recipes with IRC parts, IRC's crafting arrow in IRI's screen
   - IRF milestone 10: recipe switching, stone boiling
@@ -152,6 +152,26 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 ## 7. Family test setups
 
 - [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools"). Every setup with IRI loads Curios too (IRI requires it).
+
+## Playtest feedback (Nov 2026)
+
+Fixes from the user's first playtest, worked through before the remaining milestones.
+
+- [x] Every mod's jar collected in `build/mods/`
+- [x] Inventory: one main-hand slot with vanilla's off hand beside it (no more item showing in both), no extra back slot (Curios's only), the pockets as a 3×3 grid in every container screen
+- [x] Vitality: no effects in creative or spectator; moist foods never refused as dry; Thin air from Y 192; colder heights and deep caves; water cools you; a pressure-gauge temperature dial with fixed color zones and a warming/cooling arrow
+- [x] Vitality: masks and the Straw Hat also fit Curios's head slot (optional; Curios isn't required)
+- [x] Food: no style description lines on styled foods
+- [x] Crafting: pebbles on grass, sand and other natural ground at dead-bush density, with a pebble for each stone type and for sand
+- [x] Crafting: loose items with real finishing steps (boats assembled from hull and oars, the bucket cast in a clay mold, fasteners driven into pistons, doors and minecarts, the blast furnace sealed with mortar)
+- [x] Hold-to-use animations (hammering, grinding and the other interactions) visible like SRF's, with or without playerAnimator
+
+## Later (noted by the user, Nov 2026)
+
+- **More temperature gear.** Cooling and warming gear for each climate, beyond the Straw Hat and the armor linings: hats, cloaks, scarves, light desert clothing, insulated coats and boots, ideally worn in Curios slots too.
+- **Water purification steps.** Clean, unclean and salt water currently go straight to Purified; later steps (settling, boiling, filtering stages) will expand this.
+- **Per-food descriptions.** If food descriptions return, they'll be written per food family (bread, mutton, rabbit, ...), not per style.
+- **Vitality depth.** The user finds Vitality "somewhat lackluster" for now and will expand it later.
 
 ## Open items
 

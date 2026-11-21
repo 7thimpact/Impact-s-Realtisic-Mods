@@ -2,12 +2,13 @@ package com.impact.realisticinventory.forge.client;
 
 import com.impact.lib.hud.HudLayout;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.client.ContainerPocketsLayout;
+import com.impact.realisticinventory.client.HandsHotbarRenderer;
 import com.impact.realisticinventory.client.InventoryKeys;
 import com.impact.realisticinventory.client.PackItemColors;
 import com.impact.realisticinventory.client.PackScreen;
 import com.impact.realisticinventory.client.PlacedPackRenderer;
 import com.impact.realisticinventory.client.RealisticInventoryScreen;
-import com.impact.realisticinventory.client.TwoSlotHotbarRenderer;
 import com.impact.realisticinventory.client.WornPackModels;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import com.impact.realisticinventory.pack.InventoryItems;
@@ -17,9 +18,12 @@ import com.impact.realisticinventory.pack.PlacedPacks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.client.event.ContainerScreenEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
@@ -49,11 +53,13 @@ public final class InventoryForgeClient {
         modEventBus.addListener(InventoryForgeClient::onRegisterRenderers);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onRenderOverlay);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onScreenOpening);
+        MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onScreenInit);
+        MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onContainerBackground);
         MinecraftForge.EVENT_BUS.addListener(InventoryForgeClient::onClientTick);
     }
 
     private static void onClientSetup(FMLClientSetupEvent event) {
-        HudLayout.publishHotbarBounds(InventoryMod.MOD_ID, TwoSlotHotbarRenderer::bounds);
+        HudLayout.publishHotbarBounds(InventoryMod.MOD_ID, HandsHotbarRenderer::bounds);
         event.enqueueWork(() -> MenuScreens.register(PackMenus.packMenuType(), PackScreen::new));
         PackCurioRenderer packRenderer = new PackCurioRenderer();
         InventoryItems.packs().forEach(pack -> CuriosRendererRegistry.register(pack, () -> packRenderer));
@@ -78,14 +84,14 @@ public final class InventoryForgeClient {
         event.registerBlockEntityRenderer(PlacedPacks.blockEntityType(), PlacedPackRenderer::new);
     }
 
-    /** Replaces vanilla's hotbar (and its separate off-hand slot) while the two-slot hotbar is in use. */
+    /** Replaces vanilla's hotbar (and its separate off-hand slot) with the hands while the locks apply. */
     private static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
         boolean isHotbar = event.getOverlay().id().equals(VanillaGuiOverlay.HOTBAR.id());
         if (!isHotbar || !InventoryLocks.isActiveFor(Minecraft.getInstance().player)) {
             return;
         }
         event.setCanceled(true);
-        TwoSlotHotbarRenderer.render(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+        HandsHotbarRenderer.render(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
     }
 
     /** Vanilla's inventory screen becomes Inventory's while the locks apply (not in creative with creativeVanilla on). */
@@ -97,6 +103,22 @@ public final class InventoryForgeClient {
             return;
         }
         event.setNewScreen(new RealisticInventoryScreen(player));
+    }
+
+    /** Other containers' screens show the pockets as a 3 by 3 grid (creative mode's screen keeps vanilla's layout). */
+    private static void onScreenInit(ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof AbstractContainerScreen<?> screen && !(screen instanceof CreativeModeInventoryScreen)) {
+            ContainerPocketsLayout.applyTo(screen.getMenu(), Minecraft.getInstance().player);
+        }
+    }
+
+    private static void onContainerBackground(ContainerScreenEvent.Render.Background event) {
+        AbstractContainerScreen<?> screen = event.getContainerScreen();
+        if (screen instanceof CreativeModeInventoryScreen) {
+            return;
+        }
+        ContainerPocketsLayout.applyTo(screen.getMenu(), Minecraft.getInstance().player)
+                .ifPresent(layout -> layout.drawBackground(event.getGuiGraphics(), screen.getGuiLeft(), screen.getGuiTop()));
     }
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {

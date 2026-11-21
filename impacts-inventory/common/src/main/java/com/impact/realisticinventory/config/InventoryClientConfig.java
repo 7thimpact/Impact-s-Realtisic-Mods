@@ -43,13 +43,11 @@ public final class InventoryClientConfig {
         public final ConfigValue<Integer> offsetX;
         public final ConfigValue<Integer> offsetY;
         public final ConfigValue<Double> scale;
-        public final ConfigValue<Boolean> areSlotLabelsShown;
 
         private HotbarDisplaySettings(ConfigSpecBuilder builder) {
             offsetX = builder.defineInteger("offsetX", 0, -MAXIMUM_OFFSET_PIXELS, MAXIMUM_OFFSET_PIXELS, "Pixels to move the hotbar sideways.");
             offsetY = builder.defineInteger("offsetY", 0, -MAXIMUM_OFFSET_PIXELS, MAXIMUM_OFFSET_PIXELS, "Pixels to move the hotbar up (negative) or down.");
             scale = builder.defineDouble("scale", 1.0, 0.5, 3.0, "Size of the hotbar.");
-            areSlotLabelsShown = builder.defineBoolean("showSlotLabels", true, "Show the labels 1 and 2 on the hotbar slots.");
         }
     }
 

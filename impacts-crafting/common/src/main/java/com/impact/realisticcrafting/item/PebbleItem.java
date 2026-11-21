@@ -7,12 +7,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * The Stone Pebble: the first tool, for trimming and early hammering. Unused pebbles carry no tag and stack to 64; once
+ * A pebble (stone, or another kind of stone): the first tool, for trimming and early hammering. Unused pebbles carry no tag and stack to 64; once
  * used, Lib counts its uses in NBT, it stacks to 1 and shows a durability bar.
  */
 public final class PebbleItem extends Item implements UsesTrackedItem {
-    public PebbleItem() {
+    private final PebbleKind kind;
+
+    public PebbleItem(PebbleKind kind) {
         super(new Item.Properties());
+        this.kind = kind;
+    }
+
+    public PebbleKind kind() {
+        return kind;
     }
 
     @Override

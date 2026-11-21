@@ -54,6 +54,7 @@ final class GrindingAction implements HoldAction {
         stick.hurtAndBreak(WEAR_PER_ITEM, player, wearer -> wearer.broadcastBreakEvent(InteractionHand.MAIN_HAND));
         LOG.debug(LibLogCategories.GRINDER, "ground", "player", player.getGameProfile().getName(), "recipe", recipe.get().getId(),
                 "result", ResourceIds.itemId(result.getItem()), "count", result.getCount());
+        Grinding.postGround(new CompletedGrind(player, recipe.get(), result.copy()));
         return canContinue(player, player.getMainHandItem());
     }
 

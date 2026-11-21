@@ -7,14 +7,16 @@ import com.impact.lib.wood.WoodData;
 import com.impact.lib.wood.WoodKind;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.CraftingToolItem;
 import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.LooseItem;
-import com.impact.realisticcrafting.item.LooseWoodItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
+import com.impact.realisticcrafting.item.MoltenBucketMoldItem;
 import com.impact.realisticcrafting.item.PebbleItem;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.SheetItem;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
@@ -45,17 +47,18 @@ public final class CraftingItems {
     private static final int TOOL_HEAD_STACK_SIZE = 16;
     private static final Map<ToolMaterial, Map<ToolKind, Supplier<Item>>> TOOL_PARTS = new EnumMap<>(ToolMaterial.class);
     private static final Map<ToolMaterial, Map<ToolKind, Supplier<LooseItem>>> LOOSE_TOOLS = new EnumMap<>(ToolMaterial.class);
-    private static volatile Supplier<PebbleItem> stonePebble;
+    private static final Map<PebbleKind, Supplier<PebbleItem>> PEBBLES = new EnumMap<>(PebbleKind.class);
     private static final Map<WoodPart, Supplier<WoodPartItem>> WOOD_PARTS = new EnumMap<>(WoodPart.class);
     private static volatile Supplier<WoodenBucketItem> woodenBucket;
     private static volatile Supplier<WoodenWaterBucketItem> woodenWaterBucket;
-    private static volatile Supplier<LooseWoodItem> looseBoat;
     private static volatile Supplier<BlockItem> dyeVat;
     private static volatile Supplier<BedItem> bedFrame;
     private static volatile Supplier<Item> comforter;
     private static final Map<DyeColor, Supplier<SheetItem>> SHEETS = new EnumMap<>(DyeColor.class);
+    private static final Map<DyeColor, Supplier<SheetItem>> BANNER_CLOTHS = new EnumMap<>(DyeColor.class);
     private static final int COMFORTER_STACK_SIZE = 16;
     private static final Map<LooseIron, Supplier<LooseItem>> LOOSE_IRON = new EnumMap<>(LooseIron.class);
+    private static final Map<BucketMold, Supplier<Item>> BUCKET_MOLDS = new EnumMap<>(BucketMold.class);
 
     private CraftingItems() {
     }
@@ -63,7 +66,9 @@ public final class CraftingItems {
     /** Called once, during mod construction. */
     public static void register() {
         ModRegistrar registrar = LoaderPlatform.current().registrar(CraftingMod.MOD_ID);
-        stonePebble = registrar.register(Registries.ITEM, "stone_pebble", PebbleItem::new);
+        for (PebbleKind kind : PebbleKind.values()) {
+            PEBBLES.put(kind, registrar.register(Registries.ITEM, kind.itemPath, () -> new PebbleItem(kind)));
+        }
         for (MakeshiftTable table : MakeshiftTable.values()) {
             TABLES.put(table, registrar.register(Registries.ITEM, table.path, () -> new MakeshiftTableItem(CraftingBlocks.table(table))));
         }
@@ -72,15 +77,21 @@ public final class CraftingItems {
         }
         woodenBucket = registrar.register(Registries.ITEM, "wooden_bucket", WoodenBucketItem::new);
         woodenWaterBucket = registrar.register(Registries.ITEM, "wooden_water_bucket", WoodenWaterBucketItem::new);
-        looseBoat = registrar.register(Registries.ITEM, "loose_boat", LooseWoodItem::new);
         dyeVat = registrar.register(Registries.ITEM, "dye_vat", () -> new BlockItem(CraftingBlocks.dyeVat(), new Item.Properties()));
         bedFrame = registrar.register(Registries.ITEM, "bed_frame", () -> new BedItem(CraftingBlocks.bedFrame(), new Item.Properties().stacksTo(1)));
         comforter = registrar.register(Registries.ITEM, "comforter", () -> new Item(new Item.Properties().stacksTo(COMFORTER_STACK_SIZE)));
         for (DyeColor color : DyeColor.values()) {
             SHEETS.put(color, registrar.register(Registries.ITEM, color.getName() + "_sheet", () -> new SheetItem(color)));
+            BANNER_CLOTHS.put(color, registrar.register(Registries.ITEM, color.getName() + "_banner_cloth", () -> new SheetItem(color)));
+        }
+        for (BucketMold stage : BucketMold.values()) {
+            BUCKET_MOLDS.put(stage, registrar.register(Registries.ITEM, stage.path, () -> stage == BucketMold.MOLTEN
+                    ? new MoltenBucketMoldItem(new Item.Properties().stacksTo(stage.stackSize).fireResistant())
+                    : new Item(new Item.Properties().stacksTo(stage.stackSize))));
         }
         for (LooseIron looseIron : LooseIron.values()) {
-            LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path, () -> new LooseItem(LooseItem.HammerKnock.METAL)));
+            LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path,
+                    () -> new LooseItem(looseIron.finish.knock, looseIron.finish.hintKey)));
         }
         for (CraftingPart part : CraftingPart.values()) {
             PARTS.put(part, registrar.register(Registries.ITEM, part.path, () -> new Item(new Item.Properties())));
@@ -95,7 +106,15 @@ public final class CraftingItems {
     }
 
     public static PebbleItem stonePebble() {
-        return stonePebble.get();
+        return pebble(PebbleKind.STONE);
+    }
+
+    public static PebbleItem pebble(PebbleKind kind) {
+        return PEBBLES.get(kind).get();
+    }
+
+    public static List<PebbleItem> pebbles() {
+        return Arrays.stream(PebbleKind.values()).map(CraftingItems::pebble).toList();
     }
 
     public static MakeshiftTableItem table(MakeshiftTable table) {
@@ -134,12 +153,22 @@ public final class CraftingItems {
         return Arrays.stream(DyeColor.values()).map(CraftingItems::sheet).toList();
     }
 
-    public static BlockItem dyeVat() {
-        return dyeVat.get();
+    /** Banner Cloth, one item per color like the Sheets. */
+    public static SheetItem bannerCloth(DyeColor color) {
+        return BANNER_CLOTHS.get(color).get();
     }
 
-    public static LooseWoodItem looseBoat() {
-        return looseBoat.get();
+    public static List<SheetItem> bannerCloths() {
+        return Arrays.stream(DyeColor.values()).map(CraftingItems::bannerCloth).toList();
+    }
+
+    /** The bucket mold at one stage of casting: unfired clay, fired, filled with iron, or molten. */
+    public static Item bucketMold(BucketMold stage) {
+        return BUCKET_MOLDS.get(stage).get();
+    }
+
+    public static BlockItem dyeVat() {
+        return dyeVat.get();
     }
 
     public static LooseItem looseIron(LooseIron looseIron) {
@@ -174,7 +203,6 @@ public final class CraftingItems {
         for (ToolMaterial material : ToolMaterial.values()) {
             Arrays.stream(ToolKind.values()).map(kind -> looseTool(material, kind)).forEach(looseItems::add);
         }
-        looseItems.add(looseBoat());
         Arrays.stream(LooseIron.values()).map(CraftingItems::looseIron).forEach(looseItems::add);
         return looseItems;
     }
@@ -192,7 +220,7 @@ public final class CraftingItems {
 
     public static List<ItemStack> creativeTabStacks() {
         List<ItemStack> stacks = new ArrayList<>();
-        stacks.add(new ItemStack(stonePebble()));
+        pebbles().forEach(pebble -> stacks.add(new ItemStack(pebble)));
         Arrays.stream(MakeshiftTable.values()).map(table -> new ItemStack(table(table))).forEach(stacks::add);
         Arrays.stream(CraftingTool.values()).map(tool -> new ItemStack(tool(tool))).forEach(stacks::add);
         for (WoodPart part : WoodPart.values()) {
@@ -206,8 +234,9 @@ public final class CraftingItems {
         stacks.add(new ItemStack(bedFrame()));
         stacks.add(new ItemStack(comforter()));
         sheets().forEach(sheet -> stacks.add(new ItemStack(sheet)));
-        boatWoods().forEach(wood -> stacks.add(WoodData.of(looseBoat(), wood)));
+        bannerCloths().forEach(cloth -> stacks.add(new ItemStack(cloth)));
         Arrays.stream(LooseIron.values()).map(looseIron -> new ItemStack(looseIron(looseIron))).forEach(stacks::add);
+        Arrays.stream(BucketMold.values()).map(stage -> new ItemStack(bucketMold(stage))).forEach(stacks::add);
         for (ToolMaterial material : ToolMaterial.values()) {
             Arrays.stream(ToolKind.values()).map(kind -> new ItemStack(toolPart(material, kind))).forEach(stacks::add);
             Arrays.stream(ToolKind.values()).map(kind -> new ItemStack(looseTool(material, kind))).forEach(stacks::add);

@@ -1,0 +1,42 @@
+{
+  "parent": "impactscrafting:hammer_time",
+  "criteria": {
+    "hammered_stone_tool": {
+      "conditions": {
+        "action": "impactscrafting:hammering",
+        "item": {
+          "items": [
+            "impactscrafting:loose_stone_pickaxe",
+            "impactscrafting:loose_stone_axe",
+            "impactscrafting:loose_stone_shovel",
+            "impactscrafting:loose_stone_hoe",
+            "impactscrafting:loose_stone_sword"
+          ]
+        }
+      },
+      "trigger": "impactslib:hold_action"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.stone_age.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:stone_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.stone_age.title"
+    }
+  },
+  "requirements": [
+    [
+      "hammered_stone_tool"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

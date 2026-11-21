@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.forge.datagen.ToolCraftingRecipeBuilder;
 import com.impact.realisticcrafting.config.OverhaulCategory;
 import com.impact.realisticcrafting.item.CraftingPart;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.recipe.StoneFamilies;
 import com.impact.realisticcrafting.registry.CraftingItems;
@@ -48,14 +49,19 @@ final class CraftingStoneRecipes {
         StoneFamilies.all().forEach(family -> family(stone, family));
         chiseledBlock(stone, Items.STONE, Items.STONE_BRICKS);
         chiseledBlock(stone, Items.END_STONE, Items.END_STONE_BRICKS);
+        // Smooth stone isn't one of vanilla's block families, but its slab is cut like theirs.
+        ToolCraftingRecipeBuilder.of(Items.SMOOTH_STONE_SLAB, SLABS).pattern("XXX").define('X', Items.SMOOTH_STONE).tool(chisels())
+                .save(stone, id("smooth_stone_slab"));
         catalog(stone);
     }
 
     private static void parts(Consumer<FinishedRecipe> parts) {
-        Item pebble = CraftingItems.stonePebble();
         Item shapedStone = CraftingItems.part(CraftingPart.SHAPED_STONE);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE).pattern("PPP").pattern("PPP").pattern("PPP").define('P', pebble)
-                .unlockedBy("has_pebble", has(pebble)).save(parts, id("pebbles_to_cobblestone"));
+        for (PebbleKind kind : PebbleKind.values()) {
+            Item pebble = CraftingItems.pebble(kind);
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, kind.packedBlock()).pattern("PPP").pattern("PPP").pattern("PPP").define('P', pebble)
+                    .unlockedBy("has_pebble", has(pebble)).save(parts, id(kind.packingRecipePath()));
+        }
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CraftingItems.part(CraftingPart.STONE_CASING)).pattern("SSS").pattern("S S").pattern("SSS")
                 .define('S', shapedStone).unlockedBy("has_shaped_stone", has(shapedStone)).save(parts, id("stone_casing"));
         ToolCraftingRecipeBuilder.of(CraftingItems.part(CraftingPart.STONE_BASE), 2).requires(Items.SMOOTH_STONE_SLAB).tool(chisels())

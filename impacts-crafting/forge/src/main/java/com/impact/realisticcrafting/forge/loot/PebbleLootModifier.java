@@ -2,7 +2,6 @@ package com.impact.realisticcrafting.forge.loot;
 
 import com.google.common.base.Suppliers;
 import com.impact.realisticcrafting.loot.PebbleDrops;
-import com.impact.realisticcrafting.registry.CraftingItems;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -35,7 +34,7 @@ public final class PebbleLootModifier extends LootModifier {
         }
         int pebbles = PebbleDrops.fromLoot(state, tool == null ? ItemStack.EMPTY : tool, context.getRandom());
         if (pebbles > 0) {
-            generatedLoot.add(new ItemStack(CraftingItems.stonePebble(), pebbles));
+            generatedLoot.add(PebbleDrops.pebbleFor(state, pebbles));
         }
         return generatedLoot;
     }

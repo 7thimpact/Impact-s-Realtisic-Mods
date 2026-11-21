@@ -1,0 +1,110 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/banner_cloth"
+    }
+  ],
+  "input": [
+    {
+      "item": "impactscrafting:white_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:orange_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:magenta_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:light_blue_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:yellow_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:lime_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:pink_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:gray_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:light_gray_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:cyan_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:purple_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:blue_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:brown_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:green_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:red_banner_cloth"
+    },
+    {
+      "item": "impactscrafting:black_banner_cloth"
+    }
+  ],
+  "results": {
+    "black": {
+      "item": "impactscrafting:black_banner_cloth"
+    },
+    "blue": {
+      "item": "impactscrafting:blue_banner_cloth"
+    },
+    "brown": {
+      "item": "impactscrafting:brown_banner_cloth"
+    },
+    "cyan": {
+      "item": "impactscrafting:cyan_banner_cloth"
+    },
+    "gray": {
+      "item": "impactscrafting:gray_banner_cloth"
+    },
+    "green": {
+      "item": "impactscrafting:green_banner_cloth"
+    },
+    "light_blue": {
+      "item": "impactscrafting:light_blue_banner_cloth"
+    },
+    "light_gray": {
+      "item": "impactscrafting:light_gray_banner_cloth"
+    },
+    "lime": {
+      "item": "impactscrafting:lime_banner_cloth"
+    },
+    "magenta": {
+      "item": "impactscrafting:magenta_banner_cloth"
+    },
+    "orange": {
+      "item": "impactscrafting:orange_banner_cloth"
+    },
+    "pink": {
+      "item": "impactscrafting:pink_banner_cloth"
+    },
+    "purple": {
+      "item": "impactscrafting:purple_banner_cloth"
+    },
+    "red": {
+      "item": "impactscrafting:red_banner_cloth"
+    },
+    "white": {
+      "item": "impactscrafting:white_banner_cloth"
+    },
+    "yellow": {
+      "item": "impactscrafting:yellow_banner_cloth"
+    }
+  }
+}

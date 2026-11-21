@@ -9,6 +9,7 @@ import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.config.CraftingFeature;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -72,8 +73,8 @@ public final class Hammering {
         ItemStack result = recipe.get().assemble(null, player.level().registryAccess());
         player.setItemInHand(InteractionHand.MAIN_HAND, result);
         String hammerId = ResourceIds.itemId(hammer.getItem()).toString();
-        int hammerUsesLeft = wearHammer(player, recipe.get().hammerDamage());
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS,
+        int hammerUsesLeft = recipe.get().consumesTool() ? useUpTool(player) : wearHammer(player, recipe.get().hammerDamage());
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), CraftingSounds.hammerFinish(), SoundSource.PLAYERS,
                 FINISH_VOLUME, FINISH_PITCH);
         LOG.debug(CraftingLogCategories.HAMMER, "finished", "player", player.getScoreboardName(), "item", ResourceIds.itemId(loose.getItem()),
                 "result", ResourceIds.itemId(result.getItem()), "hammer", hammerId, "usesLeft", hammerUsesLeft,
@@ -92,6 +93,15 @@ public final class Hammering {
 
     public static void registerHoldAction(Item looseItem) {
         HoldToUse.register(looseItem, ACTION);
+    }
+
+    // Mortar and the like go into the work: one off the off-hand stack (none in creative). Returns how many are left.
+    private static int useUpTool(Player player) {
+        ItemStack tool = player.getOffhandItem();
+        if (!player.getAbilities().instabuild) {
+            tool.shrink(1);
+        }
+        return tool.getCount();
     }
 
     // One hammer of a stack wears, like a tool in a grid; the rest stays in the off hand.

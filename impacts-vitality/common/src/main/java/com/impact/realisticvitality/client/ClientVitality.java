@@ -13,12 +13,27 @@ public final class ClientVitality {
             AirQuality.GOOD);
     private static volatile VitalityStateMessage state = STARTING_STATE;
     private static volatile NeedSwitchesMessage needSwitches;
+    /** A trend older than this (no reading changed the body temperature since) counts as steady. */
+    private static final long TREND_HOLD_MILLIS = 2500L;
+    private static volatile float lastBodyChange;
+    private static volatile long lastBodyChangeMillis;
 
     private ClientVitality() {
     }
 
     public static void onState(VitalityStateMessage message) {
+        float change = message.bodyTemperature() - state.bodyTemperature();
+        if (change != 0.0F) {
+            lastBodyChange = change;
+            lastBodyChangeMillis = System.currentTimeMillis();
+        }
         state = message;
+    }
+
+    /** How the body temperature moved at the last reading that moved it: above 0 warming, below 0 cooling, 0 when steady. */
+    public static float bodyTrend() {
+        boolean isRecent = System.currentTimeMillis() - lastBodyChangeMillis <= TREND_HOLD_MILLIS;
+        return isRecent ? lastBodyChange : 0.0F;
     }
 
     public static void onNeedSwitches(NeedSwitchesMessage message) {
@@ -39,5 +54,6 @@ public final class ClientVitality {
     public static void reset() {
         state = STARTING_STATE;
         needSwitches = null;
+        lastBodyChange = 0.0F;
     }
 }

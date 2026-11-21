@@ -7,7 +7,6 @@ import com.impact.realisticinventory.advancement.AchievementChecks;
 import com.impact.realisticinventory.advancement.InventoryAdvancements;
 import com.impact.realisticinventory.advancement.InventoryTriggers;
 import com.impact.realisticinventory.hotbar.HandSwitch;
-import com.impact.realisticinventory.hotbar.SwitchSource;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.PickupRefusal;
 import com.impact.realisticinventory.pack.InventoryItems;
@@ -38,10 +37,10 @@ public final class InventoryAchievementGameTests {
     public static void switchingEarnsHandsFullJugglerAndSecondNature(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            HandSwitch.switchToOtherSlot(player, SwitchSource.SCROLL_WHEEL);
+            HandSwitch.swapHands(player);
             helper.assertTrue(isDone(player, InventoryAdvancements.HANDS_FULL), "One switch earns Hands Full");
             helper.assertFalse(isDone(player, InventoryAdvancements.JUGGLER), "One switch isn't Juggler");
-            IntStream.range(1, InventoryAdvancements.JUGGLER_SWITCHES).forEach(switchNumber -> HandSwitch.switchToOtherSlot(player, SwitchSource.SCROLL_WHEEL));
+            IntStream.range(1, InventoryAdvancements.JUGGLER_SWITCHES).forEach(switchNumber -> HandSwitch.swapHands(player));
             helper.assertTrue(isDone(player, InventoryAdvancements.JUGGLER), "Ten switches in five seconds earn Juggler");
             ImpactsCounters.add(player, InventoryTriggers.SLOT_SWITCHES_COUNTER, null, InventoryAdvancements.SECOND_NATURE_SWITCHES);
             helper.assertTrue(isDone(player, InventoryAdvancements.SECOND_NATURE), "A thousand switches earn Second Nature");
@@ -107,7 +106,7 @@ public final class InventoryAchievementGameTests {
         try {
             AchievementChecks.onPlayerHurtEntity(player, zombie);
             helper.assertFalse(isDone(player, InventoryAdvancements.QUICK_DRAW), "A hit without a switch isn't Quick Draw");
-            HandSwitch.switchToOtherSlot(player, SwitchSource.SWAP_HANDS_KEY);
+            HandSwitch.swapHands(player);
             AchievementChecks.onPlayerHurtEntity(player, zombie);
             helper.assertTrue(isDone(player, InventoryAdvancements.QUICK_DRAW), "A hit right after switching earns Quick Draw");
         } finally {

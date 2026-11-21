@@ -19,8 +19,9 @@ public final class CraftingLogCategories {
     public static final String BEDS = "beds";
     public static final String BYPRODUCTS = "byproducts";
     public static final String AUDIT = "audit";
+    public static final String ACHIEVEMENTS = "achievements";
 
-    public static final List<String> ALL = List.of(STARTUP, COMPAT, DEPTH, TIMER, TIER, WEAR, HAMMER, PEBBLES, BUCKET, VAT, BEDS, BYPRODUCTS, AUDIT);
+    public static final List<String> ALL = List.of(STARTUP, COMPAT, DEPTH, TIMER, TIER, WEAR, HAMMER, PEBBLES, BUCKET, VAT, BEDS, BYPRODUCTS, AUDIT, ACHIEVEMENTS);
 
     private CraftingLogCategories() {
     }

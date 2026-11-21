@@ -4,6 +4,8 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.player.TemperatureState;
+import com.impact.realisticvitality.player.VitalityExemptions;
+import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.temperature.BodyState;
@@ -24,6 +26,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -130,7 +133,27 @@ public final class VitalityBodyTemperatureGameTests {
         helper.assertTrue(DryFoods.isTooHotToEat(60.0F, new ItemStack(Items.BREAD)), "Bread can't be eaten while Hot");
         helper.assertFalse(DryFoods.isTooHotToEat(40.0F, new ItemStack(Items.BREAD)), "but can while only Warm");
         helper.assertFalse(DryFoods.isTooHotToEat(60.0F, new ItemStack(Items.APPLE)), "An apple isn't dry");
+        helper.assertFalse(DryFoods.isTooHotToEat(60.0F, new ItemStack(Items.MELON_SLICE)), "Melon is moist");
+        helper.assertFalse(DryFoods.isTooHotToEat(60.0F, new ItemStack(Items.MUSHROOM_STEW)), "Soup is moist");
+        ResourceIds.item(ResourceIds.of("impactsfood", "boiled_bread")).ifPresent(boiledBread ->
+                helper.assertFalse(DryFoods.isTooHotToEat(60.0F, new ItemStack(boiledBread)), "Boiled bread is moist, not dry"));
         helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void creativePlayersAreLeftAlone(GameTestHelper helper) {
+        withPlayer(helper, player -> {
+            helper.assertFalse(VitalityExemptions.isExempt(player), "A survival player feels Vitality's needs");
+            player.setGameMode(GameType.CREATIVE);
+            helper.assertTrue(VitalityExemptions.isExempt(player), "A creative player doesn't");
+            float bodyBefore = VitalityState.of(player).temperature.body();
+            VitalityState.of(player).temperature.setBody(bodyBefore + 30.0F);
+            float hotBody = VitalityState.of(player).temperature.body();
+            VitalityPlayerTicks.tick(player);
+            helper.assertTrue(VitalityState.of(player).temperature.body() == hotBody, "and their temperature doesn't tick");
+            player.setGameMode(GameType.SPECTATOR);
+            helper.assertTrue(VitalityExemptions.isExempt(player), "nor does a spectator's");
+        });
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)

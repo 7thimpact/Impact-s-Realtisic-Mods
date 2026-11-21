@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:black_carpet"
+    }
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:black_carpet"
+  },
+  "tools": [
+    {
+      "item": "minecraft:shears"
+    }
+  ]
+}

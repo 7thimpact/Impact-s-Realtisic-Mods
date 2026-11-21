@@ -2,7 +2,6 @@ package com.impact.realisticfood.client;
 
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.item.KnifeItem;
-import com.impact.realisticfood.item.StyledFoodItem;
 import com.impact.realisticfood.lang.FoodTranslations;
 import com.impact.realisticfood.registry.FoodItems;
 import com.impact.realisticfood.registry.FoodTags;
@@ -14,16 +13,13 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-/** Food's tooltip lines, for its own items and for vanilla raw meat and fish: what a style does, how to use a tool, and the raw-food risk. */
+/** Food's tooltip lines, for its own items and for vanilla raw meat and fish: how to use a tool, and the raw-food risk. Styled foods have none (their names say it). */
 public final class FoodTooltips {
     private FoodTooltips() {
     }
 
     /** Adds the item's lines, in gray, under its name. */
     public static void addLines(ItemStack stack, List<Component> lines) {
-        if (stack.getItem() instanceof StyledFoodItem styled) {
-            lines.add(gray(FoodTranslations.styleTooltip(styled.style())));
-        }
         if (stack.getItem() instanceof KnifeItem) {
             lines.add(gray(FoodTranslations.KNIFE_TOOLTIP));
         }

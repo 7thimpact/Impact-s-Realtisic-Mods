@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:bow"
+    }
+  ],
+  "criteria": {
+    "has_stave": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:bow_stave"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:bow"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_stave",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:bow"
+    ]
+  },
+  "sends_telemetry_event": false
+}

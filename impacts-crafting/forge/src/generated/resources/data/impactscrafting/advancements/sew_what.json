@@ -1,0 +1,37 @@
+{
+  "parent": "impactscrafting:humble_beginnings",
+  "criteria": {
+    "sewed": {
+      "conditions": {
+        "tool": {
+          "items": [
+            "impactscrafting:bone_needle"
+          ]
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.sew_what.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:bone_needle",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.sew_what.title"
+    }
+  },
+  "requirements": [
+    [
+      "sewed"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:cut_to_size",
+  "criteria": {
+    "collected_scraps": {
+      "conditions": {},
+      "trigger": "impactscrafting:scraps_collected"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.scrap_collector.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:wood_scraps"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.scrap_collector.title"
+    }
+  },
+  "requirements": [
+    [
+      "collected_scraps"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,6 +1,7 @@
 package com.impact.realisticvitality.temperature;
 
 import com.impact.realisticvitality.config.VitalityServerConfig;
+import com.impact.realisticvitality.player.Headwear;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
@@ -25,6 +26,10 @@ public final class Insulations {
         Insulation total = Insulation.NONE;
         for (EquipmentSlot slot : ARMOR_SLOTS) {
             total = total.plus(ofPiece(player.getItemBySlot(slot), slot));
+        }
+        // Headwear in Curios's head slot counts like a helmet (the helmet slot itself is already counted).
+        for (ItemStack extraHeadwear : Headwear.wornInExtraSlots(player)) {
+            total = total.plus(ofPiece(extraHeadwear, EquipmentSlot.HEAD));
         }
         if (isStrawHatInTheSun(player)) {
             total = total.plus(new Insulation(0.0, settings.strawHatCooling.get()));
@@ -58,7 +63,7 @@ public final class Insulations {
 
     // Shade only helps under the sun: open sky, daytime and no rain.
     private static boolean isStrawHatInTheSun(Player player) {
-        boolean isWearingHat = player.getItemBySlot(EquipmentSlot.HEAD).is(VitalityItems.strawHat());
+        boolean isWearingHat = Headwear.find(player, stack -> stack.is(VitalityItems.strawHat())).isPresent();
         return isWearingHat && player.level().isDay() && !player.level().isRaining() && player.level().canSeeSky(player.blockPosition().above());
     }
 }

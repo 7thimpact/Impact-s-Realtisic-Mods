@@ -3,6 +3,7 @@ package com.impact.realisticcrafting.forge.client;
 import com.impact.lib.client.DrawsOwnCraftingProgress;
 import com.impact.lib.crafting.CraftingProgress;
 import com.impact.realisticcrafting.client.CraftingArrows;
+import com.impact.realisticcrafting.client.CraftingTooltips;
 import com.impact.realisticcrafting.client.DyeVatColors;
 import com.impact.realisticcrafting.client.RefusedCraftHint;
 import com.impact.realisticcrafting.client.WoodTints;
@@ -22,10 +23,12 @@ import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Crafting's client side on Forge: the makeshift tables use vanilla's crafting screen, refused crafts name the table
@@ -45,6 +48,7 @@ public final class CraftingForgeClient {
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onRecipesUpdated);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onContainerBackground);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onContainerForeground);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeClient::onItemTooltip);
     }
 
     private static void onClientSetup(FMLClientSetupEvent event) {
@@ -56,7 +60,7 @@ public final class CraftingForgeClient {
         Item[] woodParts = Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).toArray(Item[]::new);
         event.register((stack, layer) -> layer == 0 ? WoodTints.tintOf(stack) : WOODLESS_TINT, woodParts);
         event.register((stack, layer) -> layer == 0 && stack.getItem() instanceof SheetItem sheet ? DyeVatColors.rgb(sheet.color()) : WOODLESS_TINT,
-                CraftingItems.sheets().toArray(Item[]::new));
+                Stream.concat(CraftingItems.sheets().stream(), CraftingItems.bannerCloths().stream()).toArray(Item[]::new));
     }
 
     // The client needs the hammering action for other mods' loose items too, to hold them.
@@ -84,6 +88,10 @@ public final class CraftingForgeClient {
     }
 
     // The vat's water takes its dye color.
+    private static void onItemTooltip(ItemTooltipEvent event) {
+        CraftingTooltips.appendHints(event.getItemStack(), event.getToolTip());
+    }
+
     private static void onBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, position, tintIndex) -> level == null || position == null ? DyeVatColors.PLAIN_WATER
                 : DyeVatColors.colorAt(level.getBlockEntity(position)), CraftingBlocks.dyeVat());

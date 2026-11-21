@@ -6,6 +6,8 @@ import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.air.AirTank;
+import com.impact.realisticvitality.air.BreathingGear;
+import com.impact.realisticvitality.air.BreathingMask;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
@@ -24,6 +26,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -175,6 +178,24 @@ public final class VitalityIntegrationGameTests {
         ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
         try {
             test.accept(player);
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
+    public static void headwearWorksFromCuriosHeadSlot(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded("curios")) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            boolean hasHeadSlot = CuriosHeadSlots.putOnHead(player, new ItemStack(VitalityItems.mask(BreathingMask.RESPIRATOR)));
+            helper.assertTrue(hasHeadSlot, "With Curios, Vitality gives players a head slot");
+            helper.assertTrue(BreathingGear.wornMask(player).equals(Optional.of(BreathingMask.RESPIRATOR)), "A Respirator in the head slot is worn");
+            helper.assertTrue(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty(), "while the helmet slot stays free");
         } finally {
             MockPlayers.leaveWorld(player);
         }

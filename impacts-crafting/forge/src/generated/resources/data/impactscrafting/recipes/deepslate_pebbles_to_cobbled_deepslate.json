@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:deepslate_pebbles_to_cobbled_deepslate"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:deepslate_pebble"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    "PPP"
+  ],
+  "result": {
+    "item": "minecraft:cobbled_deepslate"
+  },
+  "show_notification": true
+}

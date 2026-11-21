@@ -11,6 +11,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -20,6 +22,7 @@ import java.util.function.Supplier;
 public final class Grinding {
     private static final int DEFAULT_WOODEN_DURABILITY = 64;
     private static final int DEFAULT_STONE_DURABILITY = 256;
+    private static final List<Consumer<CompletedGrind>> GROUND_LISTENERS = new CopyOnWriteArrayList<>();
     private static Supplier<GrinderBowlItem> woodenBowl;
     private static Supplier<GrinderBowlItem> stoneBowl;
     private static Supplier<GrindingStickItem> woodenStick;
@@ -46,6 +49,15 @@ public final class Grinding {
         GrindingAction action = new GrindingAction();
         HoldToUse.register(woodenStick.get(), action);
         HoldToUse.register(stoneStick.get(), action);
+    }
+
+    /** Listens for every item ground on the server (Crafting's dye achievements). */
+    public static void onGround(Consumer<CompletedGrind> listener) {
+        GROUND_LISTENERS.add(listener);
+    }
+
+    static void postGround(CompletedGrind grind) {
+        GROUND_LISTENERS.forEach(listener -> listener.accept(grind));
     }
 
     public static GrinderBowlItem woodenBowl() {

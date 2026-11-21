@@ -16,6 +16,7 @@ final class HammeringRecipeBuilder {
     private final Ingredient input;
     private final Ingredient hammer;
     private final ItemLike result;
+    private boolean consumesTool;
 
     private HammeringRecipeBuilder(Ingredient input, Ingredient hammer, ItemLike result) {
         this.input = input;
@@ -31,6 +32,12 @@ final class HammeringRecipeBuilder {
         return new HammeringRecipeBuilder(input, hammer, result);
     }
 
+    /** The off-hand item is used up instead of worn. */
+    HammeringRecipeBuilder consumesTool() {
+        consumesTool = true;
+        return this;
+    }
+
     void save(Consumer<FinishedRecipe> output, ResourceLocation recipeId) {
         JsonObject fields = new JsonObject();
         fields.add("input", input.toJson());
@@ -38,6 +45,9 @@ final class HammeringRecipeBuilder {
         JsonObject resultObject = new JsonObject();
         resultObject.addProperty("item", ResourceIds.itemId(result.asItem()).toString());
         fields.add("result", resultObject);
+        if (consumesTool) {
+            fields.addProperty("consumes_tool", true);
+        }
         output.accept(new Result(recipeId, fields));
     }
 

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "combat",
+        "recipe": "minecraft:fishing_rod"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:rods/wooden"
+    },
+    "X": {
+      "tag": "forge:string"
+    }
+  },
+  "pattern": [
+    "  #",
+    " #X",
+    "# X"
+  ],
+  "result": {
+    "item": "minecraft:fishing_rod"
+  },
+  "show_notification": true
+}

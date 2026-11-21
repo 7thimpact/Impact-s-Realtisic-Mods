@@ -1,0 +1,74 @@
+{
+  "parent": "impactscrafting:humble_beginnings",
+  "criteria": {
+    "andesite_pebbles_to_andesite": {
+      "conditions": {
+        "recipe_id": "impactscrafting:andesite_pebbles_to_andesite"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "deepslate_pebbles_to_cobbled_deepslate": {
+      "conditions": {
+        "recipe_id": "impactscrafting:deepslate_pebbles_to_cobbled_deepslate"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "diorite_pebbles_to_diorite": {
+      "conditions": {
+        "recipe_id": "impactscrafting:diorite_pebbles_to_diorite"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "granite_pebbles_to_granite": {
+      "conditions": {
+        "recipe_id": "impactscrafting:granite_pebbles_to_granite"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "pebbles_to_cobblestone": {
+      "conditions": {
+        "recipe_id": "impactscrafting:pebbles_to_cobblestone"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "red_sandstone_pebbles_to_red_sandstone": {
+      "conditions": {
+        "recipe_id": "impactscrafting:red_sandstone_pebbles_to_red_sandstone"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    },
+    "sandstone_pebbles_to_sandstone": {
+      "conditions": {
+        "recipe_id": "impactscrafting:sandstone_pebbles_to_sandstone"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.rock_solid.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.rock_solid.title"
+    }
+  },
+  "requirements": [
+    [
+      "pebbles_to_cobblestone",
+      "granite_pebbles_to_granite",
+      "diorite_pebbles_to_diorite",
+      "andesite_pebbles_to_andesite",
+      "deepslate_pebbles_to_cobbled_deepslate",
+      "sandstone_pebbles_to_sandstone",
+      "red_sandstone_pebbles_to_red_sandstone"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

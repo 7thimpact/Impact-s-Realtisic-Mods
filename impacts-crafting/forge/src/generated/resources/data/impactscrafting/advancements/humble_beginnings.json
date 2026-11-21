@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "has_pebble": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactscrafting:pebbles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/cobblestone.png",
+    "description": {
+      "translate": "advancements.impactscrafting.humble_beginnings.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:stone_pebble"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.humble_beginnings.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_pebble"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

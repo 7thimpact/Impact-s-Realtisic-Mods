@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:grind_set",
+  "criteria": {
+    "mixed_dyes": {
+      "conditions": {},
+      "trigger": "impactscrafting:dyes_mixed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.color_theory.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:orange_dye"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.color_theory.title"
+    }
+  },
+  "requirements": [
+    [
+      "mixed_dyes"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

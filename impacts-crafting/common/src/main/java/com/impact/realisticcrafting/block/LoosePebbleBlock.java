@@ -1,5 +1,6 @@
 package com.impact.realisticcrafting.block;
 
+import com.impact.realisticcrafting.item.PebbleKind;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -19,8 +20,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * A small flat cluster of stones on exposed stone, river beds and cave floors. No collision, breaks instantly by hand
- * into a Stone Pebble, sits in water, and pops off when the block under it goes. Only worldgen places it.
+ * A small flat cluster of stones on natural ground, river beds and cave floors, one block per pebble kind. No collision,
+ * breaks instantly by hand into its pebble, sits in water, and pops off when the block under it goes. Only worldgen places it.
  */
 public final class LoosePebbleBlock extends Block implements SimpleWaterloggedBlock {
     /** Which of the cluster models it shows. */
@@ -28,9 +29,16 @@ public final class LoosePebbleBlock extends Block implements SimpleWaterloggedBl
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     private static final VoxelShape SHAPE = Block.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0);
 
-    public LoosePebbleBlock(Properties properties) {
+    private final PebbleKind kind;
+
+    public LoosePebbleBlock(PebbleKind kind, Properties properties) {
         super(properties);
+        this.kind = kind;
         registerDefaultState(stateDefinition.any().setValue(VARIANT, 0).setValue(WATERLOGGED, false));
+    }
+
+    public PebbleKind kind() {
+        return kind;
     }
 
     @Override

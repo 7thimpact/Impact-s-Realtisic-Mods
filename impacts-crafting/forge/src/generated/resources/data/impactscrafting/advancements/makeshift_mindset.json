@@ -1,0 +1,37 @@
+{
+  "parent": "impactscrafting:humble_beginnings",
+  "criteria": {
+    "placed_table": {
+      "conditions": {
+        "location": [
+          {
+            "block": "impactscrafting:makeshift_table",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.makeshift_mindset.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:makeshift_table"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.makeshift_mindset.title"
+    }
+  },
+  "requirements": [
+    [
+      "placed_table"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

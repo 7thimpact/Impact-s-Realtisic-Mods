@@ -39,10 +39,18 @@ public class LooseItem extends Item {
     private static final double HANDS_BELOW_EYES = 0.4;
 
     private final HammerKnock knock;
+    private final String hintKey;
 
+    /** A loose tool: hammered to seat its head. */
     public LooseItem(HammerKnock knock) {
+        this(knock, HAMMER_HINT_KEY);
+    }
+
+    /** A loose item with its own finishing step, named by its tooltip. */
+    public LooseItem(HammerKnock knock, String hintKey) {
         super(new Item.Properties().stacksTo(1));
         this.knock = knock;
+        this.hintKey = hintKey;
     }
 
     @Override
@@ -89,7 +97,7 @@ public class LooseItem extends Item {
     @Override
     public void appendHoverText(ItemStack loose, Level level, List<Component> tooltip, TooltipFlag flag) {
         if (level != null && level.isClientSide() && CraftingClientConfig.get().areNextStepHintsOn.get()) {
-            tooltip.add(Component.translatable(HAMMER_HINT_KEY).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable(hintKey).withStyle(ChatFormatting.GRAY));
         }
     }
 
@@ -114,17 +122,19 @@ public class LooseItem extends Item {
         }
     }
 
-    /** What a hammer blow sounds like and what chips off: wood for wooden items, stone for stone ones, metal for iron. */
+    /** What a blow sounds like and what flies off: wood for wooden items, stone for stone ones, metal for iron, wet clay for mortar. */
     public enum HammerKnock {
         WOOD,
         STONE,
-        METAL;
+        METAL,
+        MORTAR;
 
         SoundEvent sound() {
             return switch (this) {
                 case WOOD -> SoundEvents.WOOD_HIT;
                 case STONE -> SoundEvents.STONE_HIT;
                 case METAL -> SoundEvents.ANVIL_HIT;
+                case MORTAR -> SoundEvents.MUD_BRICKS_PLACE;
             };
         }
 
@@ -133,6 +143,7 @@ public class LooseItem extends Item {
                 case WOOD -> Blocks.OAK_PLANKS.defaultBlockState();
                 case STONE -> Blocks.STONE.defaultBlockState();
                 case METAL -> Blocks.IRON_BLOCK.defaultBlockState();
+                case MORTAR -> Blocks.CLAY.defaultBlockState();
             };
         }
     }

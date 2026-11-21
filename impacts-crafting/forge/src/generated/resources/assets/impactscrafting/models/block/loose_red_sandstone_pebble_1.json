@@ -1,0 +1,197 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#stone",
+          "uv": [
+            4.0,
+            6.0,
+            8.0,
+            9.0
+          ]
+        },
+        "east": {
+          "texture": "#stone",
+          "uv": [
+            4.0,
+            6.0,
+            7.0,
+            8.0
+          ]
+        },
+        "north": {
+          "texture": "#stone",
+          "uv": [
+            4.0,
+            6.0,
+            8.0,
+            8.0
+          ]
+        },
+        "south": {
+          "texture": "#stone",
+          "uv": [
+            4.0,
+            6.0,
+            8.0,
+            8.0
+          ]
+        },
+        "up": {
+          "texture": "#stone"
+        },
+        "west": {
+          "texture": "#stone",
+          "uv": [
+            4.0,
+            6.0,
+            7.0,
+            8.0
+          ]
+        }
+      },
+      "from": [
+        4,
+        0,
+        6
+      ],
+      "to": [
+        8,
+        2,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#stone",
+          "uv": [
+            10.0,
+            8.0,
+            13.0,
+            11.0
+          ]
+        },
+        "east": {
+          "texture": "#stone",
+          "uv": [
+            10.0,
+            8.0,
+            13.0,
+            9.0
+          ]
+        },
+        "north": {
+          "texture": "#stone",
+          "uv": [
+            10.0,
+            8.0,
+            13.0,
+            9.0
+          ]
+        },
+        "south": {
+          "texture": "#stone",
+          "uv": [
+            10.0,
+            8.0,
+            13.0,
+            9.0
+          ]
+        },
+        "up": {
+          "texture": "#stone"
+        },
+        "west": {
+          "texture": "#stone",
+          "uv": [
+            10.0,
+            8.0,
+            13.0,
+            9.0
+          ]
+        }
+      },
+      "from": [
+        10,
+        0,
+        8
+      ],
+      "to": [
+        13,
+        1,
+        11
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#stone",
+          "uv": [
+            5.0,
+            11.0,
+            7.0,
+            13.0
+          ]
+        },
+        "east": {
+          "texture": "#stone",
+          "uv": [
+            5.0,
+            11.0,
+            7.0,
+            12.0
+          ]
+        },
+        "north": {
+          "texture": "#stone",
+          "uv": [
+            5.0,
+            11.0,
+            7.0,
+            12.0
+          ]
+        },
+        "south": {
+          "texture": "#stone",
+          "uv": [
+            5.0,
+            11.0,
+            7.0,
+            12.0
+          ]
+        },
+        "up": {
+          "texture": "#stone"
+        },
+        "west": {
+          "texture": "#stone",
+          "uv": [
+            5.0,
+            11.0,
+            7.0,
+            12.0
+          ]
+        }
+      },
+      "from": [
+        5,
+        0,
+        11
+      ],
+      "to": [
+        7,
+        1,
+        13
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "impactscrafting:block/loose_red_sandstone_pebble",
+    "stone": "impactscrafting:block/loose_red_sandstone_pebble"
+  }
+}

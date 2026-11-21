@@ -3,9 +3,12 @@ package com.impact.realisticcrafting.timing;
 import com.impact.lib.crafting.CraftingProgress;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.advancement.CraftingAchievements;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
 import com.impact.realisticcrafting.menu.CraftingStation;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
@@ -22,6 +25,8 @@ import java.util.Optional;
  */
 public final class CraftTimers {
     private static final int RESULT_SLOT = 0;
+    private static final float FINISH_VOLUME = 0.3F;
+    private static final float FINISH_PITCH = 1.4F;
     private static final ImpactsLog LOG = ImpactsLog.of(CraftingMod.MOD_ID);
 
     private CraftTimers() {
@@ -68,6 +73,8 @@ public final class CraftTimers {
         }
         LOG.debug(CraftingLogCategories.TIMER, "craft finished", "player", player.getScoreboardName(), "recipe", timer.get().recipeId(),
                 "ticks", timer.get().totalTicks());
+        CraftingAchievements.onCraftFinished(player, timer.get().totalTicks());
+        player.playNotifySound(CraftingSounds.craftFinish(), SoundSource.PLAYERS, FINISH_VOLUME, FINISH_PITCH);
         if (timer.get().isRepeatQueued()) {
             takeQueuedCraft(player, menu, timer.get());
         }

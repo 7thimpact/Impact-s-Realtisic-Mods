@@ -1,0 +1,24 @@
+{
+  "values": [
+    "minecraft:melon_slice",
+    "minecraft:glistering_melon_slice",
+    "#impactsvitality:soups",
+    "#impactsvitality:juicy_foods",
+    {
+      "id": "#impactsfood:boiled_foods",
+      "required": false
+    },
+    {
+      "id": "impactsfood:dried_melon_slice",
+      "required": false
+    },
+    {
+      "id": "impactsfood:toasted_melon_slice",
+      "required": false
+    },
+    {
+      "id": "impactsfood:boiled_melon_slice",
+      "required": false
+    }
+  ]
+}

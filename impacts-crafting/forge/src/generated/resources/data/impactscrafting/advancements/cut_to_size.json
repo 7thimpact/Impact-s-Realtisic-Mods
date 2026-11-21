@@ -1,0 +1,36 @@
+{
+  "parent": "impactscrafting:humble_beginnings",
+  "criteria": {
+    "trimmed_planks": {
+      "conditions": {
+        "result": {
+          "items": [
+            "impactscrafting:trimmed_planks"
+          ]
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.cut_to_size.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:trimmed_planks"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.cut_to_size.title"
+    }
+  },
+  "requirements": [
+    [
+      "trimmed_planks"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

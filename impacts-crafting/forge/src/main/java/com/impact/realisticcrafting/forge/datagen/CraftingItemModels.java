@@ -2,6 +2,7 @@ package com.impact.realisticcrafting.forge.datagen;
 
 import com.impact.lib.ResourceIds;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
@@ -27,19 +28,21 @@ final class CraftingItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(CraftingItems.stonePebble());
+        CraftingItems.pebbles().forEach(this::basicItem);
         Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).forEach(this::basicItem);
         basicItem(CraftingItems.woodenBucket());
         basicItem(CraftingItems.woodenWaterBucket());
         basicItem(CraftingItems.comforter());
         CraftingItems.sheets().forEach(sheet -> withExistingParent(ResourceIds.itemId(sheet).getPath(), GENERATED_PARENT)
                 .texture("layer0", modLoc("item/sheet")));
+        CraftingItems.bannerCloths().forEach(cloth -> withExistingParent(ResourceIds.itemId(cloth).getPath(), GENERATED_PARENT)
+                .texture("layer0", modLoc("item/banner_cloth")));
         for (LooseIron looseIron : LooseIron.values()) {
-            withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", mcLoc(looseIron.vanillaSprite))
+            withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", ResourceIds.tryParse(looseIron.vanillaSprite).orElseThrow())
                     .texture("layer1", modLoc("item/loose_binding"));
         }
-        withExistingParent("loose_boat", GENERATED_PARENT).texture("layer0", mcLoc("item/oak_boat")).texture("layer1", modLoc("item/loose_binding"));
         Arrays.stream(CraftingPart.values()).map(CraftingItems::part).forEach(this::basicItem);
+        Arrays.stream(BucketMold.values()).map(CraftingItems::bucketMold).forEach(this::basicItem);
         Arrays.stream(CraftingTool.values()).map(CraftingItems::tool).forEach(this::handheld);
         for (ToolMaterial material : ToolMaterial.values()) {
             for (ToolKind kind : ToolKind.values()) {

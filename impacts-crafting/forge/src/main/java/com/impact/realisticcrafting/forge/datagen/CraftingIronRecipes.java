@@ -6,6 +6,7 @@ import com.impact.lib.forge.datagen.WoodIngredients;
 import com.impact.lib.wood.WoodData;
 import com.impact.lib.wood.WoodKind;
 import com.impact.realisticcrafting.config.OverhaulCategory;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
@@ -16,6 +17,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
@@ -39,6 +41,10 @@ import static com.impact.realisticcrafting.forge.datagen.CraftingRecipeOutputs.t
  * {@code #impactscrafting:iron_plates} and {@code #impactscrafting:iron_rods}, so SRF's plates and rods fit too.
  */
 final class CraftingIronRecipes {
+    private static final int BUCKET_INGOTS = 3;
+    private static final int FURNACE_TICKS = 200;
+    private static final float MOLD_FIRING_EXPERIENCE = 0.1F;
+    private static final float MELTING_EXPERIENCE = 0.35F;
     private static final int PANES_PER_GLASS = 3;
     private static final int HANGING_SIGNS = 6;
 
@@ -50,7 +56,8 @@ final class CraftingIronRecipes {
         Consumer<FinishedRecipe> stone = overhaulRecipe(output, OverhaulCategory.STONE);
         tools(parts);
         ironParts(parts);
-        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone, overhaulRecipe(output, OverhaulCategory.REDSTONE));
+        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone, overhaulRecipe(output, OverhaulCategory.REDSTONE),
+                overhaulRecipe(output, OverhaulCategory.COMBAT));
         woodRows(overhaulRecipe(output, OverhaulCategory.WOOD));
         stoneRows(stone);
     }
@@ -80,25 +87,30 @@ final class CraftingIronRecipes {
                 .define('P', CraftingTags.IRON_PLATES).unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS)).save(parts, id("iron_wheel"));
     }
 
-    // The blast furnace's and piston's hammering follow their own catalogs' switches (stone, redstone).
-    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone, Consumer<FinishedRecipe> redstone) {
+    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone, Consumer<FinishedRecipe> redstone,
+                                  Consumer<FinishedRecipe> combat) {
         Item rivets = CraftingItems.part(CraftingPart.IRON_RIVETS);
         Item hinge = CraftingItems.part(CraftingPart.IRON_HINGE);
         Item stick = CraftingItems.part(CraftingPart.TRIMMED_STICK);
-        shaped(CraftingItems.looseIron(LooseIron.BUCKET), 1).pattern("P P").pattern(" P ").define('P', CraftingTags.IRON_PLATES)
-                .unlockedBy("has_iron_plate", has(CraftingTags.IRON_PLATES)).save(iron, id(LooseIron.BUCKET.path));
+        bucketCasting(iron);
+        // Riveted goods come out with their rivets in place but not driven home; hammering finishes them.
         shapeless(CraftingItems.looseIron(LooseIron.CAULDRON), 1).requires(Items.BUCKET).requires(Ingredient.of(CraftingTags.IRON_PLATES), 4)
-                .unlockedBy("has_bucket", has(Items.BUCKET)).save(iron, id(LooseIron.CAULDRON.path));
+                .requires(rivets, 2).unlockedBy("has_bucket", has(Items.BUCKET)).save(iron, id(LooseIron.CAULDRON.path));
         shapeless(CraftingItems.looseIron(LooseIron.IRON_DOOR), 1).requires(Ingredient.of(CraftingTags.IRON_PLATES), 2).requires(hinge)
-                .unlockedBy("has_iron_hinge", has(hinge)).save(iron, id(LooseIron.IRON_DOOR.path));
+                .requires(rivets, 2).unlockedBy("has_iron_hinge", has(hinge)).save(iron, id(LooseIron.IRON_DOOR.path));
         shapeless(CraftingItems.looseIron(LooseIron.MINECART), 1).requires(Ingredient.of(CraftingTags.IRON_PLATES), 3)
-                .requires(CraftingItems.part(CraftingPart.IRON_WHEEL), 2).unlockedBy("has_iron_wheel", has(CraftingItems.part(CraftingPart.IRON_WHEEL)))
-                .save(iron, id(LooseIron.MINECART.path));
+                .requires(CraftingItems.part(CraftingPart.IRON_WHEEL), 2).requires(rivets, 2)
+                .unlockedBy("has_iron_wheel", has(CraftingItems.part(CraftingPart.IRON_WHEEL))).save(iron, id(LooseIron.MINECART.path));
+        Item mortar = CraftingItems.part(CraftingPart.MORTAR);
         for (LooseIron looseIron : LooseIron.values()) {
             Item finished = ResourceIds.item(ResourceIds.of("minecraft", looseIron.vanillaPath)).orElseThrow();
-            HammeringRecipeBuilder.of(CraftingItems.looseIron(looseIron), Ingredient.of(CraftingTags.HAMMERS), finished)
-                    .save(looseIron == LooseIron.BLAST_FURNACE ? stone : looseIron == LooseIron.PISTON ? redstone : iron,
-                            id(looseIron.vanillaPath + "_from_hammering"));
+            boolean isSealed = looseIron.finish == LooseIron.Finish.MORTAR;
+            HammeringRecipeBuilder finishing = HammeringRecipeBuilder.of(CraftingItems.looseIron(looseIron),
+                    isSealed ? Ingredient.of(mortar) : Ingredient.of(CraftingTags.HAMMERS), finished);
+            if (isSealed) {
+                finishing.consumesTool();
+            }
+            finishing.save(outputFor(looseIron, iron, stone, redstone, combat), id(looseIron.vanillaPath + "_from_hammering"));
         }
         shapeless(Items.HOPPER, 1).requires(Items.BUCKET).requires(Ingredient.of(CraftingTags.IRON_PLATES), 2).requires(Items.CHEST)
                 .unlockedBy("has_bucket", has(Items.BUCKET)).save(iron, id("hopper"));
@@ -117,6 +129,35 @@ final class CraftingIronRecipes {
                 .unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS)).save(iron, id("tripwire_hook"));
         shapeless(Items.RAIL, 8).requires(Ingredient.of(CraftingTags.IRON_RODS), 4).requires(stick, 2).unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS))
                 .save(iron, id("rail"));
+    }
+
+    // Clay mold, fired; filled with iron, melted; cooled in water (in game) for the bucket and the mold back.
+    private static void bucketCasting(Consumer<FinishedRecipe> iron) {
+        Item unfired = CraftingItems.bucketMold(BucketMold.UNFIRED);
+        Item fired = CraftingItems.bucketMold(BucketMold.FIRED);
+        Item filled = CraftingItems.bucketMold(BucketMold.FILLED);
+        Item molten = CraftingItems.bucketMold(BucketMold.MOLTEN);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, unfired).pattern("C C").pattern("CCC").define('C', Items.CLAY_BALL)
+                .unlockedBy("has_clay", has(Items.CLAY_BALL)).save(iron, id(BucketMold.UNFIRED.path));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(unfired), RecipeCategory.MISC, fired, MOLD_FIRING_EXPERIENCE, FURNACE_TICKS)
+                .unlockedBy("has_unfired_mold", has(unfired)).save(iron, id(BucketMold.FIRED.path + "_from_firing"));
+        shapeless(filled, 1).requires(fired).requires(Ingredient.of(Tags.Items.INGOTS_IRON), BUCKET_INGOTS)
+                .unlockedBy("has_bucket_mold", has(fired)).save(iron, id(BucketMold.FILLED.path));
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(filled), RecipeCategory.MISC, molten, MELTING_EXPERIENCE, FURNACE_TICKS)
+                .unlockedBy("has_filled_mold", has(filled)).save(iron, id(BucketMold.MOLTEN.path + "_from_smelting"));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(filled), RecipeCategory.MISC, molten, MELTING_EXPERIENCE, FURNACE_TICKS / 2)
+                .unlockedBy("has_filled_mold", has(filled)).save(iron, id(BucketMold.MOLTEN.path + "_from_blasting"));
+    }
+
+    // A loose item's hammering follows its own catalog's switch: the blast furnace stone, the piston redstone, the shield combat.
+    private static Consumer<FinishedRecipe> outputFor(LooseIron looseIron, Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone,
+                                                     Consumer<FinishedRecipe> redstone, Consumer<FinishedRecipe> combat) {
+        return switch (looseIron) {
+            case BLAST_FURNACE -> stone;
+            case PISTON -> redstone;
+            case SHIELD -> combat;
+            default -> iron;
+        };
     }
 
     private static void woodRows(Consumer<FinishedRecipe> wood) {

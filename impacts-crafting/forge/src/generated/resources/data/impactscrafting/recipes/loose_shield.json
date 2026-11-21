@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:loose_shield"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_panel"
+    },
+    {
+      "item": "impactscrafting:wooden_panel"
+    },
+    {
+      "item": "impactscrafting:wooden_panel"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:loose_shield"
+  }
+}

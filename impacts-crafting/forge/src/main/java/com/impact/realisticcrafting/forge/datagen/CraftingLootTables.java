@@ -3,8 +3,11 @@ package com.impact.realisticcrafting.forge.datagen;
 import com.impact.lib.item.UsesDurability;
 import com.impact.realisticcrafting.bed.BedFrameBlock;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -42,7 +45,7 @@ final class CraftingLootTables {
 
         @Override
         protected void generate() {
-            dropOther(CraftingBlocks.loosePebble(), CraftingItems.stonePebble());
+            Arrays.stream(PebbleKind.values()).forEach(kind -> dropOther(CraftingBlocks.loosePebble(kind), CraftingItems.pebble(kind)));
             for (MakeshiftTable table : MakeshiftTable.values()) {
                 add(table.block(), keepingUses(table.block()));
             }
@@ -75,8 +78,8 @@ final class CraftingLootTables {
 
         @Override
         protected Iterable<Block> getKnownBlocks() {
-            return List.of(CraftingBlocks.loosePebble(), MakeshiftTable.WOODEN.block(), MakeshiftTable.STONE.block(), CraftingBlocks.dyeVat(),
-                    CraftingBlocks.bedFrame());
+            Stream<Block> otherBlocks = Stream.of(MakeshiftTable.WOODEN.block(), MakeshiftTable.STONE.block(), CraftingBlocks.dyeVat(), CraftingBlocks.bedFrame());
+            return Stream.concat(CraftingBlocks.loosePebbles().stream(), otherBlocks).toList();
         }
     }
 }

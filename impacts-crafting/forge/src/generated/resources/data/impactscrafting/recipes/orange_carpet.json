@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:orange_carpet"
+    }
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:orange_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:orange_carpet"
+  },
+  "tools": [
+    {
+      "item": "minecraft:shears"
+    }
+  ]
+}

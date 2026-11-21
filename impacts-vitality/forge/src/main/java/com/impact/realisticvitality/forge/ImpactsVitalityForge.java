@@ -5,9 +5,11 @@ import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.VitalityStartup;
 import com.impact.realisticvitality.forge.brewing.PurifiedWaterBrewing;
 import com.impact.realisticvitality.forge.client.VitalityForgeClient;
+import com.impact.realisticvitality.forge.compat.curios.VitalityCurios;
 import com.impact.realisticvitality.forge.condition.FeatureEnabledCondition;
 import com.impact.realisticvitality.forge.datagen.VitalityDataGenerators;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -24,6 +26,9 @@ public final class ImpactsVitalityForge {
         context.getModEventBus().addListener(ImpactsVitalityForge::onRegister);
         context.getModEventBus().addListener(ImpactsVitalityForge::onCommonSetup);
         VitalityForgeEvents.register();
+        if (ModList.get().isLoaded(VitalityCurios.MOD_ID)) {
+            VitalityCurios.register(context.getModEventBus());
+        }
         if (FMLEnvironment.dist.isClient()) {
             VitalityForgeClient.register(context.getModEventBus());
         }

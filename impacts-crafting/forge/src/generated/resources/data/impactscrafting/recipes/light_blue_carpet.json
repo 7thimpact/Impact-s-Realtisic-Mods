@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:light_blue_carpet"
+    }
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:light_blue_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:light_blue_carpet"
+  },
+  "tools": [
+    {
+      "item": "minecraft:shears"
+    }
+  ]
+}

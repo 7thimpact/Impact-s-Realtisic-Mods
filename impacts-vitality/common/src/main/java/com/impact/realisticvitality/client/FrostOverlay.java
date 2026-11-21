@@ -2,8 +2,10 @@ package com.impact.realisticvitality.client;
 
 import com.impact.lib.ResourceIds;
 import com.impact.realisticvitality.config.VitalityNeed;
+import com.impact.realisticvitality.player.VitalityExemptions;
 import com.impact.realisticvitality.temperature.BodyState;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -15,7 +17,8 @@ public final class FrostOverlay {
     }
 
     public static void render(GuiGraphics graphics, int screenWidth, int screenHeight) {
-        boolean isFreezing = ClientVitality.isNeedOn(VitalityNeed.TEMPERATURE) && BodyState.of(ClientVitality.state().bodyTemperature()) == BodyState.FREEZING;
+        boolean isFreezing = ClientVitality.isNeedOn(VitalityNeed.TEMPERATURE) && BodyState.of(ClientVitality.state().bodyTemperature()) == BodyState.FREEZING
+                && !VitalityExemptions.isExempt(Minecraft.getInstance().player);
         if (!isFreezing) {
             return;
         }

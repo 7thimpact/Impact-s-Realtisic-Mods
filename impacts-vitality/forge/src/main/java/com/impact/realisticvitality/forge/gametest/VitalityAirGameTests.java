@@ -34,6 +34,7 @@ import java.util.function.Consumer;
 @GameTestHolder(VitalityMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class VitalityAirGameTests {
+    private static final int ABOVE_NEIGHBORS = 24;
     private static final String LIB_NAMESPACE = VitalitySkeletonGameTests.LIB_NAMESPACE;
     private static final String EMPTY_TEMPLATE = VitalitySkeletonGameTests.EMPTY_TEMPLATE;
     private static final int FULL_AIR = 300;
@@ -61,7 +62,8 @@ public final class VitalityAirGameTests {
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void lavaFumesButFurnacesDont(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        BlockPos body = helper.absolutePos(BlockPos.ZERO);
+        // High above the test floor, so lava in a neighboring test's area (Food's heat sources) is out of reach.
+        BlockPos body = helper.absolutePos(new BlockPos(0, ABOVE_NEIGHBORS, 0));
         AABB playerBox = new AABB(body).setMaxY(body.getY() + 1.8);
         helper.assertTrue(AirQualities.ofLava(level, playerBox) == AirQuality.GOOD, "No lava nearby: good air");
         placeAndCheck(helper, body.east(), Blocks.FURNACE.defaultBlockState().setValue(AbstractFurnaceBlock.LIT, true), playerBox, AirQuality.GOOD,

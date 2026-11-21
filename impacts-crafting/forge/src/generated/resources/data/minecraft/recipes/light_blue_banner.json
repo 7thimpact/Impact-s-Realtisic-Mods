@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "textiles",
+        "recipe": "minecraft:light_blue_banner"
+      }
+    }
+  ],
+  "group": "banner",
+  "key": {
+    "#": {
+      "item": "minecraft:light_blue_wool"
+    },
+    "|": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    " | "
+  ],
+  "result": {
+    "item": "minecraft:light_blue_banner"
+  },
+  "show_notification": true
+}

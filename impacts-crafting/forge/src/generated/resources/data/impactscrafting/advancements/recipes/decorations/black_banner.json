@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:black_banner"
+    }
+  ],
+  "criteria": {
+    "has_banner_cloth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:black_banner_cloth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:black_banner"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_banner_cloth",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:black_banner"
+    ]
+  },
+  "sends_telemetry_event": false
+}

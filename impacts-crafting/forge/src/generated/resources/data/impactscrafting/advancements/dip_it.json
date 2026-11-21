@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:grind_set",
+  "criteria": {
+    "vat_dyed": {
+      "conditions": {},
+      "trigger": "impactscrafting:vat_dyed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.dip_it.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:dye_vat"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.dip_it.title"
+    }
+  },
+  "requirements": [
+    [
+      "vat_dyed"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

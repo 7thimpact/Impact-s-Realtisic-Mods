@@ -68,6 +68,7 @@ public final class BedLayering {
         consumeOne(held, player);
         LOG.debug(CraftingLogCategories.BEDS, "bed recolored", "player", player.getScoreboardName(), "from", oldColor.getName(),
                 "to", sheet.color().getName(), "pos", position.toShortString());
+        BedEvents.onBedAssembled(player, sheet.color());
         return InteractionResult.CONSUME;
     }
 

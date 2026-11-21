@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:makeshift_mindset",
+  "criteria": {
+    "table_broken": {
+      "conditions": {},
+      "trigger": "impactscrafting:table_broken"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.falling_apart.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:makeshift_table"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.falling_apart.title"
+    }
+  },
+  "requirements": [
+    [
+      "table_broken"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

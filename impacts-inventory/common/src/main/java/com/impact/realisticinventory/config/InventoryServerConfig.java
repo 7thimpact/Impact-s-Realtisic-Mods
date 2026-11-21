@@ -56,13 +56,10 @@ public final class InventoryServerConfig {
         private static final int MAXIMUM_SWAP_COOLDOWN_TICKS = 200;
 
         public final ConfigValue<Integer> swapCooldownTicks;
-        public final ConfigValue<Boolean> isActiveSlotKeptWithKeepInventory;
 
         private HotbarSettings(ConfigSpecBuilder builder) {
             swapCooldownTicks = builder.defineInteger("swapCooldownTicks", 0, 0, MAXIMUM_SWAP_COOLDOWN_TICKS,
-                    "Ticks after switching slots before the new main-hand item can attack or be used.");
-            isActiveSlotKeptWithKeepInventory = builder.defineBoolean("keepActiveSlotWithKeepInventory", true,
-                    "With the keepInventory game rule, the active slot survives death too.");
+                    "Ticks after swapping hands before the new main-hand item can attack or be used.");
         }
     }
 

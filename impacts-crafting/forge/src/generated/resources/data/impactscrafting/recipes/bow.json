@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:bow"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:bow_stave"
+    },
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bow"
+  }
+}

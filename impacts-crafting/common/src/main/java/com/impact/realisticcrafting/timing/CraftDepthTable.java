@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 
@@ -33,7 +34,8 @@ import java.util.Set;
  * reload). Base materials are depth 0: {@code #impactscrafting:base_materials}, anything a cooking recipe makes, and
  * anything no crafting or hammering recipe makes. A crafting recipe's output is 1 deeper than its deepest ingredient (an
  * ingredient counts its shallowest item; tools and items that come back from the craft don't count); a hammering recipe
- * passes its loose item's depth on. The table settles as a fixpoint, so loops (ingot and block) take the shortest path.
+ * passes its loose item's depth on. The table settles as a fixpoint, so loops (ingot and block) take the shortest path,
+ * and a packing loop with no way in counts its unpacked material as base (wheat from a hay block).
  */
 public final class CraftDepthTable {
     private static final ImpactsLog LOG = ImpactsLog.of(CraftingMod.MOD_ID);
@@ -59,6 +61,16 @@ public final class CraftDepthTable {
         List<CraftingRecipe> craftingRecipes = recipes.getAllRecipesFor(RecipeType.CRAFTING);
         List<HammeringRecipe> hammeringRecipes = recipes.getAllRecipesFor(CraftingRecipeTypes.hammering());
         Map<Item, Integer> solved = new HashMap<>(baseMaterials(recipes, registryAccess, craftingRecipes, hammeringRecipes));
+        settle(solved, craftingRecipes, hammeringRecipes, registryAccess);
+        while (seedPackingLoops(solved, craftingRecipes, registryAccess)) {
+            settle(solved, craftingRecipes, hammeringRecipes, registryAccess);
+        }
+        depths = Collections.unmodifiableMap(solved);
+        logRebuild(craftingRecipes, solved, (System.nanoTime() - startNanos) / 1_000_000L);
+    }
+
+    private static void settle(Map<Item, Integer> solved, List<CraftingRecipe> craftingRecipes, List<HammeringRecipe> hammeringRecipes,
+                               RegistryAccess registryAccess) {
         boolean hasChanged = true;
         while (hasChanged) {
             hasChanged = false;
@@ -75,8 +87,34 @@ public final class CraftDepthTable {
                 }
             }
         }
-        depths = Collections.unmodifiableMap(solved);
-        logRebuild(craftingRecipes, solved, (System.nanoTime() - startNanos) / 1_000_000L);
+    }
+
+    // A packing loop with no other way in (wheat <-> hay block, slimeball <-> slime block) never settles, so the
+    // unpacked material (the side a recipe makes several of from one other item) counts as a base material.
+    private static boolean seedPackingLoops(Map<Item, Integer> solved, List<CraftingRecipe> craftingRecipes, RegistryAccess registryAccess) {
+        Map<Item, Set<Item>> madeFromOne = new HashMap<>();
+        craftingRecipes.forEach(recipe -> singleIngredientItem(recipe).ifPresent(source ->
+                madeFromOne.computeIfAbsent(recipe.getResultItem(registryAccess).getItem(), output -> new HashSet<>()).add(source)));
+        boolean hasSeeded = false;
+        for (CraftingRecipe recipe : craftingRecipes) {
+            ItemStack result = recipe.getResultItem(registryAccess);
+            Optional<Item> source = singleIngredientItem(recipe);
+            boolean isUnpacking = result.getCount() > 1 && source.isPresent()
+                    && madeFromOne.getOrDefault(source.get(), Set.of()).contains(result.getItem());
+            if (isUnpacking && !solved.containsKey(result.getItem())) {
+                solved.put(result.getItem(), 0);
+                hasSeeded = true;
+            }
+        }
+        return hasSeeded;
+    }
+
+    // The one item every counted ingredient of the recipe accepts, when there is exactly one.
+    private static Optional<Item> singleIngredientItem(Recipe<?> recipe) {
+        Set<Item> items = new HashSet<>();
+        recipe.getIngredients().stream().filter(CraftDepthTable::counts)
+                .forEach(ingredient -> Arrays.stream(ingredient.getItems()).forEach(stack -> items.add(stack.getItem())));
+        return items.size() == 1 ? items.stream().findFirst() : Optional.empty();
     }
 
     private static Map<Item, Integer> baseMaterials(RecipeManager recipes, RegistryAccess registryAccess, List<CraftingRecipe> craftingRecipes,

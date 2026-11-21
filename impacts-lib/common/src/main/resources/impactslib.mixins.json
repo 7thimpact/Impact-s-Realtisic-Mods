@@ -10,7 +10,10 @@
     "ServerPlayerAttachmentsMixin",
     "ServerPlayerSpawnProtectionAccessor"
   ],
-  "client": [],
+  "client": [
+    "client.HumanoidModelHoldMotionMixin",
+    "client.ItemInHandRendererHoldMotionMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

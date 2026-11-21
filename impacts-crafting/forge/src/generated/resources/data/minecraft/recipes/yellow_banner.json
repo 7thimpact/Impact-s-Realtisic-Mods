@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "textiles",
+        "recipe": "minecraft:yellow_banner"
+      }
+    }
+  ],
+  "group": "banner",
+  "key": {
+    "#": {
+      "item": "minecraft:yellow_wool"
+    },
+    "|": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    " | "
+  ],
+  "result": {
+    "item": "minecraft:yellow_banner"
+  },
+  "show_notification": true
+}

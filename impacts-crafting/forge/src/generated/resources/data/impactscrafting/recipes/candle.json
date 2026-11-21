@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:candle"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "T": {
+      "item": "impactscrafting:twine"
+    }
+  },
+  "pattern": [
+    "T",
+    "H"
+  ],
+  "result": {
+    "item": "minecraft:candle"
+  },
+  "show_notification": true
+}

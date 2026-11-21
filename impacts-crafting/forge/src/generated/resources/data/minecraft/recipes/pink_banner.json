@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "textiles",
+        "recipe": "minecraft:pink_banner"
+      }
+    }
+  ],
+  "group": "banner",
+  "key": {
+    "#": {
+      "item": "minecraft:pink_wool"
+    },
+    "|": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "###",
+    "###",
+    " | "
+  ],
+  "result": {
+    "item": "minecraft:pink_banner"
+  },
+  "show_notification": true
+}

@@ -12,8 +12,10 @@ def hasForgeMixins = project.file("src/main/resources/${forgeMixinConfigName}").
 def dependencyModProjects = (findProperty('mod_dependencies') ?: '').split(',').collect { it.trim() }.findAll { !it.isEmpty() }
         .collect { dependencyName -> project(":${dependencyName}:forge") }
 dependencyModProjects.each { dependencyProject -> evaluationDependsOn(dependencyProject.path) }
-// Mods that need the Curios API (Inventory's back slot) set mod_requires_curios=true in their gradle.properties.
-def isUsingCurios = (findProperty('mod_requires_curios') ?: 'false').toBoolean()
+// Mods that need the Curios API (Inventory's back slot) set mod_requires_curios=true in their gradle.properties. Mods with
+// optional Curios support (Vitality's head slot) set mod_uses_curios=true: compile-only, and their own runs leave it out.
+def isRequiringCurios = (findProperty('mod_requires_curios') ?: 'false').toBoolean()
+def isUsingCurios = isRequiringCurios || (findProperty('mod_uses_curios') ?: 'false').toBoolean()
 // Mods with optional playerAnimator support (Lib's hold-to-use animations) set mod_uses_player_animator=true. It is
 // compile-only: the mod's own runs leave it out, so they test the fallback; test setups can load it.
 def isUsingPlayerAnimator = (findProperty('mod_uses_player_animator') ?: 'false').toBoolean()
@@ -158,8 +160,10 @@ dependencies {
         compileOnly fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
     }
     if (isUsingCurios) {
-        // Compile against Curios's API only; the runs load the whole mod.
+        // Compile against Curios's API only; the runs of mods that require it load the whole mod.
         compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    }
+    if (isRequiringCurios) {
         runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
     }
 }
@@ -217,4 +221,17 @@ tasks.named('jar', Jar) {
         ])
     }
     finalizedBy 'reobfJar'
+}
+
+// Every mod's finished (reobfuscated) jar is also copied to <root>/build/mods/, so one folder holds the whole family
+// after `./gradlew build`.
+def collectModJar = tasks.register('collectModJar', Copy) {
+    group = 'build'
+    description = 'Copies this mod\'s finished jar into the root build/mods folder.'
+    dependsOn 'reobfJar'
+    from(tasks.named('jar', Jar).flatMap { modJar -> modJar.archiveFile })
+    into(rootProject.layout.buildDirectory.dir('mods'))
+}
+tasks.named('assemble') {
+    finalizedBy collectModJar
 }

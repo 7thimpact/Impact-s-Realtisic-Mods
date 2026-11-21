@@ -6,9 +6,11 @@ import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.LoosePebbleBlock;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.loot.PebbleDrops;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.registry.CraftingTags;
 import com.impact.realisticcrafting.worldgen.CraftingWorldgen;
 import com.impact.realisticcrafting.worldgen.LoosePebblePlacer;
 import net.minecraft.core.BlockPos;
@@ -164,7 +166,7 @@ public final class CraftingPebbleGameTests {
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
-    public static void worldgenPlacesOnPebbleBasesOnly(GameTestHelper helper) {
+    public static void worldgenPlacesOnNaturalGround(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos base = helper.absolutePos(BASE);
         BlockPos spot = helper.absolutePos(ABOVE_BASE);
@@ -172,7 +174,12 @@ public final class CraftingPebbleGameTests {
             helper.assertTrue(placesOn(level, base, spot, Blocks.STONE.defaultBlockState(), Blocks.AIR.defaultBlockState()), "Pebbles generate on stone");
             helper.assertTrue(placesOn(level, base, spot, Blocks.CALCITE.defaultBlockState(), Blocks.AIR.defaultBlockState()),
                     "and on calcite, a worldgen-only base");
-            helper.assertFalse(placesOn(level, base, spot, Blocks.DIRT.defaultBlockState(), Blocks.AIR.defaultBlockState()), "but not on dirt");
+            helper.assertTrue(placesOn(level, base, spot, Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.AIR.defaultBlockState()), "on grass");
+            helper.assertTrue(placesOn(level, base, spot, Blocks.SAND.defaultBlockState(), Blocks.AIR.defaultBlockState()), "and on sand,");
+            helper.assertTrue(level.getBlockState(spot).is(CraftingBlocks.loosePebble(PebbleKind.SANDSTONE)), "where they're sandstone pebbles");
+            helper.assertTrue(placesOn(level, base, spot, Blocks.GRANITE.defaultBlockState(), Blocks.AIR.defaultBlockState())
+                    && level.getBlockState(spot).is(CraftingBlocks.loosePebble(PebbleKind.GRANITE)), "Granite ground has granite pebbles");
+            helper.assertFalse(placesOn(level, base, spot, Blocks.OAK_PLANKS.defaultBlockState(), Blocks.AIR.defaultBlockState()), "but not on planks");
             helper.assertFalse(placesOn(level, base, spot, Blocks.STONE.defaultBlockState(), Blocks.OAK_PLANKS.defaultBlockState()),
                     "nor where the spot is taken");
             helper.assertTrue(placesOn(level, base, spot, Blocks.STONE.defaultBlockState(), Blocks.WATER.defaultBlockState()), "River beds work");
@@ -230,7 +237,7 @@ public final class CraftingPebbleGameTests {
     private static boolean placesOn(ServerLevel level, BlockPos base, BlockPos spot, BlockState baseState, BlockState spotState) {
         level.setBlock(base, baseState, Block.UPDATE_CLIENTS);
         level.setBlock(spot, spotState, Block.UPDATE_CLIENTS);
-        return LoosePebblePlacer.tryPlace(level, spot, level.getRandom()) && level.getBlockState(spot).is(CraftingBlocks.loosePebble());
+        return LoosePebblePlacer.tryPlace(level, spot, level.getRandom()) && level.getBlockState(spot).getBlock() instanceof LoosePebbleBlock;
     }
 
     private static List<ItemStack> drops(GameTestHelper helper, BlockState state, ItemStack tool) {
@@ -238,7 +245,7 @@ public final class CraftingPebbleGameTests {
     }
 
     private static int pebblesIn(List<ItemStack> loot) {
-        return loot.stream().filter(stack -> stack.is(CraftingItems.stonePebble())).mapToInt(ItemStack::getCount).sum();
+        return loot.stream().filter(stack -> stack.is(CraftingTags.PEBBLES)).mapToInt(ItemStack::getCount).sum();
     }
 
     private static int pebbleEntitiesAt(ServerLevel level, BlockPos position) {

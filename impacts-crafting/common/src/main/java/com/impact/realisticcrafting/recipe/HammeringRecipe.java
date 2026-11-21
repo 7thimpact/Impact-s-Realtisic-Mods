@@ -18,7 +18,8 @@ import net.minecraft.world.level.Level;
 /**
  * {@code impactscrafting:hammering}: an in-world recipe. Hold the loose {@code input} in the main hand and a
  * {@code hammer} in the off hand, hold right-click for {@code use_ticks} (default: the hammer's config time), and the
- * input becomes the {@code result}; the hammer takes {@code hammer_damage} (default 1). Other Impact mods may ship
+ * input becomes the {@code result}; the hammer takes {@code hammer_damage} (default 1), or with {@code consumes_tool}
+ * the off-hand item is used up (Mortar sealing a blast furnace). Other Impact mods may ship
  * these for their own loose items, gated by {@code forge:mod_loaded impactscrafting}.
  */
 public final class HammeringRecipe implements Recipe<Container> {
@@ -34,14 +35,17 @@ public final class HammeringRecipe implements Recipe<Container> {
     private final ItemStack result;
     private final int useTicks;
     private final int hammerDamage;
+    private final boolean consumesTool;
 
-    public HammeringRecipe(ResourceLocation id, Ingredient input, Ingredient hammer, ItemStack result, int useTicks, int hammerDamage) {
+    public HammeringRecipe(ResourceLocation id, Ingredient input, Ingredient hammer, ItemStack result, int useTicks, int hammerDamage,
+                           boolean consumesTool) {
         this.id = id;
         this.input = input;
         this.hammer = hammer;
         this.result = result;
         this.useTicks = useTicks;
         this.hammerDamage = hammerDamage;
+        this.consumesTool = consumesTool;
     }
 
     public Ingredient input() {
@@ -62,6 +66,11 @@ public final class HammeringRecipe implements Recipe<Container> {
 
     public int hammerDamage() {
         return hammerDamage;
+    }
+
+    /** Whether the off-hand item is used up instead of worn (Mortar sealing a blast furnace). */
+    public boolean consumesTool() {
+        return consumesTool;
     }
 
     public boolean matches(ItemStack loose, ItemStack held) {
@@ -119,6 +128,7 @@ public final class HammeringRecipe implements Recipe<Container> {
         private static final String RESULT_FIELD = "result";
         private static final String USE_TICKS_FIELD = "use_ticks";
         private static final String HAMMER_DAMAGE_FIELD = "hammer_damage";
+        private static final String CONSUMES_TOOL_FIELD = "consumes_tool";
 
         @Override
         public HammeringRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
@@ -127,13 +137,14 @@ public final class HammeringRecipe implements Recipe<Container> {
                     Ingredient.fromJson(GsonHelper.getNonNull(json, HAMMER_FIELD)),
                     ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, RESULT_FIELD)),
                     GsonHelper.getAsInt(json, USE_TICKS_FIELD, HAMMER_DECIDES_TICKS),
-                    GsonHelper.getAsInt(json, HAMMER_DAMAGE_FIELD, DEFAULT_HAMMER_DAMAGE));
+                    GsonHelper.getAsInt(json, HAMMER_DAMAGE_FIELD, DEFAULT_HAMMER_DAMAGE),
+                    GsonHelper.getAsBoolean(json, CONSUMES_TOOL_FIELD, false));
         }
 
         @Override
         public HammeringRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             return new HammeringRecipe(recipeId, Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), buffer.readItem(),
-                    buffer.readInt(), buffer.readVarInt());
+                    buffer.readInt(), buffer.readVarInt(), buffer.readBoolean());
         }
 
         @Override
@@ -143,6 +154,7 @@ public final class HammeringRecipe implements Recipe<Container> {
             buffer.writeItem(recipe.result);
             buffer.writeInt(recipe.useTicks);
             buffer.writeVarInt(recipe.hammerDamage);
+            buffer.writeBoolean(recipe.consumesTool);
         }
     }
 }

@@ -39,7 +39,6 @@ public final class FoodTranslations {
     public static final String SPIT_TOOLTIP = "tooltip.impactsfood.spit";
     public static final String PIECE_TOOLTIP = "tooltip.impactsfood.piece";
     public static final String RAW_RISK_TOOLTIP = "tooltip.impactsfood.raw_risk";
-    private static final String STYLE_TOOLTIP_PREFIX = "tooltip.impactsfood.style.";
     private static final String SUBTITLE_PREFIX = "subtitles.impactsfood.";
     private static final String JEI_VESSEL_PREFIX = "jei.impactsfood.vessel.";
     private static final String JEI_STYLE_INFO_PREFIX = "jei.impactsfood.info.style.";
@@ -74,10 +73,6 @@ public final class FoodTranslations {
     private FoodTranslations() {
     }
 
-    public static String styleTooltip(FoodStyle style) {
-        return STYLE_TOOLTIP_PREFIX + style.prefix;
-    }
-
     /** The subtitle key of one of Food's sounds, by its sound event path. */
     public static String subtitle(String soundPath) {
         return SUBTITLE_PREFIX + soundPath;
@@ -96,9 +91,6 @@ public final class FoodTranslations {
     }
 
     private static void addTooltipsAndSubtitles(Map<String, String> translations) {
-        translations.put(styleTooltip(FoodStyle.DRIED), "Dried: eaten quickly");
-        translations.put(styleTooltip(FoodStyle.TOASTED), "Toasted: more filling");
-        translations.put(styleTooltip(FoodStyle.BOILED), "Boiled: safer, but can't go back on the heat");
         translations.put(KNIFE_TOOLTIP, "Cuts raw food in any crafting grid");
         translations.put(SPIT_TOOLTIP, "Use on a lit campfire");
         translations.put(PIECE_TOOLTIP, "Cooks in half the time");

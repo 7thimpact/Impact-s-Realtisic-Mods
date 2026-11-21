@@ -1,0 +1,31 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:green_banner_cloth"
+    }
+  ],
+  "key": {
+    "T": {
+      "item": "impactscrafting:twine"
+    },
+    "W": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WWW",
+    " T "
+  ],
+  "result": {
+    "item": "impactscrafting:green_banner_cloth"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

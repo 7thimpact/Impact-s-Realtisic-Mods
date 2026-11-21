@@ -2,5 +2,5 @@
   "type": "forge:add_features",
   "biomes": "#minecraft:is_overworld",
   "features": "impactscrafting:surface_loose_pebbles",
-  "step": "top_layer_modification"
+  "step": "fluid_springs"
 }

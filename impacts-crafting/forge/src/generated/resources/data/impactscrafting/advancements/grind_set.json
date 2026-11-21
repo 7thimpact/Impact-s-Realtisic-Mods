@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:cut_to_size",
+  "criteria": {
+    "ground_dye": {
+      "conditions": {},
+      "trigger": "impactscrafting:dye_ground"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.grind_set.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:red_dye"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.grind_set.title"
+    }
+  },
+  "requirements": [
+    [
+      "ground_dye"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

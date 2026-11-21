@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:stick_from_bamboo"
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bamboo"
+    }
+  },
+  "pattern": [
+    "B",
+    "B"
+  ],
+  "result": {
+    "item": "minecraft:stick"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

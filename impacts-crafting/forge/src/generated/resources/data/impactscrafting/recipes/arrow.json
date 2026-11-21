@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:arrow"
+    }
+  ],
+  "key": {
+    "A": {
+      "item": "impactscrafting:flint_arrowhead"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "A",
+    "S",
+    "F"
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:arrow"
+  },
+  "show_notification": true
+}

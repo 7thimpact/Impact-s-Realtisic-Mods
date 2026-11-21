@@ -10,12 +10,11 @@
     "impactscrafting:loose_stone_shovel",
     "impactscrafting:loose_stone_hoe",
     "impactscrafting:loose_stone_sword",
-    "impactscrafting:loose_boat",
-    "impactscrafting:loose_bucket",
     "impactscrafting:loose_cauldron",
     "impactscrafting:loose_iron_door",
     "impactscrafting:loose_minecart",
     "impactscrafting:loose_blast_furnace",
-    "impactscrafting:loose_piston"
+    "impactscrafting:loose_piston",
+    "impactscrafting:loose_shield"
   ]
 }

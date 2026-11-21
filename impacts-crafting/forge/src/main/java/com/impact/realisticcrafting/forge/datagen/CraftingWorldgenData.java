@@ -58,8 +58,9 @@ final class CraftingWorldgenData {
     private static void biomeModifiers(BootstapContext<BiomeModifier> context) {
         HolderGetter<PlacedFeature> placed = context.lookup(Registries.PLACED_FEATURE);
         HolderSet<Biome> overworldBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD);
+        // Surface pebbles go in just before vegetation, so grass and flowers don't take the spots first.
         context.register(biomeModifier("surface_loose_pebbles"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(overworldBiomes,
-                HolderSet.direct(placed.getOrThrow(CraftingWorldgen.SURFACE_PEBBLES_PLACED)), GenerationStep.Decoration.TOP_LAYER_MODIFICATION));
+                HolderSet.direct(placed.getOrThrow(CraftingWorldgen.SURFACE_PEBBLES_PLACED)), GenerationStep.Decoration.FLUID_SPRINGS));
         context.register(biomeModifier("cave_loose_pebbles"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(overworldBiomes,
                 HolderSet.direct(placed.getOrThrow(CraftingWorldgen.CAVE_PEBBLES_PLACED)), GenerationStep.Decoration.UNDERGROUND_DECORATION));
     }

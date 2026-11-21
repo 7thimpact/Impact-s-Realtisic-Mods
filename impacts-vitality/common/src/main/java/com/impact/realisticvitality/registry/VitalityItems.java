@@ -98,6 +98,14 @@ public final class VitalityItems {
         return MASKS.get(mask).get();
     }
 
+    /** Everything worn on the head: every breathing mask and the Straw Hat (they also fit Curios's head slot). */
+    public static List<Item> headwear() {
+        List<Item> headwear = new ArrayList<>();
+        Arrays.stream(BreathingMask.values()).forEach(mask -> headwear.add(mask(mask)));
+        headwear.add(strawHat());
+        return headwear;
+    }
+
     public static AirTankItem tank(AirTank tank) {
         return TANKS.get(tank).get();
     }

@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
-/** Too hot for dry food: while Hot or worse, foods in {@code #impactsvitality:dry_foods} can't be eaten. */
+/** Too hot for dry food: while Hot or worse, foods in {@code #impactsvitality:dry_foods} can't be eaten, unless they're also in {@code #impactsvitality:moist_foods}. */
 public final class DryFoods {
     private static final ImpactsLog LOG = ImpactsLog.of(VitalityMod.MOD_ID);
 
@@ -22,7 +22,7 @@ public final class DryFoods {
     /** Whether eating this is refused at this body temperature. Each side asks with its own copy of the body temperature. */
     public static boolean isTooHotToEat(float body, ItemStack food) {
         boolean isRuleOn = TemperatureTicks.isOn() && VitalityFeatures.byConditionName(VitalityFeatures.DRY_FOOD_RULE).orElseThrow().getAsBoolean();
-        return isRuleOn && food.is(VitalityTags.DRY_FOODS) && BodyState.of(body).isHotOrWorse();
+        return isRuleOn && food.is(VitalityTags.DRY_FOODS) && !food.is(VitalityTags.MOIST_FOODS) && BodyState.of(body).isHotOrWorse();
     }
 
     /** Tells the player why, on the action bar, and logs it. */

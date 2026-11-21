@@ -18,8 +18,6 @@ public final class InventoryLayout {
     public static final int MENU_MAIN_HAND_SLOT = InventoryMenu.USE_ROW_SLOT_START;
     /** In the player's inventory menu: vanilla's off-hand slot. */
     public static final int MENU_OFF_HAND_SLOT = InventoryMenu.SHIELD_SLOT;
-    /** In the player's inventory menu: the back slot, appended after vanilla's 46 slots so no vanilla index moves. */
-    public static final int MENU_BACK_SLOT = InventoryMenu.SHIELD_SLOT + 1;
     private static final int MAIN_INVENTORY_SIZE = Inventory.INVENTORY_SIZE;
 
     private InventoryLayout() {

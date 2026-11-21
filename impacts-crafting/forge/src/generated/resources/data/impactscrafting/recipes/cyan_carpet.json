@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:cyan_carpet"
+    }
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:cyan_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:cyan_carpet"
+  },
+  "tools": [
+    {
+      "item": "minecraft:shears"
+    }
+  ]
+}

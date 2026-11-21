@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:lead"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "tag": "forge:slimeballs"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:lead"
+  }
+}

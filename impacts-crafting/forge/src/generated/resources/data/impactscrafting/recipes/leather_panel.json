@@ -1,0 +1,25 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:leather_panel"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:leather_panel"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

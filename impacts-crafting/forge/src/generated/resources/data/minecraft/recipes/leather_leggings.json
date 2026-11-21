@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "combat",
+        "recipe": "minecraft:leather_leggings"
+      }
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "X X",
+    "X X"
+  ],
+  "result": {
+    "item": "minecraft:leather_leggings"
+  },
+  "show_notification": true
+}

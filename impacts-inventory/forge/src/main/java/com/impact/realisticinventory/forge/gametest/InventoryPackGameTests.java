@@ -82,20 +82,6 @@ public final class InventoryPackGameTests {
     }
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
-    public static void shiftClickPutsAPackOnTheBack(GameTestHelper helper) {
-        ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
-        try {
-            player.getInventory().setItem(InventoryLayout.FIRST_POCKET_INDEX, new ItemStack(InventoryItems.backpack()));
-            player.inventoryMenu.clicked(InventoryLayout.FIRST_POCKET_INDEX, LEFT_MOUSE_BUTTON, ClickType.QUICK_MOVE, player);
-            helper.assertTrue(BackSlotStorage.get(player).is(InventoryItems.backpack()), "Shift-click wears the backpack");
-            helper.assertTrue(player.getInventory().getItem(InventoryLayout.FIRST_POCKET_INDEX).isEmpty(), "The pocket is empty afterwards");
-        } finally {
-            MockPlayers.leaveWorld(player);
-        }
-        helper.succeed();
-    }
-
-    @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
     public static void pickupsGoIntoTheWornPackWhenPocketsAreFull(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {

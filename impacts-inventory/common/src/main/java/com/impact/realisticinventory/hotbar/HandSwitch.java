@@ -8,26 +8,24 @@ import com.impact.lib.counter.ImpactsCounters;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.advancement.InventoryTriggers;
+import com.impact.realisticinventory.config.InventoryServerConfig;
 import com.impact.realisticinventory.debug.InventoryLogCategories;
-import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.InventoryLocks;
-import com.impact.realisticinventory.network.InventoryNetwork;
-import com.impact.realisticinventory.network.SelectHotbarSlotMessage;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * Switching hotbar slots. The main hand is always vanilla inventory index 0 and the off hand is vanilla's off-hand
- * slot, so every mod that reads the hands keeps working. Switching swaps the two stacks and flips the active slot.
- * Runs on the server; clients ask for a switch with {@link SelectHotbarSlotMessage}.
+ * The two hands: the main hand is vanilla inventory index 0 (the one hotbar slot) and the off hand is vanilla's own
+ * off-hand slot beside it. Swapping them is vanilla's swap-hands key (F, or the scroll wheel), so vanilla moves and
+ * syncs the items; Inventory only counts the swap for its achievements and adds the optional swap cooldown.
  */
 public final class HandSwitch {
     /** Kept like the inventory: lost on death unless keepInventory is on. */
     public static final PlayerAttachment<HotbarState> HOTBAR =
             new PlayerAttachment<>(ResourceIds.of(InventoryMod.MOD_ID, "hotbar"), HotbarState::new, DeathCopyRule.LIKE_INVENTORY);
-    /** The "Juggler" achievement counts switches within this many ticks (5 seconds). */
+    /** The "Juggler" achievement counts swaps within this many ticks (5 seconds). */
     public static final long RECENT_SWITCH_WINDOW_TICKS = 100;
     private static final ImpactsLog LOG = ImpactsLog.of(InventoryMod.MOD_ID);
 
@@ -38,70 +36,31 @@ public final class HandSwitch {
         return PlayerAttachments.get(player, HOTBAR);
     }
 
-    /** Makes the slot active. Nothing happens when it already is. */
-    public static void selectSlot(ServerPlayer player, int slot, SwitchSource source) {
+    /** Server, as vanilla swaps the hands: the achievements, the swap counter, the optional cooldown and the log line. */
+    public static void onHandsSwapped(ServerPlayer player) {
         if (!InventoryLocks.isActiveFor(player)) {
             return;
         }
-        HotbarState state = stateOf(player);
-        if (state.activeSlot() == slot) {
-            return;
+        // Vanilla swaps right after this, so the off hand's item is about to be the main hand's.
+        ItemStack comingToMainHand = player.getOffhandItem();
+        int recentSwitches = stateOf(player).recordSwitch(player.level().getGameTime(), RECENT_SWITCH_WINDOW_TICKS);
+        int cooldownTicks = InventoryServerConfig.get().hotbar.swapCooldownTicks.get();
+        if (cooldownTicks > 0 && !comingToMainHand.isEmpty()) {
+            player.getCooldowns().addCooldown(comingToMainHand.getItem(), cooldownTicks);
         }
-        switchHands(player, state, source);
-    }
-
-    /** Makes the other slot active: what the scroll wheel and the swap-hands key do. */
-    public static void switchToOtherSlot(ServerPlayer player, SwitchSource source) {
-        if (!InventoryLocks.isActiveFor(player)) {
-            return;
-        }
-        switchHands(player, stateOf(player), source);
-    }
-
-    /** Handles a client's request: slot 1, slot 2, or {@link SelectHotbarSlotMessage#OTHER_SLOT}. */
-    public static void handleRequest(SelectHotbarSlotMessage message, ServerPlayer sender) {
-        int requestedSlot = message.requestedSlot();
-        if (requestedSlot == SelectHotbarSlotMessage.OTHER_SLOT) {
-            switchToOtherSlot(sender, message.source());
-            return;
-        }
-        boolean isValidSlot = requestedSlot == HotbarState.FIRST_SLOT || requestedSlot == HotbarState.SECOND_SLOT;
-        if (!isValidSlot) {
-            LOG.warn(InventoryLogCategories.HOTBAR, "invalid slot request refused", "player", sender.getGameProfile().getName(), "slot", requestedSlot);
-            return;
-        }
-        selectSlot(sender, requestedSlot, message.source());
-    }
-
-    private static void switchHands(ServerPlayer player, HotbarState state, SwitchSource source) {
-        Inventory inventory = player.getInventory();
-        ItemStack previousMainHand = inventory.getItem(InventoryLayout.MAIN_HAND_INDEX);
-        ItemStack previousOffHand = inventory.offhand.get(0);
-        boolean wasUsingItem = player.isUsingItem();
-        // Written straight to the lists: both are hand slots, and neither is locked.
-        inventory.items.set(InventoryLayout.MAIN_HAND_INDEX, previousOffHand);
-        inventory.offhand.set(0, previousMainHand);
-        inventory.setChanged();
-        player.stopUsingItem();
-        int previousSlot = state.activeSlot();
-        state.setActiveSlot(HotbarState.otherSlot(previousSlot));
-        int recentSwitches = state.recordSwitch(player.level().getGameTime(), RECENT_SWITCH_WINDOW_TICKS);
-        InventoryNetwork.sendHotbarState(player);
         InventoryTriggers.SLOT_SWITCHED.trigger(player, recentSwitches);
         ImpactsCounters.add(player, InventoryTriggers.SLOT_SWITCHES_COUNTER, null, 1);
-        logSwitch(player, previousSlot, state.activeSlot(), source, wasUsingItem);
+        LOG.debug(InventoryLogCategories.HOTBAR, "hands swapped", "player", player.getGameProfile().getName(),
+                "toMainHand", ResourceIds.itemId(comingToMainHand.getItem()), "toOffHand", ResourceIds.itemId(player.getMainHandItem().getItem()),
+                "wasUsingItem", player.isUsingItem(), "recentSwaps", recentSwitches);
     }
 
-    private static void logSwitch(ServerPlayer player, int fromSlot, int toSlot, SwitchSource source, boolean wasUsingItem) {
-        if (!LOG.isEnabled(InventoryLogCategories.HOTBAR)) {
-            return;
-        }
-        String playerName = player.getGameProfile().getName();
-        LOG.debug(InventoryLogCategories.HOTBAR, "switched", "player", playerName, "from", fromSlot, "to", toSlot,
-                "mainHand", ResourceIds.itemId(player.getMainHandItem().getItem()),
-                "offHand", ResourceIds.itemId(player.getOffhandItem().getItem()), "source", source.logName());
-        if (wasUsingItem) {
-            LOG.debug(InventoryLogCategories.HOTBAR, "hold action cancelled by switch", "player", playerName);
-        }
+    /** Swaps the hands the way vanilla's swap-hands key does, for callers without a key press (tests, other mods). */
+    public static void swapHands(ServerPlayer player) {
+        onHandsSwapped(player);
+        ItemStack offHand = player.getItemInHand(InteractionHand.OFF_HAND);
+        player.setItemInHand(InteractionHand.OFF_HAND, player.getItemInHand(InteractionHand.MAIN_HAND));
+        player.setItemInHand(InteractionHand.MAIN_HAND, offHand);
+        player.stopUsingItem();
     }
 }

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:acacia_boat"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:boat_hull",
+      "nbt": "{wood:\"minecraft:acacia\"}"
+    },
+    {
+      "item": "impactscrafting:oar"
+    },
+    {
+      "item": "impactscrafting:oar"
+    }
+  ],
+  "result": {
+    "item": "minecraft:acacia_boat"
+  }
+}
