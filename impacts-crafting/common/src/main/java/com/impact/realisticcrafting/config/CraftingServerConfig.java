@@ -26,6 +26,7 @@ public final class CraftingServerConfig {
     public final HammeringSettings hammering;
     public final TimedCraftingSettings timedCrafting;
     public final DyeVatSettings dyeVat;
+    public final AchievementSettings achievements;
     public final ConfigValue<Boolean> isFuelOn;
     public final ConfigValue<Integer> woodenBucketUses;
     public final ConfigValue<Boolean> bedsDropParts;
@@ -62,6 +63,9 @@ public final class CraftingServerConfig {
         dyeVat = new DyeVatSettings(builder);
         builder.popSection();
         bedsDropParts = builder.defineBoolean("bedsDropParts", true, "A broken bed drops its frame, comforter and sheet instead of itself.");
+        builder.pushSection("achievements", "The numbers behind the Realistic Crafting achievements.");
+        achievements = new AchievementSettings(builder);
+        builder.popSection();
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
         builder.popSection();
@@ -222,6 +226,19 @@ public final class CraftingServerConfig {
             dipTicks = builder.defineInteger("dipTicks", 10, 1, 1200, "Ticks to dip one item.");
             rainFillTicks = builder.defineInteger("rainFillTicks", 1200, 1, 72000, "Ticks of rain falling on an empty vat to fill it.");
             paperPulpTicks = builder.defineInteger("paperPulpTicks", 20, 1, 1200, "Ticks to soak one sugar cane into Paper Pulp.");
+        }
+    }
+
+    public static final class AchievementSettings {
+        public final ConfigValue<Integer> longCraftTicks;
+        public final ConfigValue<Integer> scrapCollectorScraps;
+        public final ConfigValue<Integer> masterCraftsmanCrafts;
+
+        private AchievementSettings(ConfigSpecBuilder builder) {
+            longCraftTicks = builder.defineInteger("longCraftTicks", 100, 1, 72000, "A craft at least this long counts for \"Patience Is a Virtue\".");
+            scrapCollectorScraps = builder.defineInteger("scrapCollectorScraps", 64, 1, 1000000, "Wood Scraps collected for \"Scrap Collector\".");
+            masterCraftsmanCrafts = builder.defineInteger("masterCraftsmanCrafts", 1000, 1, 1000000,
+                    "Items crafted with Crafting's recipes for \"Master Craftsman\".");
         }
     }
 }

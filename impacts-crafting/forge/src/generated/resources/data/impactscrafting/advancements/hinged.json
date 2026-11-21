@@ -1,0 +1,38 @@
+{
+  "parent": "impactscrafting:rock_solid",
+  "criteria": {
+    "has_hinge": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_hinge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.hinged.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:stone_hinge"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.hinged.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_hinge"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "impactscrafting:bucket_list",
+  "criteria": {
+    "crafted_chest": {
+      "conditions": {
+        "recipe_id": "impactscrafting:chest"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.storage_solution.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:chest"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.storage_solution.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_chest"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

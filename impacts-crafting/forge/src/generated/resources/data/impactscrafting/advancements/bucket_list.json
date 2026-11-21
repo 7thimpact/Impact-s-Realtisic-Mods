@@ -1,0 +1,38 @@
+{
+  "parent": "impactscrafting:cut_to_size",
+  "criteria": {
+    "has_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:wooden_bucket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.bucket_list.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:wooden_bucket"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.bucket_list.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_bucket"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

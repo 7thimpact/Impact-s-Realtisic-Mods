@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:makeshift_mindset",
+  "criteria": {
+    "long_craft": {
+      "conditions": {},
+      "trigger": "impactscrafting:long_craft"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.patience_is_a_virtue.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:clock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.patience_is_a_virtue.title"
+    }
+  },
+  "requirements": [
+    [
+      "long_craft"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

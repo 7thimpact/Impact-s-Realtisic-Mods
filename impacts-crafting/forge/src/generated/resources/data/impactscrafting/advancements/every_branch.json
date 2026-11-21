@@ -1,0 +1,521 @@
+{
+  "parent": "impactscrafting:the_real_deal",
+  "criteria": {
+    "banner_cloth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:white_banner_cloth",
+              "impactscrafting:orange_banner_cloth",
+              "impactscrafting:magenta_banner_cloth",
+              "impactscrafting:light_blue_banner_cloth",
+              "impactscrafting:yellow_banner_cloth",
+              "impactscrafting:lime_banner_cloth",
+              "impactscrafting:pink_banner_cloth",
+              "impactscrafting:gray_banner_cloth",
+              "impactscrafting:light_gray_banner_cloth",
+              "impactscrafting:cyan_banner_cloth",
+              "impactscrafting:purple_banner_cloth",
+              "impactscrafting:blue_banner_cloth",
+              "impactscrafting:brown_banner_cloth",
+              "impactscrafting:green_banner_cloth",
+              "impactscrafting:red_banner_cloth",
+              "impactscrafting:black_banner_cloth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "boat_hull": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:boat_hull"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "bow_stave": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:bow_stave"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chest_top": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:chest_top"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "comforter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:comforter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "fence_post": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:fence_post"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "flint_arrowhead": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:flint_arrowhead"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "iron_hinge": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_hinge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "iron_plate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_plate"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "iron_rivets": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_rivets"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "iron_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_rod"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "iron_wheel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_wheel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "leather_panel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:leather_panel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "leather_strip": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:leather_strip"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "mortar": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:mortar"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "oar": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:oar"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "paper_pulp": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:paper_pulp"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "piston_head": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:piston_head"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "redstone_mechanism": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:redstone_mechanism"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "shaped_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:shaped_stone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sheet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:white_sheet",
+              "impactscrafting:orange_sheet",
+              "impactscrafting:magenta_sheet",
+              "impactscrafting:light_blue_sheet",
+              "impactscrafting:yellow_sheet",
+              "impactscrafting:lime_sheet",
+              "impactscrafting:pink_sheet",
+              "impactscrafting:gray_sheet",
+              "impactscrafting:light_gray_sheet",
+              "impactscrafting:cyan_sheet",
+              "impactscrafting:purple_sheet",
+              "impactscrafting:blue_sheet",
+              "impactscrafting:brown_sheet",
+              "impactscrafting:green_sheet",
+              "impactscrafting:red_sheet",
+              "impactscrafting:black_sheet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "stone_base": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_base"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "stone_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_casing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "stone_hinge": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_hinge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "string_clump": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:string_clump"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "trimmed_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:trimmed_planks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "trimmed_stick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:trimmed_stick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "twine": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:twine"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wooden_bucket": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:wooden_bucket"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wooden_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:wooden_frame"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "wooden_panel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:wooden_panel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.every_branch.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:twine"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.every_branch.title"
+    }
+  },
+  "requirements": [
+    [
+      "trimmed_stick"
+    ],
+    [
+      "shaped_stone"
+    ],
+    [
+      "stone_hinge"
+    ],
+    [
+      "twine"
+    ],
+    [
+      "string_clump"
+    ],
+    [
+      "chest_top"
+    ],
+    [
+      "oar"
+    ],
+    [
+      "stone_casing"
+    ],
+    [
+      "stone_base"
+    ],
+    [
+      "mortar"
+    ],
+    [
+      "leather_strip"
+    ],
+    [
+      "flint_arrowhead"
+    ],
+    [
+      "iron_plate"
+    ],
+    [
+      "iron_rod"
+    ],
+    [
+      "iron_rivets"
+    ],
+    [
+      "iron_hinge"
+    ],
+    [
+      "iron_wheel"
+    ],
+    [
+      "paper_pulp"
+    ],
+    [
+      "redstone_mechanism"
+    ],
+    [
+      "piston_head"
+    ],
+    [
+      "bow_stave"
+    ],
+    [
+      "leather_panel"
+    ],
+    [
+      "trimmed_planks"
+    ],
+    [
+      "wooden_panel"
+    ],
+    [
+      "wooden_frame"
+    ],
+    [
+      "fence_post"
+    ],
+    [
+      "boat_hull"
+    ],
+    [
+      "wooden_bucket"
+    ],
+    [
+      "comforter"
+    ],
+    [
+      "sheet"
+    ],
+    [
+      "banner_cloth"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

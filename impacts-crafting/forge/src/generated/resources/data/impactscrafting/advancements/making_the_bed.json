@@ -1,0 +1,30 @@
+{
+  "parent": "impactscrafting:sew_what",
+  "criteria": {
+    "bed_assembled": {
+      "conditions": {},
+      "trigger": "impactscrafting:bed_assembled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.making_the_bed.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:red_bed"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.making_the_bed.title"
+    }
+  },
+  "requirements": [
+    [
+      "bed_assembled"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,49 @@
+{
+  "parent": "impactscrafting:set_in_stone",
+  "criteria": {
+    "has_iron_tools": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:iron_saw"
+            ]
+          },
+          {
+            "items": [
+              "impactscrafting:iron_hammer"
+            ]
+          },
+          {
+            "items": [
+              "impactscrafting:iron_tweezers"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.tools_of_the_trade.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:iron_hammer",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.tools_of_the_trade.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_tools"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

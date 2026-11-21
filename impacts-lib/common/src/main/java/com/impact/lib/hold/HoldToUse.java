@@ -105,9 +105,10 @@ public final class HoldToUse {
     }
 
     private static void finishCycle(ServerPlayer player, ItemStack held, HoldAction action) {
+        ItemStack heldBefore = held.copy();
         boolean isContinuing = action.completeCycle(player, held);
         player.swing(player.getUsedItemHand(), true);
-        LibTriggers.HOLD_ACTION.trigger(player, action.id());
+        LibTriggers.HOLD_ACTION.trigger(player, action.id(), heldBefore);
         if (!isContinuing) {
             player.stopUsingItem();
         }

@@ -1,0 +1,32 @@
+{
+  "parent": "impactscrafting:humble_beginnings",
+  "criteria": {
+    "crafted_cobblestone": {
+      "conditions": {
+        "recipe_id": "impactscrafting:pebbles_to_cobblestone"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.rock_solid.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.rock_solid.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_cobblestone"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

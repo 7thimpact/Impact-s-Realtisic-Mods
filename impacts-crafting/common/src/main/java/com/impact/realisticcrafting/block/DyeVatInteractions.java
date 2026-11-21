@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.item.ImpactsItems;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.advancement.CraftingAchievements;
 import com.impact.realisticcrafting.config.CraftingFeature;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
@@ -12,6 +13,7 @@ import com.impact.realisticcrafting.recipe.CraftingRecipeTypes;
 import com.impact.realisticcrafting.recipe.DyeMixes;
 import com.impact.realisticcrafting.recipe.VatDyeingRecipe;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -91,7 +93,7 @@ public final class DyeVatInteractions {
             return InteractionResult.SUCCESS;
         }
         vat.fillWithWater();
-        level.playSound(null, position, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, position, CraftingSounds.vatFill(), SoundSource.BLOCKS, 1.0F, 1.0F);
         if (!player.getAbilities().instabuild) {
             ItemStack empty = bucket.is(Items.WATER_BUCKET) ? new ItemStack(Items.BUCKET) : WoodenWaterBucketItem.emptied(bucket, player, level, position);
             player.setItemInHand(hand, empty);
@@ -118,7 +120,8 @@ public final class DyeVatInteractions {
         if (!player.getAbilities().instabuild) {
             dye.shrink(1);
         }
-        level.playSound(null, position, SoundEvents.DYE_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, position, CraftingSounds.vatDye(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        DyeVatParticles.colorBurst(level, position, vat.color());
         LOG.debug(CraftingLogCategories.VAT, mixed.isPresent() && before.isPresent() && before.get() != added ? "colors mixed" : "dye added",
                 "player", player.getScoreboardName(), "dye", added.getName(), "color", vat.color().map(DyeColor::getName).orElse("water"),
                 "charges", vat.charges());
@@ -147,11 +150,16 @@ public final class DyeVatInteractions {
         } else {
             ImpactsItems.giveOrDrop(player, result);
         }
+        boolean isDyed = vat.color().isPresent();
         vat.spendCharges(dip.get().charges());
-        level.playSound(null, position, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 0.4F, 1.2F);
+        level.playSound(null, position, CraftingSounds.vatDip(), SoundSource.BLOCKS, 0.4F, 1.2F);
+        DyeVatParticles.dipSplash(level, position, vat.color());
         LOG.debug(CraftingLogCategories.VAT, "dipped", "player", player.getScoreboardName(), "input", ResourceIds.itemId(dip.get().input()),
                 "result", ResourceIds.itemId(result.getItem()), "color", vat.color().map(DyeColor::getName).orElse("water"),
                 "chargesLeft", vat.charges());
+        if (isDyed) {
+            CraftingAchievements.onVatDyed(player);
+        }
         return InteractionResult.CONSUME;
     }
 

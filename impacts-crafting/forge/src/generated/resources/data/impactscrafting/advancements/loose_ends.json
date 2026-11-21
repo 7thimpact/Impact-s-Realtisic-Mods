@@ -1,0 +1,47 @@
+{
+  "parent": "impactscrafting:makeshift_mindset",
+  "criteria": {
+    "has_loose_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:loose_wooden_pickaxe",
+              "impactscrafting:loose_wooden_axe",
+              "impactscrafting:loose_wooden_shovel",
+              "impactscrafting:loose_wooden_hoe",
+              "impactscrafting:loose_wooden_sword",
+              "impactscrafting:loose_stone_pickaxe",
+              "impactscrafting:loose_stone_axe",
+              "impactscrafting:loose_stone_shovel",
+              "impactscrafting:loose_stone_hoe",
+              "impactscrafting:loose_stone_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.loose_ends.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:loose_wooden_pickaxe"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.loose_ends.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_loose_tool"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

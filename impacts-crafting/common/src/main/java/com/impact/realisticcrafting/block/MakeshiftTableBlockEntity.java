@@ -2,14 +2,18 @@ package com.impact.realisticcrafting.block;
 
 import com.impact.lib.item.UsesDurability;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** A makeshift table's exact uses spent. Saved as {@code uses} like Lib's uses-tracked items, and left out while unused. */
 public final class MakeshiftTableBlockEntity extends BlockEntity {
+    private static final float CREAK_VOLUME = 0.6F;
+    private static final float CREAK_PITCH = 0.7F;
     private int usesSpent;
 
     public MakeshiftTableBlockEntity(BlockPos position, BlockState state) {
@@ -48,6 +52,7 @@ public final class MakeshiftTableBlockEntity extends BlockEntity {
         int stage = TableWear.stageFor(usesLeft(), table().maxUses());
         if (state.hasProperty(MakeshiftTableBlock.WEAR) && state.getValue(MakeshiftTableBlock.WEAR) != stage) {
             level.setBlock(worldPosition, state.setValue(MakeshiftTableBlock.WEAR, stage), Block.UPDATE_ALL);
+            level.playSound(null, worldPosition, CraftingSounds.tableCreak(), SoundSource.BLOCKS, CREAK_VOLUME, CREAK_PITCH);
         }
     }
 

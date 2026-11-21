@@ -1,0 +1,170 @@
+{
+  "parent": "impactscrafting:making_the_bed",
+  "criteria": {
+    "black": {
+      "conditions": {
+        "color": "black"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "blue": {
+      "conditions": {
+        "color": "blue"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "brown": {
+      "conditions": {
+        "color": "brown"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "cyan": {
+      "conditions": {
+        "color": "cyan"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "gray": {
+      "conditions": {
+        "color": "gray"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "green": {
+      "conditions": {
+        "color": "green"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "light_blue": {
+      "conditions": {
+        "color": "light_blue"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "light_gray": {
+      "conditions": {
+        "color": "light_gray"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "lime": {
+      "conditions": {
+        "color": "lime"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "magenta": {
+      "conditions": {
+        "color": "magenta"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "orange": {
+      "conditions": {
+        "color": "orange"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "pink": {
+      "conditions": {
+        "color": "pink"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "purple": {
+      "conditions": {
+        "color": "purple"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "red": {
+      "conditions": {
+        "color": "red"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "white": {
+      "conditions": {
+        "color": "white"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    },
+    "yellow": {
+      "conditions": {
+        "color": "yellow"
+      },
+      "trigger": "impactscrafting:bed_assembled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.full_spectrum.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:magenta_sheet"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.full_spectrum.title"
+    }
+  },
+  "requirements": [
+    [
+      "white"
+    ],
+    [
+      "orange"
+    ],
+    [
+      "magenta"
+    ],
+    [
+      "light_blue"
+    ],
+    [
+      "yellow"
+    ],
+    [
+      "lime"
+    ],
+    [
+      "pink"
+    ],
+    [
+      "gray"
+    ],
+    [
+      "light_gray"
+    ],
+    [
+      "cyan"
+    ],
+    [
+      "purple"
+    ],
+    [
+      "blue"
+    ],
+    [
+      "brown"
+    ],
+    [
+      "green"
+    ],
+    [
+      "red"
+    ],
+    [
+      "black"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

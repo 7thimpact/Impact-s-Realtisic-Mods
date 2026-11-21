@@ -142,7 +142,7 @@ public final class CraftingBedGameTests {
         helper.succeed();
     }
 
-    private static void atFrame(GameTestHelper helper, BiConsumer<ServerPlayer, BlockPos> check) {
+    static void atFrame(GameTestHelper helper, BiConsumer<ServerPlayer, BlockPos> check) {
         ServerLevel level = helper.getLevel();
         BlockPos foot = helper.absolutePos(new BlockPos(0, 0, 1));
         ServerPlayer player = MockPlayers.joinWorld(level);
@@ -158,7 +158,7 @@ public final class CraftingBedGameTests {
         }
     }
 
-    private static InteractionResult use(ServerPlayer player, BlockPos position, ItemStack held) {
+    static InteractionResult use(ServerPlayer player, BlockPos position, ItemStack held) {
         player.setItemInHand(InteractionHand.MAIN_HAND, held);
         return BedLayering.onFrameUsed(player.level(), position, player.level().getBlockState(position), player, InteractionHand.MAIN_HAND);
     }

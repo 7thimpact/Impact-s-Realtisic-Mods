@@ -1,0 +1,46 @@
+{
+  "parent": "impactscrafting:loose_ends",
+  "criteria": {
+    "hammered_tool": {
+      "conditions": {
+        "action": "impactscrafting:hammering",
+        "item": {
+          "items": [
+            "impactscrafting:loose_wooden_pickaxe",
+            "impactscrafting:loose_wooden_axe",
+            "impactscrafting:loose_wooden_shovel",
+            "impactscrafting:loose_wooden_hoe",
+            "impactscrafting:loose_wooden_sword",
+            "impactscrafting:loose_stone_pickaxe",
+            "impactscrafting:loose_stone_axe",
+            "impactscrafting:loose_stone_shovel",
+            "impactscrafting:loose_stone_hoe",
+            "impactscrafting:loose_stone_sword"
+          ]
+        }
+      },
+      "trigger": "impactslib:hold_action"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.hammer_time.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactscrafting:stone_pebble"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.hammer_time.title"
+    }
+  },
+  "requirements": [
+    [
+      "hammered_tool"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,56 @@
+{
+  "block.dye_vat.dip": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.generic.splash"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.block.dye_vat.dip"
+  },
+  "block.dye_vat.dye": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.dye.use"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.block.dye_vat.dye"
+  },
+  "block.dye_vat.fill": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "item.bucket.empty"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.block.dye_vat.fill"
+  },
+  "block.makeshift_table.creak": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.wood.break"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.block.makeshift_table.creak"
+  },
+  "item.hammer.finish": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.anvil.land"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.item.hammer.finish"
+  },
+  "ui.timed_craft.finish": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "block.wooden_button.click_on"
+      }
+    ],
+    "subtitle": "subtitles.impactscrafting.ui.timed_craft.finish"
+  }
+}

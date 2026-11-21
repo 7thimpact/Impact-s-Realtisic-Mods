@@ -1,0 +1,33 @@
+{
+  "parent": "impactscrafting:the_real_deal",
+  "criteria": {
+    "crafted_many": {
+      "conditions": {},
+      "trigger": "impactscrafting:master_craftsman"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactscrafting.master_craftsman.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:crafting_table"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactscrafting.master_craftsman.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_many"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

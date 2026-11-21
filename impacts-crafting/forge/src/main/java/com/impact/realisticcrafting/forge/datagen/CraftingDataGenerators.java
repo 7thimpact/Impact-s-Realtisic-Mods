@@ -7,7 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-/** Crafting's generated data: translations, models, tags, recipes and vanilla recipe overrides, loot tables, loot modifiers and worldgen. Run with {@code runData}. */
+/** Crafting's generated data: translations, models, sounds, tags, recipes and vanilla recipe overrides, loot tables, loot modifiers, advancements and worldgen. Run with {@code runData}. */
 public final class CraftingDataGenerators {
     private static final String ENGLISH_LOCALE = "en_us";
 
@@ -25,12 +25,14 @@ public final class CraftingDataGenerators {
         });
         generator.addProvider(event.includeClient(), new CraftingItemModels(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new CraftingBlockStates(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new CraftingSoundDefinitions(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new CraftingBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new CraftingItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new CraftingRecipes(output));
         generator.addProvider(event.includeServer(), new VanillaRecipeOverrides(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), CraftingLootTables.create(output));
         generator.addProvider(event.includeServer(), new CraftingLootModifiers(output));
+        generator.addProvider(event.includeServer(), new CraftingAdvancementProvider(output));
         generator.addProvider(event.includeServer(), CraftingWorldgenData.create(output, event.getLookupProvider()));
     }
 }

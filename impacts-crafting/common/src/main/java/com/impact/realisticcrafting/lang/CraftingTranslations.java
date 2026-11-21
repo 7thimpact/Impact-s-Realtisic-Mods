@@ -1,7 +1,9 @@
 package com.impact.realisticcrafting.lang;
 
+import com.impact.lib.advancement.ImpactsAdvancementBuilder;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.advancement.CraftingAdvancements;
 import com.impact.realisticcrafting.bed.BedLayering;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
@@ -13,7 +15,9 @@ import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.menu.CraftingStation;
+import com.impact.realisticcrafting.registry.CraftingSounds;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 
 import java.util.Arrays;
@@ -28,6 +32,19 @@ public final class CraftingTranslations {
     public static final String CREATIVE_TAB = CreativeTabs.titleKey(CraftingMod.MOD_ID);
     /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
     public static final String ADVANCEMENT_TAB = "advancements." + CraftingMod.MOD_ID + ".tab";
+    public static final String JEI_HAMMERING = jeiKey("hammering");
+    public static final String JEI_DYE_VAT = jeiKey("dye_vat");
+    public static final String JEI_HOLD_TIME = jeiKey("hold_time");
+    public static final String JEI_HOLD_TIME_RANGE = jeiKey("hold_time_range");
+    public static final String JEI_VAT_COLOR = jeiKey("vat_color");
+    public static final String JEI_VAT_COLOR_CHARGES = jeiKey("vat_color_charges");
+    public static final String JEI_PLAIN_WATER = jeiKey("plain_water");
+    public static final String JEI_SECONDS = jeiKey("seconds");
+    public static final String JEI_CRAFT_INFO = jeiKey("craft_info");
+    public static final String JEI_PEBBLES_INFO = jeiKey("info.pebbles");
+    public static final String JEI_BEDS_INFO = jeiKey("info.beds");
+    public static final String JEI_DYE_VAT_INFO = jeiKey("info.dye_vat");
+    public static final String JEI_LOOSE_ITEMS_INFO = jeiKey("info.loose_items");
     private static final String ITEM_KEY_PREFIX = "item." + CraftingMod.MOD_ID + ".";
     private static final String BLOCK_KEY_PREFIX = "block." + CraftingMod.MOD_ID + ".";
 
@@ -112,6 +129,96 @@ public final class CraftingTranslations {
         english.put(CraftingStation.MAKESHIFT_TABLE.needsTranslationKey(), "Needs a Makeshift Table");
         english.put(CraftingStation.MAKESHIFT_STONE_TABLE.needsTranslationKey(), "Needs a Makeshift Stone Table");
         english.put(CraftingStation.CRAFTING_TABLE.needsTranslationKey(), "Needs a Crafting Table");
+        addAdvancements(english);
+        addJei(english);
+        addSubtitles(english);
+        addHints(english);
         return Collections.unmodifiableMap(english);
+    }
+
+    private static void addHints(Map<String, String> english) {
+        english.put(CraftingHints.MADE_FROM_KEY, "Made from %s");
+        english.put(CraftingHints.NEXT_KEY, "Next: %s");
+        CraftingHints.ENGLISH.forEach((hintName, hint) -> {
+            english.put(CraftingHints.madeFromKey(hintName), hint.madeFrom());
+            english.put(CraftingHints.nextKey(hintName), hint.next());
+        });
+    }
+
+    private static void addJei(Map<String, String> english) {
+        english.put(JEI_HAMMERING, "Hammering");
+        english.put(JEI_DYE_VAT, "Dye Vat");
+        english.put(JEI_HOLD_TIME, "Hold for %s");
+        english.put(JEI_HOLD_TIME_RANGE, "Hold for %s to %s");
+        english.put(JEI_VAT_COLOR, "%s water");
+        english.put(JEI_VAT_COLOR_CHARGES, "%s water, %s charges");
+        english.put(JEI_PLAIN_WATER, "Plain water");
+        english.put(JEI_SECONDS, "%ss");
+        english.put(JEI_CRAFT_INFO, "%s, %s");
+        english.put(CraftingStation.INVENTORY_GRID.nameTranslationKey(), "2×2 grid or any table");
+        english.put(CraftingStation.MAKESHIFT_TABLE.nameTranslationKey(), "Makeshift Table");
+        english.put(CraftingStation.MAKESHIFT_STONE_TABLE.nameTranslationKey(), "Makeshift Stone Table");
+        english.put(CraftingStation.CRAFTING_TABLE.nameTranslationKey(), "Crafting Table");
+        english.put(JEI_PEBBLES_INFO, "Stone Pebbles are the first tool. Pick up loose pebbles lying on mountains, stony shores and cave floors. "
+                + "Breaking gravel drops one sometimes, and breaking stone by hand always does. A fresh pebble stacks to 64; once used, it stacks to 1.");
+        english.put(JEI_BEDS_INFO, "Beds are built where they stand. Place a Bed Frame, right-click it with a Comforter, then with a Sheet: "
+                + "the sheet's color is the bed's. A sheet on a finished bed recolors it, and a broken bed drops all three parts.");
+        english.put(JEI_DYE_VAT_INFO, "Fill the vat with water from a bucket, or let rain fill it. One dye colors 8 dips, and a second dye mixes "
+                + "with the first when the colors mix (red and yellow make orange). Hold right-click with an item to dip it. Leather armor and packs "
+                + "take the vat's color; plain water washes dye off and soaks sugar cane into Paper Pulp.");
+        english.put(JEI_LOOSE_ITEMS_INFO, "Loose items must be hammered before use: hold the loose item in your main hand and a hammer (a Stone "
+                + "Pebble or the Iron Hammer) in your off hand, then hold right-click. Letting go early starts over and costs nothing.");
+    }
+
+    private static void addSubtitles(Map<String, String> english) {
+        english.put(subtitle(CraftingSounds.HAMMER_FINISH), "Loose item hammered");
+        english.put(subtitle(CraftingSounds.CRAFT_FINISH), "Craft finished");
+        english.put(subtitle(CraftingSounds.TABLE_CREAK), "Makeshift table creaks");
+        english.put(subtitle(CraftingSounds.VAT_FILL), "Dye Vat fills");
+        english.put(subtitle(CraftingSounds.VAT_DYE), "Dye stirs in");
+        english.put(subtitle(CraftingSounds.VAT_DIP), "Item dipped");
+    }
+
+    /** The subtitle key of one of Crafting's sounds. */
+    public static String subtitle(String soundPath) {
+        return "subtitles." + CraftingMod.MOD_ID + "." + soundPath;
+    }
+
+    private static String jeiKey(String path) {
+        return "jei." + CraftingMod.MOD_ID + "." + path;
+    }
+
+    private static void addAdvancements(Map<String, String> english) {
+        addAdvancement(english, CraftingAdvancements.HUMBLE_BEGINNINGS, "Humble Beginnings", "Pick up a Stone Pebble");
+        addAdvancement(english, CraftingAdvancements.ROCK_SOLID, "Rock Solid", "Craft 9 pebbles into cobblestone");
+        addAdvancement(english, CraftingAdvancements.CUT_TO_SIZE, "Cut to Size", "Trim planks into Trimmed Planks");
+        addAdvancement(english, CraftingAdvancements.SCRAP_COLLECTOR, "Scrap Collector", "Collect 64 Wood Scraps");
+        addAdvancement(english, CraftingAdvancements.MAKESHIFT_MINDSET, "Makeshift Mindset", "Place a Makeshift Table");
+        addAdvancement(english, CraftingAdvancements.PATIENCE_IS_A_VIRTUE, "Patience Is a Virtue", "Wait out a full 5-second craft");
+        addAdvancement(english, CraftingAdvancements.FALLING_APART, "Falling Apart", "Use a makeshift table until it breaks");
+        addAdvancement(english, CraftingAdvancements.LOOSE_ENDS, "Loose Ends", "Craft a loose tool");
+        addAdvancement(english, CraftingAdvancements.HAMMER_TIME, "Hammer Time", "Hammer a loose tool into a finished tool");
+        addAdvancement(english, CraftingAdvancements.STONE_AGE, "Stone Age", "Finish a stone tool");
+        addAdvancement(english, CraftingAdvancements.HINGED, "Hinged", "Craft a Stone Hinge");
+        addAdvancement(english, CraftingAdvancements.BUCKET_LIST, "Bucket List", "Craft a Wooden Bucket");
+        addAdvancement(english, CraftingAdvancements.STORAGE_SOLUTION, "Storage Solution", "Craft a chest from a Wooden Bucket, a Chest Top and Stone Hinges");
+        addAdvancement(english, CraftingAdvancements.SET_IN_STONE, "Set in Stone", "Place a Makeshift Stone Table");
+        addAdvancement(english, CraftingAdvancements.TOOLS_OF_THE_TRADE, "Tools of the Trade", "Own an Iron Saw, Iron Hammer and Iron Tweezers at once");
+        addAdvancement(english, CraftingAdvancements.THE_REAL_DEAL, "The Real Deal", "Craft a Crafting Table");
+        addAdvancement(english, CraftingAdvancements.GRIND_SET, "Grind Set", "Grind your first dye");
+        addAdvancement(english, CraftingAdvancements.COLOR_THEORY, "Color Theory", "Mix two dyes in a grinder");
+        addAdvancement(english, CraftingAdvancements.DIP_IT, "Dip It", "Dye an item in a Dye Vat");
+        addAdvancement(english, CraftingAdvancements.SEW_WHAT, "Sew What?", "Craft something with a Bone Needle");
+        addAdvancement(english, CraftingAdvancements.MAKING_THE_BED, "Making the Bed", "Build a bed from frame, comforter and sheet");
+        addAdvancement(english, CraftingAdvancements.FULL_SPECTRUM, "Full Spectrum", "Make a bed in all 16 sheet colors");
+        addAdvancement(english, CraftingAdvancements.MECHANICALLY_INCLINED, "Mechanically Inclined", "Craft a Redstone Mechanism");
+        addAdvancement(english, CraftingAdvancements.PUSHING_IT, "Pushing It", "Hammer a loose piston into a piston");
+        addAdvancement(english, CraftingAdvancements.EVERY_BRANCH, "Every Branch", "Craft every shared part in the parts library");
+        addAdvancement(english, CraftingAdvancements.MASTER_CRAFTSMAN, "Master Craftsman", "Craft 1,000 items with Realistic Crafting recipes");
+    }
+
+    private static void addAdvancement(Map<String, String> english, ResourceLocation advancementId, String title, String description) {
+        english.put(ImpactsAdvancementBuilder.titleKey(advancementId), title);
+        english.put(ImpactsAdvancementBuilder.descriptionKey(advancementId), description);
     }
 }
