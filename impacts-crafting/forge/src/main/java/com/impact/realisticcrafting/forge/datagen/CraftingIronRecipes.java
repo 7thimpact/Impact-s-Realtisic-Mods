@@ -50,7 +50,7 @@ final class CraftingIronRecipes {
         Consumer<FinishedRecipe> stone = overhaulRecipe(output, OverhaulCategory.STONE);
         tools(parts);
         ironParts(parts);
-        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone);
+        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone, overhaulRecipe(output, OverhaulCategory.REDSTONE));
         woodRows(overhaulRecipe(output, OverhaulCategory.WOOD));
         stoneRows(stone);
     }
@@ -80,8 +80,8 @@ final class CraftingIronRecipes {
                 .define('P', CraftingTags.IRON_PLATES).unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS)).save(parts, id("iron_wheel"));
     }
 
-    // The blast furnace is a stone catalog row, so its hammering follows the stone switch.
-    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone) {
+    // The blast furnace's and piston's hammering follow their own catalogs' switches (stone, redstone).
+    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone, Consumer<FinishedRecipe> redstone) {
         Item rivets = CraftingItems.part(CraftingPart.IRON_RIVETS);
         Item hinge = CraftingItems.part(CraftingPart.IRON_HINGE);
         Item stick = CraftingItems.part(CraftingPart.TRIMMED_STICK);
@@ -97,7 +97,8 @@ final class CraftingIronRecipes {
         for (LooseIron looseIron : LooseIron.values()) {
             Item finished = ResourceIds.item(ResourceIds.of("minecraft", looseIron.vanillaPath)).orElseThrow();
             HammeringRecipeBuilder.of(CraftingItems.looseIron(looseIron), Ingredient.of(CraftingTags.HAMMERS), finished)
-                    .save(looseIron == LooseIron.BLAST_FURNACE ? stone : iron, id(looseIron.vanillaPath + "_from_hammering"));
+                    .save(looseIron == LooseIron.BLAST_FURNACE ? stone : looseIron == LooseIron.PISTON ? redstone : iron,
+                            id(looseIron.vanillaPath + "_from_hammering"));
         }
         shapeless(Items.HOPPER, 1).requires(Items.BUCKET).requires(Ingredient.of(CraftingTags.IRON_PLATES), 2).requires(Items.CHEST)
                 .unlockedBy("has_bucket", has(Items.BUCKET)).save(iron, id("hopper"));

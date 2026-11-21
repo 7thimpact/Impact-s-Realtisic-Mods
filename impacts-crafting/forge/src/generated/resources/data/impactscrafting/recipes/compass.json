@@ -1,0 +1,26 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:compass"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:compass"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_tweezers"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:block/piston_top",
+    "layer1": "impactscrafting:item/loose_binding"
+  }
+}

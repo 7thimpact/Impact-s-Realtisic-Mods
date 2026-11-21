@@ -93,6 +93,8 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_HINGE.path, "Iron Hinge");
         english.put(ITEM_KEY_PREFIX + CraftingPart.IRON_WHEEL.path, "Iron Wheel");
         english.put(ITEM_KEY_PREFIX + CraftingPart.PAPER_PULP.path, "Paper Pulp");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.REDSTONE_MECHANISM.path, "Redstone Mechanism");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.PISTON_HEAD.path, "Piston Head");
         for (LooseIron looseIron : LooseIron.values()) {
             english.put(ITEM_KEY_PREFIX + looseIron.path, titleCase(looseIron.path));
         }

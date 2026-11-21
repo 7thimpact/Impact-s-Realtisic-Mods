@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:daylight_detector"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:stone_base"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "tag": "forge:gems/quartz"
+    }
+  ],
+  "result": {
+    "item": "minecraft:daylight_detector"
+  }
+}

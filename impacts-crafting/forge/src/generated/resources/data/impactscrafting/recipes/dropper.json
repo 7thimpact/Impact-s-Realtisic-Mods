@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:dropper"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:stone_casing"
+    },
+    {
+      "item": "impactscrafting:redstone_mechanism"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dropper"
+  }
+}

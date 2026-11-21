@@ -101,6 +101,8 @@ public final class VanillaRecipeReplacements {
             }
         }
         put(replaced, OverhaulCategory.TEXTILES, "paper");
+        put(replaced, OverhaulCategory.REDSTONE, "redstone_torch", "repeater", "piston", "dropper", "dispenser", "note_block", "compass", "tnt",
+                "comparator", "daylight_detector", "observer", "jukebox");
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.BEDS, color.getName() + "_bed"));
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.STONE, color.getName() + "_stained_glass_pane"));
         put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);

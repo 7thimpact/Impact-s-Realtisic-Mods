@@ -1,0 +1,31 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:redstone_mechanism"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:redstone_mechanism"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_tweezers"
+    }
+  ]
+}

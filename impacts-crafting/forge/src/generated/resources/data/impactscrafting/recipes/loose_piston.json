@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:loose_piston"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:piston_head"
+    },
+    {
+      "item": "impactscrafting:stone_casing"
+    },
+    {
+      "item": "impactscrafting:redstone_mechanism"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:loose_piston"
+  }
+}

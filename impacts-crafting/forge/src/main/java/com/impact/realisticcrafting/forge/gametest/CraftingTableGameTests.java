@@ -88,7 +88,7 @@ public final class CraftingTableGameTests {
     public static void recipesTakeTheirHighestIngredient(GameTestHelper helper) {
         assertRecipeTier(helper, "impactscrafting:oak_planks_by_hand", CraftingTier.NON_METAL);
         assertRecipeTier(helper, "minecraft:iron_nugget", CraftingTier.STONE);
-        assertRecipeTier(helper, "minecraft:compass", CraftingTier.STONE);
+        assertRecipeTier(helper, "impactscrafting:compass", CraftingTier.STONE);
         assertRecipeTier(helper, "minecraft:clock", CraftingTier.ADVANCED);
         assertRecipeTier(helper, "minecraft:golden_apple", CraftingTier.ADVANCED);
         assertRecipeTier(helper, "minecraft:firework_rocket", CraftingTier.NON_METAL);
