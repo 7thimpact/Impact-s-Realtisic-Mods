@@ -4,6 +4,7 @@ import com.impact.realisticfood.bucket.CampfireBuckets;
 import com.impact.realisticfood.client.BoilingEffects;
 import com.impact.realisticfood.client.FoodTooltips;
 import com.impact.realisticfood.client.StyledOverlaySource;
+import com.impact.realisticfood.stoneboiling.StoneBoilingPots;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,12 +32,12 @@ public final class FoodForgeClient {
         FoodTooltips.addLines(event.getItemStack(), event.getToolTip());
     }
 
-    // A campfire bucket's water takes the biome's water color, as a cauldron's does.
+    // A campfire bucket's or stone-boiling pot's water takes the biome's water color, as a cauldron's does.
     private static void onRegisterBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, position, tintIndex) -> {
             boolean isWater = tintIndex == WATER_TINT && level != null && position != null;
             return isWater ? BiomeColors.getAverageWaterColor(level, position) : DEFAULT_WATER_COLOR;
-        }, CampfireBuckets.block());
+        }, CampfireBuckets.block(), StoneBoilingPots.block());
     }
 
     private static void onClientTick(TickEvent.ClientTickEvent event) {

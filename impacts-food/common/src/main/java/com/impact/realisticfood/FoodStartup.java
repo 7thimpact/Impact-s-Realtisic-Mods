@@ -24,6 +24,8 @@ import com.impact.realisticfood.registry.FoodItems;
 import com.impact.realisticfood.registry.FoodSounds;
 import com.impact.realisticfood.soup.SoupRecipes;
 import com.impact.realisticfood.spit.Spits;
+import com.impact.realisticfood.stoneboiling.StoneBoilingPotWaterVessel;
+import com.impact.realisticfood.stoneboiling.StoneBoilingPots;
 
 /** Food's startup steps that don't depend on the mod loader. */
 public final class FoodStartup {
@@ -53,10 +55,12 @@ public final class FoodStartup {
         BoilingRecipes.register();
         SoupRecipes.register();
         CampfireBuckets.register();
+        StoneBoilingPots.register();
         Spits.register();
         FoodNetwork.create();
         ImpactsLib.registerBoilingProvider(FoodMod.MOD_ID, PotBoiling::isBoiling);
         WaterVessels.registerProvider(FoodMod.MOD_ID, new CampfireBucketWaterVessel());
+        WaterVessels.registerProvider(FoodMod.MOD_ID, new StoneBoilingPotWaterVessel());
         ImpactsLib.onModsReady(impactMods -> {
             FuelRegistry.register(FoodItems.fixedFood(FixedFood.BURNT_FOOD), stack -> FoodServerConfig.get().burntFood.burnTicks.get());
             FuelRegistry.register(Spits.spitItem(), SPIT_BURN_TICKS);

@@ -6,6 +6,8 @@ import com.impact.realisticfood.boiling.CauldronInteractions;
 import com.impact.realisticfood.boiling.CauldronPots;
 import com.impact.realisticfood.bucket.CampfireBuckets;
 import com.impact.realisticfood.raw.RawFoodRisk;
+import com.impact.realisticfood.stoneboiling.PebbleHeating;
+import com.impact.realisticfood.stoneboiling.StoneBoilingPots;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +30,8 @@ final class FoodForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onItemUseFinished);
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onItemSmelted);
         MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onAdvancementEarned);
-        // Early, so no other mod fills a bottle from a soup or pours the water bucket meant for a campfire; other clicks pass.
+        MinecraftForge.EVENT_BUS.addListener(FoodForgeEvents::onPlayerLoggedOut);
+        // Early, so no other mod fills a bottle from a soup or pours a bucket meant for a pot; other clicks pass.
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, FoodForgeEvents::onRightClickBlock);
     }
 
@@ -65,10 +68,20 @@ final class FoodForgeEvents {
             return;
         }
         Direction face = event.getFace() == null ? Direction.UP : event.getFace();
-        InteractionResult placing = CampfireBuckets.tryPlace(event.getLevel(), event.getPos(), face, event.getEntity(), event.getHand());
-        if (placing != InteractionResult.PASS) {
-            event.setCanceled(true);
-            event.setCancellationResult(placing);
+        InteractionResult result = CampfireBuckets.tryPlace(event.getLevel(), event.getPos(), face, event.getEntity(), event.getHand());
+        if (result == InteractionResult.PASS) {
+            result = StoneBoilingPots.tryPlace(event.getLevel(), event.getPos(), face, event.getEntity(), event.getHand());
         }
+        if (result == InteractionResult.PASS) {
+            result = PebbleHeating.tryHeat(event.getLevel(), event.getPos(), event.getEntity(), event.getHand());
+        }
+        if (result != InteractionResult.PASS) {
+            event.setCanceled(true);
+            event.setCancellationResult(result);
+        }
+    }
+
+    private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        PebbleHeating.forget(event.getEntity());
     }
 }

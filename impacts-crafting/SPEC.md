@@ -803,3 +803,5 @@ Changes made during implementation, following the handoff rule "follow the API a
   - **The Unfitted Piston** takes an Iron Rod (the push rod), which hammering fits.
   - **The Unsealed Blast Furnace** is sealed with Mortar instead of hammered: Mortar in the off hand, hold right-click, and one Mortar is used up. Hammering recipes gain `consumes_tool`.
   - Item IDs stay as before (`loose_iron_door` ...); only the names and tooltips say what each needs. JEI's Hammering page notes the Mortar being used up.
+- **The Water-filled Wooden Bucket tracks uses through Lib (step 5, for Food):** it implements Lib's `UsesTrackedItem` with the empty bucket's maximum (`woodenBucketUses`, 32), so other mods spend its uses through `UsesDurability`. Food's stone-boiling pot does: each Hot Pebble costs the bucket 1 use.
+

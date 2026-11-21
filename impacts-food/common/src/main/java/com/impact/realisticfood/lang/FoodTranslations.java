@@ -10,6 +10,7 @@ import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.food.FoodStyle;
+import com.impact.realisticfood.item.HotPebbleItem;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.registry.FoodSounds;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 public final class FoodTranslations {
     public static final String CREATIVE_TAB = CreativeTabs.titleKey(FoodMod.MOD_ID);
     public static final String CAMPFIRE_BUCKET = "block." + FoodMod.MOD_ID + ".campfire_bucket";
+    public static final String STONE_BOILING_POT = "block." + FoodMod.MOD_ID + ".stone_boiling_pot";
     public static final String JEI_BOILING = "jei.impactsfood.boiling";
     public static final String JEI_SOUP = "jei.impactsfood.soup";
     public static final String JEI_SPIT_ROASTING = "jei.impactsfood.spit_roasting";
@@ -35,6 +37,7 @@ public final class FoodTranslations {
     public static final String JEI_STYLES_INFO = "jei.impactsfood.info.styles";
     public static final String JEI_SPIT_INFO = "jei.impactsfood.info.spit";
     public static final String JEI_CAMPFIRE_BUCKET_INFO = "jei.impactsfood.info.campfire_bucket";
+    public static final String JEI_STONE_BOILING_INFO = "jei.impactsfood.info.stone_boiling";
     public static final String KNIFE_TOOLTIP = "tooltip.impactsfood.knife";
     public static final String SPIT_TOOLTIP = "tooltip.impactsfood.spit";
     public static final String PIECE_TOOLTIP = "tooltip.impactsfood.piece";
@@ -93,6 +96,7 @@ public final class FoodTranslations {
     private static void addTooltipsAndSubtitles(Map<String, String> translations) {
         translations.put(KNIFE_TOOLTIP, "Cuts raw food in any crafting grid");
         translations.put(SPIT_TOOLTIP, "Use on a lit campfire");
+        translations.put(HotPebbleItem.COOLING_TOOLTIP_KEY, "Cools in %s s");
         translations.put(PIECE_TOOLTIP, "Cooks in half the time");
         translations.put(RAW_RISK_TOOLTIP, "May cause Hunger if eaten raw");
         translations.put(subtitle(FoodSounds.POT_SIMMER), "Pot simmers");
@@ -124,6 +128,9 @@ public final class FoodTranslations {
                 + "empty hand to turn it for a burst of speed, and sneak with an empty hand to take it down.");
         translations.put(JEI_CAMPFIRE_BUCKET_INFO, "Sneak and use a water bucket on the top of a lit campfire to set it down as a small pot. "
                 + "Its water lasts 8 boils. Sneak with an empty hand to take it back.");
+        translations.put(JEI_STONE_BOILING_INFO, "Hold use on a lit campfire with a pebble to heat it into a Hot Pebble, which cools back "
+                + "after 30 seconds. Sneak and use a Water-filled Wooden Bucket on the top of a block to set it down, then drop Hot Pebbles "
+                + "in: each one boils the water for 30 seconds and costs the bucket 1 use. Sneak with an empty hand to take the bucket back.");
     }
 
     private static void addAdvancements(Map<String, String> translations) {
@@ -164,6 +171,8 @@ public final class FoodTranslations {
         Map<String, String> translations = new LinkedHashMap<>();
         translations.put(CREATIVE_TAB, "Impact's Realistic Food");
         translations.put(CAMPFIRE_BUCKET, "Campfire Bucket");
+        translations.put(STONE_BOILING_POT, "Stone-boiling Pot");
+        translations.put(itemKey("hot_pebble"), "Hot Pebble");
         translations.put(itemKey("spit"), "Spit");
         translations.put(ADVANCEMENT_TAB, "Realistic Food");
         addJei(translations);

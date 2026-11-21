@@ -57,6 +57,7 @@ public final class FoodJeiPlugin implements IModPlugin {
         }
         registration.addIngredientInfo(new ItemStack(Spits.spitItem()), VanillaTypes.ITEM_STACK, Component.translatable(FoodTranslations.JEI_SPIT_INFO));
         registration.addIngredientInfo(new ItemStack(Items.WATER_BUCKET), VanillaTypes.ITEM_STACK, Component.translatable(FoodTranslations.JEI_CAMPFIRE_BUCKET_INFO));
+        registration.addIngredientInfo(new ItemStack(FoodItems.hotPebble()), VanillaTypes.ITEM_STACK, Component.translatable(FoodTranslations.JEI_STONE_BOILING_INFO));
     }
 
     @Override

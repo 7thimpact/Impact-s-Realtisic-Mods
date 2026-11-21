@@ -4,7 +4,6 @@ import com.impact.lib.ImpactsLib;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.realisticfood.FoodMod;
-import com.impact.realisticfood.bucket.CampfireBucketBlockEntity;
 import com.impact.realisticfood.config.FoodFeature;
 import com.impact.realisticfood.debug.FoodLogCategories;
 import com.impact.realisticfood.mixin.ItemEntityAccessor;
@@ -54,7 +53,7 @@ public final class CauldronInteractions {
     }
 
     /**
-     * Whether Food refuses a bottle here: a cauldron or campfire bucket holding a soup or its ingredients mustn't give water. Checked by
+     * Whether Food refuses a bottle here: a cauldron, campfire bucket or stone-boiling pot holding a soup or its ingredients mustn't give water. Checked by
      * the loader's early click event too, so no other mod fills a bottle from a soup.
      */
     public static boolean isBottleRefused(Level level, BlockPos position, ItemStack held) {
@@ -70,10 +69,10 @@ public final class CauldronInteractions {
         return holdsSoup;
     }
 
-    // A water cauldron's pot, or a campfire bucket's.
+    // A water cauldron's pot, or a campfire bucket's or stone-boiling pot's.
     private static Optional<BoilingPot> serverPot(ServerLevel level, BlockPos position) {
-        if (level.getBlockEntity(position) instanceof CampfireBucketBlockEntity bucketEntity) {
-            return Optional.of(bucketEntity.pot());
+        if (level.getBlockEntity(position) instanceof PotBlockEntity potEntity) {
+            return Optional.of(potEntity.pot());
         }
         boolean isWaterCauldron = CauldronPotHost.isWaterCauldron(level.getBlockState(position));
         return isWaterCauldron ? CauldronPots.of(level).pot(position) : Optional.empty();

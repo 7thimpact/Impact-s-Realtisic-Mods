@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.boiling.BoilingPot;
+import com.impact.realisticfood.boiling.PotBlockEntity;
 import com.impact.realisticfood.boiling.SoupState;
 import com.impact.realisticfood.config.FoodServerConfig;
 import com.impact.realisticfood.debug.FoodLogCategories;
@@ -24,7 +25,7 @@ import java.util.stream.Stream;
  * A water bucket sitting on a campfire as a small pot. It keeps the bucket that was set down (with any other mod's
  * NBT), its pot, and how many boils its water has left; the bucket itself never wears down.
  */
-public final class CampfireBucketBlockEntity extends BlockEntity {
+public final class CampfireBucketBlockEntity extends BlockEntity implements PotBlockEntity {
     private static final ImpactsLog LOG = ImpactsLog.of(FoodMod.MOD_ID);
     private static final String BUCKET_KEY = "Bucket";
     private static final String BOILS_LEFT_KEY = "BoilsLeft";
@@ -42,6 +43,7 @@ public final class CampfireBucketBlockEntity extends BlockEntity {
         boilsLeft = FoodServerConfig.get().boiling.bucketBoils.get();
     }
 
+    @Override
     public BoilingPot pot() {
         return pot;
     }

@@ -9,7 +9,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Done, with Vitality and Crafting |
-| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality (IRC parts in step 5) |
+| 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality and Crafting |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Done on its own (milestone 10's IRC parts land in step 5) |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | In progress (milestone 1 done) |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
@@ -98,7 +98,7 @@ These are the milestones from `impacts-food/SPEC.md`.
 - [x] 7 Spit roasting: the Spit item, mounting on a lit campfire, 6 slots on top of the campfire's 4, 1.25x and turned 1.5x speed, taking it down, staying while the campfire is out and dropping when it breaks, saved and synced on the campfire, drawn by vanilla's campfire renderer
 - [x] 8 Raw food risk: `#impactsfood:raw_risky`, the Hunger roll on Forge's finished-eating event, per-food overrides, the switch
 - [x] 9 Baking: Flour from a stone grinder (with seeds), Dough with any water bottle, Loaf Dough, Dough Bun, Flatbread, Dumpling, bread from Loaf Dough, cake, cookies, pie and porridge from Flour, grid baking off, the grinders' standalone recipes
-- [ ] 10 IRC integration (moves to step 5)
+- [x] 10 IRC integration (done in step 5): knives and the spit from Crafting's parts, Hot Pebbles heated on a campfire from any of Crafting's pebbles, the stone-boiling pot from the Water-filled Wooden Bucket, Stone Soup, and the `crafting-and-food` setup
 - [x] 11 IRV, IRI and SRF checks: IRI (byproducts with no room drop, with or without its locked slots), SRF (the cauldron pass-through with SRF's raw gold ore, in the new `food-with-srf` setup) and IRV (the campfire bucket as a Lib water vessel, so Vitality fills Purified Water from it while it boils; the food tags Vitality reads; the `food-and-vitality` setup)
 - [x] 12 Polish: all 26 achievements, JEI (Boiling, Soups and Spit Roasting categories; cutting in Lib's Tool Crafting; info on the cooking styles, the spit and the campfire bucket), tooltips (styles, tools, raw pieces, the raw-food risk on vanilla items too), Food's own sound events with subtitles
 
@@ -139,7 +139,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 14 Audit (the SRF part is in step 6): the in-game recipe audit labels every vanilla crafting recipe (0 unlabeled, 0 conflicts), the tree check GameTest, endgame materials in the advanced tier, and Crafting versions of the soul campfire, smooth stone slab and bamboo sticks
 - [ ] **"With IRC" features:**
   - [x] IRI milestone 8: pack recipes with IRC parts (the Satchel takes a second Twine so it doesn't match IRC's leather boots), IRC's crafting arrow in IRI's screen, packs in the Dye Vat, the `crafting-and-inventory` setup
-  - [ ] IRF milestone 10: recipe switching, stone boiling
+  - [x] IRF milestone 10: recipe switching, stone boiling (Hot Pebbles, the stone-boiling pot), Stone Soup, the `crafting-and-food` setup
   - [ ] IRV: gear recipes, linings sewn with the Bone Needle, drinking from the Wooden Bucket, the loose Air Tank
 
 ## 6. Salty's Realistic Forging pass

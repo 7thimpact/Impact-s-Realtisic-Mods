@@ -1,5 +1,6 @@
 package com.impact.realisticfood.registry;
 
+import com.impact.lib.ImpactsLib;
 import com.impact.lib.grinding.Grinding;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
@@ -11,6 +12,7 @@ import com.impact.realisticfood.food.FoodBase;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.food.FoodStyle;
 import com.impact.realisticfood.item.FixedFoodItem;
+import com.impact.realisticfood.item.HotPebbleItem;
 import com.impact.realisticfood.item.KnifeItem;
 import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.item.PieceFoodItem;
@@ -40,6 +42,7 @@ public final class FoodItems {
     private static final Map<FixedFood, Supplier<FixedFoodItem>> FIXED_FOODS = new EnumMap<>(FixedFood.class);
     private static final Map<BakingIngredient, Supplier<Item>> BAKING_INGREDIENTS = new EnumMap<>(BakingIngredient.class);
     private static final Map<FoodStyle, Map<FoodBase, Supplier<StyledFoodItem>>> STYLED_FOODS = new EnumMap<>(FoodStyle.class);
+    private static Supplier<HotPebbleItem> hotPebble;
 
     private FoodItems() {
     }
@@ -59,6 +62,8 @@ public final class FoodItems {
         for (FixedFood fixedFood : FixedFood.values()) {
             FIXED_FOODS.put(fixedFood, registrar.register(Registries.ITEM, fixedFood.itemPath, () -> new FixedFoodItem(fixedFood)));
         }
+        // Registered even without Crafting, so worlds keep their Hot Pebbles; only Crafting's pebbles heat into one.
+        hotPebble = registrar.register(Registries.ITEM, "hot_pebble", HotPebbleItem::new);
         // Styled foods read their base's values when they are built, so they come after the pieces and fixed foods.
         for (FoodStyle style : FoodStyle.values()) {
             Map<FoodBase, Supplier<StyledFoodItem>> styledByBase = new EnumMap<>(FoodBase.class);
@@ -75,6 +80,10 @@ public final class FoodItems {
 
     public static List<Item> knives() {
         return KNIVES.values().stream().<Item>map(Supplier::get).toList();
+    }
+
+    public static HotPebbleItem hotPebble() {
+        return hotPebble.get();
     }
 
     public static Item piece(FoodPiece piece) {
@@ -106,6 +115,9 @@ public final class FoodItems {
     private static List<ItemLike> creativeTabItems() {
         Set<Item> items = new LinkedHashSet<>(knives());
         items.add(Spits.spitItem());
+        if (ImpactsLib.isLoaded(FoodMod.CRAFTING_MOD_ID)) {
+            items.add(hotPebble());
+        }
         items.addAll(Grinding.grinderItems());
         for (FoodPiece piece : FoodPiece.values()) {
             if (piece.cooks()) {

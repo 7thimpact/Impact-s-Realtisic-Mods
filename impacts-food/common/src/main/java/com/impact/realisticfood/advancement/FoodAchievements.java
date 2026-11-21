@@ -40,6 +40,11 @@ public final class FoodAchievements {
         playersNear(level, position).forEach(FoodTriggers.CAMPFIRE_BUCKET_BOILED::trigger);
     }
 
+    /** A Hot Pebble set a stone-boiling pot boiling ("Stone Soup"), for everyone close enough to see it. */
+    public static void onStoneBoiled(ServerLevel level, BlockPos position) {
+        playersNear(level, position).forEach(FoodTriggers.STONE_BOILED::trigger);
+    }
+
     /** A player finished eating: styled food counts toward "Taste Tester", boiled and toasted food toward "Day in and Day out". */
     public static void onEaten(ServerPlayer player, ItemStack eaten) {
         if (!eaten.is(FoodTags.STYLED_FOODS)) {

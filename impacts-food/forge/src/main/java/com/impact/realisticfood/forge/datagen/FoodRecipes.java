@@ -1,7 +1,9 @@
 package com.impact.realisticfood.forge.datagen;
 
+import com.google.gson.JsonElement;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.forge.datagen.ConditionalRecipes;
+import com.impact.lib.forge.datagen.ForeignRecipeBuilder;
 import com.impact.lib.forge.datagen.ToolCraftingRecipeBuilder;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.config.FoodFeature;
@@ -23,9 +25,11 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 
@@ -38,6 +42,10 @@ import java.util.function.Consumer;
  */
 final class FoodRecipes extends RecipeProvider {
     private static final float PIECE_COOKING_EXPERIENCE = 0.1F;
+    private static final String WITH_CRAFTING_SUFFIX = "_with_" + FoodMod.CRAFTING_MOD_ID;
+    private static final String CRAFTING_TRIMMED_STICK = "impactscrafting:trimmed_stick";
+    private static final String CRAFTING_FLINT_ARROWHEAD = "impactscrafting:flint_arrowhead";
+    private static final String CRAFTING_IRON_PLATES = "impactscrafting:iron_plates";
     private static final int EGG_BOIL_TICKS = 200;
 
     FoodRecipes(PackOutput output) {
@@ -67,6 +75,38 @@ final class FoodRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .unlockedBy("has_stick", has(Items.STICK))
                 .save(conditional(output, new FeatureEnabledCondition(FoodFeature.SPIT), ConditionalRecipes.modNotLoaded(FoodMod.CRAFTING_MOD_ID)));
+        knivesWithCrafting(output);
+    }
+
+    // Crafting's parts, named by ID because Crafting isn't loaded while Food generates its data. The Iron Plate is a
+    // stone-tier part, so Crafting puts the Iron Knife on the Makeshift Stone Table by itself.
+    private static void knivesWithCrafting(Consumer<FinishedRecipe> output) {
+        Consumer<FinishedRecipe> craftingOutput = conditional(output,
+                new FeatureEnabledCondition(FoodFeature.CUTTING), ConditionalRecipes.modLoaded(FoodMod.CRAFTING_MOD_ID));
+        knifeWithCrafting(craftingOutput, KnifeMaterial.FLINT, ForeignRecipeBuilder.item(CRAFTING_FLINT_ARROWHEAD));
+        knifeWithCrafting(craftingOutput, KnifeMaterial.IRON, ForeignRecipeBuilder.tag(CRAFTING_IRON_PLATES));
+        ForeignRecipeBuilder.of(RecipeSerializer.SHAPED_RECIPE)
+                .pattern("SS")
+                .key('S', ForeignRecipeBuilder.item(CRAFTING_TRIMMED_STICK))
+                .result(ResourceIds.itemId(Spits.spitItem()).toString(), 1)
+                .save(conditional(output, new FeatureEnabledCondition(FoodFeature.SPIT), ConditionalRecipes.modLoaded(FoodMod.CRAFTING_MOD_ID)),
+                        withCraftingId(ResourceIds.itemId(Spits.spitItem()).getPath()));
+    }
+
+    private static void knifeWithCrafting(Consumer<FinishedRecipe> output, KnifeMaterial material, JsonElement blade) {
+        Item knife = FoodItems.knife(material);
+        ForeignRecipeBuilder.of(RecipeSerializer.SHAPED_RECIPE)
+                .pattern("B")
+                .pattern("S")
+                .key('B', blade)
+                .key('S', ForeignRecipeBuilder.item(CRAFTING_TRIMMED_STICK))
+                .result(ResourceIds.itemId(knife).toString(), 1)
+                .save(output, withCraftingId(ResourceIds.itemId(knife).getPath()));
+    }
+
+    // Named like ConditionalRecipes.pair's recipes: flint_knife_with_impactscrafting.
+    private static ResourceLocation withCraftingId(String path) {
+        return ResourceIds.of(FoodMod.MOD_ID, path + WITH_CRAFTING_SUFFIX);
     }
 
     private static void knife(Consumer<FinishedRecipe> output, KnifeMaterial material, Item blade) {

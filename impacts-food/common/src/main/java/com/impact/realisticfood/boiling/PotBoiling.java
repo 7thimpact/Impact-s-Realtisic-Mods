@@ -1,6 +1,5 @@
 package com.impact.realisticfood.boiling;
 
-import com.impact.realisticfood.bucket.CampfireBucketBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -14,8 +13,8 @@ public final class PotBoiling {
         if (!(level instanceof ServerLevel serverLevel)) {
             return ClientBoilingPots.isBoiling(level, position);
         }
-        if (level.getBlockEntity(position) instanceof CampfireBucketBlockEntity bucketEntity) {
-            return bucketEntity.pot().isBoiling();
+        if (level.getBlockEntity(position) instanceof PotBlockEntity potEntity) {
+            return potEntity.pot().isBoiling();
         }
         return CauldronPots.isBoiling(serverLevel, position);
     }

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_water=false": {
+      "model": "impactsfood:block/stone_boiling_pot_empty"
+    },
+    "has_water=true": {
+      "model": "impactsfood:block/stone_boiling_pot"
+    }
+  }
+}

@@ -215,10 +215,15 @@ public final class FoodServerConfig {
     public static final class StoneBoilingSettings {
         public final ConfigValue<Integer> boilTicks;
         public final ConfigValue<Integer> pebbleCoolDownTicks;
+        public final ConfigValue<Integer> heatTicks;
+        public final ConfigValue<Integer> potBoils;
 
         private StoneBoilingSettings(ConfigSpecBuilder builder) {
             boilTicks = builder.defineInteger("boilTicks", 600, 1, MAXIMUM_TICKS, "Ticks one Hot Pebble keeps a stone-boiling pot boiling.");
             pebbleCoolDownTicks = builder.defineInteger("pebbleCoolDownTicks", 600, 1, MAXIMUM_TICKS, "Ticks a Hot Pebble takes to cool back into a Stone Pebble.");
+            heatTicks = builder.defineInteger("heatTicks", 40, 1, MAXIMUM_TICKS, "Ticks of holding use on a lit campfire to heat a pebble into a Hot Pebble.");
+            potBoils = builder.defineInteger("potBoils", 8, 1, 1000,
+                    "Boils the water of a stone-boiling pot lasts (each item boiled on its own, or every 2 soup servings, uses one).");
         }
     }
 

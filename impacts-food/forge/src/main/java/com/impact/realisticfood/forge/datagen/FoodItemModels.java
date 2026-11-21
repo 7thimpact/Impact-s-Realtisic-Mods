@@ -21,6 +21,7 @@ final class FoodItemModels extends ItemModelProvider {
     private static final String GENERATED_ITEM_PARENT = "item/generated";
     private static final String HANDHELD_ITEM_PARENT = "item/handheld";
     private static final String SPIT = "spit";
+    private static final String HOT_PEBBLE = "hot_pebble";
 
     FoodItemModels(PackOutput output, ExistingFileHelper existingFiles) {
         super(output, FoodMod.MOD_ID, existingFiles);
@@ -32,6 +33,7 @@ final class FoodItemModels extends ItemModelProvider {
             flatItem(material.itemPath, HANDHELD_ITEM_PARENT);
         }
         flatItem(SPIT, HANDHELD_ITEM_PARENT);
+        flatItem(HOT_PEBBLE, GENERATED_ITEM_PARENT);
         for (FoodPiece piece : FoodPiece.values()) {
             flatItem(piece.path, GENERATED_ITEM_PARENT);
         }

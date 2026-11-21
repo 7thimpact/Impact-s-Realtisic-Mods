@@ -1,5 +1,6 @@
 package com.impact.realisticfood.forge.gametest;
 
+import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.gametest.CraftingGrids;
 import com.impact.lib.grinding.GrinderTier;
@@ -96,8 +97,12 @@ public final class FoodBakingGameTests {
         helper.assertTrue(craftingRecipe(helper, pieGrid).orElseThrow().assemble(pieGrid, helper.getLevel().registryAccess()).is(Items.PUMPKIN_PIE),
                 "Pumpkin pie takes Flour");
         CraftingContainer bowlGrid = CraftingGrids.of(new ItemStack(Items.BOWL), ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.OAK_PLANKS));
-        helper.assertTrue(craftingRecipe(helper, bowlGrid).orElseThrow().assemble(bowlGrid, helper.getLevel().registryAccess()).is(Grinding.woodenBowl()),
-                "Without Crafting, a bowl on a plank makes a wooden grinder bowl");
+        if (ImpactsLib.isLoaded(FoodMod.CRAFTING_MOD_ID)) {
+            helper.assertTrue(craftingRecipe(helper, bowlGrid).isEmpty(), "With Crafting, the grinders are Crafting's recipes instead");
+        } else {
+            helper.assertTrue(craftingRecipe(helper, bowlGrid).orElseThrow().assemble(bowlGrid, helper.getLevel().registryAccess()).is(Grinding.woodenBowl()),
+                    "Without Crafting, a bowl on a plank makes a wooden grinder bowl");
+        }
         helper.succeed();
     }
 

@@ -1,6 +1,7 @@
 package com.impact.realisticcrafting.item;
 
 import com.impact.lib.item.UsesDurability;
+import com.impact.lib.item.UsesTrackedItem;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
@@ -27,9 +28,10 @@ import net.minecraft.world.phys.HitResult;
 /**
  * The Water-filled Wooden Bucket. Used on a block (not sneaking) it pours its water like vanilla's bucket, costing 1
  * use, and gives back the empty bucket with only its uses tag: other mods' water data leaves with the water. Sneaking,
- * or aiming at the air, is left to other mods (Food's stone-boiling pot, Vitality's drinking).
+ * or aiming at the air, is left to other mods (Food's stone-boiling pot, Vitality's drinking). It shares the empty
+ * bucket's uses, so other mods can spend them through Lib's {@code UsesDurability} (Food's Hot Pebbles).
  */
-public final class WoodenWaterBucketItem extends Item {
+public final class WoodenWaterBucketItem extends Item implements UsesTrackedItem {
     private static final ImpactsLog LOG = ImpactsLog.of(CraftingMod.MOD_ID);
     private static final int FULL_BAR_WIDTH = 13;
     // Water blue, so a filled bucket's wear reads apart from the empty bucket's green-to-red bar.
@@ -37,6 +39,11 @@ public final class WoodenWaterBucketItem extends Item {
 
     public WoodenWaterBucketItem() {
         super(new Item.Properties().stacksTo(1));
+    }
+
+    @Override
+    public int maxUses(ItemStack stack) {
+        return CraftingServerConfig.get().woodenBucketUses.get();
     }
 
     @Override
