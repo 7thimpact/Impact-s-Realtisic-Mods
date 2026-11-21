@@ -5,22 +5,28 @@ import com.impact.lib.gametest.MockPlayers;
 import com.impact.lib.wood.WoodData;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.registry.CraftingItems;
-import com.impact.realisticcrafting.timing.CraftDepthTable;
+import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.impact.realisticcrafting.forge.gametest.CraftingTestGrids.atTable;
@@ -117,10 +123,6 @@ public final class CraftingIronGameTests {
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void ironGoodsComeFromIronParts(GameTestHelper helper) {
         atTable(helper, MakeshiftTable.STONE, (player, table) -> {
-            ItemStack plate = stack(part(CraftingPart.IRON_PLATE));
-            ItemStack looseBucket = craft(table, player, plate.copy(), NO_ITEM, plate.copy(), NO_ITEM, plate.copy());
-            helper.assertTrue(looseBucket.is(CraftingItems.looseIron(LooseIron.BUCKET)), "3 Iron Plates make a loose bucket");
-            table.grid().clearContent();
             ItemStack rod = stack(part(CraftingPart.IRON_ROD));
             ItemStack bars = craft(table, player, rod.copy(), rod.copy(), rod.copy());
             helper.assertTrue(bars.is(Items.IRON_BARS) && bars.getCount() == 8, "3 Iron Rods make 8 iron bars");
@@ -146,9 +148,68 @@ public final class CraftingIronGameTests {
             helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceIds.of("minecraft", vanillaRecipe)).isEmpty(),
                     "Vanilla's " + vanillaRecipe + " recipe is switched off");
         }
-        helper.assertTrue(CraftDepthTable.depthOf(Items.BUCKET).orElse(-1) == CraftDepthTable.depthOf(CraftingItems.looseIron(LooseIron.BUCKET)).orElse(-2),
-                "A bucket is as deep as its loose bucket");
         helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void theBucketIsCastInAClayMold(GameTestHelper helper) {
+        ItemStack[] clay = new ItemStack[6];
+        Arrays.setAll(clay, slot -> slot == 1 ? NO_ITEM : stack(Items.CLAY_BALL));
+        atTable(helper, MakeshiftTable.WOODEN, (player, table) -> {
+            ItemStack unfired = craft(table, player, clay);
+            helper.assertTrue(unfired.is(CraftingItems.bucketMold(BucketMold.UNFIRED)), "5 clay balls shape an unfired bucket mold");
+        });
+        helper.assertTrue(smeltsInto(helper, CraftingItems.bucketMold(BucketMold.UNFIRED), CraftingItems.bucketMold(BucketMold.FIRED)),
+                "A furnace fires it into a bucket mold");
+        atTable(helper, MakeshiftTable.STONE, (player, table) -> {
+            ItemStack filled = craft(table, player, stack(CraftingItems.bucketMold(BucketMold.FIRED)), stack(Items.IRON_INGOT), stack(Items.IRON_INGOT),
+                    stack(Items.IRON_INGOT));
+            helper.assertTrue(filled.is(CraftingItems.bucketMold(BucketMold.FILLED)), "The mold and 3 iron ingots make a filled mold");
+        });
+        helper.assertTrue(smeltsInto(helper, CraftingItems.bucketMold(BucketMold.FILLED), CraftingItems.bucketMold(BucketMold.MOLTEN)),
+                "A furnace melts the iron in the mold");
+        BlockPos waterSpot = helper.absolutePos(new BlockPos(0, 1, 2));
+        helper.getLevel().setBlockAndUpdate(waterSpot, Blocks.WATER.defaultBlockState());
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            // Standing on the block above the water, looking straight down at it.
+            player.teleportTo(waterSpot.getX() + 0.5, waterSpot.getY() + 1.0, waterSpot.getZ() + 0.5);
+            player.setXRot(90.0F);
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack(CraftingItems.bucketMold(BucketMold.MOLTEN)));
+            InteractionResultHolder<ItemStack> cooled = player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+            helper.assertTrue(cooled.getObject().is(Items.BUCKET), "Cooling the molten mold in water gives a bucket");
+            helper.assertTrue(player.getInventory().countItem(CraftingItems.bucketMold(BucketMold.FIRED)) == 1, "and the mold back");
+        } finally {
+            MockPlayers.leaveWorld(player);
+            helper.getLevel().setBlockAndUpdate(waterSpot, Blocks.AIR.defaultBlockState());
+        }
+        helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceIds.of("minecraft", "bucket")).isEmpty(), "Vanilla's bucket recipe is off");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void theBlastFurnaceIsSealedWithMortar(GameTestHelper helper) {
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack(CraftingItems.looseIron(LooseIron.BLAST_FURNACE)));
+            player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(part(CraftingPart.MORTAR), 3));
+            player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
+            for (int tick = 0; tick < 60 && player.isUsingItem(); tick++) {
+                ItemStack held = player.getUseItem();
+                held.getItem().onUseTick(player.level(), player, held, player.getUseItemRemainingTicks());
+            }
+            helper.assertTrue(player.getMainHandItem().is(Items.BLAST_FURNACE), "Mortar in the off hand seals an Unsealed Blast Furnace");
+            helper.assertTrue(player.getOffhandItem().getCount() == 2, "and uses one Mortar up");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    private static boolean smeltsInto(GameTestHelper helper, Item input, Item expected) {
+        SimpleContainer furnace = new SimpleContainer(new ItemStack(input));
+        return helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, furnace, helper.getLevel())
+                .map(recipe -> recipe.getResultItem(helper.getLevel().registryAccess()).is(expected)).orElse(false);
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)

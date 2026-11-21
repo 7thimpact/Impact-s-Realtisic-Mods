@@ -75,6 +75,7 @@ final class HammeringCategory implements IRecipeCategory<HammeringRecipe> {
         Component holdText = holdTicks.getMin() == slowestTicks
                 ? Component.translatable(CraftingTranslations.JEI_HOLD_TIME, JeiText.seconds(slowestTicks))
                 : Component.translatable(CraftingTranslations.JEI_HOLD_TIME_RANGE, JeiText.seconds(holdTicks.getMin()), JeiText.seconds(slowestTicks));
-        builder.addText(holdText, WIDTH, TEXT_Y).setPosition(0, TEXT_Y);
+        Component shownText = recipe.consumesTool() ? Component.translatable(CraftingTranslations.JEI_USES_UP, holdText) : holdText;
+        builder.addText(shownText, WIDTH, TEXT_Y).setPosition(0, TEXT_Y);
     }
 }

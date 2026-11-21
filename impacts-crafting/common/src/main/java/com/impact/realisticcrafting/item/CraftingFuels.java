@@ -18,7 +18,6 @@ public final class CraftingFuels {
     private static final int WOODEN_BUCKET_BURN_TICKS = 600;
     private static final int CLOTH_BURN_TICKS = 300;
     // Like the vanilla boat it becomes.
-    private static final int LOOSE_BOAT_BURN_TICKS = 1200;
 
     private CraftingFuels() {
     }
@@ -40,7 +39,6 @@ public final class CraftingFuels {
         registerWhenOn(CraftingItems.comforter(), () -> CLOTH_BURN_TICKS);
         CraftingItems.sheets().forEach(sheet -> registerWhenOn(sheet, () -> CLOTH_BURN_TICKS));
         CraftingItems.bannerCloths().forEach(cloth -> registerWhenOn(cloth, () -> CLOTH_BURN_TICKS));
-        FuelRegistry.register(CraftingItems.looseBoat(), stack -> isOn() && isFlammableWood(stack) ? LOOSE_BOAT_BURN_TICKS : 0);
         registerWhenOn(CraftingItems.table(MakeshiftTable.WOODEN), () -> MAKESHIFT_TABLE_BURN_TICKS);
         for (ToolKind kind : ToolKind.values()) {
             registerWhenOn(CraftingItems.toolPart(ToolMaterial.WOODEN, kind), () -> WOODEN_TOOL_BURN_TICKS);

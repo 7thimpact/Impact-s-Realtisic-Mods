@@ -48,8 +48,8 @@ public final class CraftingRedstoneGameTests {
             ItemStack pistonHead = craft(table, player, panel, stack(part(CraftingPart.IRON_PLATE)));
             helper.assertTrue(pistonHead.is(part(CraftingPart.PISTON_HEAD)), "A Wooden Panel and an Iron Plate make a Piston Head");
             table.grid().clearContent();
-            ItemStack loosePiston = craft(table, player, pistonHead, stack(part(CraftingPart.STONE_CASING)), mechanism.copy());
-            helper.assertTrue(loosePiston.is(CraftingItems.looseIron(LooseIron.PISTON)), "Head, casing and mechanism make a loose piston");
+            ItemStack loosePiston = craft(table, player, pistonHead, stack(part(CraftingPart.STONE_CASING)), mechanism.copy(), stack(part(CraftingPart.IRON_ROD)));
+            helper.assertTrue(loosePiston.is(CraftingItems.looseIron(LooseIron.PISTON)), "Head, casing, mechanism and an Iron Rod make an Unfitted Piston");
             table.grid().clearContent();
             ItemStack dropper = craft(table, player, stack(part(CraftingPart.STONE_CASING)), mechanism.copy());
             helper.assertTrue(dropper.is(Items.DROPPER), "A casing and a mechanism make a dropper");

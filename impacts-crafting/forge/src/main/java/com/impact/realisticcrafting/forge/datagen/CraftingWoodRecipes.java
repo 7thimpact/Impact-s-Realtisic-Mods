@@ -90,13 +90,11 @@ final class CraftingWoodRecipes {
             ShapedRecipeBuilder hullRecipe = ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, CraftingItems.woodPart(WoodPart.BOAT_HULL))
                     .pattern("P P").pattern(" P ").define('P', panel).unlockedBy("has_panel", has(CraftingItems.woodPart(WoodPart.WOODEN_PANEL)));
             NbtResultRecipe.of(hullRecipe, WoodData.tagFor(woodType)).save(parts, id(name + "_boat_hull"));
+            // The boat is assembled from its parts: the hull and a pair of oars.
             Ingredient hull = WoodIngredients.of(CraftingItems.woodPart(WoodPart.BOAT_HULL), woodType);
-            ShapelessRecipeBuilder looseBoatRecipe = ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, CraftingItems.looseBoat())
-                    .requires(hull).requires(CraftingItems.part(CraftingPart.OAR)).requires(CraftingItems.part(CraftingPart.OAR))
-                    .unlockedBy("has_hull", has(CraftingItems.woodPart(WoodPart.BOAT_HULL)));
-            NbtResultRecipe.of(looseBoatRecipe, WoodData.tagFor(woodType)).save(wood, id(name + "_loose_boat"));
-            HammeringRecipeBuilder.of(WoodIngredients.of(CraftingItems.looseBoat(), woodType), Ingredient.of(CraftingTags.HAMMERS), boat.get())
-                    .save(wood, id(name + "_boat_from_hammering"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, boat.get()).requires(hull)
+                    .requires(CraftingItems.part(CraftingPart.OAR)).requires(CraftingItems.part(CraftingPart.OAR))
+                    .unlockedBy("has_hull", has(CraftingItems.woodPart(WoodPart.BOAT_HULL))).save(wood, id(name + "_boat"));
         }
     }
 

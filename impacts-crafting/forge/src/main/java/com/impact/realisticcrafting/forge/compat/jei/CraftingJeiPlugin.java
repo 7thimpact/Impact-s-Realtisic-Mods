@@ -92,7 +92,7 @@ public final class CraftingJeiPlugin implements IModPlugin {
     }
 
     private static List<Item> perWoodItems() {
-        return Stream.concat(Stream.of(WoodPart.values()).map(CraftingItems::woodPart), Stream.of(CraftingItems.looseBoat())).toList();
+        return Stream.of(WoodPart.values()).map(CraftingItems::woodPart).map(Item.class::cast).toList();
     }
 
     /** Tells per-wood parts apart by their {@code wood} NBT, and nothing else (uses or other mods' keys don't make a new entry). */

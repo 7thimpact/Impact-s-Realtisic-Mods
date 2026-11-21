@@ -76,6 +76,10 @@ public final class CraftingHints {
         hints.put("redstone_mechanism", new Hint("a plate, 2 redstone and rivets, with the Tweezers", "pistons, droppers, dispensers"));
         hints.put("piston_head", new Hint("a Wooden Panel and an Iron Plate", "pistons"));
         hints.put("paper_pulp", new Hint("sugar cane dipped in plain water", "3 Paper Pulp make paper"));
+        hints.put("unfired_bucket_mold", new Hint("5 clay balls", "fire it in a furnace"));
+        hints.put("bucket_mold", new Hint("an unfired mold, fired in a furnace", "fill it with 3 iron ingots"));
+        hints.put("filled_bucket_mold", new Hint("a bucket mold and 3 iron ingots", "melt it in a furnace or blast furnace"));
+        hints.put("molten_bucket_mold", new Hint("a filled mold, melted in a furnace", "cool it in water for a bucket and the mold"));
         hints.put("dye_vat", new Hint("an unused Wooden Bucket and 2 Twine", "fill with water and dye, then dip items"));
         hints.put("bed_frame", new Hint("a Wooden Frame and 3 Trimmed Planks", "place it, then lay a Comforter and a Sheet"));
         hints.put("comforter", new Hint("white wool and Twine, sewn", "the middle layer of a bed"));

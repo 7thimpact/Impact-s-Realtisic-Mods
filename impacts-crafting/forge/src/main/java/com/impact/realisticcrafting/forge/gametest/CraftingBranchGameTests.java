@@ -145,7 +145,7 @@ public final class CraftingBranchGameTests {
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
-    public static void boatsAreBuiltAndHammered(GameTestHelper helper) {
+    public static void boatsAreAssembledFromHullAndOars(GameTestHelper helper) {
         atTable(helper, MakeshiftTable.WOODEN, (player, table) -> {
             ItemStack panel = part(WoodPart.WOODEN_PANEL, BAMBOO);
             ItemStack hull = craft(table, player, panel.copy(), NO_ITEM, panel.copy(), NO_ITEM, panel.copy());
@@ -154,17 +154,8 @@ public final class CraftingBranchGameTests {
             ItemStack oar = craft(table, player, planks(OAK), NO_ITEM, NO_ITEM, stick(), NO_ITEM, NO_ITEM, stick());
             helper.assertTrue(oar.is(CraftingItems.part(CraftingPart.OAR)), "Trimmed Planks on 2 Trimmed Sticks make an Oar");
             table.grid().clearContent();
-            ItemStack looseBoat = craft(table, player, hull, oar.copy(), oar.copy());
-            helper.assertTrue(looseBoat.is(CraftingItems.looseBoat()) && WoodData.get(looseBoat).equals(Optional.of(BAMBOO)),
-                    "A hull and 2 oars make a loose bamboo boat");
-            player.setItemInHand(InteractionHand.MAIN_HAND, looseBoat);
-            player.setItemInHand(InteractionHand.OFF_HAND, pebble());
-            player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
-            for (int tick = 0; tick < 40 && player.isUsingItem(); tick++) {
-                ItemStack held = player.getUseItem();
-                held.getItem().onUseTick(player.level(), player, held, player.getUseItemRemainingTicks());
-            }
-            helper.assertTrue(player.getMainHandItem().is(Items.BAMBOO_RAFT), "Hammering it makes a bamboo raft");
+            ItemStack raft = craft(table, player, hull, oar.copy(), oar.copy());
+            helper.assertTrue(raft.is(Items.BAMBOO_RAFT) && !raft.hasTag(), "A bamboo hull and 2 oars assemble a plain bamboo raft, no hammering");
         });
         helper.succeed();
     }

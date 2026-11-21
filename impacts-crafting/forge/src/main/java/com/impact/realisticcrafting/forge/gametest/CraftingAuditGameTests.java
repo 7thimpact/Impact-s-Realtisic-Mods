@@ -5,6 +5,7 @@ import com.impact.lib.crafting.ToolCraftingRecipe;
 import com.impact.lib.grinding.Grinding;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.ToolKind;
@@ -73,12 +74,14 @@ public final class CraftingAuditGameTests {
         helper.succeed();
     }
 
-    // Every ingredient and tool of every crafting, hammering, vat and grinding recipe.
+    // Every ingredient and tool of every crafting, hammering, vat, grinding and furnace recipe.
     private static Set<Item> usedItems(RecipeManager recipes) {
         List<Recipe<?>> everyRecipe = new ArrayList<>(recipes.getAllRecipesFor(RecipeType.CRAFTING));
         everyRecipe.addAll(recipes.getAllRecipesFor(CraftingRecipeTypes.hammering()));
         everyRecipe.addAll(recipes.getAllRecipesFor(CraftingRecipeTypes.vatDyeing()));
         everyRecipe.addAll(recipes.getAllRecipesFor(Grinding.recipeType()));
+        everyRecipe.addAll(recipes.getAllRecipesFor(RecipeType.SMELTING));
+        everyRecipe.addAll(recipes.getAllRecipesFor(RecipeType.BLASTING));
         Set<Item> used = new HashSet<>();
         everyRecipe.forEach(recipe -> addIngredients(used, recipe));
         return used;
@@ -103,6 +106,7 @@ public final class CraftingAuditGameTests {
         Arrays.stream(WoodPart.values()).forEach(part -> parts.add(CraftingItems.woodPart(part)));
         Arrays.stream(CraftingTool.values()).forEach(tool -> parts.add(CraftingItems.tool(tool)));
         parts.addAll(CraftingItems.pebbles());
+        Arrays.stream(BucketMold.values()).filter(stage -> stage != BucketMold.MOLTEN).forEach(stage -> parts.add(CraftingItems.bucketMold(stage)));
         parts.add(CraftingItems.woodenBucket());
         parts.add(CraftingItems.bannerCloth(DyeColor.WHITE));
         for (ToolMaterial material : ToolMaterial.values()) {
@@ -121,6 +125,8 @@ public final class CraftingAuditGameTests {
         items.addAll(CraftingItems.bannerCloths());
         Arrays.stream(MakeshiftTable.values()).forEach(table -> items.add(CraftingItems.table(table)));
         items.add(CraftingItems.part(CraftingPart.WOOD_SCRAPS));
+        // Cooled in water in the world, not in a recipe.
+        items.add(CraftingItems.bucketMold(BucketMold.MOLTEN));
         return items;
     }
 }

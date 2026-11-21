@@ -56,7 +56,7 @@ final class CraftingRedstoneRecipes {
                 .save(redstone, id("redstone_torch"));
         shapeless(Items.REPEATER, 1).requires(base).requires(Items.REDSTONE_TORCH, 2).requires(Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_stone_base", has(base)).save(redstone, id("repeater"));
-        shapeless(CraftingItems.looseIron(LooseIron.PISTON), 1).requires(pistonHead).requires(casing).requires(mechanism)
+        shapeless(CraftingItems.looseIron(LooseIron.PISTON), 1).requires(pistonHead).requires(casing).requires(mechanism).requires(CraftingTags.IRON_RODS)
                 .unlockedBy("has_piston_head", has(pistonHead)).save(redstone, id("loose_piston"));
         shapeless(Items.DROPPER, 1).requires(casing).requires(mechanism).unlockedBy("has_mechanism", has(mechanism)).save(redstone, id("dropper"));
         shapeless(Items.DISPENSER, 1).requires(Items.DROPPER).requires(Items.BOW).unlockedBy("has_dropper", has(Items.DROPPER)).save(redstone, id("dispenser"));

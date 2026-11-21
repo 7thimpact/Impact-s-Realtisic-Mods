@@ -6,11 +6,13 @@ import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.advancement.CraftingAdvancements;
 import com.impact.realisticcrafting.bed.BedLayering;
 import com.impact.realisticcrafting.block.MakeshiftTable;
+import com.impact.realisticcrafting.item.BucketMold;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
+import com.impact.realisticcrafting.item.MoltenBucketMoldItem;
 import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
@@ -37,6 +39,7 @@ public final class CraftingTranslations {
     public static final String JEI_DYE_VAT = jeiKey("dye_vat");
     public static final String JEI_HOLD_TIME = jeiKey("hold_time");
     public static final String JEI_HOLD_TIME_RANGE = jeiKey("hold_time_range");
+    public static final String JEI_USES_UP = jeiKey("uses_up");
     public static final String JEI_VAT_COLOR = jeiKey("vat_color");
     public static final String JEI_VAT_COLOR_CHARGES = jeiKey("vat_color_charges");
     public static final String JEI_PLAIN_WATER = jeiKey("plain_water");
@@ -85,8 +88,6 @@ public final class CraftingTranslations {
             english.put(ITEM_KEY_PREFIX + part.path, titleCase(part.path));
             english.put(ITEM_KEY_PREFIX + part.path + ".wood", "%s " + titleCase(part.path));
         }
-        english.put(ITEM_KEY_PREFIX + "loose_boat", "Loose Boat");
-        english.put(ITEM_KEY_PREFIX + "loose_boat.wood", "%s Loose Boat");
         english.put(ITEM_KEY_PREFIX + "wooden_bucket", "Wooden Bucket");
         english.put(ITEM_KEY_PREFIX + "wooden_water_bucket", "Water-filled Wooden Bucket");
         english.put(ITEM_KEY_PREFIX + CraftingPart.TRIMMED_STICK.path, "Trimmed Sticks");
@@ -119,9 +120,16 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.BOW_STAVE.path, "Bow Stave");
         english.put(ITEM_KEY_PREFIX + CraftingPart.LEATHER_PANEL.path, "Leather Panel");
         for (LooseIron looseIron : LooseIron.values()) {
-            english.put(ITEM_KEY_PREFIX + looseIron.path, titleCase(looseIron.path));
+            english.put(ITEM_KEY_PREFIX + looseIron.path, looseIron.englishName);
         }
-        english.put(LooseItem.HAMMER_HINT_KEY, "Hammer with a pebble in your off hand.");
+        for (BucketMold stage : BucketMold.values()) {
+            english.put(ITEM_KEY_PREFIX + stage.path, titleCase(stage.path));
+        }
+        english.put(MoltenBucketMoldItem.HOT_HINT_KEY, "Hot! Cool it in water (right-click water or a water cauldron) for a bucket.");
+        english.put(LooseItem.HAMMER_HINT_KEY, "Seat the head: a hammer (a pebble will do) in the off hand, hold right-click.");
+        for (LooseIron.Finish finish : LooseIron.Finish.values()) {
+            english.put(finish.hintKey, finish.englishHint);
+        }
         for (ToolMaterial material : ToolMaterial.values()) {
             for (ToolKind kind : ToolKind.values()) {
                 english.put(ITEM_KEY_PREFIX + kind.partPath(material), titleCase(kind.partPath(material)));
@@ -153,6 +161,7 @@ public final class CraftingTranslations {
         english.put(JEI_DYE_VAT, "Dye Vat");
         english.put(JEI_HOLD_TIME, "Hold for %s");
         english.put(JEI_HOLD_TIME_RANGE, "Hold for %s to %s");
+        english.put(JEI_USES_UP, "%s, uses one up");
         english.put(JEI_VAT_COLOR, "%s water");
         english.put(JEI_VAT_COLOR_CHARGES, "%s water, %s charges");
         english.put(JEI_PLAIN_WATER, "Plain water");
@@ -170,8 +179,9 @@ public final class CraftingTranslations {
         english.put(JEI_DYE_VAT_INFO, "Fill the vat with water from a bucket, or let rain fill it. One dye colors 8 dips, and a second dye mixes "
                 + "with the first when the colors mix (red and yellow make orange). Hold right-click with an item to dip it. Leather armor and packs "
                 + "take the vat's color; plain water washes dye off and soaks sugar cane into Paper Pulp.");
-        english.put(JEI_LOOSE_ITEMS_INFO, "Loose items must be hammered before use: hold the loose item in your main hand and a hammer (a Stone "
-                + "Pebble or the Iron Hammer) in your off hand, then hold right-click. Letting go early starts over and costs nothing.");
+        english.put(JEI_LOOSE_ITEMS_INFO, "Unfinished items need their last step in hand: loose tools get their heads seated, riveted goods "
+                + "their rivets driven home, the piston its push rod fitted, all with a hammer (a pebble or the Iron Hammer) in your off hand; the "
+                + "blast furnace is sealed with Mortar instead. Hold the item in your main hand and hold right-click. Letting go early starts over.");
     }
 
     private static void addSubtitles(Map<String, String> english) {

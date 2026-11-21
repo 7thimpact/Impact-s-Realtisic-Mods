@@ -7,8 +7,9 @@
       "recipe": "impactscrafting:blast_furnace_from_hammering"
     }
   ],
+  "consumes_tool": true,
   "hammer": {
-    "tag": "impactscrafting:hammers"
+    "item": "impactscrafting:mortar"
   },
   "input": {
     "item": "impactscrafting:loose_blast_furnace"
