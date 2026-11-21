@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "rain_barrel"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "impactscrafting:wooden_bucket"
+    },
+    "P": {
+      "item": "impactscrafting:wooden_panel"
+    }
+  },
+  "pattern": [
+    "P P",
+    " B "
+  ],
+  "result": {
+    "item": "impactsvitality:rain_barrel"
+  }
+}

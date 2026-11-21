@@ -76,7 +76,7 @@ public final class VitalityTranslations {
             Map.entry("air_compressor", "Use a tank on it, then any furnace fuel: it fills the tank in 5 seconds, even in thin air."),
             Map.entry("thermometer", "Carry it anywhere in your inventory to see the temperature under the gauge."),
             Map.entry("straw_hat", "Shade: in the sun it widens the hot side of your comfortable range."),
-            Map.entry("linings", "Sew a lining into any armor at an anvil: 3 wool for warmth, 4 rabbit hide for more warmth, or 3 leather to stay cool. The armor keeps its enchantments and damage."));
+            Map.entry("linings", "Sew a lining into any armor at an anvil (with Impact's Realistic Crafting, in a crafting grid with Twine and the Bone Needle): 3 wool for warmth, 4 rabbit hide for more warmth, or 3 leather to stay cool. The armor keeps its enchantments and damage."));
     public static final String MASK_DAMP = "tooltip.impactsvitality.mask.damp";
     public static final String MASK_DRY = "tooltip.impactsvitality.mask.dry";
     public static final String MASK_FILTER = "tooltip.impactsvitality.mask.filter";
@@ -84,6 +84,7 @@ public final class VitalityTranslations {
     public static final String MASK_NEVER_SMOKE = "tooltip.impactsvitality.mask.never_smoke";
     public static final String TANK_AIR = "tooltip.impactsvitality.tank.air";
     public static final String TANK_NEEDS_RESPIRATOR = "tooltip.impactsvitality.tank.needs_respirator";
+    public static final String LOOSE_AIR_TANK_HINT = "tooltip.impactsvitality.loose_air_tank";
     public static final String BLADDER_USES = "tooltip.impactsvitality.air_bladder.uses";
     private static final Map<String, String> BREATHING_ITEM_NAMES = Map.of(
             "cloth_mask", "Cloth Mask",
@@ -93,7 +94,8 @@ public final class VitalityTranslations {
             "air_tank", "Air Tank",
             "shulker_air_tank", "Shulker Air Tank",
             "air_bladder", "Air Bladder",
-            "bottled_air", "Bottled Air");
+            "bottled_air", "Bottled Air",
+            "loose_air_tank", "Loose Air Tank");
     private static final Map<ArmorLining, String> LINING_NAMES = new EnumMap<>(Map.of(
             ArmorLining.WOOL, "Wool Lining: warmer",
             ArmorLining.FUR, "Fur Lining: much warmer",
@@ -218,6 +220,7 @@ public final class VitalityTranslations {
         english.put(MASK_NEVER_SMOKE, "Smoke never affects you");
         english.put(TANK_AIR, "Air: %s of %s seconds");
         english.put(TANK_NEEDS_RESPIRATOR, "Supplies thin air while you wear a Respirator or Rebreather");
+        english.put(LOOSE_AIR_TANK_HINT, "Hold it and hammer it with a pebble or Iron Hammer in the other hand");
         english.put(BLADDER_USES, "%s of %s breaths: fill it in good air, use it in thin air");
         english.put(ITEM_KEY_PREFIX + "thermometer", "Thermometer");
         for (ResourceKey<DamageType> damageType : VitalityDamageTypes.ALL) {

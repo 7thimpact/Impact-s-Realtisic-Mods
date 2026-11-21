@@ -45,8 +45,9 @@ public final class VitalityAirGameTests {
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void heightBandsInTheOverworld(GameTestHelper helper) {
         helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 100) == AirQuality.GOOD, "Y 100 is good air");
-        helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 170) == AirQuality.THIN, "Y 170 is thin");
-        helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 230) == AirQuality.VERY_THIN, "Y 230 is very thin");
+        helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 180) == AirQuality.GOOD, "Y 180, a high mountain, is still good air");
+        helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 200) == AirQuality.THIN, "Above Y 192 the air is thin");
+        helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, 260) == AirQuality.VERY_THIN, "Above Y 256 it's very thin");
         helper.assertTrue(AirQualities.ofPlace(Level.OVERWORLD, -50) == AirQuality.THIN, "Below Y −40 the deep air is stale");
         helper.succeed();
     }

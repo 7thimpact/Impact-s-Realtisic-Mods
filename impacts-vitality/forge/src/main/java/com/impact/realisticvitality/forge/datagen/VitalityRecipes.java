@@ -50,6 +50,7 @@ final class VitalityRecipes extends RecipeProvider {
                 .save(thirstOutput);
         VitalityContainerRecipes.build(output);
         VitalityBreathingRecipes.build(output);
+        VitalityCraftingRecipes.build(output);
     }
 
     private static void purifying(Consumer<FinishedRecipe> output, Ingredient water, String waterName) {

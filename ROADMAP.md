@@ -140,7 +140,9 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [ ] **"With IRC" features:**
   - [x] IRI milestone 8: pack recipes with IRC parts (the Satchel takes a second Twine so it doesn't match IRC's leather boots), IRC's crafting arrow in IRI's screen, packs in the Dye Vat, the `crafting-and-inventory` setup
   - [x] IRF milestone 10: recipe switching, stone boiling (Hot Pebbles, the stone-boiling pot), Stone Soup, the `crafting-and-food` setup
-  - [ ] IRV: gear recipes, linings sewn with the Bone Needle, drinking from the Wooden Bucket, the loose Air Tank
+  - IRV:
+    - [x] gear recipes from Crafting's parts (the Waterskin takes a Leather Strip so it doesn't match Crafting's leather boots), linings sewn with the Bone Needle, the loose Air Tank and its hammering, the `crafting-and-vitality` setup
+    - [ ] drinking from (and pouring out) the Water-filled Wooden Bucket
 
 ## 6. Salty's Realistic Forging pass
 

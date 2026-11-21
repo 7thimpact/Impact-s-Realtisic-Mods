@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "canteen"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "P": {
+      "tag": "impactscrafting:iron_plates"
+    },
+    "R": {
+      "item": "impactscrafting:iron_rivets"
+    },
+    "S": {
+      "item": "impactscrafting:leather_strip"
+    }
+  },
+  "pattern": [
+    " S ",
+    "PRP",
+    " P "
+  ],
+  "result": {
+    "item": "impactsvitality:canteen"
+  }
+}

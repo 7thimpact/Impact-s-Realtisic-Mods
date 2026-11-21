@@ -1,0 +1,22 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "air_tank"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "item": "impactsvitality:loose_air_tank"
+  },
+  "result": {
+    "item": "impactsvitality:air_tank"
+  }
+}

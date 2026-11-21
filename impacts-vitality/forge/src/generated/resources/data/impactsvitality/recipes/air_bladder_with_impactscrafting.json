@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "air_bladder"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:air_bladder"
+  }
+}

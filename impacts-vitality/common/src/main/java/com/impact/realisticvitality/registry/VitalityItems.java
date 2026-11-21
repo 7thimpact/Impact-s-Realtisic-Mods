@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.registry;
 
+import com.impact.lib.ImpactsLib;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.lib.registry.ModRegistrar;
@@ -12,6 +13,7 @@ import com.impact.realisticvitality.item.BottledAirItem;
 import com.impact.realisticvitality.item.BreathingMaskItem;
 import com.impact.realisticvitality.item.CharcoalFilterItem;
 import com.impact.realisticvitality.item.HydrationPackItem;
+import com.impact.realisticvitality.item.LooseAirTankItem;
 import com.impact.realisticvitality.item.StrawArmorMaterial;
 import com.impact.realisticvitality.item.WaterBottleItem;
 import com.impact.realisticvitality.item.WaterContainerItem;
@@ -42,6 +44,7 @@ public final class VitalityItems {
     private static final Map<AirTank, Supplier<AirTankItem>> TANKS = new EnumMap<>(AirTank.class);
     private static volatile Supplier<AirBladderItem> airBladder;
     private static volatile Supplier<BottledAirItem> bottledAir;
+    private static volatile Supplier<LooseAirTankItem> looseAirTank;
 
     private VitalityItems() {
     }
@@ -66,6 +69,8 @@ public final class VitalityItems {
         }
         airBladder = registrar.register(Registries.ITEM, "air_bladder", AirBladderItem::new);
         bottledAir = registrar.register(Registries.ITEM, "bottled_air", BottledAirItem::new);
+        // Registered even without Crafting, so worlds keep it; only Crafting's recipes and hammering make and finish one.
+        looseAirTank = registrar.register(Registries.ITEM, "loose_air_tank", LooseAirTankItem::new);
         CreativeTabs.register(VitalityMod.MOD_ID, () -> bottle(BottledWater.PURIFIED), VitalityItems::creativeTabItems);
     }
 
@@ -106,6 +111,10 @@ public final class VitalityItems {
         return headwear;
     }
 
+    public static LooseAirTankItem looseAirTank() {
+        return looseAirTank.get();
+    }
+
     public static AirTankItem tank(AirTank tank) {
         return TANKS.get(tank).get();
     }
@@ -140,6 +149,9 @@ public final class VitalityItems {
         Arrays.stream(BreathingMask.values()).map(VitalityItems::mask).forEach(items::add);
         items.add(airBladder());
         items.add(bottledAir());
+        if (ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID)) {
+            items.add(looseAirTank());
+        }
         Arrays.stream(AirTank.values()).map(VitalityItems::tank).forEach(items::add);
         return items;
     }

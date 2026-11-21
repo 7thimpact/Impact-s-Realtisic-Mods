@@ -52,7 +52,7 @@ public final class VitalityAmbientGameTests {
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void heightCoolsAboveOneHundred(GameTestHelper helper) {
-        assertClose(helper, AmbientTemperature.heightAdjustment(140), -10.0, "Y 140");
+        assertClose(helper, AmbientTemperature.heightAdjustment(160), -20.0, "Y 160: 1°F colder every 3 blocks above Y 100");
         assertClose(helper, AmbientTemperature.heightAdjustment(90), 0.0, "Y 90");
         helper.succeed();
     }
@@ -62,7 +62,8 @@ public final class VitalityAmbientGameTests {
         double surface = 62.0;
         assertClose(helper, surface + AmbientTemperature.undergroundAdjustment(surface, 30), 55.0, "A cave 20 blocks under Y 50");
         assertClose(helper, surface + AmbientTemperature.undergroundAdjustment(surface, 40), 58.5, "Halfway into the cave blend");
-        assertClose(helper, surface + AmbientTemperature.undergroundAdjustment(surface, -64), 75.0, "The deepest caves");
+        assertClose(helper, surface + AmbientTemperature.undergroundAdjustment(surface, -32), 45.0, "Caves cool below Y 0");
+        assertClose(helper, surface + AmbientTemperature.undergroundAdjustment(surface, -64), 35.0, "The deepest caves are the coldest");
         assertClose(helper, AmbientTemperature.undergroundAdjustment(surface, 60), 0.0, "Above Y 50");
         helper.succeed();
     }

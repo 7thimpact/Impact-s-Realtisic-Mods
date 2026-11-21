@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "rebreather"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "impactsvitality:air_bladder"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "impactsvitality:respirator"
+    },
+    "V": {
+      "item": "impactscrafting:iron_rivets"
+    }
+  },
+  "pattern": [
+    "GRG",
+    " B ",
+    " V "
+  ],
+  "result": {
+    "item": "impactsvitality:rebreather"
+  }
+}

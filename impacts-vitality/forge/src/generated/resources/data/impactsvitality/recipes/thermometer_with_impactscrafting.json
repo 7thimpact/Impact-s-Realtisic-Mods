@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thermometer"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "P": {
+      "tag": "impactscrafting:iron_plates"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "G",
+    "P",
+    "R"
+  ],
+  "result": {
+    "item": "impactsvitality:thermometer"
+  }
+}

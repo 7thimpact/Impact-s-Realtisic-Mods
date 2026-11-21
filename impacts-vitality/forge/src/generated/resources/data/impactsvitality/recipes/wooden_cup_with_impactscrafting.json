@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "wooden_cup"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:wooden_cup"
+  }
+}

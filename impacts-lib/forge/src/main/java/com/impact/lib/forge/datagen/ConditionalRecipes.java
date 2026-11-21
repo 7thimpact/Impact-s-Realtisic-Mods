@@ -48,6 +48,14 @@ public final class ConditionalRecipes {
     }
 
     private record ConditionalFinishedRecipe(FinishedRecipe delegate, ResourceLocation id, List<ICondition> conditions) implements FinishedRecipe {
+        // The delegate writes its own type, so a recipe of another mod's type (named by ID) keeps it.
+        @Override
+        public JsonObject serializeRecipe() {
+            JsonObject json = delegate.serializeRecipe();
+            json.add(CONDITIONS_KEY, CraftingHelper.serialize(conditions.toArray(ICondition[]::new)));
+            return json;
+        }
+
         @Override
         public void serializeRecipeData(JsonObject json) {
             delegate.serializeRecipeData(json);

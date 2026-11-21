@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "air_compressor"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "M": {
+      "item": "impactscrafting:redstone_mechanism"
+    },
+    "S": {
+      "item": "impactscrafting:stone_casing"
+    }
+  },
+  "pattern": [
+    "CMC",
+    "CSC"
+  ],
+  "result": {
+    "item": "impactsvitality:air_compressor"
+  }
+}

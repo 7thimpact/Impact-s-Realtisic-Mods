@@ -235,3 +235,11 @@ def collectModJar = tasks.register('collectModJar', Copy) {
 tasks.named('assemble') {
     finalizedBy collectModJar
 }
+
+// GameTests check the specs' numbers, so every run starts from default Impact config: files left by a dev run, or written
+// before a default changed, would otherwise be read instead (and could hide a test that no longer matches the defaults).
+tasks.matching { task -> task.name == 'runGameTestServer' }.configureEach { runTask ->
+    runTask.doFirst {
+        project.delete(project.file('run/config/impactslib'), project.file('run/world/serverconfig/impactslib'))
+    }
+}

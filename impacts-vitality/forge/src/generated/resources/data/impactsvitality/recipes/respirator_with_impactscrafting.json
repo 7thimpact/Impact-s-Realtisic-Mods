@@ -1,0 +1,32 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "respirator"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "minecraft:glass_pane"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:respirator"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

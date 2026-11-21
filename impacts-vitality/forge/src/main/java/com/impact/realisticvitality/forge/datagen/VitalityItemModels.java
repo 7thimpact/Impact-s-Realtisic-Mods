@@ -41,5 +41,6 @@ final class VitalityItemModels extends ItemModelProvider {
         }
         basicItem(VitalityItems.airBladder());
         basicItem(VitalityItems.bottledAir());
+        basicItem(VitalityItems.looseAirTank());
     }
 }

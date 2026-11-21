@@ -1,0 +1,47 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "hydration_pack"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsvitality:canteen"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:hydration_pack"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

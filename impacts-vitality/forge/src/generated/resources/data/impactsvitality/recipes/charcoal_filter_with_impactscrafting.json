@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "charcoal_filter"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "item": "impactscrafting:leather_strip"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:charcoal_filter"
+  }
+}

@@ -33,7 +33,7 @@ import java.util.function.Consumer;
 
 /**
  * The drink containers', water blocks' and Charcoal Filter's recipes without Crafting installed (the versions made from
- * Crafting's parts arrive with Crafting), the Wooden Cup purifying on a campfire, and filling containers from bottles in a grid.
+ * Crafting's parts are in {@link VitalityCraftingRecipes}), the Wooden Cup purifying on a campfire, and filling containers from bottles in a grid.
  */
 final class VitalityContainerRecipes {
     private static final float CUP_PURIFYING_EXPERIENCE = 0.1F;

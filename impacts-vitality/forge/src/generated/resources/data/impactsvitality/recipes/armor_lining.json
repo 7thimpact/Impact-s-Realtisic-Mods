@@ -1,0 +1,14 @@
+{
+  "type": "impactsvitality:armor_lining",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "linings"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ]
+}

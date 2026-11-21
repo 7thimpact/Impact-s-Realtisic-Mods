@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "water_filter"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "impactscrafting:wooden_bucket"
+    },
+    "F": {
+      "item": "impactsvitality:charcoal_filter"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "F",
+    "B",
+    "I"
+  ],
+  "result": {
+    "item": "impactsvitality:water_filter"
+  }
+}

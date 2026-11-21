@@ -3,10 +3,12 @@ package com.impact.lib.forge.datagen;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.impact.lib.ResourceIds;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,13 +19,14 @@ import java.util.function.Consumer;
  * items and tags are written by ID ({@link #item}, {@link #tag}) and the recipe's JSON is built field by field. Gate it
  * with {@link ConditionalRecipes#withConditions} and {@code forge:mod_loaded} so it only loads alongside that mod.
  * Shapeless recipes take {@link #ingredient}; shaped ones {@link #pattern} and {@link #key}; Lib's tool crafting adds
- * {@link #tool} and any other field through {@link #field}.
+ * {@link #tool} and any other field through {@link #field}. Another mod's recipe type is named by ID ({@link #ofType}).
  */
 public final class ForeignRecipeBuilder {
     private static final String ITEM_KEY = "item";
     private static final String TAG_KEY = "tag";
+    private static final String TYPE_KEY = "type";
 
-    private final RecipeSerializer<?> serializer;
+    private final ResourceLocation typeId;
     private final JsonArray ingredients = new JsonArray();
     private final JsonArray pattern = new JsonArray();
     private final JsonObject key = new JsonObject();
@@ -31,13 +34,18 @@ public final class ForeignRecipeBuilder {
     private final Map<String, JsonElement> extraFields = new LinkedHashMap<>();
     private JsonObject result;
 
-    private ForeignRecipeBuilder(RecipeSerializer<?> serializer) {
-        this.serializer = serializer;
+    private ForeignRecipeBuilder(ResourceLocation typeId) {
+        this.typeId = typeId;
     }
 
     /** A recipe of the serializer's type (vanilla's shaped or shapeless, Lib's tool crafting, a mod's own type). */
     public static ForeignRecipeBuilder of(RecipeSerializer<?> serializer) {
-        return new ForeignRecipeBuilder(serializer);
+        return new ForeignRecipeBuilder(ForgeRegistries.RECIPE_SERIALIZERS.getKey(serializer));
+    }
+
+    /** A recipe of another mod's type, by its serializer's ID ({@code impactscrafting:hammering}). */
+    public static ForeignRecipeBuilder ofType(String typeId) {
+        return new ForeignRecipeBuilder(ResourceIds.tryParse(typeId).orElseThrow(() -> new IllegalArgumentException("Not a recipe type ID: " + typeId)));
     }
 
     /** An item ingredient by ID, for items of a mod that isn't loaded here. */
@@ -119,14 +127,23 @@ public final class ForeignRecipeBuilder {
         }
         fields.add("result", result);
         extraFields.forEach(fields::add);
-        return new Result(recipeId, serializer, fields);
+        return new Result(recipeId, typeId, fields);
     }
 
     public void save(Consumer<FinishedRecipe> output, ResourceLocation recipeId) {
         output.accept(build(recipeId));
     }
 
-    private record Result(ResourceLocation id, RecipeSerializer<?> serializer, JsonObject fields) implements FinishedRecipe {
+    // The type is written from its ID, since another mod's serializer isn't registered while this mod generates its data.
+    private record Result(ResourceLocation id, ResourceLocation typeId, JsonObject fields) implements FinishedRecipe {
+        @Override
+        public JsonObject serializeRecipe() {
+            JsonObject json = new JsonObject();
+            json.addProperty(TYPE_KEY, typeId.toString());
+            serializeRecipeData(json);
+            return json;
+        }
+
         @Override
         public void serializeRecipeData(JsonObject json) {
             fields.entrySet().forEach(field -> json.add(field.getKey(), field.getValue()));
@@ -137,9 +154,10 @@ public final class ForeignRecipeBuilder {
             return id;
         }
 
+        /** The serializer when it's registered here; null for another mod's type, which {@link #serializeRecipe} writes by ID. */
         @Override
         public RecipeSerializer<?> getType() {
-            return serializer;
+            return ForgeRegistries.RECIPE_SERIALIZERS.getValue(typeId);
         }
 
         // Recipes for another mod's items carry no unlock advancement: the advancement would name items this mod can't see.

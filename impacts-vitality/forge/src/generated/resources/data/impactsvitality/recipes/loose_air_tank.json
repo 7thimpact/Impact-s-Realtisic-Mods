@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "air_tank"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "impactscrafting:iron_hinge"
+    },
+    "P": {
+      "tag": "impactscrafting:iron_plates"
+    },
+    "R": {
+      "item": "impactscrafting:iron_rivets"
+    }
+  },
+  "pattern": [
+    "PHP",
+    "P P",
+    " R "
+  ],
+  "result": {
+    "item": "impactsvitality:loose_air_tank"
+  }
+}

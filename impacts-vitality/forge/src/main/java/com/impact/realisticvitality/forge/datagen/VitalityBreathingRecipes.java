@@ -27,7 +27,8 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import java.util.function.Consumer;
 
 /**
- * Breathing gear recipes without Crafting installed (the versions made from Crafting's parts arrive with Crafting), the
+ * Breathing gear recipes without Crafting installed (the versions made from Crafting's parts are in
+ * {@link VitalityCraftingRecipes}), the
  * ones that stay the same with it (Shulker Air Tank, Netherite Rebreather), and fitting filters into masks in a grid.
  */
 final class VitalityBreathingRecipes {

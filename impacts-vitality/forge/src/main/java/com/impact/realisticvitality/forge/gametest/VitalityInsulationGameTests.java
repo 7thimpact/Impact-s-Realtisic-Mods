@@ -1,5 +1,6 @@
 package com.impact.realisticvitality.forge.gametest;
 
+import com.impact.lib.ImpactsLib;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.registry.VitalityItems;
@@ -73,6 +74,11 @@ public final class VitalityInsulationGameTests {
         EnchantmentHelper.setEnchantments(Map.of(Enchantments.ALL_DAMAGE_PROTECTION, 3), chestplate);
         chestplate.setDamageValue(CHESTPLATE_DAMAGE);
         Optional<Linings.AnvilLining> result = Linings.anvilResult(chestplate, new ItemStack(Items.WHITE_WOOL, 3));
+        if (ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID)) {
+            helper.assertTrue(result.isEmpty(), "With Crafting, linings are sewn with the Bone Needle instead of at an anvil");
+            helper.succeed();
+            return;
+        }
         helper.assertTrue(result.isPresent(), "Armor and 3 wool make a Wool Lining at the anvil");
         ItemStack lined = result.get().lined();
         helper.assertTrue(ArmorLining.of(lined).orElseThrow() == ArmorLining.WOOL, "The lining is sewn in");
