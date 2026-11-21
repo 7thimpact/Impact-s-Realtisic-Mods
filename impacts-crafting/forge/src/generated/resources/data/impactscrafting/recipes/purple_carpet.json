@@ -1,0 +1,27 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:purple_carpet"
+    }
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:purple_wool"
+    }
+  },
+  "pattern": [
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:purple_carpet"
+  },
+  "tools": [
+    {
+      "item": "minecraft:shears"
+    }
+  ]
+}

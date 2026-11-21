@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "textiles",
+        "recipe": "minecraft:white_wool_from_string"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "result": {
+    "item": "minecraft:white_wool"
+  },
+  "show_notification": true
+}

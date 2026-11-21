@@ -39,6 +39,7 @@ public final class CraftingFuels {
         registerWhenOn(CraftingItems.bedFrame(), () -> WOODEN_BUCKET_BURN_TICKS);
         registerWhenOn(CraftingItems.comforter(), () -> CLOTH_BURN_TICKS);
         CraftingItems.sheets().forEach(sheet -> registerWhenOn(sheet, () -> CLOTH_BURN_TICKS));
+        CraftingItems.bannerCloths().forEach(cloth -> registerWhenOn(cloth, () -> CLOTH_BURN_TICKS));
         FuelRegistry.register(CraftingItems.looseBoat(), stack -> isOn() && isFlammableWood(stack) ? LOOSE_BOAT_BURN_TICKS : 0);
         registerWhenOn(CraftingItems.table(MakeshiftTable.WOODEN), () -> MAKESHIFT_TABLE_BURN_TICKS);
         for (ToolKind kind : ToolKind.values()) {

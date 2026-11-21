@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:light_blue_banner"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "impactscrafting:light_blue_banner_cloth"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "C",
+    "S"
+  ],
+  "result": {
+    "item": "minecraft:light_blue_banner"
+  },
+  "show_notification": true
+}

@@ -50,7 +50,8 @@ final class CraftingIronRecipes {
         Consumer<FinishedRecipe> stone = overhaulRecipe(output, OverhaulCategory.STONE);
         tools(parts);
         ironParts(parts);
-        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone, overhaulRecipe(output, OverhaulCategory.REDSTONE));
+        ironGoods(overhaulRecipe(output, OverhaulCategory.IRON), stone, overhaulRecipe(output, OverhaulCategory.REDSTONE),
+                overhaulRecipe(output, OverhaulCategory.COMBAT));
         woodRows(overhaulRecipe(output, OverhaulCategory.WOOD));
         stoneRows(stone);
     }
@@ -80,8 +81,8 @@ final class CraftingIronRecipes {
                 .define('P', CraftingTags.IRON_PLATES).unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS)).save(parts, id("iron_wheel"));
     }
 
-    // The blast furnace's and piston's hammering follow their own catalogs' switches (stone, redstone).
-    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone, Consumer<FinishedRecipe> redstone) {
+    private static void ironGoods(Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone, Consumer<FinishedRecipe> redstone,
+                                  Consumer<FinishedRecipe> combat) {
         Item rivets = CraftingItems.part(CraftingPart.IRON_RIVETS);
         Item hinge = CraftingItems.part(CraftingPart.IRON_HINGE);
         Item stick = CraftingItems.part(CraftingPart.TRIMMED_STICK);
@@ -97,8 +98,7 @@ final class CraftingIronRecipes {
         for (LooseIron looseIron : LooseIron.values()) {
             Item finished = ResourceIds.item(ResourceIds.of("minecraft", looseIron.vanillaPath)).orElseThrow();
             HammeringRecipeBuilder.of(CraftingItems.looseIron(looseIron), Ingredient.of(CraftingTags.HAMMERS), finished)
-                    .save(looseIron == LooseIron.BLAST_FURNACE ? stone : looseIron == LooseIron.PISTON ? redstone : iron,
-                            id(looseIron.vanillaPath + "_from_hammering"));
+                    .save(outputFor(looseIron, iron, stone, redstone, combat), id(looseIron.vanillaPath + "_from_hammering"));
         }
         shapeless(Items.HOPPER, 1).requires(Items.BUCKET).requires(Ingredient.of(CraftingTags.IRON_PLATES), 2).requires(Items.CHEST)
                 .unlockedBy("has_bucket", has(Items.BUCKET)).save(iron, id("hopper"));
@@ -117,6 +117,17 @@ final class CraftingIronRecipes {
                 .unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS)).save(iron, id("tripwire_hook"));
         shapeless(Items.RAIL, 8).requires(Ingredient.of(CraftingTags.IRON_RODS), 4).requires(stick, 2).unlockedBy("has_iron_rod", has(CraftingTags.IRON_RODS))
                 .save(iron, id("rail"));
+    }
+
+    // A loose item's hammering follows its own catalog's switch: the blast furnace stone, the piston redstone, the shield combat.
+    private static Consumer<FinishedRecipe> outputFor(LooseIron looseIron, Consumer<FinishedRecipe> iron, Consumer<FinishedRecipe> stone,
+                                                     Consumer<FinishedRecipe> redstone, Consumer<FinishedRecipe> combat) {
+        return switch (looseIron) {
+            case BLAST_FURNACE -> stone;
+            case PISTON -> redstone;
+            case SHIELD -> combat;
+            default -> iron;
+        };
     }
 
     private static void woodRows(Consumer<FinishedRecipe> wood) {

@@ -34,8 +34,10 @@ final class CraftingItemModels extends ItemModelProvider {
         basicItem(CraftingItems.comforter());
         CraftingItems.sheets().forEach(sheet -> withExistingParent(ResourceIds.itemId(sheet).getPath(), GENERATED_PARENT)
                 .texture("layer0", modLoc("item/sheet")));
+        CraftingItems.bannerCloths().forEach(cloth -> withExistingParent(ResourceIds.itemId(cloth).getPath(), GENERATED_PARENT)
+                .texture("layer0", modLoc("item/banner_cloth")));
         for (LooseIron looseIron : LooseIron.values()) {
-            withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", mcLoc(looseIron.vanillaSprite))
+            withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", ResourceIds.tryParse(looseIron.vanillaSprite).orElseThrow())
                     .texture("layer1", modLoc("item/loose_binding"));
         }
         withExistingParent("loose_boat", GENERATED_PARENT).texture("layer0", mcLoc("item/oak_boat")).texture("layer1", modLoc("item/loose_binding"));

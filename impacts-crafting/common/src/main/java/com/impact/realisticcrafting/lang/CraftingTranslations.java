@@ -53,6 +53,7 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + "comforter", "Comforter");
         for (DyeColor color : DyeColor.values()) {
             english.put(ITEM_KEY_PREFIX + color.getName() + "_sheet", titleCase(color.getName() + "_sheet"));
+            english.put(ITEM_KEY_PREFIX + color.getName() + "_banner_cloth", titleCase(color.getName() + "_banner_cloth"));
         }
         english.put(BedLayering.COMFORTER_FIRST_KEY, "Lay the comforter first.");
         english.put(BLOCK_KEY_PREFIX + MakeshiftTable.WOODEN.path, "Makeshift Table");
@@ -95,6 +96,8 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + CraftingPart.PAPER_PULP.path, "Paper Pulp");
         english.put(ITEM_KEY_PREFIX + CraftingPart.REDSTONE_MECHANISM.path, "Redstone Mechanism");
         english.put(ITEM_KEY_PREFIX + CraftingPart.PISTON_HEAD.path, "Piston Head");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.BOW_STAVE.path, "Bow Stave");
+        english.put(ITEM_KEY_PREFIX + CraftingPart.LEATHER_PANEL.path, "Leather Panel");
         for (LooseIron looseIron : LooseIron.values()) {
             english.put(ITEM_KEY_PREFIX + looseIron.path, titleCase(looseIron.path));
         }

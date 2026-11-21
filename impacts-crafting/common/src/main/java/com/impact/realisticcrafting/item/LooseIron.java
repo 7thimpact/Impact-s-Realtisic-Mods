@@ -7,12 +7,13 @@ public enum LooseIron {
     IRON_DOOR("loose_iron_door", "iron_door", "item/iron_door"),
     MINECART("loose_minecart", "minecart", "item/minecart"),
     BLAST_FURNACE("loose_blast_furnace", "blast_furnace", "block/blast_furnace_front"),
-    PISTON("loose_piston", "piston", "block/piston_top");
+    PISTON("loose_piston", "piston", "block/piston_top"),
+    SHIELD("loose_shield", "shield", "impactscrafting:item/loose_shield");
 
     public final String path;
     /** The vanilla item it's hammered into. */
     public final String vanillaPath;
-    /** The vanilla sprite its model shows under the loose binding. */
+    /** The sprite its model shows under the loose binding: vanilla's (no namespace) or Crafting's own. */
     public final String vanillaSprite;
 
     LooseIron(String path, String vanillaPath, String vanillaSprite) {

@@ -51,6 +51,7 @@ final class CraftingRecipes extends RecipeProvider {
         CraftingDyeVatRecipes.build(output);
         CraftingBedRecipes.build(output);
         CraftingRedstoneRecipes.build(output);
+        CraftingCombatRecipes.build(output);
     }
 
     private static ResourceLocation id(String path) {

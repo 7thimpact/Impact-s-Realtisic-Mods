@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactscrafting:item/loose_shield",
+    "layer1": "impactscrafting:item/loose_binding"
+  }
+}

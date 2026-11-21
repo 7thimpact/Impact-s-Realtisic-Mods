@@ -54,6 +54,7 @@ public final class CraftingItems {
     private static volatile Supplier<BedItem> bedFrame;
     private static volatile Supplier<Item> comforter;
     private static final Map<DyeColor, Supplier<SheetItem>> SHEETS = new EnumMap<>(DyeColor.class);
+    private static final Map<DyeColor, Supplier<SheetItem>> BANNER_CLOTHS = new EnumMap<>(DyeColor.class);
     private static final int COMFORTER_STACK_SIZE = 16;
     private static final Map<LooseIron, Supplier<LooseItem>> LOOSE_IRON = new EnumMap<>(LooseIron.class);
 
@@ -78,6 +79,7 @@ public final class CraftingItems {
         comforter = registrar.register(Registries.ITEM, "comforter", () -> new Item(new Item.Properties().stacksTo(COMFORTER_STACK_SIZE)));
         for (DyeColor color : DyeColor.values()) {
             SHEETS.put(color, registrar.register(Registries.ITEM, color.getName() + "_sheet", () -> new SheetItem(color)));
+            BANNER_CLOTHS.put(color, registrar.register(Registries.ITEM, color.getName() + "_banner_cloth", () -> new SheetItem(color)));
         }
         for (LooseIron looseIron : LooseIron.values()) {
             LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path, () -> new LooseItem(LooseItem.HammerKnock.METAL)));
@@ -132,6 +134,15 @@ public final class CraftingItems {
 
     public static List<SheetItem> sheets() {
         return Arrays.stream(DyeColor.values()).map(CraftingItems::sheet).toList();
+    }
+
+    /** Banner Cloth, one item per color like the Sheets. */
+    public static SheetItem bannerCloth(DyeColor color) {
+        return BANNER_CLOTHS.get(color).get();
+    }
+
+    public static List<SheetItem> bannerCloths() {
+        return Arrays.stream(DyeColor.values()).map(CraftingItems::bannerCloth).toList();
     }
 
     public static BlockItem dyeVat() {
@@ -206,6 +217,7 @@ public final class CraftingItems {
         stacks.add(new ItemStack(bedFrame()));
         stacks.add(new ItemStack(comforter()));
         sheets().forEach(sheet -> stacks.add(new ItemStack(sheet)));
+        bannerCloths().forEach(cloth -> stacks.add(new ItemStack(cloth)));
         boatWoods().forEach(wood -> stacks.add(WoodData.of(looseBoat(), wood)));
         Arrays.stream(LooseIron.values()).map(looseIron -> new ItemStack(looseIron(looseIron))).forEach(stacks::add);
         for (ToolMaterial material : ToolMaterial.values()) {

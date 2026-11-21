@@ -134,7 +134,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 9 Dye Vat: the block (water from either water bucket or rain, dye in 8-charge doses up to 32, mixing, tinted water), dipping one item per 10 ticks while right-click is held (wool, carpet, terracotta, glass, panes, concrete powder, candles, shulker boxes, and leather-style items the vanilla way), washing in plain water, Paper Pulp and paper, the `impactscrafting:vat_dyeing` recipe type; every grid dyeing recipe switched off
   - [x] 10 Beds: the Bed Frame (placed like a bed), Comforter and 16 Sheets; building a bed in three layers (a sheet on a bare frame refused with a hint), recoloring a finished bed with another sheet, beds (village beds too) dropping their three parts (`bedsDropParts`), sheets dipped in the Dye Vat; vanilla's bed recipes switched off
   - [x] 11 Redstone and transport: the Redstone Mechanism and Piston Head; the redstone torch, repeater, piston (hammered), dropper, dispenser, note block, compass and TNT; the comparator, daylight detector, observer and jukebox at the Crafting Table tier; rails, the sticky piston and the gold and glowstone recipes stay vanilla
-  - [ ] 12 Combat, leather, textiles
+  - [x] 12 Combat, leather, textiles: the Bow Stave (with a Wood Scrap), bow, arrows, crossbow, fishing rod and leads; the loose shield (hammered); the Leather Panel and leather armor, horse armor and books sewn with the Bone Needle; carpet cut with shears (Stone Table), 16 Banner Cloths (dyeable in the vat) and banners, candles, and wool from String Clumps; vanilla's recipes for all of these switched off
   - [ ] 13 Polish
   - [ ] 14 Audit (the SRF part is in step 6)
 - [ ] **"With IRC" features:**

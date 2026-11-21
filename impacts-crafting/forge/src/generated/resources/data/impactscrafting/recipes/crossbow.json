@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:crossbow"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:bow_stave"
+    },
+    {
+      "item": "impactscrafting:wooden_panel"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "item": "minecraft:tripwire_hook"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:crossbow"
+  }
+}

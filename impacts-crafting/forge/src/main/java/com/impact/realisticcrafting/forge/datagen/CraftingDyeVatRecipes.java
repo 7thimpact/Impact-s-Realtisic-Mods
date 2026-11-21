@@ -52,6 +52,8 @@ final class CraftingDyeVatRecipes {
                 color -> vanilla(color + "_concrete_powder"));
         colored(dyes, "candle", Ingredient.of(ItemTags.CANDLES), color -> vanilla(color + "_candle"));
         colored(dyes, "sheet", Ingredient.of(CraftingItems.sheets().toArray(Item[]::new)), color -> CraftingItems.sheet(DyeColor.byName(color, DyeColor.WHITE)));
+        colored(dyes, "banner_cloth", Ingredient.of(CraftingItems.bannerCloths().toArray(Item[]::new)),
+                color -> CraftingItems.bannerCloth(DyeColor.byName(color, DyeColor.WHITE)));
         colored(dyes, "shulker_box", withColors(Items.SHULKER_BOX, color -> vanilla(color + "_shulker_box")), color -> vanilla(color + "_shulker_box"));
         Consumer<FinishedRecipe> textiles = overhaulRecipe(output, OverhaulCategory.TEXTILES);
         Item paperPulp = CraftingItems.part(CraftingPart.PAPER_PULP);

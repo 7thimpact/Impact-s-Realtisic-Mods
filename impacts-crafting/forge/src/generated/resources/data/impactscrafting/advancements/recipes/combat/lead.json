@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:lead"
+    }
+  ],
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:lead"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_twine": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:twine"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_twine",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:lead"
+    ]
+  },
+  "sends_telemetry_event": false
+}

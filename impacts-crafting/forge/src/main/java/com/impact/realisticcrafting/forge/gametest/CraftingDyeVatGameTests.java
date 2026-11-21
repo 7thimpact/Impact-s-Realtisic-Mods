@@ -153,7 +153,7 @@ public final class CraftingDyeVatGameTests {
         helper.succeed();
     }
 
-    private static void atVat(GameTestHelper helper, BiConsumer<ServerPlayer, DyeVatBlockEntity> check) {
+    static void atVat(GameTestHelper helper, BiConsumer<ServerPlayer, DyeVatBlockEntity> check) {
         ServerLevel level = helper.getLevel();
         BlockPos position = helper.absolutePos(BlockPos.ZERO);
         ServerPlayer player = MockPlayers.joinWorld(level);
@@ -167,7 +167,7 @@ public final class CraftingDyeVatGameTests {
         }
     }
 
-    private static InteractionResult use(ServerPlayer player, DyeVatBlockEntity vat, ItemStack held) {
+    static InteractionResult use(ServerPlayer player, DyeVatBlockEntity vat, ItemStack held) {
         player.setItemInHand(InteractionHand.MAIN_HAND, held);
         return DyeVatInteractions.use(vat, player.level(), vat.getBlockPos(), player, InteractionHand.MAIN_HAND);
     }

@@ -1,0 +1,38 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:leather_horse_armor"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:twine"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "minecraft:leather_horse_armor"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

@@ -26,6 +26,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Crafting's client side on Forge: the makeshift tables use vanilla's crafting screen, refused crafts name the table
@@ -56,7 +57,7 @@ public final class CraftingForgeClient {
         Item[] woodParts = Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).toArray(Item[]::new);
         event.register((stack, layer) -> layer == 0 ? WoodTints.tintOf(stack) : WOODLESS_TINT, woodParts);
         event.register((stack, layer) -> layer == 0 && stack.getItem() instanceof SheetItem sheet ? DyeVatColors.rgb(sheet.color()) : WOODLESS_TINT,
-                CraftingItems.sheets().toArray(Item[]::new));
+                Stream.concat(CraftingItems.sheets().stream(), CraftingItems.bannerCloths().stream()).toArray(Item[]::new));
     }
 
     // The client needs the hammering action for other mods' loose items too, to hold them.

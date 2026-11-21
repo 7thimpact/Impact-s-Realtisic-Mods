@@ -104,6 +104,10 @@ public final class VanillaRecipeReplacements {
         put(replaced, OverhaulCategory.REDSTONE, "redstone_torch", "repeater", "piston", "dropper", "dispenser", "note_block", "compass", "tnt",
                 "comparator", "daylight_detector", "observer", "jukebox");
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.BEDS, color.getName() + "_bed"));
+        put(replaced, OverhaulCategory.COMBAT, "bow", "arrow", "crossbow", "shield", "fishing_rod", "lead", "leather_helmet", "leather_chestplate",
+                "leather_leggings", "leather_boots", "leather_horse_armor", "book");
+        put(replaced, OverhaulCategory.TEXTILES, "candle", "white_wool_from_string");
+        Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.TEXTILES, color.getName() + "_carpet", color.getName() + "_banner"));
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.STONE, color.getName() + "_stained_glass_pane"));
         put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);
         for (BlockFamily family : StoneFamilies.all()) {
