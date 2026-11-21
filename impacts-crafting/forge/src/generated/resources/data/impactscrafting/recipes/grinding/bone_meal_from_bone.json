@@ -1,0 +1,20 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/bone_meal_from_bone"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    }
+  ],
+  "min_tier": "stone",
+  "result": {
+    "count": 3,
+    "item": "minecraft:bone_meal"
+  }
+}

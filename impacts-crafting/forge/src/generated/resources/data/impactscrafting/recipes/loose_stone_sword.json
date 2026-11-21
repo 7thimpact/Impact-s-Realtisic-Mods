@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:loose_stone_sword"
+    }
+  ],
+  "key": {
+    "H": {
+      "item": "impactscrafting:stone_sword_blade"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "H",
+    "S"
+  ],
+  "result": {
+    "item": "impactscrafting:loose_stone_sword"
+  },
+  "show_notification": true
+}

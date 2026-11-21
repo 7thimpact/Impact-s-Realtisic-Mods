@@ -1,0 +1,33 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:bowl"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  },
+  "pattern": [
+    "P P",
+    " P "
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:bowl"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

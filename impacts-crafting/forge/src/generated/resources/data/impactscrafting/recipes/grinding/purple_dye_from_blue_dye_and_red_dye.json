@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/purple_dye_from_blue_dye_and_red_dye"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "count": 2,
+    "item": "minecraft:purple_dye"
+  }
+}

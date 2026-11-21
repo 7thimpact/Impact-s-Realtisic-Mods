@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:stone_shovel_head"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:shaped_stone"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:stone_shovel_head"
+  }
+}

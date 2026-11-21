@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:stone_casing"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "impactscrafting:shaped_stone"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "S S",
+    "SSS"
+  ],
+  "result": {
+    "item": "impactscrafting:stone_casing"
+  },
+  "show_notification": true
+}

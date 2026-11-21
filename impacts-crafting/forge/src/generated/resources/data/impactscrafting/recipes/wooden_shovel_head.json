@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:wooden_shovel_head"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:wooden_shovel_head"
+  }
+}

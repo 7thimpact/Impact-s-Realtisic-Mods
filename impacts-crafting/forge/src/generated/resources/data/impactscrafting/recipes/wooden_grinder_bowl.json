@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:wooden_grinder_bowl"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bowl"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  ],
+  "result": {
+    "item": "impactslib:wooden_grinder_bowl"
+  }
+}

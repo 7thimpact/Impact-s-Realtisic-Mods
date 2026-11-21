@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "cookingtime": 600,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "impactsfood:loaf_dough"
+  },
+  "result": {
+    "count": 3,
+    "item": "impactsfood:flatbread"
+  }
+}

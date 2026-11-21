@@ -1,0 +1,113 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/shulker_box"
+    }
+  ],
+  "input": [
+    {
+      "item": "minecraft:shulker_box"
+    },
+    {
+      "item": "minecraft:white_shulker_box"
+    },
+    {
+      "item": "minecraft:orange_shulker_box"
+    },
+    {
+      "item": "minecraft:magenta_shulker_box"
+    },
+    {
+      "item": "minecraft:light_blue_shulker_box"
+    },
+    {
+      "item": "minecraft:yellow_shulker_box"
+    },
+    {
+      "item": "minecraft:lime_shulker_box"
+    },
+    {
+      "item": "minecraft:pink_shulker_box"
+    },
+    {
+      "item": "minecraft:gray_shulker_box"
+    },
+    {
+      "item": "minecraft:light_gray_shulker_box"
+    },
+    {
+      "item": "minecraft:cyan_shulker_box"
+    },
+    {
+      "item": "minecraft:purple_shulker_box"
+    },
+    {
+      "item": "minecraft:blue_shulker_box"
+    },
+    {
+      "item": "minecraft:brown_shulker_box"
+    },
+    {
+      "item": "minecraft:green_shulker_box"
+    },
+    {
+      "item": "minecraft:red_shulker_box"
+    },
+    {
+      "item": "minecraft:black_shulker_box"
+    }
+  ],
+  "results": {
+    "black": {
+      "item": "minecraft:black_shulker_box"
+    },
+    "blue": {
+      "item": "minecraft:blue_shulker_box"
+    },
+    "brown": {
+      "item": "minecraft:brown_shulker_box"
+    },
+    "cyan": {
+      "item": "minecraft:cyan_shulker_box"
+    },
+    "gray": {
+      "item": "minecraft:gray_shulker_box"
+    },
+    "green": {
+      "item": "minecraft:green_shulker_box"
+    },
+    "light_blue": {
+      "item": "minecraft:light_blue_shulker_box"
+    },
+    "light_gray": {
+      "item": "minecraft:light_gray_shulker_box"
+    },
+    "lime": {
+      "item": "minecraft:lime_shulker_box"
+    },
+    "magenta": {
+      "item": "minecraft:magenta_shulker_box"
+    },
+    "orange": {
+      "item": "minecraft:orange_shulker_box"
+    },
+    "pink": {
+      "item": "minecraft:pink_shulker_box"
+    },
+    "purple": {
+      "item": "minecraft:purple_shulker_box"
+    },
+    "red": {
+      "item": "minecraft:red_shulker_box"
+    },
+    "white": {
+      "item": "minecraft:white_shulker_box"
+    },
+    "yellow": {
+      "item": "minecraft:yellow_shulker_box"
+    }
+  }
+}

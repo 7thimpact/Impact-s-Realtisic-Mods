@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "overcooking"
+    }
+  ],
+  "cookingtime": 300,
+  "experience": 0.0,
+  "ingredient": [
+    {
+      "tag": "impactsfood:dried_foods"
+    },
+    {
+      "tag": "impactsfood:toasted_foods"
+    },
+    {
+      "item": "impactsfood:fried_egg"
+    },
+    {
+      "item": "impactsfood:dough_bun"
+    },
+    {
+      "item": "impactsfood:flatbread"
+    }
+  ],
+  "result": "impactsfood:burnt_food"
+}

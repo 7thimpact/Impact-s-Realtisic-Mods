@@ -1,0 +1,35 @@
+{
+  "type": "impactsfood:soup",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "soups"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsfood:raw_rabbit_piece"
+    },
+    {
+      "item": "impactsfood:carrot_slices"
+    },
+    {
+      "item": "impactsfood:potato_slices"
+    },
+    [
+      {
+        "item": "minecraft:brown_mushroom"
+      },
+      {
+        "item": "minecraft:red_mushroom"
+      }
+    ]
+  ],
+  "result": {
+    "item": "minecraft:rabbit_stew"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "impactsvitality:block/air_compressor"
+    },
+    "lit=true": {
+      "model": "impactsvitality:block/air_compressor"
+    }
+  }
+}

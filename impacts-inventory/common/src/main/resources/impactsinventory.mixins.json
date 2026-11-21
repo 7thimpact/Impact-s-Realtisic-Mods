@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.impact.realisticinventory.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "impactsinventory.refmap.json",
+  "mixins": [
+    "AbstractContainerMenuLocksMixin",
+    "InventoryLocksMixin",
+    "InventoryMenuBackSlotMixin",
+    "InventorySelectedSlotMixin",
+    "ItemEntityPickupMixin",
+    "ServerGamePacketListenerImplMixin",
+    "SlotLocksMixin",
+    "SlotPositionAccessor"
+  ],
+  "client": [
+    "client.CreativeModeInventoryScreenMixin",
+    "client.InventoryScrollMixin",
+    "client.MinecraftHotbarKeysMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

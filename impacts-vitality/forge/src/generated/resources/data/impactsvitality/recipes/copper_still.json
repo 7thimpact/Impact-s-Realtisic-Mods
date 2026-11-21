@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "copper_still"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "U": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "CUC"
+  ],
+  "result": {
+    "item": "impactsvitality:copper_still"
+  },
+  "show_notification": true
+}

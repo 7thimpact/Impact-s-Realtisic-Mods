@@ -1,0 +1,33 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:polished_blackstone_button"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:polished_blackstone"
+    }
+  },
+  "pattern": [
+    "X ",
+    " X"
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:polished_blackstone_button"
+  },
+  "tools": [
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
+  ]
+}

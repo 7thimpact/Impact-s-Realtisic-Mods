@@ -1,0 +1,32 @@
+{
+  "criteria": {
+    "drank_water": {
+      "conditions": {
+        "water": "true"
+      },
+      "trigger": "impactsvitality:drank"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/packed_ice.png",
+    "description": {
+      "translate": "advancements.impactsvitality.stay_hydrated.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:waterskin"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.stay_hydrated.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_water"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

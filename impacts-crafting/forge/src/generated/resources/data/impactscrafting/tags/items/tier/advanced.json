@@ -1,0 +1,11 @@
+{
+  "values": [
+    "#forge:ores",
+    "#forge:raw_materials",
+    "#forge:ingots",
+    "#forge:nuggets",
+    "#forge:gems",
+    "#forge:dusts",
+    "#forge:storage_blocks"
+  ]
+}

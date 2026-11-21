@@ -1,0 +1,19 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:blast_furnace_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "item": "impactscrafting:loose_blast_furnace"
+  },
+  "result": {
+    "item": "minecraft:blast_furnace"
+  }
+}

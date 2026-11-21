@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/cyan_dye_from_blue_dye_and_green_dye"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:blue_dye"
+    },
+    {
+      "item": "minecraft:green_dye"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "count": 2,
+    "item": "minecraft:cyan_dye"
+  }
+}

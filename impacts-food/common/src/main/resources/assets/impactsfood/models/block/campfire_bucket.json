@@ -1,0 +1,302 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "bucket": "impactsfood:block/campfire_bucket",
+    "water": "minecraft:block/water_still",
+    "particle": "impactsfood:block/campfire_bucket"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        -9,
+        4
+      ],
+      "to": [
+        12,
+        -8,
+        12
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ],
+          "texture": "#bucket"
+        },
+        "up": {
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ],
+          "texture": "#bucket"
+        },
+        "north": {
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "south": {
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "east": {
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "west": {
+          "uv": [
+            4,
+            15,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        -8,
+        4
+      ],
+      "to": [
+        12,
+        1,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "south": {
+          "uv": [
+            4,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "up": {
+          "uv": [
+            4,
+            4,
+            12,
+            5
+          ],
+          "texture": "#bucket"
+        },
+        "east": {
+          "uv": [
+            4,
+            6,
+            5,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "west": {
+          "uv": [
+            11,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        -8,
+        11
+      ],
+      "to": [
+        12,
+        1,
+        12
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "south": {
+          "uv": [
+            4,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "up": {
+          "uv": [
+            4,
+            11,
+            12,
+            12
+          ],
+          "texture": "#bucket"
+        },
+        "east": {
+          "uv": [
+            11,
+            6,
+            12,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "west": {
+          "uv": [
+            4,
+            6,
+            5,
+            16
+          ],
+          "texture": "#bucket"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        -8,
+        5
+      ],
+      "to": [
+        5,
+        1,
+        11
+      ],
+      "faces": {
+        "west": {
+          "uv": [
+            5,
+            6,
+            11,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "east": {
+          "uv": [
+            5,
+            6,
+            11,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "up": {
+          "uv": [
+            4,
+            5,
+            5,
+            11
+          ],
+          "texture": "#bucket"
+        }
+      }
+    },
+    {
+      "from": [
+        11,
+        -8,
+        5
+      ],
+      "to": [
+        12,
+        1,
+        11
+      ],
+      "faces": {
+        "west": {
+          "uv": [
+            5,
+            6,
+            11,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "east": {
+          "uv": [
+            5,
+            6,
+            11,
+            16
+          ],
+          "texture": "#bucket"
+        },
+        "up": {
+          "uv": [
+            11,
+            5,
+            12,
+            11
+          ],
+          "texture": "#bucket"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        -8,
+        5
+      ],
+      "to": [
+        11,
+        0,
+        11
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            5,
+            5,
+            11,
+            11
+          ],
+          "texture": "#water",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

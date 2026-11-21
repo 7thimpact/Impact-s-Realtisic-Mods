@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:dark_oak_door"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:dark_oak\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:dark_oak\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:dark_oak\"}"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:dark_oak_door"
+  }
+}

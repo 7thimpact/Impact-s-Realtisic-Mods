@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactsfood:feature_enabled",
+        "feature": "cutting"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:pumpkin"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:pumpkin_seeds"
+  }
+}

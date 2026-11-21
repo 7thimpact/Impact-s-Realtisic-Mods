@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:smithing_table"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_frame"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    }
+  ],
+  "result": {
+    "item": "minecraft:smithing_table"
+  }
+}

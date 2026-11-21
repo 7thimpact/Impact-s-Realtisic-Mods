@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:mangrove_wooden_panel"
+    }
+  ],
+  "key": {
+    "P": {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:trimmed_planks",
+      "nbt": "{wood:\"minecraft:mangrove\"}"
+    }
+  },
+  "pattern": [
+    "PP"
+  ],
+  "result": {
+    "item": "impactscrafting:wooden_panel",
+    "nbt": "{wood:\"minecraft:mangrove\"}"
+  },
+  "show_notification": true
+}

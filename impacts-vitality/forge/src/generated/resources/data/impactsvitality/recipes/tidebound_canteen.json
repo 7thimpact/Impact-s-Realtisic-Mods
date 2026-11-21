@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "tidebound_canteen"
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "impactsvitality:canteen"
+    },
+    "H": {
+      "item": "minecraft:heart_of_the_sea"
+    },
+    "P": {
+      "item": "minecraft:prismarine_shard"
+    }
+  },
+  "pattern": [
+    "PHP",
+    "PCP"
+  ],
+  "result": {
+    "item": "impactsvitality:tidebound_canteen"
+  },
+  "show_notification": true
+}

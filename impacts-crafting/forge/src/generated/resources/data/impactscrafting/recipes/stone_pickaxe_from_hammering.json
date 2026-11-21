@@ -1,0 +1,19 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:stone_pickaxe_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "item": "impactscrafting:loose_stone_pickaxe"
+  },
+  "result": {
+    "item": "minecraft:stone_pickaxe"
+  }
+}

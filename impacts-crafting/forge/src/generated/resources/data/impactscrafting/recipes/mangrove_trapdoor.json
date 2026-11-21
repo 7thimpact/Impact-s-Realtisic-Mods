@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:mangrove_trapdoor"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:mangrove\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:wooden_panel",
+      "nbt": "{wood:\"minecraft:mangrove\"}"
+    },
+    {
+      "item": "impactscrafting:stone_hinge"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:mangrove_trapdoor"
+  }
+}

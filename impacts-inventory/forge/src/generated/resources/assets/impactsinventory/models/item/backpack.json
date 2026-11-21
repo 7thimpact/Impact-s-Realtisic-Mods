@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsinventory:item/backpack",
+    "layer1": "impactsinventory:item/backpack_overlay"
+  }
+}

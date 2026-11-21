@@ -1,0 +1,35 @@
+{
+  "type": "impactsinventory:pack_upgrade",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "impactsinventory:satchel"
+    }
+  },
+  "pattern": [
+    "LCL",
+    "LPL"
+  ],
+  "result": {
+    "item": "impactsinventory:backpack"
+  },
+  "show_notification": true
+}

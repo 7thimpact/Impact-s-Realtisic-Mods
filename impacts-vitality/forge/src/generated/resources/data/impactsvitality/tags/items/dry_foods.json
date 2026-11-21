@@ -1,0 +1,19 @@
+{
+  "values": [
+    "minecraft:bread",
+    "minecraft:cookie",
+    "minecraft:dried_kelp",
+    {
+      "id": "#impactsfood:dried_foods",
+      "required": false
+    },
+    {
+      "id": "impactsfood:dough_bun",
+      "required": false
+    },
+    {
+      "id": "impactsfood:flatbread",
+      "required": false
+    }
+  ]
+}

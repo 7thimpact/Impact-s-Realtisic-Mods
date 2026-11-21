@@ -1,0 +1,63 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/terracotta"
+    }
+  ],
+  "input": {
+    "tag": "minecraft:terracotta"
+  },
+  "results": {
+    "black": {
+      "item": "minecraft:black_terracotta"
+    },
+    "blue": {
+      "item": "minecraft:blue_terracotta"
+    },
+    "brown": {
+      "item": "minecraft:brown_terracotta"
+    },
+    "cyan": {
+      "item": "minecraft:cyan_terracotta"
+    },
+    "gray": {
+      "item": "minecraft:gray_terracotta"
+    },
+    "green": {
+      "item": "minecraft:green_terracotta"
+    },
+    "light_blue": {
+      "item": "minecraft:light_blue_terracotta"
+    },
+    "light_gray": {
+      "item": "minecraft:light_gray_terracotta"
+    },
+    "lime": {
+      "item": "minecraft:lime_terracotta"
+    },
+    "magenta": {
+      "item": "minecraft:magenta_terracotta"
+    },
+    "orange": {
+      "item": "minecraft:orange_terracotta"
+    },
+    "pink": {
+      "item": "minecraft:pink_terracotta"
+    },
+    "purple": {
+      "item": "minecraft:purple_terracotta"
+    },
+    "red": {
+      "item": "minecraft:red_terracotta"
+    },
+    "white": {
+      "item": "minecraft:white_terracotta"
+    },
+    "yellow": {
+      "item": "minecraft:yellow_terracotta"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:wooden_bucket"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  },
+  "pattern": [
+    "P P",
+    "PPP"
+  ],
+  "result": {
+    "item": "impactscrafting:wooden_bucket"
+  },
+  "show_notification": true
+}

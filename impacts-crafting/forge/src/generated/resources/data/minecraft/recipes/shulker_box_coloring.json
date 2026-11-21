@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_special_shulkerboxcoloring",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:shulker_box_coloring"
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:hands_full",
+  "criteria": {
+    "ten_quick_switches": {
+      "conditions": {
+        "recent_switches": 10
+      },
+      "trigger": "impactsinventory:slot_switched"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.juggler.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:slime_ball"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.juggler.title"
+    }
+  },
+  "requirements": [
+    [
+      "ten_quick_switches"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -24,3 +24,17 @@ rootProject.name = 'impacts-dev'
 
 include 'impacts-lib:common'
 include 'impacts-lib:forge'
+include 'impacts-inventory:common'
+include 'impacts-inventory:forge'
+include 'impacts-food:common'
+include 'impacts-food:forge'
+include 'impacts-vitality:common'
+include 'impacts-vitality:forge'
+include 'impacts-crafting:common'
+include 'impacts-crafting:forge'
+
+// Every folder in test-setups/ with a gradle.properties is one family test setup.
+file('test-setups').listFiles()
+        ?.findAll { setupFolder -> setupFolder.isDirectory() && new File(setupFolder, 'gradle.properties').exists() }
+        ?.sort { setupFolder -> setupFolder.name }
+        ?.each { setupFolder -> include "test-setups:${setupFolder.name}" }

@@ -1,0 +1,34 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:dark_oak_stairs"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:dark_oak_planks"
+    }
+  },
+  "pattern": [
+    "P  ",
+    "PP ",
+    "PPP"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:dark_oak_stairs"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "key": {
+    "D": {
+      "item": "impactsfood:dough"
+    }
+  },
+  "pattern": [
+    "DDD"
+  ],
+  "result": {
+    "item": "impactsfood:loaf_dough"
+  },
+  "show_notification": true
+}

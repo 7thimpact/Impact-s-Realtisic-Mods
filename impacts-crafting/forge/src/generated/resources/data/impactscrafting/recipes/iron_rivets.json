@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:iron_rivets"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/iron"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactscrafting:iron_rivets"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_hammer"
+    }
+  ]
+}

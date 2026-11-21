@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsfood:item/cooked_chicken_piece",
+    "layer1": "impactsfood:item/styled/dried_cooked_chicken_piece"
+  }
+}

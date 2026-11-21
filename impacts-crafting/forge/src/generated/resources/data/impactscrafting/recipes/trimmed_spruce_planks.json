@@ -1,0 +1,28 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:trimmed_spruce_planks"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:spruce_planks"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:trimmed_planks",
+    "nbt": "{wood:\"minecraft:spruce\"}"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

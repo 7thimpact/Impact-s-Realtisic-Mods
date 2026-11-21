@@ -1,0 +1,26 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:stone_hoe_head"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:shaped_stone"
+    }
+  },
+  "pattern": [
+    "PP"
+  ],
+  "result": {
+    "item": "impactscrafting:stone_hoe_head"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

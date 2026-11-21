@@ -1,0 +1,25 @@
+{
+  "type": "impactsfood:boiling",
+  "boil_ticks": 300,
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiled"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    }
+  ],
+  "input": {
+    "item": "minecraft:rabbit"
+  },
+  "result": {
+    "item": "impactsfood:boiled_cooked_rabbit"
+  },
+  "vessel": "any"
+}

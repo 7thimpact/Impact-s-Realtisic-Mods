@@ -2,8 +2,35 @@
 // module's sources and resources into one mod jar, then reobfuscates it for release.
 
 def commonProject = project.parent.project('common')
+def mixinConfigName = "${mod_id}.mixins.json"
+def hasMixins = commonProject.file("src/main/resources/${mixinConfigName}").exists()
+// Mixins that target Forge's own classes live in the forge module's resources.
+def forgeMixinConfigName = "${mod_id}.forge.mixins.json"
+def hasForgeMixins = project.file("src/main/resources/${forgeMixinConfigName}").exists()
 
-group = mod_group
+// Impact mods this one builds on, as project folders (for example impacts-lib), from its gradle.properties.
+def dependencyModProjects = (findProperty('mod_dependencies') ?: '').split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+        .collect { dependencyName -> project(":${dependencyName}:forge") }
+dependencyModProjects.each { dependencyProject -> evaluationDependsOn(dependencyProject.path) }
+// Mods that need the Curios API (Inventory's back slot) set mod_requires_curios=true in their gradle.properties.
+def isUsingCurios = (findProperty('mod_requires_curios') ?: 'false').toBoolean()
+// Mods with optional playerAnimator support (Lib's hold-to-use animations) set mod_uses_player_animator=true. It is
+// compile-only: the mod's own runs leave it out, so they test the fallback; test setups can load it.
+def isUsingPlayerAnimator = (findProperty('mod_uses_player_animator') ?: 'false').toBoolean()
+// Mods with JEI pages set mod_uses_jei=true (compile-only API); mod_runs_with_jei=true also loads JEI in their runs.
+def isUsingJei = (findProperty('mod_uses_jei') ?: 'false').toBoolean()
+def isRunningWithJei = (findProperty('mod_runs_with_jei') ?: 'false').toBoolean()
+// In development, a dependency's Mixin configs come from launch arguments.
+def dependencyMixinConfigs = dependencyModProjects.collectMany { dependencyProject ->
+    def dependencyModId = dependencyProject.property('mod_id')
+    [
+            dependencyProject.parent.project('common').file("src/main/resources/${dependencyModId}.mixins.json"),
+            dependencyProject.file("src/main/resources/${dependencyModId}.forge.mixins.json")
+    ].findAll { configFile -> configFile.exists() }.collect { configFile -> configFile.name }
+}
+
+// One group per mod: every mod's modules are named common and forge, and Gradle tells modules apart by group.
+group = "${mod_group}.${mod_id}"
 version = mod_version
 
 java {
@@ -22,15 +49,32 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', mod_id
+            // GameTests are filtered by their template's namespace, and mods reuse Lib's empty template.
+            property 'forge.enabledGameTestNamespaces', ([mod_id] + dependencyModProjects.collect { dependencyProject -> dependencyProject.property('mod_id') }).join(',')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            dependencyMixinConfigs.each { configName ->
+                args '--mixin.config', configName
+            }
             mods {
                 "${mod_id}" {
                     source sourceSets.main
+                }
+                dependencyModProjects.each { dependencyProject ->
+                    "${dependencyProject.property('mod_id')}" {
+                        source dependencyProject.sourceSets.main
+                    }
                 }
             }
         }
 
         client {
+        }
+
+        // A client that loads straight into the world saved as run/saves/ImpactsTest, for scripted screenshots.
+        clientQuickPlay {
+            parent runs.client
+            args '--quickPlaySingleplayer', 'ImpactsTest'
         }
 
         server {
@@ -53,8 +97,75 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
+repositories {
+    maven {
+        name = 'SpongePowered'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
+    maven {
+        name = 'Curios'
+        url = 'https://maven.theillusivec4.top/'
+        content {
+            includeGroup 'top.theillusivec4.curios'
+        }
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com/'
+        content {
+            includeGroup 'mezz.jei'
+            // JEI's runtime jar depends on mezz's config library from the same repository.
+            includeGroup 'net.mezzdev.config'
+        }
+    }
+    maven {
+        name = 'KosmX'
+        url = 'https://maven.kosmx.dev/'
+        content {
+            includeGroup 'dev.kosmx.player-anim'
+        }
+    }
+}
+
+// Mods with a <modid>.mixins.json (common) or <modid>.forge.mixins.json (forge) get Mixin's refmap and manifest entry.
+if (hasMixins || hasForgeMixins) {
+    apply plugin: 'org.spongepowered.mixin'
+    mixin {
+        add sourceSets.main, "${mod_id}.refmap.json"
+        if (hasMixins) {
+            config mixinConfigName
+        }
+        if (hasForgeMixins) {
+            config forgeMixinConfigName
+        }
+    }
+    dependencies {
+        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+    }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    dependencyModProjects.each { dependencyProject -> compileOnly dependencyProject.sourceSets.main.output }
+    if (isUsingJei) {
+        compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+        compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    }
+    if (isRunningWithJei) {
+        runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    }
+    if (isUsingPlayerAnimator) {
+        compileOnly fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
+    }
+    if (isUsingCurios) {
+        // Compile against Curios's API only; the runs load the whole mod.
+        compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+        runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    }
+}
+
+tasks.matching { task -> task.name.startsWith('prepareRun') }.configureEach { prepareTask ->
+    prepareTask.dependsOn dependencyModProjects.collect { dependencyProject -> "${dependencyProject.path}:classes" }
 }
 
 tasks.named('compileJava', JavaCompile) {
@@ -64,6 +175,7 @@ tasks.named('compileJava', JavaCompile) {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = java_version as int
+    options.compilerArgs << '-Xlint:deprecation'
 }
 
 def modMetadata = [
@@ -75,6 +187,10 @@ def modMetadata = [
         mod_license            : mod_license,
         minecraft_version_range: minecraft_version_range,
         forge_version_range    : forge_version_range,
+        lib_version_range      : lib_version_range,
+        impact_mod_version_range: impact_mod_version_range,
+        srf_version_range      : srf_version_range,
+        curios_version_range   : curios_version_range,
         loader_version_range   : loader_version_range,
 ]
 

@@ -1,0 +1,10 @@
+{
+  "type": "impactsvitality:mask_filter",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "air"
+    }
+  ]
+}

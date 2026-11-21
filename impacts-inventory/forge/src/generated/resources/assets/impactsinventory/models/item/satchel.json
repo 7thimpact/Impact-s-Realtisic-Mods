@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsinventory:item/satchel",
+    "layer1": "impactsinventory:item/satchel_overlay"
+  }
+}

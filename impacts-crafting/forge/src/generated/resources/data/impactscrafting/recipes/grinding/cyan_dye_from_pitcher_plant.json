@@ -1,0 +1,20 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/cyan_dye_from_pitcher_plant"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:pitcher_plant"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "count": 2,
+    "item": "minecraft:cyan_dye"
+  }
+}

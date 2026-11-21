@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:stone_pickaxe_head"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:shaped_stone"
+    }
+  },
+  "pattern": [
+    "PPP"
+  ],
+  "result": {
+    "item": "impactscrafting:stone_pickaxe_head"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,38 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsfood:flour"
+    },
+    {
+      "item": "impactsfood:flour"
+    },
+    {
+      "item": "impactsfood:flour"
+    },
+    {
+      "type": "impactslib:water_bottle"
+    }
+  ],
+  "remainders": [
+    {
+      "ingredient": {
+        "type": "impactslib:water_bottle"
+      },
+      "result": {
+        "item": "minecraft:glass_bottle"
+      }
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "impactsfood:dough"
+  },
+  "tools": []
+}

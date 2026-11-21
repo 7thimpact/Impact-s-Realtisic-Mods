@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/light_blue_dye_from_blue_orchid"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:blue_orchid"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:light_blue_dye"
+  }
+}

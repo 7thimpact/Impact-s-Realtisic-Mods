@@ -4,8 +4,7 @@ import com.impact.lib.config.ConfigValue;
 import com.impact.lib.log.ImpactsLog;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 /**
  * One Impact config value backed by a Forge config value. Forge already resets values it can't read to their
@@ -17,30 +16,30 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
     private final String key;
     private final ForgeConfigSpec.ConfigValue<?> forgeValue;
     private final T defaultValue;
-    private final Function<Object, T> storedValueReader;
-    private final Predicate<T> isInAllowedRange;
-    private final String allowedRange;
+    private final ValueRules<T> rules;
     private volatile Object lastRejectedValue;
+    private volatile Optional<T> inMemoryOverride = Optional.empty();
 
-    ForgeConfigValue(ForgeConfigFile file, String key, ForgeConfigSpec.ConfigValue<?> forgeValue, T defaultValue,
-                     Function<Object, T> storedValueReader, Predicate<T> isInAllowedRange, String allowedRange) {
+    ForgeConfigValue(ForgeConfigFile file, String key, ForgeConfigSpec.ConfigValue<?> forgeValue, T defaultValue, ValueRules<T> rules) {
         this.file = file;
         this.key = key;
         this.forgeValue = forgeValue;
         this.defaultValue = defaultValue;
-        this.storedValueReader = storedValueReader;
-        this.isInAllowedRange = isInAllowedRange;
-        this.allowedRange = allowedRange;
+        this.rules = rules;
     }
 
     @Override
     public T get() {
+        Optional<T> override = inMemoryOverride;
+        if (override.isPresent()) {
+            return override.get();
+        }
         // Forge throws when a value is read before its file loads; Impact code gets the default instead.
         if (!file.isLoaded()) {
             return defaultValue;
         }
-        T storedValue = storedValueReader.apply(forgeValue.get());
-        if (isInAllowedRange.test(storedValue)) {
+        T storedValue = rules.storedValueReader().apply(forgeValue.get());
+        if (isAllowed(storedValue)) {
             return storedValue;
         }
         warnOnceAboutRejectedValue(storedValue);
@@ -65,8 +64,33 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
     }
 
     @Override
+    public void overrideInMemory(T value) {
+        inMemoryOverride = Optional.of(value);
+    }
+
+    @Override
+    public void clearOverride() {
+        inMemoryOverride = Optional.empty();
+    }
+
+    @Override
     public String key() {
         return key;
+    }
+
+    @Override
+    public Optional<T> parse(String text) {
+        return rules.textParser().apply(text);
+    }
+
+    @Override
+    public boolean isAllowed(T value) {
+        return rules.isInAllowedRange().test(value);
+    }
+
+    @Override
+    public String allowedValues() {
+        return rules.allowedValues();
     }
 
     private void warnOnceAboutRejectedValue(T storedValue) {
@@ -75,6 +99,6 @@ final class ForgeConfigValue<T> implements ConfigValue<T> {
         }
         lastRejectedValue = storedValue;
         ImpactsLog.of(file.modId()).warn(ImpactsLog.CONFIG_CATEGORY, "value out of range, using default",
-                "file", file.fileName(), "key", key, "value", storedValue, "allowed", allowedRange, "default", defaultValue);
+                "file", file.fileName(), "key", key, "value", storedValue, "allowed", rules.allowedValues(), "default", defaultValue);
     }
 }

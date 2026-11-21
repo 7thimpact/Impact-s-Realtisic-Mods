@@ -1,0 +1,38 @@
+{
+  "parent": "impactsfood:hot_water",
+  "criteria": {
+    "has_mush": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:mush"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.mush_ado_about_nothing.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "impactsfood:mush"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.mush_ado_about_nothing.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mush"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

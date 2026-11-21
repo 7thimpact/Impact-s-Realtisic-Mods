@@ -1,0 +1,106 @@
+#!/bin/bash
+# Starts a mod's development client on a virtual display, straight into the world saved as
+# <mod>/forge/run/saves/ImpactsTest (copied from the GameTest world the first time), performs the given steps, then
+# saves a screenshot and stops the client. A step is a chat command, "key:<xdotool key name>" for a key press,
+# "click:<x>,<y>" (left), "rclick:<x>,<y>" (right) or "move:<x>,<y>" (hover) at game-window pixels (the window is
+# 854x480 at GUI scale 2, so double the GUI coordinates), "wait:<seconds>" to let the game run, or "shot:<file.png>"
+# for an extra screenshot along the way.
+#
+#   tools/client-screenshot.sh <mod folder> <output.png> [step ...]
+#   tools/client-screenshot.sh impacts-inventory /tmp/hotbar.png "/gamemode survival" "/give @s iron_sword" key:f
+# A family setup's folder works too (test-setups/<name>), to see several mods together; run its GameTests first.
+set -u
+MOD_FOLDER=$1
+OUTPUT_FILE=$2
+shift 2
+REPOSITORY_ROOT=$(cd "$(dirname "$0")/.." && pwd)
+if [ -d "$REPOSITORY_ROOT/$MOD_FOLDER/forge" ]; then
+  RUN_DIRECTORY="$REPOSITORY_ROOT/$MOD_FOLDER/forge/run"
+  CLIENT_TASK=":$MOD_FOLDER:forge:runClientQuickPlay"
+  GAME_TEST_TASK=":$MOD_FOLDER:forge:runGameTestServer"
+else
+  RUN_DIRECTORY="$REPOSITORY_ROOT/$MOD_FOLDER/run"
+  CLIENT_TASK=":${MOD_FOLDER//\//:}:runClientQuickPlay"
+  GAME_TEST_TASK=":${MOD_FOLDER//\//:}:runGameTestServer"
+fi
+TEST_WORLD="$RUN_DIRECTORY/saves/ImpactsTest"
+CLIENT_LOG=$(mktemp)
+DISPLAY_NUMBER=:97
+STARTUP_TIMEOUT_SECONDS=600
+
+if [ ! -d "$TEST_WORLD" ]; then
+  if [ ! -d "$RUN_DIRECTORY/world" ]; then
+    echo "No test world yet: run ./gradlew $GAME_TEST_TASK first." >&2
+    exit 1
+  fi
+  mkdir -p "$RUN_DIRECTORY/saves"
+  cp -r "$RUN_DIRECTORY/world" "$TEST_WORLD"
+fi
+python3 -I "$REPOSITORY_ROOT/tools/enable_world_cheats.py" "$TEST_WORLD/level.dat" > /dev/null
+
+Xvfb "$DISPLAY_NUMBER" -screen 0 1280x720x24 > /dev/null 2>&1 &
+XVFB_PROCESS=$!
+export DISPLAY=$DISPLAY_NUMBER
+export LIBGL_ALWAYS_SOFTWARE=1
+(cd "$REPOSITORY_ROOT" && ./gradlew "$CLIENT_TASK" --max-workers=2 > "$CLIENT_LOG" 2>&1) &
+GRADLE_PROCESS=$!
+
+stop_everything() {
+  pkill -f "forgeclientuserdev" > /dev/null 2>&1
+  kill "$GRADLE_PROCESS" > /dev/null 2>&1
+  kill "$XVFB_PROCESS" > /dev/null 2>&1
+}
+trap stop_everything EXIT
+
+elapsed_seconds=0
+until grep -q "joined the game" "$CLIENT_LOG"; do
+  if [ "$elapsed_seconds" -ge "$STARTUP_TIMEOUT_SECONDS" ] || ! kill -0 "$GRADLE_PROCESS" 2> /dev/null; then
+    echo "The client did not reach the world. Log: $CLIENT_LOG" >&2
+    exit 1
+  fi
+  sleep 5
+  elapsed_seconds=$((elapsed_seconds + 5))
+done
+sleep 10
+
+GAME_WINDOW=$(xdotool search --name "Minecraft" | head -1)
+xdotool windowactivate --sync "$GAME_WINDOW" > /dev/null 2>&1
+for step in "$@"; do
+  case "$step" in
+    key:*)
+      xdotool key --window "$GAME_WINDOW" "${step#key:}"
+      sleep 2
+      ;;
+    click:*)
+      click_position=${step#click:}
+      xdotool mousemove --window "$GAME_WINDOW" "${click_position%,*}" "${click_position#*,}" click 1
+      sleep 2
+      ;;
+    move:*)
+      move_position=${step#move:}
+      xdotool mousemove --window "$GAME_WINDOW" "${move_position%,*}" "${move_position#*,}"
+      sleep 1
+      ;;
+    rclick:*)
+      click_position=${step#rclick:}
+      xdotool mousemove --window "$GAME_WINDOW" "${click_position%,*}" "${click_position#*,}" click 3
+      sleep 2
+      ;;
+    wait:*)
+      sleep "${step#wait:}"
+      ;;
+    shot:*)
+      import -window root "${step#shot:}"
+      ;;
+    *)
+      xdotool key --window "$GAME_WINDOW" t
+      sleep 1
+      xdotool type --window "$GAME_WINDOW" --delay 40 "$step"
+      xdotool key --window "$GAME_WINDOW" Return
+      sleep 2
+      ;;
+  esac
+done
+sleep 3
+import -window root "$OUTPUT_FILE"
+echo "Saved $OUTPUT_FILE (client log: $CLIENT_LOG)"

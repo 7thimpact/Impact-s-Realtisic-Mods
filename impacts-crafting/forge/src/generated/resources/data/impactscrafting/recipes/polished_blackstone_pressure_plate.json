@@ -1,0 +1,31 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:polished_blackstone_pressure_plate"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:polished_blackstone"
+    }
+  },
+  "pattern": [
+    "XX"
+  ],
+  "result": {
+    "item": "minecraft:polished_blackstone_pressure_plate"
+  },
+  "tools": [
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
+  ]
+}

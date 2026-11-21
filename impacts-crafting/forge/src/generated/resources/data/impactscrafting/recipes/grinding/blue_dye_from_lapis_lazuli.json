@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/blue_dye_from_lapis_lazuli"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "min_tier": "stone",
+  "result": {
+    "item": "minecraft:blue_dye"
+  }
+}

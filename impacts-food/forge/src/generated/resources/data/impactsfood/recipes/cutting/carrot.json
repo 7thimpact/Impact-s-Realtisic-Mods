@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "cutting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:carrot"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactsfood:carrot_slices"
+  },
+  "tools": [
+    {
+      "tag": "impactsfood:knives"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "impactsfood:sharp_thinking",
+  "criteria": {
+    "filleted_fish": {
+      "conditions": {
+        "result": {
+          "tag": "impactsfood:fish_fillets"
+        }
+      },
+      "trigger": "impactslib:tool_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.something_fishy.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:raw_cod_fillet"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.something_fishy.title"
+    }
+  },
+  "requirements": [
+    [
+      "filleted_fish"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

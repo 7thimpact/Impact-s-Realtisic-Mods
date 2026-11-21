@@ -1,0 +1,33 @@
+{
+  "parent": "impactsvitality:skin_in_the_game",
+  "criteria": {
+    "drank_often": {
+      "conditions": {},
+      "trigger": "impactsvitality:well_watered"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.well_watered.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:hydration_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.well_watered.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_often"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

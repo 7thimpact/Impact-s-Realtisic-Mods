@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/light_gray_dye_from_white_tulip"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:white_tulip"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:light_gray_dye"
+  }
+}

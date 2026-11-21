@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "impactsfood:dough"
+  },
+  "result": "impactsfood:dough_bun"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/blue_dye_from_cornflower"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:cornflower"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:blue_dye"
+  }
+}

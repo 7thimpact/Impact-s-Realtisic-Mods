@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:cherry_wooden_frame"
+    }
+  ],
+  "key": {
+    "P": {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:trimmed_planks",
+      "nbt": "{wood:\"minecraft:cherry\"}"
+    },
+    "S": {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "S S",
+    "PSP"
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactscrafting:wooden_frame",
+    "nbt": "{wood:\"minecraft:cherry\"}"
+  },
+  "show_notification": true
+}

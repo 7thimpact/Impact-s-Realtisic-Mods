@@ -1,0 +1,110 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/concrete_powder"
+    }
+  ],
+  "input": [
+    {
+      "item": "minecraft:white_concrete_powder"
+    },
+    {
+      "item": "minecraft:orange_concrete_powder"
+    },
+    {
+      "item": "minecraft:magenta_concrete_powder"
+    },
+    {
+      "item": "minecraft:light_blue_concrete_powder"
+    },
+    {
+      "item": "minecraft:yellow_concrete_powder"
+    },
+    {
+      "item": "minecraft:lime_concrete_powder"
+    },
+    {
+      "item": "minecraft:pink_concrete_powder"
+    },
+    {
+      "item": "minecraft:gray_concrete_powder"
+    },
+    {
+      "item": "minecraft:light_gray_concrete_powder"
+    },
+    {
+      "item": "minecraft:cyan_concrete_powder"
+    },
+    {
+      "item": "minecraft:purple_concrete_powder"
+    },
+    {
+      "item": "minecraft:blue_concrete_powder"
+    },
+    {
+      "item": "minecraft:brown_concrete_powder"
+    },
+    {
+      "item": "minecraft:green_concrete_powder"
+    },
+    {
+      "item": "minecraft:red_concrete_powder"
+    },
+    {
+      "item": "minecraft:black_concrete_powder"
+    }
+  ],
+  "results": {
+    "black": {
+      "item": "minecraft:black_concrete_powder"
+    },
+    "blue": {
+      "item": "minecraft:blue_concrete_powder"
+    },
+    "brown": {
+      "item": "minecraft:brown_concrete_powder"
+    },
+    "cyan": {
+      "item": "minecraft:cyan_concrete_powder"
+    },
+    "gray": {
+      "item": "minecraft:gray_concrete_powder"
+    },
+    "green": {
+      "item": "minecraft:green_concrete_powder"
+    },
+    "light_blue": {
+      "item": "minecraft:light_blue_concrete_powder"
+    },
+    "light_gray": {
+      "item": "minecraft:light_gray_concrete_powder"
+    },
+    "lime": {
+      "item": "minecraft:lime_concrete_powder"
+    },
+    "magenta": {
+      "item": "minecraft:magenta_concrete_powder"
+    },
+    "orange": {
+      "item": "minecraft:orange_concrete_powder"
+    },
+    "pink": {
+      "item": "minecraft:pink_concrete_powder"
+    },
+    "purple": {
+      "item": "minecraft:purple_concrete_powder"
+    },
+    "red": {
+      "item": "minecraft:red_concrete_powder"
+    },
+    "white": {
+      "item": "minecraft:white_concrete_powder"
+    },
+    "yellow": {
+      "item": "minecraft:yellow_concrete_powder"
+    }
+  }
+}

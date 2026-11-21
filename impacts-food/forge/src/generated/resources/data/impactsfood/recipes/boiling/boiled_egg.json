@@ -1,0 +1,17 @@
+{
+  "type": "impactsfood:boiling",
+  "boil_ticks": 200,
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    }
+  ],
+  "input": {
+    "item": "minecraft:egg"
+  },
+  "result": {
+    "item": "impactsfood:boiled_egg"
+  },
+  "vessel": "any"
+}

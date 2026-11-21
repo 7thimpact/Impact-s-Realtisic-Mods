@@ -1,0 +1,36 @@
+{
+  "parent": "impactsfood:sharp_thinking",
+  "criteria": {
+    "has_toasted_food": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactsfood:toasted_foods"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.toast_of_the_town.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:toasted_bread"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.toast_of_the_town.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_toasted_food"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

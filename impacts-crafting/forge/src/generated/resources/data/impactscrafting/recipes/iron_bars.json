@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:iron_bars"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:iron_bars"
+  }
+}

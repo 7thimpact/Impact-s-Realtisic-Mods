@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactsvitality:purified_water"
+    },
+    {
+      "item": "minecraft:ice"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:cold_water"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:armor_stand"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:stone_base"
+    }
+  ],
+  "result": {
+    "item": "minecraft:armor_stand"
+  }
+}

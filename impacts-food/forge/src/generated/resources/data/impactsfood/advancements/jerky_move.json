@@ -1,0 +1,168 @@
+{
+  "parent": "impactsfood:toast_of_the_town",
+  "criteria": {
+    "cooked_beef": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_beef"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_beef_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_beef_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_chicken": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_chicken"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_chicken_piece": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_chicken_piece"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_mutton": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_mutton"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_mutton_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_mutton_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_pork_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_pork_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_porkchop": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_porkchop"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rabbit": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rabbit"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rabbit_piece": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rabbit_piece"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rotten_flesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rotten_flesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.jerky_move.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:dried_cooked_beef"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.jerky_move.title"
+    }
+  },
+  "requirements": [
+    [
+      "cooked_beef",
+      "cooked_porkchop",
+      "cooked_mutton",
+      "cooked_chicken",
+      "cooked_rabbit",
+      "cooked_rotten_flesh",
+      "cooked_beef_cut",
+      "cooked_pork_cut",
+      "cooked_mutton_cut",
+      "cooked_chicken_piece",
+      "cooked_rabbit_piece"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

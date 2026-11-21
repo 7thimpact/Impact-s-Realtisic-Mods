@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:sharp_thinking",
+  "criteria": {
+    "baked_bread": {
+      "conditions": {},
+      "trigger": "impactsfood:bread_baked"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.use_your_loaf.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:bread"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.use_your_loaf.title"
+    }
+  },
+  "requirements": [
+    [
+      "baked_bread"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

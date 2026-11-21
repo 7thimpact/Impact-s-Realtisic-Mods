@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "chance": 0.2,
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "cutting"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:salmon"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactsfood:raw_salmon_fillet"
+  },
+  "tools": [
+    {
+      "tag": "impactsfood:knives"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:leather_strip"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "impactscrafting:leather_strip"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "impactsfood:three_ways",
+  "criteria": {
+    "ate_one_food_often": {
+      "conditions": {},
+      "trigger": "impactsfood:day_in_and_day_out"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.day_in_and_day_out.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:toasted_cooked_beef"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.day_in_and_day_out.title"
+    }
+  },
+  "requirements": [
+    [
+      "ate_one_food_often"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

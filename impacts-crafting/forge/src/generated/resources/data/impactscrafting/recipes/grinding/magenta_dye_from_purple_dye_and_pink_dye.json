@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/magenta_dye_from_purple_dye_and_pink_dye"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:purple_dye"
+    },
+    {
+      "item": "minecraft:pink_dye"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "count": 2,
+    "item": "minecraft:magenta_dye"
+  }
+}

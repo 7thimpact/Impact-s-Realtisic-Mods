@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/orange_dye_from_torchflower"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:torchflower"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:orange_dye"
+  }
+}

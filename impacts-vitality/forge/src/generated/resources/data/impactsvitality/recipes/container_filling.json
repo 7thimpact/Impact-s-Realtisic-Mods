@@ -1,0 +1,10 @@
+{
+  "type": "impactsvitality:container_filling",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ]
+}

@@ -1,0 +1,669 @@
+{
+  "parent": "impactsfood:jerky_move",
+  "criteria": {
+    "apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_apple"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_apple"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_apple"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "baked_potato": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_baked_potato"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_baked_potato"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_baked_potato"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "beetroot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_beetroot"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_beetroot"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_beetroot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "bread": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_bread"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_bread"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_bread"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carrot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_carrot"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_carrot"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_carrot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carrot_slices": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_carrot_slices"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_carrot_slices"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_carrot_slices"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_beef": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_beef"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_beef"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_beef"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_beef_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_beef_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_beef_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_beef_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_chicken": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_chicken"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_chicken"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_chicken"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_chicken_piece": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_chicken_piece"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_chicken_piece"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_chicken_piece"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_cod": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_cod"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_cod"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_cod"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_cod_fillet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_cod_fillet"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_cod_fillet"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_cod_fillet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_mutton": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_mutton"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_mutton"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_mutton"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_mutton_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_mutton_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_mutton_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_mutton_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_pork_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_pork_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_pork_cut"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_pork_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_porkchop": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_porkchop"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_porkchop"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_porkchop"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rabbit": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rabbit"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_rabbit"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_rabbit"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rabbit_piece": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rabbit_piece"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_rabbit_piece"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_rabbit_piece"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_rotten_flesh": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_rotten_flesh"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_rotten_flesh"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_rotten_flesh"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_salmon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_salmon"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_salmon"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_salmon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_salmon_fillet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_salmon_fillet"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_salmon_fillet"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_salmon_fillet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cooked_tropical_fish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cooked_tropical_fish"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cooked_tropical_fish"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cooked_tropical_fish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_cookie"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_cookie"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_cookie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "fried_potato_slices": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_fried_potato_slices"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_fried_potato_slices"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_fried_potato_slices"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "glow_berries": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_glow_berries"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_glow_berries"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_glow_berries"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "melon_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_melon_slice"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_melon_slice"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_melon_slice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pumpkin_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_pumpkin_pie"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_pumpkin_pie"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_pumpkin_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sweet_berries": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:dried_sweet_berries"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:toasted_sweet_berries"
+            ]
+          },
+          {
+            "items": [
+              "impactsfood:boiled_sweet_berries"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.three_ways.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:boiled_cooked_beef"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.three_ways.title"
+    }
+  },
+  "requirements": [
+    [
+      "bread",
+      "cooked_beef",
+      "cooked_porkchop",
+      "cooked_mutton",
+      "cooked_chicken",
+      "cooked_rabbit",
+      "cooked_cod",
+      "cooked_salmon",
+      "cooked_tropical_fish",
+      "cooked_rotten_flesh",
+      "cooked_beef_cut",
+      "cooked_pork_cut",
+      "cooked_mutton_cut",
+      "cooked_chicken_piece",
+      "cooked_rabbit_piece",
+      "cooked_cod_fillet",
+      "cooked_salmon_fillet",
+      "baked_potato",
+      "fried_potato_slices",
+      "carrot",
+      "carrot_slices",
+      "beetroot",
+      "apple",
+      "melon_slice",
+      "sweet_berries",
+      "glow_berries",
+      "cookie",
+      "pumpkin_pie"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

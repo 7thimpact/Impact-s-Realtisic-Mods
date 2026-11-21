@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:lectern"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:bookshelf"
+    },
+    {
+      "item": "impactscrafting:wooden_panel"
+    }
+  ],
+  "result": {
+    "item": "minecraft:lectern"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:sandstone_slab"
+      }
+    }
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "minecraft:sandstone"
+      },
+      {
+        "item": "minecraft:chiseled_sandstone"
+      }
+    ]
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:sandstone_slab"
+  },
+  "show_notification": true
+}

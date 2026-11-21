@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:cyan_dye_from_pitcher_plant"
+      }
+    }
+  ],
+  "group": "cyan_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:pitcher_plant"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:cyan_dye"
+  }
+}

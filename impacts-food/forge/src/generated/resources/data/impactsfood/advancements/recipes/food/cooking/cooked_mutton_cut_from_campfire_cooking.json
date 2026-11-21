@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_mutton_cut": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsfood:raw_mutton_cut"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactsfood:cooking/cooked_mutton_cut_from_campfire_cooking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_mutton_cut",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactsfood:cooking/cooked_mutton_cut_from_campfire_cooking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

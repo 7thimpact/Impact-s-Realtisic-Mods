@@ -1,0 +1,33 @@
+{
+  "parent": "impactsinventory:hands_full",
+  "criteria": {
+    "entered_nether_light": {
+      "conditions": {},
+      "trigger": "impactsinventory:travel_light"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.travel_light.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:feather"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.travel_light.title"
+    }
+  },
+  "requirements": [
+    [
+      "entered_nether_light"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

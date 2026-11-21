@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/baked_potato",
+    "layer1": "impactsfood:item/styled/boiled_baked_potato"
+  }
+}

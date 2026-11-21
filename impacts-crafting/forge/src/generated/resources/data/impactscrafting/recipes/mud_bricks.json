@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:mud_bricks"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:packed_mud"
+    },
+    {
+      "item": "minecraft:packed_mud"
+    },
+    {
+      "item": "minecraft:packed_mud"
+    },
+    {
+      "item": "minecraft:packed_mud"
+    },
+    {
+      "item": "impactscrafting:mortar"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "minecraft:mud_bricks"
+  }
+}

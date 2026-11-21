@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:chest"
+    }
+  ],
+  "key": {
+    "B": {
+      "type": "forge:nbt",
+      "count": 1,
+      "item": "impactscrafting:wooden_bucket"
+    },
+    "H": {
+      "item": "impactscrafting:stone_hinge"
+    },
+    "T": {
+      "item": "impactscrafting:chest_top"
+    }
+  },
+  "pattern": [
+    "HTH",
+    " B "
+  ],
+  "result": {
+    "item": "minecraft:chest"
+  },
+  "show_notification": true
+}

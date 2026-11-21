@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsinventory:item/frame_pack",
+    "layer1": "impactsinventory:item/frame_pack_overlay"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_special_suspiciousstew",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:and",
+        "values": [
+          {
+            "type": "impactsfood:feature_enabled",
+            "feature": "soups"
+          },
+          {
+            "type": "impactsfood:feature_enabled",
+            "feature": "stews"
+          }
+        ]
+      }
+    }
+  ]
+}

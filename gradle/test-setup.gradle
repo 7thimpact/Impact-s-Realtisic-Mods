@@ -1,0 +1,137 @@
+// Shared setup for a family test setup (Lib's spec, "Family compatibility and testing"): a GameTest server that
+// loads exactly the listed Impact mods, plus Salty's Realistic Forging and playerAnimator when the setup asks for
+// them (and Curios whenever a listed mod requires it), then fails if any Impact mod logged a warning or an error.
+// Configure it in the setup's gradle.properties:
+//   setup_mods=impacts-lib,impacts-inventory   (project folders)
+//   setup_srf=true                             (needs libs/realisticforgingores-4.1.6.jar, git-ignored)
+//   setup_player_animator=true
+
+def setupModProjects = setup_mods.split(',').collect { it.trim() }.findAll { !it.isEmpty() }.collect { project(":${it}:forge") }
+setupModProjects.each { modProject -> evaluationDependsOn(modProject.path) }
+def setupModIds = setupModProjects.collect { modProject -> modProject.property('mod_id') }
+// In development, Mixin configs come from launch arguments, which MixinGradle only adds to each mod's own runs:
+// each mod's common config and, when it has one, the config for its mixins into Forge's classes.
+def setupMixinConfigs = setupModProjects.collectMany { modProject ->
+    def modId = modProject.property('mod_id')
+    [
+            modProject.parent.project('common').file("src/main/resources/${modId}.mixins.json"),
+            modProject.file("src/main/resources/${modId}.forge.mixins.json")
+    ].findAll { configFile -> configFile.exists() }.collect { configFile -> configFile.name }
+}
+def isUsingSrf = (findProperty('setup_srf') ?: 'false').toBoolean()
+def isUsingPlayerAnimator = (findProperty('setup_player_animator') ?: 'false').toBoolean()
+// Curios comes along whenever a listed mod requires it (Inventory).
+def isUsingCurios = setupModProjects.any { modProject -> (modProject.findProperty('mod_requires_curios') ?: 'false').toBoolean() }
+def srfJar = rootProject.file("libs/realisticforgingores-${srf_version}.jar")
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+}
+
+repositories {
+    flatDir {
+        dirs rootProject.file('libs')
+    }
+    maven {
+        name = 'KosmX'
+        url = 'https://maven.kosmx.dev/'
+    }
+    maven {
+        name = 'Curios'
+        url = 'https://maven.theillusivec4.top/'
+        content {
+            includeGroup 'top.theillusivec4.curios'
+        }
+    }
+}
+
+minecraft {
+    mappings channel: 'parchment', version: "${parchment_version}-${parchment_minecraft_version}"
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            setupMixinConfigs.each { configName ->
+                args '--mixin.config', configName
+            }
+            mods {
+                setupModProjects.each { modProject ->
+                    "${modProject.property('mod_id')}" {
+                        source modProject.sourceSets.main
+                    }
+                }
+            }
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', setupModIds.join(',')
+        }
+
+        client {
+        }
+
+        // A client with exactly this setup's mods, straight into run/saves/ImpactsTest: tools/client-screenshot.sh takes the setup's folder.
+        clientQuickPlay {
+            parent runs.client
+            args '--quickPlaySingleplayer', 'ImpactsTest'
+        }
+    }
+}
+
+// Third-party mods go in the setup's own mods folder, deobfuscated for the development environment.
+configurations {
+    setupModJars {
+        transitive = false
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    if (isUsingSrf) {
+        if (!srfJar.exists()) {
+            throw new GradleException("Setup ${project.name} needs ${srfJar}. Copy the Salty's Realistic Forging jar there (it is git-ignored).")
+        }
+        setupModJars fg.deobf("local:realisticforgingores:${srf_version}")
+    }
+    if (isUsingPlayerAnimator) {
+        setupModJars fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:${player_animator_version}")
+    }
+    if (isUsingCurios) {
+        setupModJars fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    }
+}
+
+def copySetupModJars = tasks.register('copySetupModJars', Sync) {
+    description = "Puts the setup's third-party mods, deobfuscated, in its run/mods folder."
+    from configurations.setupModJars
+    into project.file('run/mods')
+}
+
+def checkImpactLog = tasks.register('checkImpactLog') {
+    description = 'Fails when an Impact mod logged a warning or an error during the GameTest run.'
+    doLast {
+        def latestLog = project.file('run/logs/latest.log')
+        if (!latestLog.exists()) {
+            throw new GradleException("No GameTest log found at ${latestLog}")
+        }
+        def impactProblems = latestLog.readLines().findAll { line -> line ==~ /.*\/(WARN|ERROR)\] \[Impact\/.*/ }
+        if (!impactProblems.isEmpty()) {
+            throw new GradleException("Impact mods logged ${impactProblems.size()} warning(s) or error(s) in ${project.name}:\n" + impactProblems.join('\n'))
+        }
+        logger.lifecycle("${project.name}: no Impact warnings or errors")
+    }
+}
+
+tasks.matching { task -> task.name == 'runGameTestServer' }.configureEach { runTask ->
+    runTask.finalizedBy checkImpactLog
+}
+
+tasks.matching { task -> task.name in ['prepareRunGameTestServer', 'prepareRunClient', 'prepareRunClientQuickPlay'] }.configureEach { prepareTask ->
+    prepareTask.dependsOn setupModProjects.collect { modProject -> "${modProject.path}:classes" }
+    prepareTask.dependsOn copySetupModJars
+    // Mixin remaps each mod's refmap with this file at launch.
+    prepareTask.dependsOn 'createSrgToMcp'
+}

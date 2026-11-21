@@ -1,0 +1,38 @@
+{
+  "parent": "impactsvitality:cold_feet",
+  "criteria": {
+    "has_thermometer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsvitality:thermometer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.taking_the_temperature.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:thermometer"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.taking_the_temperature.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_thermometer"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

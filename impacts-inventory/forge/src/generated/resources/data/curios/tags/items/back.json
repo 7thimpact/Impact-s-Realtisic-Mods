@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#impactsinventory:packs",
+    {
+      "id": "#impactslib:back_slot_items",
+      "required": false
+    }
+  ]
+}

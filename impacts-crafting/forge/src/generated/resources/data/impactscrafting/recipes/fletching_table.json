@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:fletching_table"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_frame"
+    },
+    {
+      "item": "impactscrafting:flint_arrowhead"
+    },
+    {
+      "item": "impactscrafting:flint_arrowhead"
+    }
+  ],
+  "result": {
+    "item": "minecraft:fletching_table"
+  }
+}

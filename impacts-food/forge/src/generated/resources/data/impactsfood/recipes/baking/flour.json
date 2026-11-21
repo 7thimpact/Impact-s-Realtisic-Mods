@@ -1,0 +1,24 @@
+{
+  "type": "impactslib:grinding",
+  "byproducts": [
+    {
+      "chance": 0.5,
+      "item": "minecraft:wheat_seeds"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "baking"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    }
+  ],
+  "min_tier": "stone",
+  "result": {
+    "item": "impactsfood:flour"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "impactsinventory:hands_full",
+  "criteria": {
+    "pockets_filled": {
+      "conditions": {},
+      "trigger": "impactsinventory:pockets_filled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.pocket_space.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:leather"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.pocket_space.title"
+    }
+  },
+  "requirements": [
+    [
+      "pockets_filled"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "impactscrafting:block/dye_vat"
+    },
+    "filled=true": {
+      "model": "impactscrafting:block/dye_vat_filled"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+package com.impact.realisticcrafting.recipe;
+
+import com.impact.lib.ResourceIds;
+import com.impact.lib.crafting.ToolCraftingRecipe;
+import com.impact.realisticcrafting.config.CraftingServerConfig;
+import com.impact.realisticcrafting.config.ItemEntries;
+import com.impact.realisticcrafting.menu.CraftingTier;
+import com.impact.realisticcrafting.registry.CraftingTags;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
+
+/**
+ * The tier of items and recipes. An item's tier comes from the config's extra lists first, then the tier tags. An
+ * ingredient takes the lowest tier among the items it accepts (the cheapest way to fill it), and a recipe the highest
+ * tier among its ingredients, tool ingredients included. Recipes without an ingredient list are non-metal.
+ */
+public final class TierResolver {
+    // Keyed by the recipe object, so a data pack reload (new recipes, new tags) starts over on its own.
+    private static final Map<Recipe<?>, CraftingTier> RECIPE_TIERS = Collections.synchronizedMap(new WeakHashMap<>());
+    // Forge files bricks under its ingots tag, but they're fired clay, not ore.
+    private static final List<TagKey<Item>> FIRED_CLAY_INGOTS = List.of(forgeItemTag("ingots/brick"), forgeItemTag("ingots/nether_brick"));
+
+    private TierResolver() {
+    }
+
+    public static CraftingTier tierOf(Recipe<?> recipe) {
+        return RECIPE_TIERS.computeIfAbsent(recipe, TierResolver::computeTier);
+    }
+
+    public static CraftingTier tierOf(ItemStack stack) {
+        CraftingServerConfig.TierSettings settings = CraftingServerConfig.get().tiers;
+        if (ItemEntries.contains(settings.extraAdvanced.get(), stack)) {
+            return CraftingTier.ADVANCED;
+        }
+        if (ItemEntries.contains(settings.extraStone.get(), stack) || stack.is(CraftingTags.TIER_STONE)) {
+            return CraftingTier.STONE;
+        }
+        if (FIRED_CLAY_INGOTS.stream().anyMatch(stack::is)) {
+            return CraftingTier.NON_METAL;
+        }
+        return stack.is(CraftingTags.TIER_ADVANCED) ? CraftingTier.ADVANCED : CraftingTier.NON_METAL;
+    }
+
+    public static CraftingTier tierOf(Ingredient ingredient) {
+        return Arrays.stream(ingredient.getItems())
+                .map(TierResolver::tierOf)
+                .reduce(CraftingTier::lowest)
+                .orElse(CraftingTier.NON_METAL);
+    }
+
+    private static TagKey<Item> forgeItemTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceIds.of("forge", path));
+    }
+
+    /** Forgets every recipe's tier, for when the tier lists in the config change. */
+    public static void clearCache() {
+        RECIPE_TIERS.clear();
+    }
+
+    // Tool ingredients count too: a recipe that needs the Iron Saw needs the Stone Table.
+    private static CraftingTier computeTier(Recipe<?> recipe) {
+        List<Ingredient> ingredients = new ArrayList<>(recipe.getIngredients());
+        if (recipe instanceof ToolCraftingRecipe toolRecipe) {
+            ingredients.addAll(toolRecipe.tools());
+        }
+        return ingredients.stream()
+                .filter(ingredient -> !ingredient.isEmpty())
+                .map(TierResolver::tierOf)
+                .reduce(CraftingTier::highest)
+                .orElse(CraftingTier.NON_METAL);
+    }
+}

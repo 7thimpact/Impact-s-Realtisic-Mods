@@ -1,0 +1,34 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:end_stone_brick_stairs"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:end_stone_bricks"
+    }
+  },
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:end_stone_brick_stairs"
+  },
+  "tools": [
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
+  ]
+}

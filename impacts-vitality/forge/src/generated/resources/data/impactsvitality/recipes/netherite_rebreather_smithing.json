@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "impactsvitality:rebreather"
+  },
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "netherite_rebreather"
+    }
+  ],
+  "result": {
+    "item": "impactsvitality:netherite_rebreather"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

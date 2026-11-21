@@ -1,0 +1,14 @@
+{
+  "values": [
+    "impactsvitality:unclean_water",
+    "impactsvitality:salt_water",
+    "impactsvitality:purified_water",
+    "impactsvitality:cold_water",
+    "impactsvitality:wooden_cup",
+    "impactsvitality:waterskin",
+    "impactsvitality:canteen",
+    "impactsvitality:insulated_flask",
+    "impactsvitality:tidebound_canteen",
+    "impactsvitality:hydration_pack"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:loose_minecart"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "item": "impactscrafting:iron_wheel"
+    },
+    {
+      "item": "impactscrafting:iron_wheel"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:loose_minecart"
+  }
+}

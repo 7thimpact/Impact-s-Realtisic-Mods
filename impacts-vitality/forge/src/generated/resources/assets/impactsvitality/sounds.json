@@ -1,0 +1,29 @@
+{
+  "player.cough": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.player.hurt_drown"
+      }
+    ],
+    "subtitle": "subtitles.impactsvitality.player.cough"
+  },
+  "player.pant": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.player.breath"
+      }
+    ],
+    "subtitle": "subtitles.impactsvitality.player.pant"
+  },
+  "player.shiver": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "entity.player.hurt_freeze"
+      }
+    ],
+    "subtitle": "subtitles.impactsvitality.player.shiver"
+  }
+}

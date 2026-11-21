@@ -1,0 +1,19 @@
+{
+  "type": "impactslib:grinding",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:grinding/brown_dye_from_cocoa_beans"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:cocoa_beans"
+    }
+  ],
+  "min_tier": "wood",
+  "result": {
+    "item": "minecraft:brown_dye"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "impactsvitality:stay_hydrated",
+  "criteria": {
+    "drank_salt_water": {
+      "conditions": {
+        "purity": "salt"
+      },
+      "trigger": "impactsvitality:drank"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.worth_its_salt.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "impactsvitality:salt_water"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.worth_its_salt.title"
+    }
+  },
+  "requirements": [
+    [
+      "drank_salt_water"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

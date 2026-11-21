@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "switched": {
+      "conditions": {},
+      "trigger": "impactsinventory:slot_switched"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "minecraft:textures/block/brown_wool.png",
+    "description": {
+      "translate": "advancements.impactsinventory.hands_full.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:satchel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.hands_full.title"
+    }
+  },
+  "requirements": [
+    [
+      "switched"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

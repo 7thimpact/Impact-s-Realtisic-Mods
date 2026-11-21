@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/cooked_rabbit",
+    "layer1": "impactsfood:item/styled/boiled_cooked_rabbit"
+  }
+}

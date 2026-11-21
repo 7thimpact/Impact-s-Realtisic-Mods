@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:hot_water",
+  "criteria": {
+    "boiled_in_bucket": {
+      "conditions": {},
+      "trigger": "impactsfood:campfire_bucket_boiled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.camp_cook.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:campfire"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.camp_cook.title"
+    }
+  },
+  "requirements": [
+    [
+      "boiled_in_bucket"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

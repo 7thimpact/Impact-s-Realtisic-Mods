@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "water_filter"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:barrel"
+    },
+    "F": {
+      "item": "impactsvitality:charcoal_filter"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "F",
+    "B",
+    "I"
+  ],
+  "result": {
+    "item": "impactsvitality:water_filter"
+  },
+  "show_notification": true
+}

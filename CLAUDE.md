@@ -19,8 +19,9 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 
 ## How a session works
 
-- One milestone per session. ROADMAP.md lists them in order.
-- For each milestone: implement it, run the checks below, tick it off in ROADMAP.md, commit, push, then stop and report for review.
+- Work one milestone at a time, in ROADMAP.md's order.
+- For each milestone: implement it, run the checks below, tick it off in ROADMAP.md, commit and push.
+- Stop to report and ask for review after a milestone, unless the user has asked you to keep going. The current goal is to finish all mods: keep going, and save questions for the end of a major task (a whole mod).
 - Work on branch `claude/minecraft-mods-dev-tz2j7p`.
 - If a spec and the real Minecraft or Forge API disagree, follow the API. Record the change under "Implementation changes" at the end of that mod's SPEC.md.
 
@@ -29,7 +30,8 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 - `./gradlew build`
 - `./gradlew :<mod>:forge:runData` whenever generated data changes. Never hand-edit files under `src/generated/`.
 - `./gradlew :<mod>:forge:runGameTestServer`, which must exit with code 0.
-- HUD and screen work: take screenshots with `runClient` under `xvfb-run`, using software rendering.
+- `./gradlew runFamilyTestSetups` before finishing a mod: every family setup in `test-setups/` must pass. Setups with SRF need `libs/realisticforgingores-4.1.6.jar`.
+- HUD and screen work: take screenshots with `tools/client-screenshot.sh <mod folder or test-setups/<name>> <output.png> [steps]` (a setup's folder starts a client with exactly that setup's mods). It starts the mod's Quick Play client on a virtual display in a copy of the GameTest world with cheats on, then runs the steps: chat commands, `key:<name>` presses, `click:`/`rclick:`/`move:<x>,<y>` mouse steps, `wait:<seconds>`, and `shot:<file>` extra screenshots. It needs `xdotool` and ImageMagick (`apt-get install -y xdotool imagemagick`).
 
 ## Code rules
 
@@ -49,7 +51,7 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 
 These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
-- Every mod runs with only Impact's Lib installed.
+- Every mod runs with only Impact's Lib installed. The one exception: Impact's Realistic Inventory also requires Curios (its back slot is Curios's `back` slot; decided by the user, Nov 2026).
 - No Impact mod imports another Impact mod's classes. Mods meet only through Lib's API, shared items, tags and recipe conditions (`forge:mod_loaded`, `forge:not`).
 - Refer to other mods' items by registry ID at runtime. Tag entries for them use `"required": false`.
 - Interaction handlers act only on items they own (or items in Lib's shared interactions table) and return PASS for everything else.
@@ -73,9 +75,22 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## Salty's Realistic Forging (SRF)
 
-- Reference only. Keep its jar and any decompiled copy outside the repo, for example `/home/user/reference/srf/`. `libs/` and `reference/` are git-ignored as a safety net.
+- Reference only. Keep its jar and any decompiled copy outside the repo. `libs/` and `reference/` are git-ignored as a safety net.
 - Never copy SRF's code or assets.
-- Record findings in `<mod>/docs/srf-notes.md`.
+- Findings are in `<mod>/docs/srf-notes.md`; shared facts are in `impacts-lib/docs/srf-notes.md`.
+- To read the jar again: unzip the user's upload into `/home/user/reference/jars/`, decompile with Vineflower, then turn SRG names (`m_12345_`) into readable names with `tools/remap_srg_names.py <mappings.tsrg> <source folder> <output folder>`. The mapping file is ForgeGradle's `impacts-lib/forge/build/createMcpToSrg/output.tsrg`.
+- For runtime tests, put the SRF jar in `libs/` (git-ignored). The build loads it, deobfuscated, when it is there.
+
+## playerAnimator
+
+- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib uses it for hold-to-use animations (hammering, grinding, sewing, …) when it is installed, and falls back to vanilla arm swings when it isn't.
+- Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
+
+## Curios
+
+- Required by Impact's Realistic Inventory only (`curios`, Maven `top.theillusivec4.curios:curios-forge:<curios_version>` from https://maven.theillusivec4.top/). A mod opts in with `mod_requires_curios=true` in its `gradle.properties`: it then compiles against Curios's API jar, its runs load Curios, and every test setup that lists it loads Curios too.
+- IRI's back slot is Curios's `back` slot. IRI's data gives players that slot (`data/impactsinventory/curios/entities/player_back.json`, gated by `impactsinventory:back_slot_enabled`) and tags its packs `#curios:back`. Curios saves, syncs and drops it.
+- Code that imports Curios lives in IRI's `forge` module (`com.impact.realisticinventory.forge.curios`), behind `BackSlotBackend` in `common`.
 
 ## AI notice
 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsfood:item/cooked_mutton_cut",
+    "layer1": "impactsfood:item/styled/boiled_cooked_mutton_cut"
+  }
+}

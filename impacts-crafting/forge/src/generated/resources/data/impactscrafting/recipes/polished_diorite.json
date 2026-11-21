@@ -1,0 +1,28 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:polished_diorite"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:diorite"
+    }
+  ],
+  "result": {
+    "item": "minecraft:polished_diorite"
+  },
+  "tools": [
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
+  ]
+}

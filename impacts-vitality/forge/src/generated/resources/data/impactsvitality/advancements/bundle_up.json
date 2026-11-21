@@ -1,0 +1,32 @@
+{
+  "parent": "impactsvitality:cold_feet",
+  "criteria": {
+    "wore_warm_linings": {
+      "conditions": {
+        "gear": "warm_linings"
+      },
+      "trigger": "impactsvitality:gear_used"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.bundle_up.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:white_wool"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.bundle_up.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_warm_linings"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

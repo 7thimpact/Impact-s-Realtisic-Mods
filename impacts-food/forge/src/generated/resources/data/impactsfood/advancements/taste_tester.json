@@ -1,0 +1,33 @@
+{
+  "parent": "impactsfood:three_ways",
+  "criteria": {
+    "tasted_many_foods": {
+      "conditions": {},
+      "trigger": "impactsfood:taste_tester"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.taste_tester.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactsfood:dried_apple"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.taste_tester.title"
+    }
+  },
+  "requirements": [
+    [
+      "tasted_many_foods"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

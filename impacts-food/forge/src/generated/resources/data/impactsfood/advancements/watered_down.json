@@ -1,0 +1,32 @@
+{
+  "parent": "impactsfood:souper",
+  "criteria": {
+    "watery_soup": {
+      "conditions": {
+        "soup": "impactsfood:watery_soup"
+      },
+      "trigger": "impactsfood:soup_ladled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.watered_down.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "impactsfood:watery_soup"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.watered_down.title"
+    }
+  },
+  "requirements": [
+    [
+      "watery_soup"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

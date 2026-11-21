@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:loose_iron_door"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    },
+    {
+      "item": "impactscrafting:iron_hinge"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:loose_iron_door"
+  }
+}

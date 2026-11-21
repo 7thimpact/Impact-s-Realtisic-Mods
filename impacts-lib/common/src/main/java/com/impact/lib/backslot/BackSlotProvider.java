@@ -1,0 +1,20 @@
+package com.impact.lib.backslot;
+
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+
+/** Stores the player's back slot. Impact's Realistic Inventory implements this. */
+public interface BackSlotProvider {
+    ItemStack get(Player player);
+
+    /** Stores the stack. Returns false, changing nothing, when this player has no back slot right now. */
+    boolean set(Player player, ItemStack stack);
+
+    /** Whether the stack is one of the provider's own back-slot items, such as Inventory's packs. */
+    boolean acceptsOwnItem(ItemStack stack);
+
+    /** Whether the back slot is switched on right now. A provider can turn it off in its own config. */
+    default boolean isEnabled() {
+        return true;
+    }
+}

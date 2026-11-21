@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:spit_take",
+  "criteria": {
+    "turned_often": {
+      "conditions": {},
+      "trigger": "impactsfood:spit_turned_often"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.round_and_round.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:clock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.round_and_round.title"
+    }
+  },
+  "requirements": [
+    [
+      "turned_often"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

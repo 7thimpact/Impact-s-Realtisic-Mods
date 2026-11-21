@@ -9,6 +9,9 @@ import java.util.List;
  * A value outside its range, or one that can't be read, falls back to its default with a warning.
  */
 public interface ConfigSpecBuilder {
+    /** The mod that owns the file being built. */
+    String modId();
+
     ConfigSpecBuilder pushSection(String name, String... comment);
 
     ConfigSpecBuilder popSection();

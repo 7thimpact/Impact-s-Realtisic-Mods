@@ -1,0 +1,24 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:glass_pane"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:glass_pane"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_saw"
+    }
+  ]
+}

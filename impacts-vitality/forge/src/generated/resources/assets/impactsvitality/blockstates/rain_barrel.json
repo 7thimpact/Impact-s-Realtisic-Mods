@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "fill=0": {
+      "model": "impactsvitality:block/rain_barrel"
+    },
+    "fill=1": {
+      "model": "impactsvitality:block/rain_barrel_filled"
+    },
+    "fill=2": {
+      "model": "impactsvitality:block/rain_barrel_filled"
+    },
+    "fill=3": {
+      "model": "impactsvitality:block/rain_barrel_filled"
+    },
+    "fill=4": {
+      "model": "impactsvitality:block/rain_barrel_filled"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:tripwire_hook"
+    }
+  ],
+  "criteria": {
+    "has_iron_rod": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "impactscrafting:iron_rods"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:tripwire_hook"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_rod",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:tripwire_hook"
+    ]
+  },
+  "sends_telemetry_event": false
+}

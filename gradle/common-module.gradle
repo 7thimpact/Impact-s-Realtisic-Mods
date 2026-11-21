@@ -1,8 +1,13 @@
 // Shared setup for every mod's `common` module: code and data that compile against vanilla Minecraft only.
 // The matching `forge` module compiles these sources into its own jar.
 
-group = mod_group
+// One group per mod: every mod's modules are named common and forge, and Gradle tells modules apart by group.
+group = "${mod_group}.${mod_id}"
 version = mod_version
+
+// Impact mods this one builds on, as project folders (for example impacts-lib), from its gradle.properties.
+def dependencyModNames = (findProperty('mod_dependencies') ?: '').split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+dependencyModNames.each { dependencyName -> evaluationDependsOn(":${dependencyName}:common") }
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
@@ -25,9 +30,13 @@ repositories {
 
 dependencies {
     compileOnly "org.spongepowered:mixin:${mixin_version}"
+    // Mixin's field and opcode targets use ASM's constants; Forge provides ASM at runtime.
+    compileOnly "org.ow2.asm:asm:${asm_version}"
+    dependencyModNames.each { dependencyName -> compileOnly project(":${dependencyName}:common") }
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = java_version as int
+    options.compilerArgs << '-Xlint:deprecation'
 }

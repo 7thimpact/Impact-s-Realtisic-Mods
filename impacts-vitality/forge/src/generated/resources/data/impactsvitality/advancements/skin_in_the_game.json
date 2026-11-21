@@ -1,0 +1,38 @@
+{
+  "parent": "impactsvitality:clean_living",
+  "criteria": {
+    "has_waterskin": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactsvitality:waterskin"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.skin_in_the_game.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:waterskin"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.skin_in_the_game.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_waterskin"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

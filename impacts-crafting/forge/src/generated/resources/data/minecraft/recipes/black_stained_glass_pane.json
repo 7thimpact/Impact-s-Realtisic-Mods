@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "stone",
+        "recipe": "minecraft:black_stained_glass_pane"
+      }
+    }
+  ],
+  "group": "stained_glass_pane",
+  "key": {
+    "#": {
+      "item": "minecraft:black_stained_glass"
+    }
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 16,
+    "item": "minecraft:black_stained_glass_pane"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsfood:item/carrot_slices",
+    "layer1": "impactsfood:item/styled/toasted_carrot_slices"
+  }
+}

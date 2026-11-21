@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:heavy_weighted_pressure_plate"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_plates"
+    }
+  ],
+  "result": {
+    "item": "minecraft:heavy_weighted_pressure_plate"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_saw"
+    }
+  ]
+}

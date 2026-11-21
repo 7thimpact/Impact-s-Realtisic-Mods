@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "facing=east,kind=backpack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=backpack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=frame_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=satchel,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=satchel,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=backpack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=backpack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=frame_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=satchel,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=satchel,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=backpack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=backpack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=frame_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=satchel,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=satchel,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=backpack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=backpack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=frame_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=satchel,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=satchel,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    }
+  }
+}

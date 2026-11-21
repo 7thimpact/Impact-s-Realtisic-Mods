@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "wear=0": {
+      "model": "impactscrafting:block/makeshift_stone_table_0"
+    },
+    "wear=1": {
+      "model": "impactscrafting:block/makeshift_stone_table_1"
+    },
+    "wear=2": {
+      "model": "impactscrafting:block/makeshift_stone_table_2"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:cherry_fence"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:cherry\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:cherry\"}"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:cherry_fence"
+  }
+}

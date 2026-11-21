@@ -1,0 +1,14 @@
+{
+  "values": [
+    "#minecraft:logs",
+    "#minecraft:wool",
+    "#forge:ingots",
+    "#forge:gems",
+    "#forge:raw_materials",
+    "#forge:leather",
+    "minecraft:cobblestone",
+    "minecraft:cobbled_deepslate",
+    "minecraft:stone",
+    "minecraft:string"
+  ]
+}

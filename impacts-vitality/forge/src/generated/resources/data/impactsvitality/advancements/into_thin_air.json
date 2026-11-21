@@ -1,0 +1,43 @@
+{
+  "parent": "impactsvitality:it_feels_like_nothing",
+  "criteria": {
+    "tank_in_the_end": {
+      "conditions": {
+        "gear": "air_tank",
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "dimension": "minecraft:the_end"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "impactsvitality:gear_used"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsvitality.into_thin_air.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsvitality:air_tank"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsvitality.into_thin_air.title"
+    }
+  },
+  "requirements": [
+    [
+      "tank_in_the_end"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

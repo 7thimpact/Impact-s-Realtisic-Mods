@@ -1,0 +1,25 @@
+{
+  "type": "impactsfood:boiling",
+  "boil_ticks": 200,
+  "conditions": [
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "styles"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiled"
+    },
+    {
+      "type": "impactsfood:feature_enabled",
+      "feature": "boiling"
+    }
+  ],
+  "input": {
+    "item": "minecraft:dried_kelp"
+  },
+  "result": {
+    "item": "impactsfood:boiled_dried_kelp"
+  },
+  "vessel": "any"
+}

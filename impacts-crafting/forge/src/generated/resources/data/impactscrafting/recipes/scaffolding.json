@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:scaffolding"
+    }
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bamboo"
+    },
+    "T": {
+      "item": "impactscrafting:twine"
+    }
+  },
+  "pattern": [
+    "BTB",
+    "B B",
+    "B B"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:scaffolding"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,77 @@
+package com.impact.realisticvitality.player;
+
+import net.minecraft.nbt.CompoundTag;
+
+/** Body temperature, from -100 (freezing) to +100 (overheating) with 0 comfortable, and how long the player stays Wet. */
+public final class TemperatureState {
+    public static final float COLDEST = -100.0F;
+    public static final float HOTTEST = 100.0F;
+    private static final String BODY_KEY = "Body";
+    private static final String WET_TICKS_KEY = "WetTicks";
+
+    private float body;
+    private int wetTicks;
+    // Not saved: worked out again within a second.
+    private float ambient = Float.NaN;
+    private int damageSeconds;
+    private String loggedState = "none";
+
+    public float body() {
+        return body;
+    }
+
+    public void setBody(float newBody) {
+        body = Math.max(COLDEST, Math.min(HOTTEST, newBody));
+    }
+
+    /** The ambient temperature where the player stands, in °F, or NaN until the first reading. */
+    public float ambient() {
+        return ambient;
+    }
+
+    public void setAmbient(float fahrenheit) {
+        ambient = fahrenheit;
+    }
+
+    /** Seconds spent Freezing or Overheating since the last damage. Not saved. */
+    public int damageSeconds() {
+        return damageSeconds;
+    }
+
+    public void setDamageSeconds(int seconds) {
+        damageSeconds = seconds;
+    }
+
+    /** The body state last written to the log. Not saved. */
+    public String loggedState() {
+        return loggedState;
+    }
+
+    public void setLoggedState(String state) {
+        loggedState = state;
+    }
+
+    public int wetTicks() {
+        return wetTicks;
+    }
+
+    public boolean isWet() {
+        return wetTicks > 0;
+    }
+
+    public void setWetTicks(int ticks) {
+        wetTicks = Math.max(0, ticks);
+    }
+
+    CompoundTag save() {
+        CompoundTag tag = new CompoundTag();
+        tag.putFloat(BODY_KEY, body);
+        tag.putInt(WET_TICKS_KEY, wetTicks);
+        return tag;
+    }
+
+    void load(CompoundTag tag) {
+        body = tag.getFloat(BODY_KEY);
+        wetTicks = tag.getInt(WET_TICKS_KEY);
+    }
+}

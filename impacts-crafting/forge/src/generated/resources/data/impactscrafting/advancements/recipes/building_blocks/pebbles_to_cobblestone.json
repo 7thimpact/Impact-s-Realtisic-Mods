@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:pebbles_to_cobblestone"
+    }
+  ],
+  "criteria": {
+    "has_pebble": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "impactscrafting:stone_pebble"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "impactscrafting:pebbles_to_cobblestone"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_pebble",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "impactscrafting:pebbles_to_cobblestone"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/dried_kelp",
+    "layer1": "impactsfood:item/styled/boiled_dried_kelp"
+  }
+}

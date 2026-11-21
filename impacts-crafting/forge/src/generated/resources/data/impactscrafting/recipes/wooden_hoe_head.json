@@ -1,0 +1,26 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:wooden_hoe_head"
+    }
+  ],
+  "key": {
+    "P": {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  },
+  "pattern": [
+    "PP"
+  ],
+  "result": {
+    "item": "impactscrafting:wooden_hoe_head"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

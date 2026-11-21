@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:yellow_dye_from_sunflower"
+      }
+    }
+  ],
+  "group": "yellow_dye",
+  "ingredients": [
+    {
+      "item": "minecraft:sunflower"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:yellow_dye"
+  }
+}

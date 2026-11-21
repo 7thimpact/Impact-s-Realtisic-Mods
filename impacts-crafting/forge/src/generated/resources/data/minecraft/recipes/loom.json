@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "wood",
+        "recipe": "minecraft:loom"
+      }
+    }
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "@": {
+      "tag": "forge:string"
+    }
+  },
+  "pattern": [
+    "@@",
+    "##"
+  ],
+  "result": {
+    "item": "minecraft:loom"
+  },
+  "show_notification": true
+}

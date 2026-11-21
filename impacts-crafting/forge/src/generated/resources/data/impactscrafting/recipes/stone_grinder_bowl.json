@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:stone_grinder_bowl"
+    }
+  ],
+  "key": {
+    "S": {
+      "item": "impactscrafting:shaped_stone"
+    }
+  },
+  "pattern": [
+    "S S",
+    " S "
+  ],
+  "result": {
+    "item": "impactslib:stone_grinder_bowl"
+  },
+  "show_notification": true
+}

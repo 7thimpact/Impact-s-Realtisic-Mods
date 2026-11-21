@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:oak_fence"
+    }
+  ],
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:oak\"}"
+    },
+    {
+      "type": "forge:partial_nbt",
+      "item": "impactscrafting:fence_post",
+      "nbt": "{wood:\"minecraft:oak\"}"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:oak_fence"
+  }
+}

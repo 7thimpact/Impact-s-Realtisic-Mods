@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "textiles",
+      "recipe": "impactscrafting:paper"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:paper_pulp"
+    },
+    {
+      "item": "impactscrafting:paper_pulp"
+    },
+    {
+      "item": "impactscrafting:paper_pulp"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:paper"
+  }
+}

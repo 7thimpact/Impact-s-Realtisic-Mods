@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsfood:item/cooked_salmon_fillet",
+    "layer1": "impactsfood:item/styled/dried_cooked_salmon_fillet"
+  }
+}

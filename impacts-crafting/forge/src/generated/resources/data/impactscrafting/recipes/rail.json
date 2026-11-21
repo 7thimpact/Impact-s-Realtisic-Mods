@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "iron",
+      "recipe": "impactscrafting:rail"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    },
+    {
+      "item": "impactscrafting:trimmed_stick"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:rail"
+  }
+}

@@ -37,13 +37,23 @@ final class ForgeConfigFile implements ConfigFile {
         spec = builtSpec;
     }
 
-    /** Forge loaded or reloaded a config file. Acts only when it is this one. */
+    /** Forge loaded a config file. Acts only when it is this one. */
     void handleLoad(ModConfig loadedConfig) {
         if (!isThisFile(loadedConfig)) {
             return;
         }
         loadLog.onFileLoaded();
         loadListeners.forEach(Runnable::run);
+    }
+
+    /** Forge reloaded a config file after it changed on disk. A changed SERVER file is sent to connected players. */
+    void handleReload(ModConfig reloadedConfig) {
+        if (!isThisFile(reloadedConfig)) {
+            return;
+        }
+        loadLog.onFileLoaded();
+        loadListeners.forEach(Runnable::run);
+        ServerConfigResync.broadcastIfServerFile(reloadedConfig);
     }
 
     /** Forge unloaded a config file, for example a SERVER file when its world closes. Acts only when it is this one. */

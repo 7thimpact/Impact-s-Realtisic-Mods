@@ -1,0 +1,23 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:iron_rod"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "impactscrafting:iron_rod"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_saw"
+    }
+  ]
+}

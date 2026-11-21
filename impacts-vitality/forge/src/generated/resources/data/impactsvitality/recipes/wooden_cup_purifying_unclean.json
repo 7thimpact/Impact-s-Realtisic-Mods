@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactsvitality:feature_enabled",
+      "feature": "thirst"
+    }
+  ],
+  "cookingtime": 300,
+  "experience": 0.1,
+  "ingredient": {
+    "type": "forge:partial_nbt",
+    "item": "impactsvitality:wooden_cup",
+    "nbt": "{\"impactsvitality:contents\":\"water\",\"impactsvitality:drinks\":1,\"impactsvitality:purity\":\"unclean\"}"
+  },
+  "result": {
+    "item": "impactsvitality:wooden_cup",
+    "nbt": "{\"impactsvitality:contents\":\"water\",\"impactsvitality:drinks\":1,\"impactsvitality:purity\":\"purified\"}"
+  }
+}

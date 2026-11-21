@@ -1,0 +1,30 @@
+{
+  "parent": "impactsinventory:pocket_space",
+  "criteria": {
+    "pickup_refused": {
+      "conditions": {},
+      "trigger": "impactsinventory:pickup_refused"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.no_room_at_all.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:cobblestone"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.no_room_at_all.title"
+    }
+  },
+  "requirements": [
+    [
+      "pickup_refused"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

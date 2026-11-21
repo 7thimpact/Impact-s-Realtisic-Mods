@@ -1,0 +1,29 @@
+{
+  "type": "impactslib:tool_crafting",
+  "byproducts": [
+    {
+      "item": "impactscrafting:wood_scraps"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:mangrove_planks"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:mangrove_logs"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "minecraft:mangrove_planks"
+  },
+  "tools": [
+    {
+      "tag": "impactscrafting:trimming_tools"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "impactsvitality:block/rain_barrel_bottom",
+    "side": "impactsvitality:block/rain_barrel_side",
+    "top": "impactsvitality:block/rain_barrel_top"
+  }
+}

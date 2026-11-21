@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_special_armordye",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "impactscrafting:overhaul_enabled",
+        "category": "dyes",
+        "recipe": "minecraft:armor_dye"
+      }
+    }
+  ]
+}

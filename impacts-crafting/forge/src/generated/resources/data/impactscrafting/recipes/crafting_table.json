@@ -1,0 +1,38 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:crafting_table"
+    }
+  ],
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "result": {
+    "item": "minecraft:crafting_table"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:iron_saw"
+    },
+    {
+      "item": "impactscrafting:iron_hammer"
+    },
+    {
+      "item": "impactscrafting:iron_tweezers"
+    }
+  ]
+}

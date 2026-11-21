@@ -27,7 +27,7 @@ public final class ForgeModConstruction {
         FMLJavaModLoadingContext context = CONSTRUCTING_MOD_CONTEXT.get();
         if (context == null) {
             throw new IllegalStateException(
-                    "Impact config files must be registered during mod construction, inside ForgeModConstruction.run(...).");
+                    "Impact config files and registrations must happen during mod construction, inside ForgeModConstruction.run(...).");
         }
         return context;
     }

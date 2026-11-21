@@ -1,37 +1,61 @@
 package com.impact.lib;
 
+import com.impact.lib.advancement.LibTriggers;
+import com.impact.lib.attachment.PlayerAttachments;
+import com.impact.lib.config.LibClientConfig;
 import com.impact.lib.config.LibCommonConfig;
+import com.impact.lib.config.LibServerConfig;
+import com.impact.lib.counter.ImpactsCounters;
+import com.impact.lib.crafting.ToolCrafting;
 import com.impact.lib.debug.LibLogCategories;
+import com.impact.lib.dump.ImpactsDump;
+import com.impact.lib.dump.LibBlockDumpSection;
+import com.impact.lib.dump.LibItemDumpSection;
+import com.impact.lib.dump.LibPlayerDumpSection;
+import com.impact.lib.fuel.CompostRegistry;
+import com.impact.lib.grinding.Grinding;
 import com.impact.lib.log.DebugLogFile;
 import com.impact.lib.log.ImpactsLog;
+import com.impact.lib.network.LibNetwork;
 import com.impact.lib.platform.LoaderPlatform;
-import net.minecraft.SharedConstants;
 
 import java.nio.file.Path;
-import java.util.Set;
 
 /** Lib's startup steps that don't depend on the mod loader. The loader module calls them in this order. */
 public final class LibStartup {
     private static final String LOGS_FOLDER_NAME = "logs";
-    private static final String UNKNOWN_VERSION = "unknown";
     private static final ImpactsLog LOG = ImpactsLog.of(ImpactsLib.MOD_ID);
 
     private LibStartup() {
     }
 
-    /** Mod construction: Lib's log categories, its config file, and the debug log file with default settings. */
+    /** Mod construction: Lib's log categories, config files, network channel, dump section and debug log file. */
     public static void onModConstruction() {
         LOG.registerCategories(LibLogCategories.ALL);
+        ImpactsDump.registerPlayerSection(LibPlayerDumpSection.SECTION_NAME, new LibPlayerDumpSection());
+        ImpactsDump.registerItemSection(LibItemDumpSection.SECTION_NAME, new LibItemDumpSection());
+        ImpactsDump.registerBlockSection(LibBlockDumpSection.SECTION_NAME, new LibBlockDumpSection());
         LibCommonConfig commonConfig = LibCommonConfig.register();
-        LOG.useDebugSettings(commonConfig.debug);
+        LibServerConfig.register();
+        LibClientConfig.register();
+        LibNetwork.create();
+        ToolCrafting.register();
+        Grinding.register();
+        PlayerAttachments.register(ImpactsCounters.COUNTERS);
         ImpactsLog.useFamilyDebugSwitch(commonConfig.isFamilyDebugOn::get);
         commonConfig.file.onLoad(LibStartup::applyDebugLogFile);
         applyDebugLogFile();
     }
 
-    /** Every mod finished common setup: logs Lib's startup summary and tells listeners which Impact mods are present. */
+    /**
+     * Every mod finished common setup (runs on the main thread): registers Lib's advancement triggers, logs the
+     * startup summary and tells listeners which Impact mods are present.
+     */
     public static void onModsReady() {
-        logStartupSummary();
+        LibTriggers.registerAll();
+        CompostRegistry.applyAll();
+        Grinding.registerHoldActions();
+        StartupSummary.log(ImpactsLib.MOD_ID);
         ImpactsLib.announceModsReady();
     }
 
@@ -42,14 +66,4 @@ public final class LibStartup {
                 logFile.sizeMegabytes.get(), logFile.fileCount.get()));
     }
 
-    private static void logStartupSummary() {
-        LoaderPlatform platform = LoaderPlatform.current();
-        LOG.debug(LibLogCategories.STARTUP, "started",
-                "version", platform.modVersion(ImpactsLib.MOD_ID).orElse(UNKNOWN_VERSION),
-                "minecraft", SharedConstants.getCurrentVersion().getName(),
-                "loader", platform.loaderName(),
-                "loaderVersion", platform.loaderVersion());
-        Set<String> impactMods = ImpactsLib.registeredImpactMods();
-        LOG.debug(LibLogCategories.STARTUP, "impact mods found", "count", impactMods.size(), "mods", impactMods);
-    }
 }

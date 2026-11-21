@@ -1,0 +1,21 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "wood",
+      "recipe": "impactscrafting:acacia_boat_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "type": "forge:partial_nbt",
+    "item": "impactscrafting:loose_boat",
+    "nbt": "{wood:\"minecraft:acacia\"}"
+  },
+  "result": {
+    "item": "minecraft:acacia_boat"
+  }
+}

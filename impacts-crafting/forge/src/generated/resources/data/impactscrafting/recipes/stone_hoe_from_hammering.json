@@ -1,0 +1,19 @@
+{
+  "type": "impactscrafting:hammering",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "combat",
+      "recipe": "impactscrafting:stone_hoe_from_hammering"
+    }
+  ],
+  "hammer": {
+    "tag": "impactscrafting:hammers"
+  },
+  "input": {
+    "item": "impactscrafting:loose_stone_hoe"
+  },
+  "result": {
+    "item": "minecraft:stone_hoe"
+  }
+}

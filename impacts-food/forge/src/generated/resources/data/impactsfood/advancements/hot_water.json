@@ -1,0 +1,30 @@
+{
+  "parent": "impactsfood:sharp_thinking",
+  "criteria": {
+    "cauldron_boiled": {
+      "conditions": {},
+      "trigger": "impactsfood:cauldron_boiled"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsfood.hot_water.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:cauldron"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsfood.hot_water.title"
+    }
+  },
+  "requirements": [
+    [
+      "cauldron_boiled"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
