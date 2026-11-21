@@ -218,3 +218,16 @@ tasks.named('jar', Jar) {
     }
     finalizedBy 'reobfJar'
 }
+
+// Every mod's finished (reobfuscated) jar is also copied to <root>/build/mods/, so one folder holds the whole family
+// after `./gradlew build`.
+def collectModJar = tasks.register('collectModJar', Copy) {
+    group = 'build'
+    description = 'Copies this mod\'s finished jar into the root build/mods folder.'
+    dependsOn 'reobfJar'
+    from(tasks.named('jar', Jar).flatMap { modJar -> modJar.archiveFile })
+    into(rootProject.layout.buildDirectory.dir('mods'))
+}
+tasks.named('assemble') {
+    finalizedBy collectModJar
+}

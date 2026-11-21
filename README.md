@@ -30,7 +30,7 @@ Minecraft 1.20.1 builds and runs on Java 17. Gradle itself can run on a newer Ja
 ./gradlew build
 ```
 
-Each mod's jar is written to `<mod>/forge/build/libs/`. To run a mod's GameTests on a headless server:
+Every mod's jar is collected in `build/mods/` at the top of the repository (each one is also in `<mod>/forge/build/libs/`). Impact's Realistic Inventory also needs [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) in your mods folder. To run a mod's GameTests on a headless server:
 
 ```
 ./gradlew :impacts-lib:forge:runGameTestServer
