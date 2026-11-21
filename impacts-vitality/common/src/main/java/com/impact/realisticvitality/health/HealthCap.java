@@ -6,6 +6,7 @@ import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.player.ThirstState;
+import com.impact.realisticvitality.player.VitalityExemptions;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.thirst.ThirstDrain;
 import net.minecraft.server.level.ServerPlayer;
@@ -83,7 +84,7 @@ public final class HealthCap {
     /** With {@code healthCap.capAllHealing} on, every heal (potions, golden apples, beacons) stops at the cap too. */
     public static float limitHealing(LivingEntity entity, float amount) {
         boolean capsAllHealing = VitalityServerConfig.get().healthCap.capsAllHealing.get();
-        if (!(entity instanceof Player player) || !capsAllHealing || !isActive() || player.level().isClientSide) {
+        if (!(entity instanceof Player player) || !capsAllHealing || !isActive() || player.level().isClientSide || VitalityExemptions.isExempt(player)) {
             return amount;
         }
         return Math.max(0.0F, Math.min(amount, limit(player) - player.getHealth()));

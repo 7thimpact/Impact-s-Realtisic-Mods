@@ -200,8 +200,5 @@
   "tooltip.impactsfood.knife": "Cuts raw food in any crafting grid",
   "tooltip.impactsfood.piece": "Cooks in half the time",
   "tooltip.impactsfood.raw_risk": "May cause Hunger if eaten raw",
-  "tooltip.impactsfood.spit": "Use on a lit campfire",
-  "tooltip.impactsfood.style.boiled": "Boiled: safer, but can't go back on the heat",
-  "tooltip.impactsfood.style.dried": "Dried: eaten quickly",
-  "tooltip.impactsfood.style.toasted": "Toasted: more filling"
+  "tooltip.impactsfood.spit": "Use on a lit campfire"
 }

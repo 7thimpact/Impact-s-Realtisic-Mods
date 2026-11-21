@@ -38,8 +38,16 @@ final class VitalityItemTags extends ItemTagsProvider {
                 VitalityItems.tank(AirTank.SHULKER_AIR_TANK));
         tag(VitalityTags.DRY_FOODS).add(Items.BREAD, Items.COOKIE, Items.DRIED_KELP)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "dried_foods"))
+                .addOptional(ResourceIds.of(FOOD_MOD_ID, "toasted_bread"))
+                .addOptional(ResourceIds.of(FOOD_MOD_ID, "toasted_cookie"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "dough_bun"))
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "flatbread"));
+        // Moist wins over dry: boiled food (the soggy cookie too), soups, juicy food and every kind of melon.
+        tag(VitalityTags.MOIST_FOODS).add(Items.MELON_SLICE, Items.GLISTERING_MELON_SLICE).addTags(VitalityTags.SOUPS, VitalityTags.JUICY_FOODS)
+                .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "boiled_foods"))
+                .addOptional(ResourceIds.of(FOOD_MOD_ID, "dried_melon_slice"))
+                .addOptional(ResourceIds.of(FOOD_MOD_ID, "toasted_melon_slice"))
+                .addOptional(ResourceIds.of(FOOD_MOD_ID, "boiled_melon_slice"));
         tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "soups"));
         tag(VitalityTags.HEAVY_PACKS).addOptional(ResourceIds.of(INVENTORY_MOD_ID, "frame_pack"));

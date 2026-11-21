@@ -4,6 +4,7 @@ import com.impact.realisticvitality.air.AirQuality;
 import com.impact.realisticvitality.config.VitalityClientConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.config.VitalityServerConfig;
+import com.impact.realisticvitality.player.VitalityExemptions;
 import com.impact.realisticvitality.registry.VitalitySounds;
 import com.impact.realisticvitality.temperature.BodyState;
 import net.minecraft.client.Minecraft;
@@ -27,7 +28,7 @@ public final class NeedSounds {
     /** Called at the end of each client tick. */
     public static void tick() {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null || !VitalityClientConfig.get().display.areNeedSoundsOn.get() || player.isSpectator()) {
+        if (player == null || !VitalityClientConfig.get().display.areNeedSoundsOn.get() || VitalityExemptions.isExempt(player)) {
             lastAirSupply = -1;
             return;
         }

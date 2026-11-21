@@ -8,6 +8,14 @@
       "required": false
     },
     {
+      "id": "impactsfood:toasted_bread",
+      "required": false
+    },
+    {
+      "id": "impactsfood:toasted_cookie",
+      "required": false
+    },
+    {
       "id": "impactsfood:dough_bun",
       "required": false
     },

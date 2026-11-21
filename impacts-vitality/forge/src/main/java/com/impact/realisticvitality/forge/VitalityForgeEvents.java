@@ -10,6 +10,7 @@ import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.health.HealthCap;
 import com.impact.realisticvitality.network.VitalityNetwork;
+import com.impact.realisticvitality.player.VitalityExemptions;
 import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.player.VitalitySync;
@@ -94,7 +95,7 @@ final class VitalityForgeEvents {
 
     // Both sides refuse, each with its own copy of the body temperature, so the client never starts the eating animation.
     private static void onItemUseStart(LivingEntityUseItemEvent.Start event) {
-        if (!(event.getEntity() instanceof Player player) || !DryFoods.isTooHotToEat(bodyTemperature(player), event.getItem())) {
+        if (!(event.getEntity() instanceof Player player) || VitalityExemptions.isExempt(player) || !DryFoods.isTooHotToEat(bodyTemperature(player), event.getItem())) {
             return;
         }
         event.setCanceled(true);
@@ -105,7 +106,7 @@ final class VitalityForgeEvents {
 
     // Mining is predicted on the client, so both sides slow it the same way.
     private static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
-        boolean isCold = TemperatureTicks.isOn() && BodyState.of(bodyTemperature(event.getEntity())).isColdOrWorse();
+        boolean isCold = TemperatureTicks.isOn() && !VitalityExemptions.isExempt(event.getEntity()) && BodyState.of(bodyTemperature(event.getEntity())).isColdOrWorse();
         if (isCold) {
             event.setNewSpeed(event.getNewSpeed() * VitalityServerConfig.get().temperature.coldMiningSpeed.get().floatValue());
         }

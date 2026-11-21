@@ -35,6 +35,7 @@ public final class VitalityServerConfig {
     public final BreathingSettings breathing;
     public final CounterSettings counters;
     public final HealthCapSettings healthCap;
+    public final ConfigValue<Boolean> isCreativeExempt;
     public final ConfigFile file;
 
     private VitalityServerConfig(ConfigSpecBuilder builder) {
@@ -73,6 +74,9 @@ public final class VitalityServerConfig {
         builder.popSection();
         builder.pushSection("healthCap", "Natural regeneration depends on both hunger and thirst.");
         healthCap = new HealthCapSettings(builder);
+        builder.popSection();
+        builder.pushSection("players", "Who Vitality applies to. Spectators are always left alone.");
+        isCreativeExempt = builder.defineBoolean("exemptCreative", true, "Creative-mode players feel no thirst, temperature or air effects.");
         builder.popSection();
         file = builder.register();
     }

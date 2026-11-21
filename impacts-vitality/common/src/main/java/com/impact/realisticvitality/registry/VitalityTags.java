@@ -11,6 +11,8 @@ import net.minecraft.world.item.Item;
 public final class VitalityTags {
     /** Costs thirst to eat, and can't be eaten while Hot. */
     public static final TagKey<Item> DRY_FOODS = item("dry_foods");
+    /** Moist foods are never refused as dry, even when also tagged dry (boiled bread, every melon, the soggy cookie). */
+    public static final TagKey<Item> MOIST_FOODS = item("moist_foods");
     /** Everything Vitality lets you drink: its water bottles, its containers and (with Crafting) the Water-filled Wooden Bucket. */
     public static final TagKey<Item> DRINKS = item("drinks");
     /** Bowl soups and stews: they hydrate and warm you. */
