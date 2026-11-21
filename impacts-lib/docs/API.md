@@ -308,6 +308,7 @@ HoldToUse.register(ModItems.IRON_HAMMER.get(), new HammeringAction());     // on
 
 - A `HoldAction` gives its `id()`, `cycleTicks(player, held)`, `canContinue(player, held)` (both sides, every tick), `completeCycle(serverPlayer, held)` (returns whether to keep going) and a `motion()` (`STIR`, `HAMMER`, `TURN`).
 - Vanilla's item-use hold ends it: letting go, switching hands, eating. The cycle in progress is lost, nothing else.
+- **Animations:** each action names a `HoldMotion` (`STIR`, `HAMMER`, `TURN`), which says which hand works (the hammer's off hand, the grinding stick's main hand, both for turning) and how long a stroke takes (a hammer stroke lands on each 10-tick blow). With playerAnimator installed, Lib's layer poses the arms; without it, Lib poses them itself in third person and moves the working hand in first person. Both use `HoldMotionPoses`, so they look alike.
 - Each finished cycle swings the arm, fires `impactslib:hold_action` (optional `action` ID, and an optional `item` predicate on the item held as the cycle started, such as the loose item being hammered; `HoldActionTrigger.TriggerInstance.holding(actionId, predicate)` in datagen) and logs under `holdtouse`. With playerAnimator installed, the arms follow the action's motion. A bar under the crosshair shows the cycle (`holdToUse.showProgressBar`).
 
 ## Grinding (`impactslib:grinding`)

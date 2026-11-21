@@ -164,7 +164,7 @@ Fixes from the user's first playtest, worked through before the remaining milest
 - [x] Food: no style description lines on styled foods
 - [x] Crafting: pebbles on grass, sand and other natural ground at dead-bush density, with a pebble for each stone type and for sand
 - [x] Crafting: loose items with real finishing steps (boats assembled from hull and oars, the bucket cast in a clay mold, fasteners driven into pistons, doors and minecarts, the blast furnace sealed with mortar)
-- [ ] Hold-to-use animations (hammering, grinding and the other interactions) visible like SRF's
+- [x] Hold-to-use animations (hammering, grinding and the other interactions) visible like SRF's, with or without playerAnimator
 
 ## Later (noted by the user, Nov 2026)
 

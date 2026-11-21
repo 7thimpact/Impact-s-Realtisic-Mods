@@ -3,7 +3,8 @@
 # <mod>/forge/run/saves/ImpactsTest (copied from the GameTest world the first time), performs the given steps, then
 # saves a screenshot and stops the client. A step is a chat command, "key:<xdotool key name>" for a key press,
 # "click:<x>,<y>" (left), "rclick:<x>,<y>" (right) or "move:<x>,<y>" (hover) at game-window pixels (the window is
-# 854x480 at GUI scale 2, so double the GUI coordinates), "wait:<seconds>" to let the game run, or "shot:<file.png>"
+# 854x480 at GUI scale 2, so double the GUI coordinates), "rdown" / "rup" to hold and let go of the right mouse button
+# (hold-to-use actions), "wait:<seconds>" to let the game run, or "shot:<file.png>"
 # for an extra screenshot along the way.
 #
 #   tools/client-screenshot.sh <mod folder> <output.png> [step ...]
@@ -85,6 +86,12 @@ for step in "$@"; do
       click_position=${step#rclick:}
       xdotool mousemove --window "$GAME_WINDOW" "${click_position%,*}" "${click_position#*,}" click 3
       sleep 2
+      ;;
+    rdown)
+      xdotool mousedown --window "$GAME_WINDOW" 3
+      ;;
+    rup)
+      xdotool mouseup --window "$GAME_WINDOW" 3
       ;;
     wait:*)
       sleep "${step#wait:}"
