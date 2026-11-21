@@ -48,6 +48,9 @@ final class CraftingStoneRecipes {
         StoneFamilies.all().forEach(family -> family(stone, family));
         chiseledBlock(stone, Items.STONE, Items.STONE_BRICKS);
         chiseledBlock(stone, Items.END_STONE, Items.END_STONE_BRICKS);
+        // Smooth stone isn't one of vanilla's block families, but its slab is cut like theirs.
+        ToolCraftingRecipeBuilder.of(Items.SMOOTH_STONE_SLAB, SLABS).pattern("XXX").define('X', Items.SMOOTH_STONE).tool(chisels())
+                .save(stone, id("smooth_stone_slab"));
         catalog(stone);
     }
 

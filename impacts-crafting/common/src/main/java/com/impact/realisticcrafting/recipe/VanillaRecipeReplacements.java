@@ -33,13 +33,13 @@ public final class VanillaRecipeReplacements {
     private static final List<WoodKind> WOOD_CATALOG_KINDS = List.of(WoodKind.SLAB, WoodKind.STAIRS, WoodKind.FENCE, WoodKind.FENCE_GATE,
             WoodKind.DOOR, WoodKind.TRAPDOOR, WoodKind.SIGN, WoodKind.BUTTON, WoodKind.PRESSURE_PLATE, WoodKind.BOAT);
     private static final String[] WOOD_CATALOG_RECIPES = {"bowl", "chest", "barrel", "composter", "beehive", "bookshelf", "chiseled_bookshelf",
-            "lectern", "loom", "cartography_table", "fletching_table", "painting", "item_frame", "armor_stand", "campfire", "ladder", "scaffolding",
-            "smithing_table"};
+            "lectern", "loom", "cartography_table", "fletching_table", "painting", "item_frame", "armor_stand", "campfire", "soul_campfire", "ladder",
+            "scaffolding", "smithing_table"};
     private static final String[] IRON_CATALOG_RECIPES = {"bucket", "cauldron", "hopper", "iron_bars", "chain", "lantern", "soul_lantern",
             "iron_door", "iron_trapdoor", "heavy_weighted_pressure_plate", "tripwire_hook", "rail", "minecart"};
     private static final String[] STONE_CATALOG_RECIPES = {"stone_bricks", "end_stone_bricks", "bricks", "nether_bricks", "red_nether_bricks",
             "mud_bricks", "flower_pot", "furnace", "smoker", "grindstone", "lever", "white_concrete_powder", "blast_furnace", "stonecutter",
-            "glass_pane", "glass_bottle"};
+            "glass_pane", "glass_bottle", "smooth_stone_slab"};
     // Every dye and powder comes from a grinder; green and lime dye stay smelted.
     private static final String[] GROUND_RECIPES = {"white_dye", "white_dye_from_lily_of_the_valley", "light_gray_dye_from_azure_bluet",
             "light_gray_dye_from_oxeye_daisy", "light_gray_dye_from_white_tulip", "light_gray_dye_from_black_white_dye", "light_gray_dye_from_gray_white_dye",
@@ -77,7 +77,7 @@ public final class VanillaRecipeReplacements {
 
     private static Map<ResourceLocation, OverhaulCategory> buildReplaced() {
         Map<ResourceLocation, OverhaulCategory> replaced = new LinkedHashMap<>();
-        put(replaced, OverhaulCategory.WOOD, "crafting_table", "stick");
+        put(replaced, OverhaulCategory.WOOD, "crafting_table", "stick", "stick_from_bamboo_item");
         WoodData.VANILLA_WOODS.forEach(wood -> put(replaced, OverhaulCategory.WOOD, wood.getPath() + "_planks"));
         for (ToolMaterial material : ToolMaterial.values()) {
             for (ToolKind kind : ToolKind.values()) {

@@ -2,6 +2,7 @@ package com.impact.realisticcrafting.forge;
 
 import com.impact.realisticcrafting.bed.BedLayering;
 import com.impact.realisticcrafting.loot.PebbleDrops;
+import com.impact.realisticcrafting.recipe.CraftingRecipeAudit;
 import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.timing.CraftDepthTable;
@@ -36,11 +37,12 @@ final class CraftingForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onBlockRightClicked);
     }
 
-    // The depth table and other mods' loose items follow the live recipes: at start and after every /reload.
+    // The depth table, other mods' loose items and the recipe audit follow the live recipes: at start and after every /reload.
     private static void onServerStarted(ServerStartedEvent event) {
         MinecraftServer server = event.getServer();
         CraftDepthTable.rebuild(server.getRecipeManager(), server.registryAccess());
         Hammering.registerHoldActions(server.getRecipeManager());
+        CraftingRecipeAudit.logAudit(server.getResourceManager(), server.getRecipeManager(), server.registryAccess());
     }
 
     // A player joining gets the recipes synced too; only a reload (no player) changes them.
@@ -51,6 +53,7 @@ final class CraftingForgeEvents {
         MinecraftServer server = event.getPlayerList().getServer();
         CraftDepthTable.rebuild(server.getRecipeManager(), server.registryAccess());
         Hammering.registerHoldActions(server.getRecipeManager());
+        CraftingRecipeAudit.logAudit(server.getResourceManager(), server.getRecipeManager(), server.registryAccess());
     }
 
     // A sheet on a finished vanilla bed recolors it, before the bed's own use (sleeping) runs.

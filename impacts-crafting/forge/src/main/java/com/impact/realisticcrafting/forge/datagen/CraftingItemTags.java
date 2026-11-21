@@ -44,6 +44,9 @@ final class CraftingItemTags extends ItemTagsProvider {
                 Tags.Items.LEATHER).add(Items.COBBLESTONE, Items.COBBLED_DEEPSLATE, Items.STONE, Items.STRING);
         tag(CraftingTags.LOOSE_TOOLS).add(CraftingItems.looseItems().toArray(Item[]::new));
         tag(CraftingTags.TIER_ADVANCED).addTags(Tags.Items.ORES, Tags.Items.RAW_MATERIALS, Tags.Items.INGOTS, Tags.Items.NUGGETS,
-                Tags.Items.GEMS, Tags.Items.DUSTS, Tags.Items.STORAGE_BLOCKS);
+                Tags.Items.GEMS, Tags.Items.DUSTS, Tags.Items.STORAGE_BLOCKS)
+                // Nether and End materials: the endgame recipes made from them need the Crafting Table.
+                .add(Items.NETHER_STAR, Items.HEART_OF_THE_SEA, Items.ENDER_PEARL, Items.ENDER_EYE, Items.CRYING_OBSIDIAN, Items.POPPED_CHORUS_FRUIT,
+                        Items.SHULKER_SHELL, Items.BLAZE_ROD, Items.BLAZE_POWDER, Items.GHAST_TEAR);
     }
 }

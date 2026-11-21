@@ -147,6 +147,9 @@ final class CraftingWoodRecipes {
                 .unlockedBy("has_stone_base", has(CraftingItems.part(CraftingPart.STONE_BASE))).save(wood, id("armor_stand"));
         shaped(Items.CAMPFIRE, 1).pattern(" S ").pattern("SCS").pattern("LLL").define('S', trimmedStick).define('C', ItemTags.COALS)
                 .define('L', ItemTags.LOGS).unlockedBy("has_trimmed_stick", has(trimmedStick)).save(wood, id("campfire"));
+        shaped(Items.SOUL_CAMPFIRE, 1).pattern(" S ").pattern("SCS").pattern("LLL").define('S', trimmedStick)
+                .define('C', ItemTags.SOUL_FIRE_BASE_BLOCKS).define('L', ItemTags.LOGS).unlockedBy("has_trimmed_stick", has(trimmedStick))
+                .save(wood, id("soul_campfire"));
         shaped(Items.LADDER, 3).pattern("S S").pattern("STS").pattern("S S").define('S', trimmedStick).define('T', twine)
                 .unlockedBy("has_twine", has(twine)).save(wood, id("ladder"));
         shaped(Items.SCAFFOLDING, 6).pattern("BTB").pattern("B B").pattern("B B").define('B', Items.BAMBOO).define('T', twine)

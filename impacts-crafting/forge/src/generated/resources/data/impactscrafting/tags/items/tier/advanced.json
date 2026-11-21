@@ -6,6 +6,16 @@
     "#forge:nuggets",
     "#forge:gems",
     "#forge:dusts",
-    "#forge:storage_blocks"
+    "#forge:storage_blocks",
+    "minecraft:nether_star",
+    "minecraft:heart_of_the_sea",
+    "minecraft:ender_pearl",
+    "minecraft:ender_eye",
+    "minecraft:crying_obsidian",
+    "minecraft:popped_chorus_fruit",
+    "minecraft:shulker_shell",
+    "minecraft:blaze_rod",
+    "minecraft:blaze_powder",
+    "minecraft:ghast_tear"
   ]
 }

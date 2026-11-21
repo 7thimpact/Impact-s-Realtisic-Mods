@@ -93,6 +93,8 @@ final class CraftingPartRecipes {
     private static void sticks(Consumer<FinishedRecipe> output) {
         trimming(ToolCraftingRecipeBuilder.of(Items.STICK, STICKS_PER_TWO_PLANKS).pattern("P").pattern("P").define('P', Ingredient.of(ItemTags.PLANKS)), true)
                 .save(overhaulRecipe(output, OverhaulCategory.WOOD), id("sticks"));
+        trimming(ToolCraftingRecipeBuilder.of(Items.STICK, 1).pattern("B").pattern("B").define('B', Items.BAMBOO), false)
+                .save(overhaulRecipe(output, OverhaulCategory.WOOD), id("stick_from_bamboo"));
     }
 
     private static void trimmedSticks(Consumer<FinishedRecipe> output) {

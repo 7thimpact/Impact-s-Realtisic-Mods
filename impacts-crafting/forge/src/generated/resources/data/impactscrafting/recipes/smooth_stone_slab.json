@@ -1,0 +1,32 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "stone",
+      "recipe": "impactscrafting:smooth_stone_slab"
+    }
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "item": "minecraft:smooth_stone_slab"
+  },
+  "tools": [
+    [
+      {
+        "item": "impactscrafting:flint_chisel"
+      },
+      {
+        "item": "impactscrafting:iron_chisel"
+      }
+    ]
+  ]
+}
