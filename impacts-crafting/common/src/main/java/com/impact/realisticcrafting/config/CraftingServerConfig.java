@@ -28,6 +28,7 @@ public final class CraftingServerConfig {
     public final DyeVatSettings dyeVat;
     public final ConfigValue<Boolean> isFuelOn;
     public final ConfigValue<Integer> woodenBucketUses;
+    public final ConfigValue<Boolean> bedsDropParts;
     public final ConfigFile file;
 
     private CraftingServerConfig(ConfigSpecBuilder builder) {
@@ -60,6 +61,7 @@ public final class CraftingServerConfig {
         builder.pushSection("dyeVat", "The Dye Vat, where all dyeing happens.");
         dyeVat = new DyeVatSettings(builder);
         builder.popSection();
+        bedsDropParts = builder.defineBoolean("bedsDropParts", true, "A broken bed drops its frame, comforter and sheet instead of itself.");
         builder.pushSection("fuel", "Crafting's wooden parts as furnace fuel. Per-item numbers go in Lib's fuel.overrides.");
         isFuelOn = builder.defineBoolean("enabled", true, "Crafting's wooden parts burn in furnaces.");
         builder.popSection();

@@ -3,6 +3,7 @@ package com.impact.realisticcrafting.registry;
 import com.impact.lib.platform.LoaderPlatform;
 import com.impact.lib.registry.ModRegistrar;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.bed.BedFrameBlock;
 import com.impact.realisticcrafting.block.DyeVatBlock;
 import com.impact.realisticcrafting.block.DyeVatBlockEntity;
 import com.impact.realisticcrafting.block.LoosePebbleBlock;
@@ -30,6 +31,8 @@ public final class CraftingBlocks {
     private static volatile Supplier<BlockEntityType<MakeshiftTableBlockEntity>> tableEntity;
     private static final float DYE_VAT_STRENGTH = 2.0F;
     private static volatile Supplier<DyeVatBlock> dyeVat;
+    private static final float BED_FRAME_STRENGTH = 0.2F;
+    private static volatile Supplier<BedFrameBlock> bedFrame;
     private static volatile Supplier<BlockEntityType<DyeVatBlockEntity>> dyeVatEntity;
 
     private CraftingBlocks() {
@@ -50,6 +53,8 @@ public final class CraftingBlocks {
                 .blockEntityType(MakeshiftTableBlockEntity::new, table(MakeshiftTable.WOODEN), table(MakeshiftTable.STONE)));
         dyeVat = registrar.register(Registries.BLOCK, "dye_vat", () -> new DyeVatBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD)
                 .strength(DYE_VAT_STRENGTH).sound(SoundType.WOOD).noOcclusion().ignitedByLava()));
+        bedFrame = registrar.register(Registries.BLOCK, "bed_frame", () -> new BedFrameBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD)
+                .strength(BED_FRAME_STRENGTH).sound(SoundType.WOOD).noOcclusion().ignitedByLava().pushReaction(PushReaction.DESTROY)));
         dyeVatEntity = registrar.register(Registries.BLOCK_ENTITY_TYPE, "dye_vat",
                 () -> LoaderPlatform.current().blockEntityType(DyeVatBlockEntity::new, dyeVat.get()));
     }
@@ -65,6 +70,10 @@ public final class CraftingBlocks {
 
     public static BlockEntityType<MakeshiftTableBlockEntity> tableEntity() {
         return tableEntity.get();
+    }
+
+    public static BedFrameBlock bedFrame() {
+        return bedFrame.get();
     }
 
     public static DyeVatBlock dyeVat() {

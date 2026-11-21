@@ -8,6 +8,7 @@ import com.impact.realisticcrafting.forge.client.CraftingForgeClient;
 import com.impact.realisticcrafting.forge.condition.OverhaulEnabledCondition;
 import com.impact.realisticcrafting.forge.condition.RecipeEnabledCondition;
 import com.impact.realisticcrafting.forge.datagen.CraftingDataGenerators;
+import com.impact.realisticcrafting.forge.loot.BedPartsLootModifier;
 import com.impact.realisticcrafting.forge.loot.PebbleLootModifier;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Mod;
@@ -24,6 +25,8 @@ public final class ImpactsCraftingForge {
             CraftingStartup.onModConstruction();
             LoaderPlatform.current().registrar(CraftingMod.MOD_ID)
                     .register(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, PebbleLootModifier.PATH, PebbleLootModifier.CODEC);
+            LoaderPlatform.current().registrar(CraftingMod.MOD_ID)
+                    .register(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, BedPartsLootModifier.PATH, BedPartsLootModifier.CODEC);
         });
         context.getModEventBus().addListener(CraftingDataGenerators::onGatherData);
         context.getModEventBus().addListener(ImpactsCraftingForge::onRegister);

@@ -1,6 +1,7 @@
 package com.impact.realisticcrafting.forge.datagen;
 
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.bed.BedFrameBlock;
 import com.impact.realisticcrafting.block.DyeVatBlock;
 import com.impact.realisticcrafting.block.LoosePebbleBlock;
 import com.impact.realisticcrafting.block.MakeshiftTable;
@@ -10,13 +11,16 @@ import com.impact.realisticcrafting.registry.CraftingBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -38,6 +42,8 @@ final class CraftingBlockStates extends BlockStateProvider {
     private static final int TABLE_LEG_WIDTH = 3;
     private static final int[][] TABLE_LEG_CORNERS = {{1, 1}, {12, 1}, {1, 12}, {12, 12}};
     private static final int QUARTER_TURN_DEGREES = 90;
+    private static final int HALF_TURN_DEGREES = 180;
+    private static final int FULL_TURN_DEGREES = 360;
     private static final int QUARTER_TURNS = 4;
 
     CraftingBlockStates(PackOutput output, ExistingFileHelper existingFiles) {
@@ -52,6 +58,7 @@ final class CraftingBlockStates extends BlockStateProvider {
                 .toList();
         getVariantBuilder(CraftingBlocks.loosePebble()).forAllStatesExcept(state -> quarterTurns(clusterModels.get(state.getValue(LoosePebbleBlock.VARIANT))),
                 LoosePebbleBlock.WATERLOGGED);
+        bedFrame();
         ModelFile emptyVat = dyeVatModel(false);
         ModelFile filledVat = dyeVatModel(true);
         getVariantBuilder(CraftingBlocks.dyeVat()).forAllStates(state -> ConfiguredModel.builder()
@@ -63,6 +70,49 @@ final class CraftingBlockStates extends BlockStateProvider {
                     .modelFile(wearModels.get(state.getValue(MakeshiftTableBlock.WEAR))).build());
             simpleBlockItem(table.block(), wearModels.get(TableWear.NEW));
         }
+    }
+
+    // Each half has its own model (rails, slats and the legs at its outer end), drawn facing north and turned by the block state.
+    private void bedFrame() {
+        Map<String, ModelFile> models = new HashMap<>();
+        for (BedPart part : BedPart.values()) {
+            for (boolean hasComforter : new boolean[]{false, true}) {
+                models.put(part.getSerializedName() + hasComforter, bedFrameModel(part, hasComforter));
+            }
+        }
+        getVariantBuilder(CraftingBlocks.bedFrame()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models.get(state.getValue(BedFrameBlock.PART).getSerializedName() + state.getValue(BedFrameBlock.COMFORTER)))
+                .rotationY(((int) state.getValue(BedFrameBlock.FACING).toYRot() + HALF_TURN_DEGREES) % FULL_TURN_DEGREES).build());
+        itemModels().withExistingParent("bed_frame", mcLoc("item/generated")).texture("layer0", modLoc("item/bed_frame"));
+    }
+
+    private ModelFile bedFrameModel(BedPart part, boolean hasComforter) {
+        boolean isFoot = part == BedPart.FOOT;
+        BlockModelBuilder model = models().withExistingParent("block/bed_frame_" + part.getSerializedName() + (hasComforter ? "_comforter" : ""),
+                        mcLoc("block/block"))
+                .texture("particle", modLoc("block/bed_frame"))
+                .texture("wood", modLoc("block/bed_frame"))
+                .texture("cloth", modLoc("block/comforter"));
+        int outerEnd = isFoot ? 13 : 0;
+        int endRailFrom = isFoot ? 14 : 0;
+        bedBox(model, "#wood", 0, 3, 0, 2, 6, 16);
+        bedBox(model, "#wood", 14, 3, 0, 16, 6, 16);
+        bedBox(model, "#wood", 2, 3, endRailFrom, 14, 6, endRailFrom + 2);
+        bedBox(model, "#wood", 0, 0, outerEnd, 3, 3, outerEnd + 3);
+        bedBox(model, "#wood", 13, 0, outerEnd, 16, 3, outerEnd + 3);
+        for (int slatStart : new int[]{2, 7, 12}) {
+            bedBox(model, "#wood", 2, 4, slatStart, 14, 5, slatStart + 2);
+        }
+        if (hasComforter) {
+            bedBox(model, "#cloth", 1, 5, isFoot ? 0 : 2, 15, 9, isFoot ? 15 : 16);
+        }
+        return model;
+    }
+
+    private static void bedBox(BlockModelBuilder model, String texture, int fromX, int fromY, int fromZ, int toX, int toY, int toZ) {
+        model.element().from(fromX, fromY, fromZ).to(toX, toY, toZ)
+                .allFaces((direction, face) -> face.texture(texture).cullface(direction == Direction.DOWN && fromY == 0 ? Direction.DOWN : null))
+                .end();
     }
 
     // A wooden tub with two twine hoops; filled, a water surface sits inside it, tinted by the vat's color (tint 0).

@@ -2,6 +2,7 @@ package com.impact.realisticcrafting.lang;
 
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticcrafting.CraftingMod;
+import com.impact.realisticcrafting.bed.BedLayering;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
@@ -12,6 +13,8 @@ import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.menu.CraftingStation;
+
+import net.minecraft.world.item.DyeColor;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,6 +49,12 @@ public final class CraftingTranslations {
         english.put(ITEM_KEY_PREFIX + "stone_pebble", "Stone Pebble");
         english.put(BLOCK_KEY_PREFIX + "loose_pebble", "Loose Pebbles");
         english.put(BLOCK_KEY_PREFIX + "dye_vat", "Dye Vat");
+        english.put(BLOCK_KEY_PREFIX + "bed_frame", "Bed Frame");
+        english.put(ITEM_KEY_PREFIX + "comforter", "Comforter");
+        for (DyeColor color : DyeColor.values()) {
+            english.put(ITEM_KEY_PREFIX + color.getName() + "_sheet", titleCase(color.getName() + "_sheet"));
+        }
+        english.put(BedLayering.COMFORTER_FIRST_KEY, "Lay the comforter first.");
         english.put(BLOCK_KEY_PREFIX + MakeshiftTable.WOODEN.path, "Makeshift Table");
         english.put(BLOCK_KEY_PREFIX + MakeshiftTable.STONE.path, "Makeshift Stone Table");
         english.put(MakeshiftTable.WOODEN.containerTitleKey(), "Makeshift Table");

@@ -1,0 +1,30 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "beds",
+      "recipe": "impactscrafting:comforter"
+    }
+  ],
+  "key": {
+    "T": {
+      "item": "impactscrafting:twine"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "pattern": [
+    "WTW",
+    " W "
+  ],
+  "result": {
+    "item": "impactscrafting:comforter"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "type": "impactscrafting:vat_dyeing",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "dyes",
+      "recipe": "impactscrafting:dye_vat/sheet"
+    }
+  ],
+  "input": [
+    {
+      "item": "impactscrafting:white_sheet"
+    },
+    {
+      "item": "impactscrafting:orange_sheet"
+    },
+    {
+      "item": "impactscrafting:magenta_sheet"
+    },
+    {
+      "item": "impactscrafting:light_blue_sheet"
+    },
+    {
+      "item": "impactscrafting:yellow_sheet"
+    },
+    {
+      "item": "impactscrafting:lime_sheet"
+    },
+    {
+      "item": "impactscrafting:pink_sheet"
+    },
+    {
+      "item": "impactscrafting:gray_sheet"
+    },
+    {
+      "item": "impactscrafting:light_gray_sheet"
+    },
+    {
+      "item": "impactscrafting:cyan_sheet"
+    },
+    {
+      "item": "impactscrafting:purple_sheet"
+    },
+    {
+      "item": "impactscrafting:blue_sheet"
+    },
+    {
+      "item": "impactscrafting:brown_sheet"
+    },
+    {
+      "item": "impactscrafting:green_sheet"
+    },
+    {
+      "item": "impactscrafting:red_sheet"
+    },
+    {
+      "item": "impactscrafting:black_sheet"
+    }
+  ],
+  "results": {
+    "black": {
+      "item": "impactscrafting:black_sheet"
+    },
+    "blue": {
+      "item": "impactscrafting:blue_sheet"
+    },
+    "brown": {
+      "item": "impactscrafting:brown_sheet"
+    },
+    "cyan": {
+      "item": "impactscrafting:cyan_sheet"
+    },
+    "gray": {
+      "item": "impactscrafting:gray_sheet"
+    },
+    "green": {
+      "item": "impactscrafting:green_sheet"
+    },
+    "light_blue": {
+      "item": "impactscrafting:light_blue_sheet"
+    },
+    "light_gray": {
+      "item": "impactscrafting:light_gray_sheet"
+    },
+    "lime": {
+      "item": "impactscrafting:lime_sheet"
+    },
+    "magenta": {
+      "item": "impactscrafting:magenta_sheet"
+    },
+    "orange": {
+      "item": "impactscrafting:orange_sheet"
+    },
+    "pink": {
+      "item": "impactscrafting:pink_sheet"
+    },
+    "purple": {
+      "item": "impactscrafting:purple_sheet"
+    },
+    "red": {
+      "item": "impactscrafting:red_sheet"
+    },
+    "white": {
+      "item": "impactscrafting:white_sheet"
+    },
+    "yellow": {
+      "item": "impactscrafting:yellow_sheet"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "entries": [
-    "impactscrafting:pebble_drops"
+    "impactscrafting:pebble_drops",
+    "impactscrafting:bed_parts"
   ],
   "replace": false
 }

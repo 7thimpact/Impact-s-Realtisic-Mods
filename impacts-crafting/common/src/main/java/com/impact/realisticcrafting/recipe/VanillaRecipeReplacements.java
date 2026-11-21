@@ -101,6 +101,7 @@ public final class VanillaRecipeReplacements {
             }
         }
         put(replaced, OverhaulCategory.TEXTILES, "paper");
+        Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.BEDS, color.getName() + "_bed"));
         Arrays.stream(DyeColor.values()).forEach(color -> put(replaced, OverhaulCategory.STONE, color.getName() + "_stained_glass_pane"));
         put(replaced, OverhaulCategory.STONE, STONE_CATALOG_RECIPES);
         for (BlockFamily family : StoneFamilies.all()) {
