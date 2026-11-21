@@ -12,6 +12,7 @@ import com.impact.realisticvitality.debug.VitalityLogCategories;
 import com.impact.realisticvitality.item.AirBladderItem;
 import com.impact.realisticvitality.item.AirTankItem;
 import com.impact.realisticvitality.item.BreathingMaskItem;
+import com.impact.realisticvitality.player.Headwear;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +20,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -42,18 +42,23 @@ public final class BreathingGear {
     }
 
     public static Optional<BreathingMask> wornMask(Player player) {
-        return player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof BreathingMaskItem maskItem ? Optional.of(maskItem.mask) : Optional.empty();
+        return wornMaskStack(player).map(stack -> ((BreathingMaskItem) stack.getItem()).mask);
+    }
+
+    /** The worn mask itself, in the helmet slot or (with Curios) the head slot. */
+    public static Optional<ItemStack> wornMaskStack(Player player) {
+        return Headwear.find(player, stack -> stack.getItem() instanceof BreathingMaskItem);
     }
 
     /** Smoke counts as good air: a Netherite Rebreather, or a Respirator or Rebreather with a working filter. */
     public static boolean blocksSmoke(Player player) {
-        ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+        ItemStack head = wornMaskStack(player).orElse(ItemStack.EMPTY);
         return wornMask(player).filter(mask -> mask.blocksSmokeAlways || mask.takesFilter && MaskFilters.hasWorkingFilter(head)).isPresent();
     }
 
     public static boolean isDampMaskWorn(Player player) {
         return wornMask(player).filter(mask -> mask == BreathingMask.CLOTH_MASK).isPresent()
-                && BreathingMaskItem.dampTicks(player.getItemBySlot(EquipmentSlot.HEAD)) > 0;
+                && BreathingMaskItem.dampTicks(wornMaskStack(player).orElse(ItemStack.EMPTY)) > 0;
     }
 
     /** With a Respirator or Rebreather on, a tank with air in the back slot or anywhere in the inventory. */
@@ -81,7 +86,7 @@ public final class BreathingGear {
     /** Once a second: masks dry, filters wear in smoke, tanks give air in thin air and refill in good air. */
     public static void tickSecond(ServerPlayer player, AirQuality quality, boolean isDrainingWithoutGear) {
         Optional<BreathingMask> mask = wornMask(player);
-        ItemStack head = player.getItemBySlot(EquipmentSlot.HEAD);
+        ItemStack head = wornMaskStack(player).orElse(ItemStack.EMPTY);
         mask.filter(worn -> worn == BreathingMask.CLOTH_MASK).ifPresent(worn -> dryMask(player, head));
         if (quality.isSmoke && isDrainingWithoutGear) {
             mask.filter(worn -> worn.takesFilter).ifPresent(worn -> wearFilter(player, head, worn));

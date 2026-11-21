@@ -8,9 +8,11 @@ import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
 import com.impact.realisticvitality.thirst.WaterContainer;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -50,6 +52,8 @@ final class VitalityItemTags extends ItemTagsProvider {
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "boiled_melon_slice"));
         tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "soups"));
+        // Curios's head slot takes Vitality's headwear (read only when Curios is installed).
+        tag(TagKey.create(Registries.ITEM, ResourceIds.of("curios", "head"))).add(VitalityItems.headwear().toArray(Item[]::new));
         tag(VitalityTags.HEAVY_PACKS).addOptional(ResourceIds.of(INVENTORY_MOD_ID, "frame_pack"));
         tag(VitalityTags.JUICY_FOODS).add(Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.APPLE, Items.CARROT, Items.BEETROOT);
         tag(VitalityTags.WARM_ARMOR).add(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);

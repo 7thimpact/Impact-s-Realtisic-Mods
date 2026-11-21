@@ -3,6 +3,7 @@ package com.impact.realisticvitality.advancement;
 import com.impact.lib.counter.ImpactsCounters;
 import com.impact.realisticvitality.config.TaggedEntries;
 import com.impact.realisticvitality.config.VitalityServerConfig;
+import com.impact.realisticvitality.player.Headwear;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.temperature.ArmorLining;
@@ -67,7 +68,7 @@ public final class VitalityAchievements {
     }
 
     private static boolean isWearingStrawHatInDesertNoon(ServerPlayer player) {
-        if (!player.getItemBySlot(EquipmentSlot.HEAD).is(VitalityItems.strawHat())) {
+        if (Headwear.find(player, stack -> stack.is(VitalityItems.strawHat())).isEmpty()) {
             return false;
         }
         long timeOfDay = player.level().getDayTime() % DAY_TICKS;

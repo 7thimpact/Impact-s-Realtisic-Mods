@@ -153,6 +153,26 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 
 - [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools"). Every setup with IRI loads Curios too (IRI requires it).
 
+## Playtest feedback (Nov 2026)
+
+Fixes from the user's first playtest, worked through before the remaining milestones.
+
+- [x] Every mod's jar collected in `build/mods/`
+- [x] Inventory: one main-hand slot with vanilla's off hand beside it (no more item showing in both), no extra back slot (Curios's only), the pockets as a 3×3 grid in every container screen
+- [x] Vitality: no effects in creative or spectator; moist foods never refused as dry; Thin air from Y 192; colder heights and deep caves; water cools you; a pressure-gauge temperature dial with fixed color zones and a warming/cooling arrow
+- [x] Vitality: masks and the Straw Hat also fit Curios's head slot (optional; Curios isn't required)
+- [x] Food: no style description lines on styled foods
+- [ ] Crafting: pebbles on grass, sand and other natural ground at dead-bush density, with a pebble for each stone type and for sand
+- [ ] Crafting: loose items with real finishing steps (boats assembled from hull and oars, the bucket cast in a clay mold, fasteners driven into pistons, doors and minecarts, the blast furnace sealed with mortar)
+- [ ] Hold-to-use animations (hammering, grinding and the other interactions) visible like SRF's
+
+## Later (noted by the user, Nov 2026)
+
+- **More temperature gear.** Cooling and warming gear for each climate, beyond the Straw Hat and the armor linings: hats, cloaks, scarves, light desert clothing, insulated coats and boots, ideally worn in Curios slots too.
+- **Water purification steps.** Clean, unclean and salt water currently go straight to Purified; later steps (settling, boiling, filtering stages) will expand this.
+- **Per-food descriptions.** If food descriptions return, they'll be written per food family (bread, mutton, rabbit, ...), not per style.
+- **Vitality depth.** The user finds Vitality "somewhat lackluster" for now and will expand it later.
+
 ## Open items
 
 - Lib's `FuelHelper` is `FuelRegistry` plus `CompostRegistry` (clean-naming rule 6), as proposed in the approved plan.
