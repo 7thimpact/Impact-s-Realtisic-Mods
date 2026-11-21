@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:jukebox"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:note_block"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    }
+  ],
+  "result": {
+    "item": "minecraft:jukebox"
+  }
+}

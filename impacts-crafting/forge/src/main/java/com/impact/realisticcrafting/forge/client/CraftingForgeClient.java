@@ -6,6 +6,7 @@ import com.impact.realisticcrafting.client.CraftingArrows;
 import com.impact.realisticcrafting.client.DyeVatColors;
 import com.impact.realisticcrafting.client.RefusedCraftHint;
 import com.impact.realisticcrafting.client.WoodTints;
+import com.impact.realisticcrafting.item.SheetItem;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.menu.CraftingMenus;
 import com.impact.realisticcrafting.recipe.Hammering;
@@ -54,6 +55,8 @@ public final class CraftingForgeClient {
     private static void onItemColors(RegisterColorHandlersEvent.Item event) {
         Item[] woodParts = Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).toArray(Item[]::new);
         event.register((stack, layer) -> layer == 0 ? WoodTints.tintOf(stack) : WOODLESS_TINT, woodParts);
+        event.register((stack, layer) -> layer == 0 && stack.getItem() instanceof SheetItem sheet ? DyeVatColors.rgb(sheet.color()) : WOODLESS_TINT,
+                CraftingItems.sheets().toArray(Item[]::new));
     }
 
     // The client needs the hammering action for other mods' loose items too, to hold them.

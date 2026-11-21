@@ -25,7 +25,7 @@ final class CraftingBlockTags extends BlockTagsProvider {
                 Blocks.TUFF, Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE);
         tag(CraftingTags.PEBBLE_WORLDGEN_ONLY).add(Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE);
         tag(CraftingTags.PEBBLE_GRAVEL).add(Blocks.GRAVEL);
-        tag(BlockTags.MINEABLE_WITH_AXE).add(MakeshiftTable.WOODEN.block(), CraftingBlocks.dyeVat());
+        tag(BlockTags.MINEABLE_WITH_AXE).add(MakeshiftTable.WOODEN.block(), CraftingBlocks.dyeVat(), CraftingBlocks.bedFrame());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(MakeshiftTable.STONE.block());
     }
 }

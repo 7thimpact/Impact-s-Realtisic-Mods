@@ -15,6 +15,7 @@ import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.LooseWoodItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
 import com.impact.realisticcrafting.item.PebbleItem;
+import com.impact.realisticcrafting.item.SheetItem;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
@@ -23,7 +24,9 @@ import com.impact.realisticcrafting.item.WoodenBucketItem;
 import com.impact.realisticcrafting.item.WoodenWaterBucketItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,6 +51,10 @@ public final class CraftingItems {
     private static volatile Supplier<WoodenWaterBucketItem> woodenWaterBucket;
     private static volatile Supplier<LooseWoodItem> looseBoat;
     private static volatile Supplier<BlockItem> dyeVat;
+    private static volatile Supplier<BedItem> bedFrame;
+    private static volatile Supplier<Item> comforter;
+    private static final Map<DyeColor, Supplier<SheetItem>> SHEETS = new EnumMap<>(DyeColor.class);
+    private static final int COMFORTER_STACK_SIZE = 16;
     private static final Map<LooseIron, Supplier<LooseItem>> LOOSE_IRON = new EnumMap<>(LooseIron.class);
 
     private CraftingItems() {
@@ -67,6 +74,11 @@ public final class CraftingItems {
         woodenWaterBucket = registrar.register(Registries.ITEM, "wooden_water_bucket", WoodenWaterBucketItem::new);
         looseBoat = registrar.register(Registries.ITEM, "loose_boat", LooseWoodItem::new);
         dyeVat = registrar.register(Registries.ITEM, "dye_vat", () -> new BlockItem(CraftingBlocks.dyeVat(), new Item.Properties()));
+        bedFrame = registrar.register(Registries.ITEM, "bed_frame", () -> new BedItem(CraftingBlocks.bedFrame(), new Item.Properties().stacksTo(1)));
+        comforter = registrar.register(Registries.ITEM, "comforter", () -> new Item(new Item.Properties().stacksTo(COMFORTER_STACK_SIZE)));
+        for (DyeColor color : DyeColor.values()) {
+            SHEETS.put(color, registrar.register(Registries.ITEM, color.getName() + "_sheet", () -> new SheetItem(color)));
+        }
         for (LooseIron looseIron : LooseIron.values()) {
             LOOSE_IRON.put(looseIron, registrar.register(Registries.ITEM, looseIron.path, () -> new LooseItem(LooseItem.HammerKnock.METAL)));
         }
@@ -104,6 +116,22 @@ public final class CraftingItems {
 
     public static WoodenWaterBucketItem woodenWaterBucket() {
         return woodenWaterBucket.get();
+    }
+
+    public static BedItem bedFrame() {
+        return bedFrame.get();
+    }
+
+    public static Item comforter() {
+        return comforter.get();
+    }
+
+    public static SheetItem sheet(DyeColor color) {
+        return SHEETS.get(color).get();
+    }
+
+    public static List<SheetItem> sheets() {
+        return Arrays.stream(DyeColor.values()).map(CraftingItems::sheet).toList();
     }
 
     public static BlockItem dyeVat() {
@@ -175,6 +203,9 @@ public final class CraftingItems {
         stacks.add(new ItemStack(woodenBucket()));
         stacks.add(new ItemStack(woodenWaterBucket()));
         stacks.add(new ItemStack(dyeVat()));
+        stacks.add(new ItemStack(bedFrame()));
+        stacks.add(new ItemStack(comforter()));
+        sheets().forEach(sheet -> stacks.add(new ItemStack(sheet)));
         boatWoods().forEach(wood -> stacks.add(WoodData.of(looseBoat(), wood)));
         Arrays.stream(LooseIron.values()).map(looseIron -> new ItemStack(looseIron(looseIron))).forEach(stacks::add);
         for (ToolMaterial material : ToolMaterial.values()) {

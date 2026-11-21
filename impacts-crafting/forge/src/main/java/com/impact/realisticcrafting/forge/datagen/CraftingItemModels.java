@@ -31,6 +31,9 @@ final class CraftingItemModels extends ItemModelProvider {
         Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).forEach(this::basicItem);
         basicItem(CraftingItems.woodenBucket());
         basicItem(CraftingItems.woodenWaterBucket());
+        basicItem(CraftingItems.comforter());
+        CraftingItems.sheets().forEach(sheet -> withExistingParent(ResourceIds.itemId(sheet).getPath(), GENERATED_PARENT)
+                .texture("layer0", modLoc("item/sheet")));
         for (LooseIron looseIron : LooseIron.values()) {
             withExistingParent(looseIron.path, GENERATED_PARENT).texture("layer0", mcLoc(looseIron.vanillaSprite))
                     .texture("layer1", modLoc("item/loose_binding"));

@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.Optional;
 
@@ -36,6 +37,12 @@ public final class ResourceIds {
     @SuppressWarnings("deprecation")
     public static Optional<Item> item(ResourceLocation itemId) {
         return BuiltInRegistries.ITEM.getOptional(itemId).filter(item -> item != Items.AIR);
+    }
+
+    /** The block with this ID, or empty when there's none (air doesn't count). */
+    @SuppressWarnings("deprecation")
+    public static Optional<Block> block(ResourceLocation blockId) {
+        return BuiltInRegistries.BLOCK.getOptional(blockId).filter(block -> block != Blocks.AIR);
     }
 
     @SuppressWarnings("deprecation")

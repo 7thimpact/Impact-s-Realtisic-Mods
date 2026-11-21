@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:tnt"
+    }
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    }
+  },
+  "pattern": [
+    "GSG",
+    "SPS",
+    "GSG"
+  ],
+  "result": {
+    "item": "minecraft:tnt"
+  },
+  "show_notification": true
+}

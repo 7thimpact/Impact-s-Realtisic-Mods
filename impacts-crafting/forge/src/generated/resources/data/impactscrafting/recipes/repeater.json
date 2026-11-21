@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "redstone",
+      "recipe": "impactscrafting:repeater"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:stone_base"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:repeater"
+  }
+}

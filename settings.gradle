@@ -20,6 +20,11 @@ pluginManagement {
     }
 }
 
+// Lets Gradle download a JDK 17 for the Java toolchains when the machine doesn't have one installed.
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.9.0'
+}
+
 rootProject.name = 'impacts-dev'
 
 include 'impacts-lib:common'

@@ -24,7 +24,7 @@ There is no Fabric version.
 
 ## Building
 
-You need JDK 17 installed. Gradle finds it through toolchains.
+Minecraft 1.20.1 builds and runs on Java 17. Gradle itself can run on a newer Java. If a JDK 17 is installed (on Arch-based systems: `sudo pacman -S jdk17-openjdk`; on Debian or Ubuntu: `sudo apt install openjdk-17-jdk`), Gradle finds it on its own. If none is installed, Gradle downloads one into `~/.gradle/jdks` the first time you build.
 
 ```
 ./gradlew build

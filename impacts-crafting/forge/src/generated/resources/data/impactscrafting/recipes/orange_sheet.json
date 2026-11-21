@@ -1,0 +1,30 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "beds",
+      "recipe": "impactscrafting:orange_sheet"
+    }
+  ],
+  "key": {
+    "T": {
+      "item": "impactscrafting:twine"
+    },
+    "W": {
+      "item": "minecraft:orange_wool"
+    }
+  },
+  "pattern": [
+    "WWW",
+    " T "
+  ],
+  "result": {
+    "item": "impactscrafting:orange_sheet"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

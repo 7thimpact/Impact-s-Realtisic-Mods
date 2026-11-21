@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "conditions": [
+    {
+      "type": "impactscrafting:recipe_enabled",
+      "recipe": "impactscrafting:piston_head"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_panel"
+    },
+    {
+      "tag": "impactscrafting:iron_plates"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:piston_head"
+  }
+}

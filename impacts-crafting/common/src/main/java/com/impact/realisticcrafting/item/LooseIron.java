@@ -6,7 +6,8 @@ public enum LooseIron {
     CAULDRON("loose_cauldron", "cauldron", "item/cauldron"),
     IRON_DOOR("loose_iron_door", "iron_door", "item/iron_door"),
     MINECART("loose_minecart", "minecart", "item/minecart"),
-    BLAST_FURNACE("loose_blast_furnace", "blast_furnace", "block/blast_furnace_front");
+    BLAST_FURNACE("loose_blast_furnace", "blast_furnace", "block/blast_furnace_front"),
+    PISTON("loose_piston", "piston", "block/piston_top");
 
     public final String path;
     /** The vanilla item it's hammered into. */

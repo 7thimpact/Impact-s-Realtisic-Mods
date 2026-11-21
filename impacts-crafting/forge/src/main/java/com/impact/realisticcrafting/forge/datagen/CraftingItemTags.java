@@ -31,7 +31,7 @@ final class CraftingItemTags extends ItemTagsProvider {
         tag(CraftingTags.TIER_STONE).add(CraftingItems.tool(CraftingTool.IRON_SAW), CraftingItems.tool(CraftingTool.IRON_HAMMER),
                 CraftingItems.tool(CraftingTool.IRON_TWEEZERS), CraftingItems.tool(CraftingTool.IRON_CHISEL), CraftingItems.part(CraftingPart.IRON_PLATE),
                 CraftingItems.part(CraftingPart.IRON_ROD), CraftingItems.part(CraftingPart.IRON_RIVETS), CraftingItems.part(CraftingPart.IRON_HINGE),
-                CraftingItems.part(CraftingPart.IRON_WHEEL)).addTags(Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_COPPER, Tags.Items.NUGGETS_IRON,
+                CraftingItems.part(CraftingPart.IRON_WHEEL), CraftingItems.part(CraftingPart.REDSTONE_MECHANISM)).addTags(Tags.Items.INGOTS_IRON, Tags.Items.INGOTS_COPPER, Tags.Items.NUGGETS_IRON,
                 Tags.Items.RAW_MATERIALS_IRON, Tags.Items.RAW_MATERIALS_COPPER, Tags.Items.ORES_IRON, Tags.Items.ORES_COPPER,
                 Tags.Items.STORAGE_BLOCKS_IRON, Tags.Items.STORAGE_BLOCKS_COPPER, Tags.Items.STORAGE_BLOCKS_RAW_IRON,
                 Tags.Items.STORAGE_BLOCKS_RAW_COPPER, Tags.Items.DUSTS_REDSTONE, Tags.Items.STORAGE_BLOCKS_REDSTONE);

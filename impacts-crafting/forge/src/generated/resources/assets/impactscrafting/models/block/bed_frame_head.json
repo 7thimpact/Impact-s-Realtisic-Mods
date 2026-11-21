@@ -1,0 +1,268 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        0,
+        3,
+        0
+      ],
+      "to": [
+        2,
+        6,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        14,
+        3,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        2,
+        3,
+        0
+      ],
+      "to": [
+        14,
+        6,
+        2
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        13,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        3
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        2,
+        4,
+        2
+      ],
+      "to": [
+        14,
+        5,
+        4
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        2,
+        4,
+        7
+      ],
+      "to": [
+        14,
+        5,
+        9
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#wood"
+        },
+        "east": {
+          "texture": "#wood"
+        },
+        "north": {
+          "texture": "#wood"
+        },
+        "south": {
+          "texture": "#wood"
+        },
+        "up": {
+          "texture": "#wood"
+        },
+        "west": {
+          "texture": "#wood"
+        }
+      },
+      "from": [
+        2,
+        4,
+        12
+      ],
+      "to": [
+        14,
+        5,
+        14
+      ]
+    }
+  ],
+  "textures": {
+    "cloth": "impactscrafting:block/comforter",
+    "particle": "impactscrafting:block/bed_frame",
+    "wood": "impactscrafting:block/bed_frame"
+  }
+}

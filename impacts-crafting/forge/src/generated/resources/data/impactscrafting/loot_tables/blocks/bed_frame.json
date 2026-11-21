@@ -1,0 +1,55 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "impactscrafting:bed_frame",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "part": "head"
+              }
+            }
+          ],
+          "name": "impactscrafting:bed_frame"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "impactscrafting:bed_frame",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "comforter": "true",
+                "part": "head"
+              }
+            }
+          ],
+          "name": "impactscrafting:comforter"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "impactscrafting:blocks/bed_frame"
+}

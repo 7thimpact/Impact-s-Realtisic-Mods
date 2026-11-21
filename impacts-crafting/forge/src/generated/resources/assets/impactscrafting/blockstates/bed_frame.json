@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "comforter=false,facing=east,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot",
+      "y": 90
+    },
+    "comforter=false,facing=east,part=head": {
+      "model": "impactscrafting:block/bed_frame_head",
+      "y": 90
+    },
+    "comforter=false,facing=north,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot"
+    },
+    "comforter=false,facing=north,part=head": {
+      "model": "impactscrafting:block/bed_frame_head"
+    },
+    "comforter=false,facing=south,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot",
+      "y": 180
+    },
+    "comforter=false,facing=south,part=head": {
+      "model": "impactscrafting:block/bed_frame_head",
+      "y": 180
+    },
+    "comforter=false,facing=west,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot",
+      "y": 270
+    },
+    "comforter=false,facing=west,part=head": {
+      "model": "impactscrafting:block/bed_frame_head",
+      "y": 270
+    },
+    "comforter=true,facing=east,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot_comforter",
+      "y": 90
+    },
+    "comforter=true,facing=east,part=head": {
+      "model": "impactscrafting:block/bed_frame_head_comforter",
+      "y": 90
+    },
+    "comforter=true,facing=north,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot_comforter"
+    },
+    "comforter=true,facing=north,part=head": {
+      "model": "impactscrafting:block/bed_frame_head_comforter"
+    },
+    "comforter=true,facing=south,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot_comforter",
+      "y": 180
+    },
+    "comforter=true,facing=south,part=head": {
+      "model": "impactscrafting:block/bed_frame_head_comforter",
+      "y": 180
+    },
+    "comforter=true,facing=west,part=foot": {
+      "model": "impactscrafting:block/bed_frame_foot_comforter",
+      "y": 270
+    },
+    "comforter=true,facing=west,part=head": {
+      "model": "impactscrafting:block/bed_frame_head_comforter",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "conditions": [
+    {
+      "type": "impactscrafting:overhaul_enabled",
+      "category": "beds",
+      "recipe": "impactscrafting:bed_frame"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "impactscrafting:wooden_frame"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    },
+    {
+      "item": "impactscrafting:trimmed_planks"
+    }
+  ],
+  "result": {
+    "item": "impactscrafting:bed_frame"
+  }
+}

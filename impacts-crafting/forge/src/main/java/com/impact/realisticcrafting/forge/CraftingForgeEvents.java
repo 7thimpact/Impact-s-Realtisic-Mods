@@ -1,5 +1,6 @@
 package com.impact.realisticcrafting.forge;
 
+import com.impact.realisticcrafting.bed.BedLayering;
 import com.impact.realisticcrafting.loot.PebbleDrops;
 import com.impact.realisticcrafting.recipe.Hammering;
 import com.impact.realisticcrafting.registry.CraftingItems;
@@ -7,12 +8,16 @@ import com.impact.realisticcrafting.timing.CraftDepthTable;
 import com.impact.realisticcrafting.timing.CraftTimers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -28,6 +33,7 @@ final class CraftingForgeEvents {
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onServerStarted);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onDatapackSync);
         MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onPlayerTick);
+        MinecraftForge.EVENT_BUS.addListener(CraftingForgeEvents::onBlockRightClicked);
     }
 
     // The depth table and other mods' loose items follow the live recipes: at start and after every /reload.
@@ -45,6 +51,19 @@ final class CraftingForgeEvents {
         MinecraftServer server = event.getPlayerList().getServer();
         CraftDepthTable.rebuild(server.getRecipeManager(), server.registryAccess());
         Hammering.registerHoldActions(server.getRecipeManager());
+    }
+
+    // A sheet on a finished vanilla bed recolors it, before the bed's own use (sleeping) runs.
+    private static void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
+        BlockState state = event.getLevel().getBlockState(event.getPos());
+        if (!(state.getBlock() instanceof BedBlock)) {
+            return;
+        }
+        InteractionResult result = BedLayering.onBedUsed(event.getLevel(), event.getPos(), state, event.getEntity(), event.getHand());
+        if (result != InteractionResult.PASS) {
+            event.setCanceled(true);
+            event.setCancellationResult(result);
+        }
     }
 
     private static void onPlayerTick(TickEvent.PlayerTickEvent event) {
