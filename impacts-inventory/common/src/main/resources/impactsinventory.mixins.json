@@ -7,7 +7,6 @@
   "mixins": [
     "AbstractContainerMenuLocksMixin",
     "InventoryLocksMixin",
-    "InventoryMenuBackSlotMixin",
     "InventorySelectedSlotMixin",
     "ItemEntityPickupMixin",
     "ServerGamePacketListenerImplMixin",
@@ -15,7 +14,6 @@
     "SlotPositionAccessor"
   ],
   "client": [
-    "client.CreativeModeInventoryScreenMixin",
     "client.InventoryScrollMixin",
     "client.MinecraftHotbarKeysMixin"
   ],

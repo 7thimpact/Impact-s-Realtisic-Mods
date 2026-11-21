@@ -64,9 +64,13 @@ public final class PackMenuLayout {
         return pocketsTop() + GRID_ROWS * SLOT_SPACING + HANDS_BELOW_POCKETS;
     }
 
-    /** The left edge of hotbar slot 1 or 2. */
-    public int handX(int hotbarSlot) {
-        return HANDS_LEFT + (hotbarSlot - 1) * SLOT_SPACING;
+    /** The off hand sits left of the main hand, as on the HUD. */
+    public int offHandX() {
+        return HANDS_LEFT;
+    }
+
+    public int mainHandX() {
+        return HANDS_LEFT + SLOT_SPACING;
     }
 
     public int screenHeight() {

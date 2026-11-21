@@ -3,8 +3,6 @@ package com.impact.realisticinventory.forge.gametest;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.hotbar.HandSwitch;
-import com.impact.realisticinventory.hotbar.HotbarState;
-import com.impact.realisticinventory.hotbar.SwitchSource;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryItems;
@@ -59,17 +57,16 @@ public final class InventorySrfGameTests {
     }
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
-    public static void srfHandWritesFollowTheActiveSlot(GameTestHelper helper) {
+    public static void srfHandWritesReachTheHands(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            for (int activeSlot : new int[]{HotbarState.FIRST_SLOT, HotbarState.SECOND_SLOT}) {
-                HandSwitch.selectSlot(player, activeSlot, SwitchSource.NUMBER_KEY);
+            for (int swaps = 0; swaps < 2; swaps++) {
+                HandSwitch.swapHands(player);
                 player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_INGOT));
                 player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(Items.STICK));
                 helper.assertTrue(player.getInventory().getItem(InventoryLayout.MAIN_HAND_INDEX).is(Items.IRON_INGOT),
-                        "setItemInHand(MAIN_HAND) writes index 0 with slot " + activeSlot + " active");
-                helper.assertTrue(player.getInventory().offhand.get(0).is(Items.STICK),
-                        "setItemInHand(OFF_HAND) writes the off-hand slot with slot " + activeSlot + " active");
+                        "setItemInHand(MAIN_HAND) writes index 0, after a swap too");
+                helper.assertTrue(player.getInventory().offhand.get(0).is(Items.STICK), "setItemInHand(OFF_HAND) writes the off-hand slot");
                 helper.assertTrue(player.getInventory().selected == InventoryLayout.MAIN_HAND_INDEX, "The selected index stays 0");
             }
         } finally {

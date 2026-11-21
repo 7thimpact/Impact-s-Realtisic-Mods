@@ -1,6 +1,6 @@
 package com.impact.realisticinventory.mixin.client;
 
-import com.impact.realisticinventory.client.ClientHotbar;
+import com.impact.realisticinventory.client.LocalHands;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** The scroll wheel switches to the other hotbar slot, in either direction. Client only: the method is client side. */
+/** The scroll wheel swaps the hands, in either direction, exactly like vanilla's swap-hands key. Client only: the method is client side. */
 @Mixin(Inventory.class)
 public abstract class InventoryScrollMixin {
     @Inject(method = "swapPaint", at = @At("HEAD"), cancellable = true)
@@ -17,7 +17,7 @@ public abstract class InventoryScrollMixin {
         if (!InventoryLocks.isActiveFor(inventory.player)) {
             return;
         }
-        ClientHotbar.onScroll();
+        LocalHands.requestSwap();
         callback.cancel();
     }
 }

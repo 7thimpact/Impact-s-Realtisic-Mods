@@ -3,8 +3,6 @@ package com.impact.realisticinventory.forge.gametest;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.hotbar.HandSwitch;
-import com.impact.realisticinventory.hotbar.HotbarState;
-import com.impact.realisticinventory.hotbar.SwitchSource;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.InventoryLocks;
 import net.minecraft.gametest.framework.GameTest;
@@ -26,20 +24,19 @@ public final class InventoryHotbarGameTests {
     }
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
-    public static void switchingSwapsHandsAndKeepsItemsInTheirSlots(GameTestHelper helper) {
+    public static void swappingTradesTheTwoHands(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
             player.getInventory().items.set(InventoryLayout.MAIN_HAND_INDEX, Items.IRON_SWORD.getDefaultInstance());
             player.getInventory().offhand.set(0, Items.IRON_PICKAXE.getDefaultInstance());
-            HandSwitch.selectSlot(player, HotbarState.SECOND_SLOT, SwitchSource.NUMBER_KEY);
-            helper.assertTrue(player.getMainHandItem().is(Items.IRON_PICKAXE), "Slot 2's pickaxe should move to the main hand");
-            helper.assertTrue(player.getOffhandItem().is(Items.IRON_SWORD), "Slot 1's sword should move to the off hand");
-            helper.assertTrue(HandSwitch.stateOf(player).activeSlot() == HotbarState.SECOND_SLOT, "Slot 2 should be active");
-            HandSwitch.selectSlot(player, HotbarState.SECOND_SLOT, SwitchSource.NUMBER_KEY);
-            helper.assertTrue(player.getMainHandItem().is(Items.IRON_PICKAXE), "Selecting the active slot again should change nothing");
-            HandSwitch.switchToOtherSlot(player, SwitchSource.SCROLL_WHEEL);
-            helper.assertTrue(player.getMainHandItem().is(Items.IRON_SWORD), "Scrolling should switch back to the sword");
-            helper.assertTrue(HandSwitch.stateOf(player).activeSlot() == HotbarState.FIRST_SLOT, "Slot 1 should be active again");
+            HandSwitch.swapHands(player);
+            helper.assertTrue(player.getMainHandItem().is(Items.IRON_PICKAXE), "The off hand's pickaxe moves to the main hand");
+            helper.assertTrue(player.getOffhandItem().is(Items.IRON_SWORD), "and the sword to the off hand, with no copy left behind");
+            helper.assertTrue(player.getInventory().countItem(Items.IRON_SWORD) == 1 && player.getInventory().countItem(Items.IRON_PICKAXE) == 1,
+                    "Each item is in exactly one hand");
+            HandSwitch.swapHands(player);
+            helper.assertTrue(player.getMainHandItem().is(Items.IRON_SWORD), "Swapping again brings the sword back");
+            helper.assertTrue(HandSwitch.stateOf(player).hasEverSwitched(), "The swap is recorded for the achievements");
         } finally {
             MockPlayers.leaveWorld(player);
         }
@@ -50,7 +47,7 @@ public final class InventoryHotbarGameTests {
     public static void emptyHandsStayEmpty(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            HandSwitch.switchToOtherSlot(player, SwitchSource.SWAP_HANDS_KEY);
+            HandSwitch.swapHands(player);
             helper.assertTrue(player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty(), "Two empty slots are two free hands");
         } finally {
             MockPlayers.leaveWorld(player);

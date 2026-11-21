@@ -1,7 +1,5 @@
 package com.impact.realisticinventory.pack;
 
-import com.impact.realisticinventory.hotbar.HandSwitch;
-import com.impact.realisticinventory.hotbar.HotbarState;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
@@ -89,9 +87,8 @@ public final class PackMenu extends AbstractContainerMenu {
             int row = pocket / POCKET_COLUMNS;
             addSlot(new Slot(playerInventory, InventoryLayout.FIRST_POCKET_INDEX + pocket, layout.pocketX(column), layout.pocketY(row)));
         }
-        int activeSlot = HandSwitch.stateOf(playerInventory.player).activeSlot();
-        addSlot(new Slot(playerInventory, InventoryLayout.MAIN_HAND_INDEX, layout.handX(activeSlot), layout.handsTop()));
-        addSlot(new OffHandSlot(playerInventory, layout.handX(HotbarState.otherSlot(activeSlot)), layout.handsTop()));
+        addSlot(new Slot(playerInventory, InventoryLayout.MAIN_HAND_INDEX, layout.mainHandX(), layout.handsTop()));
+        addSlot(new OffHandSlot(playerInventory, layout.offHandX(), layout.handsTop()));
     }
 
     /** The off hand shows vanilla's empty-shield outline, as in the inventory screen. */
