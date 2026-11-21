@@ -8,7 +8,7 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | --- | --- | --- | --- |
 | 0 | Workspace setup | S | Done |
 | 1 | Impact's Lib core | M | Done |
-| 2 | Impact's Realistic Inventory (IRI) | M | Done on its own (milestone 8, the IRV and IRC parts, lands in steps 4 and 5) |
+| 2 | Impact's Realistic Inventory (IRI) | M | Done, with Vitality and Crafting |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality (IRC parts in step 5) |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Done on its own (milestone 10's IRC parts land in step 5) |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | In progress (milestone 1 done) |
@@ -68,7 +68,7 @@ These are the milestones from `impacts-inventory/SPEC.md`.
 - [x] 5 First-join migration and creative mode
 - [x] 6 Packs
 - [x] 7 Placed packs
-- [ ] 8 Integration: IRV parts done in step 4 (Air Tanks and the Hydration Pack in the back slot, Vitality's HUD lined up with the two-slot hotbar, the Frame Pack's thirst, the `inventory-and-vitality` setup); IRC parts in step 5
+- [x] 8 Integration: IRV parts done in step 4 (Air Tanks and the Hydration Pack in the back slot, Vitality's HUD lined up with the two-slot hotbar, the Frame Pack's thirst, the `inventory-and-vitality` setup); IRC parts in step 5 (pack recipes from Crafting's parts, the arrow in IRI's screen, the `crafting-and-inventory` setup)
 - [x] 9 SRF pass: the four GameTests from `docs/srf-notes.md`, and the `inventory-with-srf` setup
 - [x] 10 Achievements
 - [x] 11 Polish and compatibility: pack tooltips, generated lang, the `inventory-alone` and `inventory-with-srf` setups. JEI pages for packs come with Lib's JEI base plugin (step 3); the other setups with IRI come with their mods.
@@ -138,9 +138,9 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 13 Polish: the 26-achievement "Realistic Crafting" tab (Crafting's triggers, Lib counters checked against the config, Lib's `hold_action` with an item predicate and a grind listener), JEI Hammering and Dye Vat categories with info pages, wood subtypes and every crafting recipe's table and time, next-step tooltips on every item, Crafting's own sound events with subtitles, and Dye Vat particles
   - [x] 14 Audit (the SRF part is in step 6): the in-game recipe audit labels every vanilla crafting recipe (0 unlabeled, 0 conflicts), the tree check GameTest, endgame materials in the advanced tier, and Crafting versions of the soul campfire, smooth stone slab and bamboo sticks
 - [ ] **"With IRC" features:**
-  - IRI milestone 8: pack recipes with IRC parts, IRC's crafting arrow in IRI's screen
-  - IRF milestone 10: recipe switching, stone boiling
-  - IRV: gear recipes, linings sewn with the Bone Needle, drinking from the Wooden Bucket, the loose Air Tank
+  - [x] IRI milestone 8: pack recipes with IRC parts (the Satchel takes a second Twine so it doesn't match IRC's leather boots), IRC's crafting arrow in IRI's screen, packs in the Dye Vat, the `crafting-and-inventory` setup
+  - [ ] IRF milestone 10: recipe switching, stone boiling
+  - [ ] IRV: gear recipes, linings sewn with the Bone Needle, drinking from the Wooden Bucket, the loose Air Tank
 
 ## 6. Salty's Realistic Forging pass
 

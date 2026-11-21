@@ -1,5 +1,6 @@
 package com.impact.realisticinventory.forge.gametest;
 
+import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.lib.config.ConfigValue;
@@ -24,11 +25,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.TransientCraftingContainer;
+import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -50,7 +49,6 @@ public final class InventoryPackGameTests {
     private static final double FRAME_PACK_SPEED_FACTOR = 0.9;
     private static final double SPEED_TOLERANCE = 0.0001;
     private static final ResourceLocation BACKPACK_RECIPE = ResourceIds.of(InventoryMod.MOD_ID, "backpack");
-    private static final int CRAFTING_GRID_SIZE = 3;
 
     private InventoryPackGameTests() {
     }
@@ -171,17 +169,15 @@ public final class InventoryPackGameTests {
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
     public static void upgradingAPackKeepsItsContentsAndColor(GameTestHelper helper) {
+        if (ImpactsLib.isLoaded(InventoryCraftingGameTests.CRAFTING_MOD_ID)) {
+            helper.succeed();
+            return;
+        }
         Optional<? extends Recipe<?>> recipe = helper.getLevel().getRecipeManager().byKey(BACKPACK_RECIPE);
         helper.assertTrue(recipe.isPresent() && recipe.get() instanceof CraftingRecipe, "The backpack recipe loads without Crafting installed");
-        ItemStack satchel = new ItemStack(InventoryItems.satchel());
-        InventoryItems.satchel().setColor(satchel, BLUE_DYE_COLOR);
-        PackContents.write(satchel, packSlotsWith(new ItemStack(Items.APPLE, STONE_COUNT)));
-        CraftingContainer grid = new TransientCraftingContainer(new DisabledMenu(), CRAFTING_GRID_SIZE, CRAFTING_GRID_SIZE);
-        List<ItemStack> layout = List.of(new ItemStack(Items.LEATHER), new ItemStack(Items.CHEST), new ItemStack(Items.LEATHER),
-                new ItemStack(Items.LEATHER), satchel, new ItemStack(Items.LEATHER));
-        for (int gridSlot = 0; gridSlot < layout.size(); gridSlot++) {
-            grid.setItem(gridSlot, layout.get(gridSlot));
-        }
+        ItemStack satchel = blueSatchelOfApples();
+        CraftingContainer grid = TestCraftingGrids.holding(List.of(new ItemStack(Items.LEATHER), new ItemStack(Items.CHEST), new ItemStack(Items.LEATHER),
+                new ItemStack(Items.LEATHER), satchel, new ItemStack(Items.LEATHER)));
         CraftingRecipe backpackRecipe = (CraftingRecipe) recipe.get();
         helper.assertTrue(backpackRecipe.matches(grid, helper.getLevel()), "Leather, a chest and a satchel make a backpack");
         ItemStack backpack = backpackRecipe.assemble(grid, helper.getLevel().registryAccess());
@@ -222,26 +218,22 @@ public final class InventoryPackGameTests {
         }
     }
 
+    /** A satchel dyed blue with apples inside, to check that upgrades keep both. */
+    static ItemStack blueSatchelOfApples() {
+        ItemStack satchel = new ItemStack(InventoryItems.satchel());
+        InventoryItems.satchel().setColor(satchel, BLUE_DYE_COLOR);
+        PackContents.write(satchel, packSlotsWith(new ItemStack(Items.APPLE, STONE_COUNT)));
+        return satchel;
+    }
+
+    static boolean keepsTheSatchelsDyeAndApples(ItemStack upgradedPack) {
+        boolean keepsDye = upgradedPack.getItem() instanceof DyeableLeatherItem dyeable && dyeable.getColor(upgradedPack) == BLUE_DYE_COLOR;
+        return keepsDye && PackContents.stacksIn(upgradedPack).stream().anyMatch(stack -> stack.is(Items.APPLE));
+    }
+
     private static NonNullList<ItemStack> packSlotsWith(ItemStack firstSlot) {
         NonNullList<ItemStack> slots = NonNullList.withSize(PackRules.MAXIMUM_SLOTS, ItemStack.EMPTY);
         slots.set(0, firstSlot);
         return slots;
-    }
-
-    /** A menu that's never shown, for building a crafting grid by hand. */
-    private static final class DisabledMenu extends AbstractContainerMenu {
-        DisabledMenu() {
-            super(null, -1);
-        }
-
-        @Override
-        public ItemStack quickMoveStack(Player player, int slotIndex) {
-            return ItemStack.EMPTY;
-        }
-
-        @Override
-        public boolean stillValid(Player player) {
-            return false;
-        }
     }
 }

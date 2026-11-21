@@ -1,0 +1,35 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "copy_nbt_from": {
+    "item": "impactsinventory:backpack"
+  },
+  "ingredients": [
+    {
+      "item": "impactsinventory:backpack"
+    },
+    {
+      "item": "impactscrafting:wooden_frame"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "tag": "impactscrafting:iron_rods"
+    },
+    {
+      "item": "impactscrafting:iron_rivets"
+    }
+  ],
+  "result": {
+    "item": "impactsinventory:frame_pack"
+  }
+}
