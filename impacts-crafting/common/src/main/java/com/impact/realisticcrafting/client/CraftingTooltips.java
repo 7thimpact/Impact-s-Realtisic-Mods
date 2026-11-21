@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.config.CraftingClientConfig;
 import com.impact.realisticcrafting.item.LooseItem;
+import com.impact.realisticcrafting.item.PebbleItem;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.lang.CraftingHints;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public final class CraftingTooltips {
     private static final String WOODEN_TOOL_HEAD = "wooden_tool_head";
     private static final String STONE_TOOL_HEAD = "stone_tool_head";
+    private static final String PEBBLE = "pebble";
     private static final String SHEET = "sheet";
     private static final String BANNER_CLOTH = "banner_cloth";
 
@@ -49,6 +51,9 @@ public final class CraftingTooltips {
     }
 
     private static Optional<String> familyOf(Item item) {
+        if (item instanceof PebbleItem) {
+            return Optional.of(PEBBLE);
+        }
         if (CraftingItems.sheets().contains(item)) {
             return Optional.of(SHEET);
         }

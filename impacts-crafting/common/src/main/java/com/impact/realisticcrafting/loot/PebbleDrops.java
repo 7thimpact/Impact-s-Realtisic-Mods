@@ -5,6 +5,8 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
+import com.impact.realisticcrafting.item.PebbleKind;
+import com.impact.realisticcrafting.registry.CraftingItems;
 import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -52,6 +54,11 @@ public final class PebbleDrops {
         }
         log(state, player.getMainHandItem(), "hand");
         return 1;
+    }
+
+    /** The pebble a broken block gives: its own kind of stone (granite gives a Granite Pebble), and a Stone Pebble from gravel. */
+    public static ItemStack pebbleFor(BlockState state, int count) {
+        return new ItemStack(CraftingItems.pebble(PebbleKind.forBlock(state)), count);
     }
 
     public static boolean dropsPebbles(BlockState state) {

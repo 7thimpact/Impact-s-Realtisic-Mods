@@ -4,9 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "impactscrafting:stone_pebble"
-            ]
+            "tag": "impactscrafting:pebbles"
           }
         ]
       },

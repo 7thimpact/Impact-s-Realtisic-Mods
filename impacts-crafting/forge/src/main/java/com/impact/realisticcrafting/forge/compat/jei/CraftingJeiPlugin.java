@@ -27,6 +27,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.ItemLike;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public final class CraftingJeiPlugin implements IModPlugin {
         registration.addRecipes(CraftingJeiRecipeTypes.HAMMERING, recipes.getAllRecipesFor(CraftingRecipeTypes.hammering()));
         registration.addRecipes(CraftingJeiRecipeTypes.DYE_VAT, recipes.getAllRecipesFor(CraftingRecipeTypes.vatDyeing()).stream()
                 .flatMap(recipe -> VatDip.of(recipe).stream()).toList());
-        addInfo(registration, List.of(new ItemStack(CraftingItems.stonePebble())), CraftingTranslations.JEI_PEBBLES_INFO);
+        addInfo(registration, CraftingItems.pebbles().stream().map(ItemStack::new).toList(), CraftingTranslations.JEI_PEBBLES_INFO);
         List<ItemStack> bedParts = new ArrayList<>(List.of(new ItemStack(CraftingItems.bedFrame()), new ItemStack(CraftingItems.comforter())));
         CraftingItems.sheets().forEach(sheet -> bedParts.add(new ItemStack(sheet)));
         addInfo(registration, bedParts, CraftingTranslations.JEI_BEDS_INFO);
@@ -74,7 +75,9 @@ public final class CraftingJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalysts(CraftingJeiRecipeTypes.HAMMERING, CraftingItems.stonePebble(), CraftingItems.tool(CraftingTool.IRON_HAMMER));
+        List<ItemLike> hammers = new ArrayList<>(CraftingItems.pebbles());
+        hammers.add(CraftingItems.tool(CraftingTool.IRON_HAMMER));
+        registration.addRecipeCatalysts(CraftingJeiRecipeTypes.HAMMERING, hammers.toArray(ItemLike[]::new));
         registration.addRecipeCatalysts(CraftingJeiRecipeTypes.DYE_VAT, CraftingItems.dyeVat());
     }
 

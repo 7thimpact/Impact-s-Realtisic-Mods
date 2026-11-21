@@ -7,6 +7,7 @@ import com.impact.realisticcrafting.block.LoosePebbleBlock;
 import com.impact.realisticcrafting.config.CraftingFeature;
 import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.core.BlockPos;
@@ -25,8 +26,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import java.util.Optional;
 
 /**
- * Where loose pebbles generate: on top of a pebble base ({@code #impactscrafting:pebble_base}) with air or still water
- * above, a few tries per chunk on the surface (river beds included) and on cave floors.
+ * Where loose pebbles generate: on top of a pebble base ({@code #impactscrafting:pebble_base}: stone, soil, sand,
+ * gravel, terracotta) with air or still water above, a few tries per chunk on the surface (river beds included) and on
+ * cave floors. The pebble's kind follows the ground: sandstone on sand, granite on granite, mostly stone on soil.
  */
 public final class LoosePebblePlacer {
     private static final int CHUNK_WIDTH = 16;
@@ -78,7 +80,8 @@ public final class LoosePebblePlacer {
         if (!below.is(CraftingTags.PEBBLE_BASE) || !isOpen || isBlacklistedBiome(level.getBiome(spot))) {
             return false;
         }
-        BlockState pebbles = CraftingBlocks.loosePebble().defaultBlockState()
+        PebbleKind kind = PebbleKind.forGround(below, random);
+        BlockState pebbles = CraftingBlocks.loosePebble(kind).defaultBlockState()
                 .setValue(LoosePebbleBlock.VARIANT, random.nextInt(3))
                 .setValue(LoosePebbleBlock.WATERLOGGED, isWater);
         if (!pebbles.canSurvive(level, spot)) {
@@ -87,7 +90,7 @@ public final class LoosePebblePlacer {
         boolean isPlaced = level.setBlock(spot, pebbles, Block.UPDATE_CLIENTS);
         if (isPlaced && LOG.isVerbose(CraftingLogCategories.PEBBLES)) {
             LOG.verbose(CraftingLogCategories.PEBBLES, "loose pebbles placed", "pos", spot.toShortString(),
-                    "on", ResourceIds.blockId(below.getBlock()), "waterlogged", isWater);
+                    "on", ResourceIds.blockId(below.getBlock()), "kind", kind.stoneName, "waterlogged", isWater);
         }
         return isPlaced;
     }

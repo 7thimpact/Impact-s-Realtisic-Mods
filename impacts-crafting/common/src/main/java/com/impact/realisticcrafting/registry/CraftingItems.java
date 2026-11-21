@@ -15,6 +15,7 @@ import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.LooseWoodItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
 import com.impact.realisticcrafting.item.PebbleItem;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.SheetItem;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
@@ -45,7 +46,7 @@ public final class CraftingItems {
     private static final int TOOL_HEAD_STACK_SIZE = 16;
     private static final Map<ToolMaterial, Map<ToolKind, Supplier<Item>>> TOOL_PARTS = new EnumMap<>(ToolMaterial.class);
     private static final Map<ToolMaterial, Map<ToolKind, Supplier<LooseItem>>> LOOSE_TOOLS = new EnumMap<>(ToolMaterial.class);
-    private static volatile Supplier<PebbleItem> stonePebble;
+    private static final Map<PebbleKind, Supplier<PebbleItem>> PEBBLES = new EnumMap<>(PebbleKind.class);
     private static final Map<WoodPart, Supplier<WoodPartItem>> WOOD_PARTS = new EnumMap<>(WoodPart.class);
     private static volatile Supplier<WoodenBucketItem> woodenBucket;
     private static volatile Supplier<WoodenWaterBucketItem> woodenWaterBucket;
@@ -64,7 +65,9 @@ public final class CraftingItems {
     /** Called once, during mod construction. */
     public static void register() {
         ModRegistrar registrar = LoaderPlatform.current().registrar(CraftingMod.MOD_ID);
-        stonePebble = registrar.register(Registries.ITEM, "stone_pebble", PebbleItem::new);
+        for (PebbleKind kind : PebbleKind.values()) {
+            PEBBLES.put(kind, registrar.register(Registries.ITEM, kind.itemPath, () -> new PebbleItem(kind)));
+        }
         for (MakeshiftTable table : MakeshiftTable.values()) {
             TABLES.put(table, registrar.register(Registries.ITEM, table.path, () -> new MakeshiftTableItem(CraftingBlocks.table(table))));
         }
@@ -97,7 +100,15 @@ public final class CraftingItems {
     }
 
     public static PebbleItem stonePebble() {
-        return stonePebble.get();
+        return pebble(PebbleKind.STONE);
+    }
+
+    public static PebbleItem pebble(PebbleKind kind) {
+        return PEBBLES.get(kind).get();
+    }
+
+    public static List<PebbleItem> pebbles() {
+        return Arrays.stream(PebbleKind.values()).map(CraftingItems::pebble).toList();
     }
 
     public static MakeshiftTableItem table(MakeshiftTable table) {
@@ -203,7 +214,7 @@ public final class CraftingItems {
 
     public static List<ItemStack> creativeTabStacks() {
         List<ItemStack> stacks = new ArrayList<>();
-        stacks.add(new ItemStack(stonePebble()));
+        pebbles().forEach(pebble -> stacks.add(new ItemStack(pebble)));
         Arrays.stream(MakeshiftTable.values()).map(table -> new ItemStack(table(table))).forEach(stacks::add);
         Arrays.stream(CraftingTool.values()).map(tool -> new ItemStack(tool(tool))).forEach(stacks::add);
         for (WoodPart part : WoodPart.values()) {

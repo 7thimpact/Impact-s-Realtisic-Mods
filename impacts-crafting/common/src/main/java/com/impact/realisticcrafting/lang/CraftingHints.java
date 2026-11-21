@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * The next-step tooltip of every Crafting item but the loose ones (which say how to hammer them): what it's made from
  * (its parent in the crafting tree) and what it goes on to make. Keyed by hint name: the item's path, or a shared name
- * for families ({@code sheet}, {@code banner_cloth}, {@code wooden_tool_head}, {@code stone_tool_head}).
+ * for families ({@code pebble}, {@code sheet}, {@code banner_cloth}, {@code wooden_tool_head}, {@code stone_tool_head}).
  */
 public final class CraftingHints {
     public static final String MADE_FROM_KEY = "tooltip." + CraftingMod.MOD_ID + ".hint.made_from";
@@ -35,7 +35,7 @@ public final class CraftingHints {
 
     private static Map<String, Hint> buildEnglish() {
         Map<String, Hint> hints = new LinkedHashMap<>();
-        hints.put("stone_pebble", new Hint("loose pebbles, gravel or stone", "trim planks, hammer loose tools; 9 make cobblestone"));
+        hints.put("pebble", new Hint("loose pebbles on the ground, gravel or stone", "trim planks, hammer loose tools; 9 make their stone"));
         hints.put("makeshift_table", new Hint("4 planks in the 2×2 grid", "crafting with non-metal parts; place it and craft"));
         hints.put("makeshift_stone_table", new Hint("2 flint over 4 smooth stone", "iron, copper and redstone recipes"));
         hints.put("trimmed_planks", new Hint("planks and a trimming tool", "Trimmed Sticks, panels, frames, buckets, Chest Tops"));

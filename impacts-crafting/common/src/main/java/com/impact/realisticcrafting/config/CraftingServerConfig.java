@@ -100,7 +100,8 @@ public final class CraftingServerConfig {
                     "Chance that breaking stone with a pickaxe drops a pebble too.");
             doesHandBreakingDrop = builder.defineBoolean("handBreakDrops", true, "Breaking stone by hand always drops a pebble.");
             isWorldgenOn = builder.defineBoolean("worldgen", true, "Loose pebbles generate in new chunks.");
-            surfaceTriesPerChunk = builder.defineInteger("surfaceTriesPerChunk", 4, 0, 256, "Tries per chunk to place a loose pebble on the surface.");
+            surfaceTriesPerChunk = builder.defineInteger("surfaceTriesPerChunk", 6, 0, 256,
+                    "Tries per chunk to place a loose pebble on the surface (about as many as a desert's dead bushes).");
             caveTriesPerChunk = builder.defineInteger("caveTriesPerChunk", 6, 0, 256, "Tries per chunk to place a loose pebble on a cave floor.");
             worldgenDimensions = builder.defineStringList("worldgenDimensions", List.of("minecraft:overworld"),
                     "Dimensions loose pebbles generate in.");

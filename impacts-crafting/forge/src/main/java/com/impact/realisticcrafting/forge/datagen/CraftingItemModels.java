@@ -27,7 +27,7 @@ final class CraftingItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(CraftingItems.stonePebble());
+        CraftingItems.pebbles().forEach(this::basicItem);
         Arrays.stream(WoodPart.values()).map(CraftingItems::woodPart).forEach(this::basicItem);
         basicItem(CraftingItems.woodenBucket());
         basicItem(CraftingItems.woodenWaterBucket());

@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "variant=0": [
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_0"
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_0",
+        "y": 90
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_0",
+        "y": 180
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_0",
+        "y": 270
+      }
+    ],
+    "variant=1": [
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_1"
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_1",
+        "y": 90
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_1",
+        "y": 180
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_1",
+        "y": 270
+      }
+    ],
+    "variant=2": [
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_2"
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_2",
+        "y": 90
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_2",
+        "y": 180
+      },
+      {
+        "model": "impactscrafting:block/loose_granite_pebble_2",
+        "y": 270
+      }
+    ]
+  }
+}

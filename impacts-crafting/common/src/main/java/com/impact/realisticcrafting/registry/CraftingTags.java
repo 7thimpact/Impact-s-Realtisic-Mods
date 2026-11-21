@@ -16,6 +16,8 @@ public final class CraftingTags {
     /** Blocks that drop a pebble by chance when broken: gravel. */
     public static final TagKey<Block> PEBBLE_GRAVEL = block("pebble_gravel");
     public static final TagKey<Item> HAMMERS = item("hammers");
+    /** Every kind of pebble. */
+    public static final TagKey<Item> PEBBLES = item("pebbles");
     public static final TagKey<Item> TRIMMING_TOOLS = item("trimming_tools");
     public static final TagKey<Item> LOOSE_TOOLS = item("loose_tools");
     public static final TagKey<Item> TIER_STONE = item("tier/stone");

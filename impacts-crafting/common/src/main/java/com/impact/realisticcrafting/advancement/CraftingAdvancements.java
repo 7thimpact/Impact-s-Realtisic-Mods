@@ -9,12 +9,14 @@ import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
 import com.impact.realisticcrafting.recipe.CraftingRecipeTypes;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
@@ -64,7 +66,6 @@ public final class CraftingAdvancements {
     public static final ResourceLocation EVERY_BRANCH = id("every_branch");
     public static final ResourceLocation MASTER_CRAFTSMAN = id("master_craftsman");
     private static final ResourceLocation TAB_BACKGROUND = ResourceIds.of("minecraft", "textures/block/cobblestone.png");
-    private static final ResourceLocation PEBBLES_TO_COBBLESTONE_RECIPE = id("pebbles_to_cobblestone");
     private static final ResourceLocation CHEST_RECIPE = id("chest");
     private static final ResourceLocation CRAFTING_TABLE_RECIPE = id("crafting_table");
 
@@ -82,9 +83,8 @@ public final class CraftingAdvancements {
     private static List<ImpactsAdvancementBuilder> earlyDays() {
         return List.of(
                 ImpactsAdvancementBuilder.of(HUMBLE_BEGINNINGS, CraftingItems.stonePebble()).root(TAB_BACKGROUND)
-                        .criterion("has_pebble", hasItems(CraftingItems.stonePebble())),
-                ImpactsAdvancementBuilder.of(ROCK_SOLID, Items.COBBLESTONE).parent(HUMBLE_BEGINNINGS)
-                        .criterion("crafted_cobblestone", RecipeCraftedTrigger.TriggerInstance.craftedItem(PEBBLES_TO_COBBLESTONE_RECIPE)),
+                        .criterion("has_pebble", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(CraftingTags.PEBBLES).build())),
+                rockSolid(),
                 ImpactsAdvancementBuilder.of(CUT_TO_SIZE, CraftingItems.trimmedPlanks()).parent(HUMBLE_BEGINNINGS)
                         .criterion("trimmed_planks", ToolCraftedTrigger.TriggerInstance.resultMatching(anyOf(CraftingItems.trimmedPlanks()))),
                 ImpactsAdvancementBuilder.of(SCRAP_COLLECTOR, CraftingItems.part(CraftingPart.WOOD_SCRAPS)).parent(CUT_TO_SIZE)
@@ -107,6 +107,14 @@ public final class CraftingAdvancements {
                         .criterion("has_bucket", hasItems(CraftingItems.woodenBucket())),
                 ImpactsAdvancementBuilder.of(STORAGE_SOLUTION, Items.CHEST).parent(BUCKET_LIST)
                         .criterion("crafted_chest", RecipeCraftedTrigger.TriggerInstance.craftedItem(CHEST_RECIPE)));
+    }
+
+    // Any kind of pebble packed into its block.
+    private static ImpactsAdvancementBuilder rockSolid() {
+        ImpactsAdvancementBuilder rockSolid = ImpactsAdvancementBuilder.of(ROCK_SOLID, Items.COBBLESTONE).parent(HUMBLE_BEGINNINGS);
+        Arrays.stream(PebbleKind.values()).forEach(kind ->
+                rockSolid.criterion(kind.packingRecipePath(), RecipeCraftedTrigger.TriggerInstance.craftedItem(id(kind.packingRecipePath()))));
+        return rockSolid.anyCriterion();
     }
 
     private static List<ImpactsAdvancementBuilder> stoneAndIron() {

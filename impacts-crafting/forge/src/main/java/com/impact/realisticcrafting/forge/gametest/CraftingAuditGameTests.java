@@ -102,7 +102,7 @@ public final class CraftingAuditGameTests {
         Arrays.stream(CraftingPart.values()).filter(part -> part != CraftingPart.WOOD_SCRAPS).forEach(part -> parts.add(CraftingItems.part(part)));
         Arrays.stream(WoodPart.values()).forEach(part -> parts.add(CraftingItems.woodPart(part)));
         Arrays.stream(CraftingTool.values()).forEach(tool -> parts.add(CraftingItems.tool(tool)));
-        parts.add(CraftingItems.stonePebble());
+        parts.addAll(CraftingItems.pebbles());
         parts.add(CraftingItems.woodenBucket());
         parts.add(CraftingItems.bannerCloth(DyeColor.WHITE));
         for (ToolMaterial material : ToolMaterial.values()) {

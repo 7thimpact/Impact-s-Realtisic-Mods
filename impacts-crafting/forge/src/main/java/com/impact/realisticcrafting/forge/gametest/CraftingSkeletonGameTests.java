@@ -71,7 +71,7 @@ public final class CraftingSkeletonGameTests {
         helper.assertTrue(pebbles.stonePickaxeChance.defaultValue() == 0.15, "Stone broken with a pickaxe drops a pebble 15% of the time");
         helper.assertTrue(pebbles.doesHandBreakingDrop.defaultValue(), "Stone broken by hand always drops a pebble");
         helper.assertTrue(pebbles.isWorldgenOn.defaultValue(), "pebbles.worldgen should default to true");
-        helper.assertTrue(pebbles.surfaceTriesPerChunk.defaultValue() == 4, "Up to 4 surface tries per chunk");
+        helper.assertTrue(pebbles.surfaceTriesPerChunk.defaultValue() == 6, "6 surface tries per chunk: about a desert's dead bushes");
         helper.assertTrue(pebbles.caveTriesPerChunk.defaultValue() == 6, "Up to 6 cave tries per chunk");
         helper.assertTrue(pebbles.worldgenDimensions.defaultValue().equals(List.of("minecraft:overworld")), "Pebbles generate in the Overworld");
         helper.assertTrue(CraftingServerConfig.get().durability.pebbleUses.defaultValue() == 32, "A pebble lasts 32 uses");

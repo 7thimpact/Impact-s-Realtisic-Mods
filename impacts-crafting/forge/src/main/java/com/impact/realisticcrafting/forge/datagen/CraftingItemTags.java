@@ -36,8 +36,9 @@ final class CraftingItemTags extends ItemTagsProvider {
                 Tags.Items.RAW_MATERIALS_IRON, Tags.Items.RAW_MATERIALS_COPPER, Tags.Items.ORES_IRON, Tags.Items.ORES_COPPER,
                 Tags.Items.STORAGE_BLOCKS_IRON, Tags.Items.STORAGE_BLOCKS_COPPER, Tags.Items.STORAGE_BLOCKS_RAW_IRON,
                 Tags.Items.STORAGE_BLOCKS_RAW_COPPER, Tags.Items.DUSTS_REDSTONE, Tags.Items.STORAGE_BLOCKS_REDSTONE);
-        tag(CraftingTags.TRIMMING_TOOLS).add(CraftingItems.stonePebble(), Items.FLINT, CraftingItems.tool(CraftingTool.IRON_SAW));
-        tag(CraftingTags.HAMMERS).add(CraftingItems.stonePebble(), CraftingItems.tool(CraftingTool.IRON_HAMMER));
+        tag(CraftingTags.PEBBLES).add(CraftingItems.pebbles().toArray(Item[]::new));
+        tag(CraftingTags.TRIMMING_TOOLS).addTag(CraftingTags.PEBBLES).add(Items.FLINT, CraftingItems.tool(CraftingTool.IRON_SAW));
+        tag(CraftingTags.HAMMERS).addTag(CraftingTags.PEBBLES).add(CraftingItems.tool(CraftingTool.IRON_HAMMER));
         tag(CraftingTags.IRON_PLATES).add(CraftingItems.part(CraftingPart.IRON_PLATE));
         tag(CraftingTags.IRON_RODS).add(CraftingItems.part(CraftingPart.IRON_ROD));
         tag(CraftingTags.BASE_MATERIALS).addTags(ItemTags.LOGS, ItemTags.WOOL, Tags.Items.INGOTS, Tags.Items.GEMS, Tags.Items.RAW_MATERIALS,

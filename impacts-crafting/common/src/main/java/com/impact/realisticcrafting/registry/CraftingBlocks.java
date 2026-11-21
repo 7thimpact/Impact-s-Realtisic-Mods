@@ -11,6 +11,7 @@ import com.impact.realisticcrafting.block.MakeshiftStoneTableBlock;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.block.MakeshiftTableBlock;
 import com.impact.realisticcrafting.block.MakeshiftTableBlockEntity;
+import com.impact.realisticcrafting.item.PebbleKind;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -18,7 +19,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -27,7 +30,7 @@ public final class CraftingBlocks {
     private static final float WOODEN_TABLE_STRENGTH = 2.5F;
     private static final float STONE_TABLE_STRENGTH = 3.0F;
     private static final Map<MakeshiftTable, Supplier<? extends MakeshiftTableBlock>> TABLES = new EnumMap<>(MakeshiftTable.class);
-    private static volatile Supplier<LoosePebbleBlock> loosePebble;
+    private static final Map<PebbleKind, Supplier<LoosePebbleBlock>> LOOSE_PEBBLES = new EnumMap<>(PebbleKind.class);
     private static volatile Supplier<BlockEntityType<MakeshiftTableBlockEntity>> tableEntity;
     private static final float DYE_VAT_STRENGTH = 2.0F;
     private static volatile Supplier<DyeVatBlock> dyeVat;
@@ -41,9 +44,11 @@ public final class CraftingBlocks {
     /** Called once, during mod construction. */
     public static void register() {
         ModRegistrar registrar = LoaderPlatform.current().registrar(CraftingMod.MOD_ID);
-        loosePebble = registrar.register(Registries.BLOCK, "loose_pebble", () -> new LoosePebbleBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE).noCollission().instabreak().sound(SoundType.STONE).offsetType(BlockBehaviour.OffsetType.XZ)
-                .pushReaction(PushReaction.DESTROY)));
+        for (PebbleKind kind : PebbleKind.values()) {
+            LOOSE_PEBBLES.put(kind, registrar.register(Registries.BLOCK, kind.blockPath, () -> new LoosePebbleBlock(kind, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE).noCollission().instabreak().sound(SoundType.STONE).offsetType(BlockBehaviour.OffsetType.XZ)
+                    .pushReaction(PushReaction.DESTROY))));
+        }
         TABLES.put(MakeshiftTable.WOODEN, registrar.register(Registries.BLOCK, MakeshiftTable.WOODEN.path, () -> new MakeshiftTableBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(WOODEN_TABLE_STRENGTH).sound(SoundType.WOOD).noOcclusion()
                         .ignitedByLava())));
@@ -59,9 +64,17 @@ public final class CraftingBlocks {
                 () -> LoaderPlatform.current().blockEntityType(DyeVatBlockEntity::new, dyeVat.get()));
     }
 
-    /** Natural pebble clusters. There's no block item: players can't place them. */
+    /** Natural stone pebble clusters. There's no block item: players can't place them. */
     public static LoosePebbleBlock loosePebble() {
-        return loosePebble.get();
+        return loosePebble(PebbleKind.STONE);
+    }
+
+    public static LoosePebbleBlock loosePebble(PebbleKind kind) {
+        return LOOSE_PEBBLES.get(kind).get();
+    }
+
+    public static List<LoosePebbleBlock> loosePebbles() {
+        return Arrays.stream(PebbleKind.values()).map(CraftingBlocks::loosePebble).toList();
     }
 
     public static MakeshiftTableBlock table(MakeshiftTable table) {

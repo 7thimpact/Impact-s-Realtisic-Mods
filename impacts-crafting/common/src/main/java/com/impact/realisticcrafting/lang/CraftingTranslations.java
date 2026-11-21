@@ -11,6 +11,7 @@ import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.item.LooseIron;
 import com.impact.realisticcrafting.item.LooseItem;
 import com.impact.realisticcrafting.item.MakeshiftTableItem;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.item.ToolKind;
 import com.impact.realisticcrafting.item.ToolMaterial;
 import com.impact.realisticcrafting.item.WoodPart;
@@ -63,8 +64,10 @@ public final class CraftingTranslations {
         Map<String, String> english = new LinkedHashMap<>();
         english.put(CREATIVE_TAB, "Impact's Realistic Crafting");
         english.put(ADVANCEMENT_TAB, "Realistic Crafting");
-        english.put(ITEM_KEY_PREFIX + "stone_pebble", "Stone Pebble");
-        english.put(BLOCK_KEY_PREFIX + "loose_pebble", "Loose Pebbles");
+        for (PebbleKind kind : PebbleKind.values()) {
+            english.put(ITEM_KEY_PREFIX + kind.itemPath, titleCase(kind.itemPath));
+            english.put(BLOCK_KEY_PREFIX + kind.blockPath, kind == PebbleKind.STONE ? "Loose Pebbles" : "Loose " + titleCase(kind.itemPath) + "s");
+        }
         english.put(BLOCK_KEY_PREFIX + "dye_vat", "Dye Vat");
         english.put(BLOCK_KEY_PREFIX + "bed_frame", "Bed Frame");
         english.put(ITEM_KEY_PREFIX + "comforter", "Comforter");
@@ -159,8 +162,9 @@ public final class CraftingTranslations {
         english.put(CraftingStation.MAKESHIFT_TABLE.nameTranslationKey(), "Makeshift Table");
         english.put(CraftingStation.MAKESHIFT_STONE_TABLE.nameTranslationKey(), "Makeshift Stone Table");
         english.put(CraftingStation.CRAFTING_TABLE.nameTranslationKey(), "Crafting Table");
-        english.put(JEI_PEBBLES_INFO, "Stone Pebbles are the first tool. Pick up loose pebbles lying on mountains, stony shores and cave floors. "
-                + "Breaking gravel drops one sometimes, and breaking stone by hand always does. A fresh pebble stacks to 64; once used, it stacks to 1.");
+        english.put(JEI_PEBBLES_INFO, "Pebbles are the first tool. Pick up the loose pebbles lying on grass, sand, stone and cave floors: "
+                + "their kind follows the ground (sandstone on sand, granite on granite). Breaking gravel drops one sometimes, and breaking stone "
+                + "by hand always does. Every kind works the same. A fresh pebble stacks to 64; once used, it stacks to 1.");
         english.put(JEI_BEDS_INFO, "Beds are built where they stand. Place a Bed Frame, right-click it with a Comforter, then with a Sheet: "
                 + "the sheet's color is the bed's. A sheet on a finished bed recolors it, and a broken bed drops all three parts.");
         english.put(JEI_DYE_VAT_INFO, "Fill the vat with water from a bucket, or let rain fill it. One dye colors 8 dips, and a second dye mixes "

@@ -82,7 +82,7 @@ final class CraftingForgeEvents {
         }
         int pebbles = PebbleDrops.fromHandBreak(event.getState(), event.getPlayer());
         if (pebbles > 0) {
-            Block.popResource(level, event.getPos(), new ItemStack(CraftingItems.stonePebble(), pebbles));
+            Block.popResource(level, event.getPos(), PebbleDrops.pebbleFor(event.getState(), pebbles));
         }
     }
 }

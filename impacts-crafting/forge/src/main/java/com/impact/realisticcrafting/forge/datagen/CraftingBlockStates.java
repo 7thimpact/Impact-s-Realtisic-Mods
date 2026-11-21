@@ -7,6 +7,7 @@ import com.impact.realisticcrafting.block.LoosePebbleBlock;
 import com.impact.realisticcrafting.block.MakeshiftTable;
 import com.impact.realisticcrafting.block.MakeshiftTableBlock;
 import com.impact.realisticcrafting.block.TableWear;
+import com.impact.realisticcrafting.item.PebbleKind;
 import com.impact.realisticcrafting.registry.CraftingBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -52,12 +53,14 @@ final class CraftingBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        ResourceLocation stoneTexture = modLoc("block/loose_pebble");
-        List<ModelFile> clusterModels = IntStream.range(0, PEBBLE_CLUSTERS.size())
-                .mapToObj(variant -> clusterModel(variant, PEBBLE_CLUSTERS.get(variant), stoneTexture))
-                .toList();
-        getVariantBuilder(CraftingBlocks.loosePebble()).forAllStatesExcept(state -> quarterTurns(clusterModels.get(state.getValue(LoosePebbleBlock.VARIANT))),
-                LoosePebbleBlock.WATERLOGGED);
+        for (PebbleKind kind : PebbleKind.values()) {
+            ResourceLocation stoneTexture = modLoc("block/" + kind.blockPath);
+            List<ModelFile> clusterModels = IntStream.range(0, PEBBLE_CLUSTERS.size())
+                    .mapToObj(variant -> clusterModel(kind.blockPath, variant, PEBBLE_CLUSTERS.get(variant), stoneTexture))
+                    .toList();
+            getVariantBuilder(CraftingBlocks.loosePebble(kind))
+                    .forAllStatesExcept(state -> quarterTurns(clusterModels.get(state.getValue(LoosePebbleBlock.VARIANT))), LoosePebbleBlock.WATERLOGGED);
+        }
         bedFrame();
         ModelFile emptyVat = dyeVatModel(false);
         ModelFile filledVat = dyeVatModel(true);
@@ -169,8 +172,8 @@ final class CraftingBlockStates extends BlockStateProvider {
         return model;
     }
 
-    private ModelFile clusterModel(int variant, List<int[]> stones, ResourceLocation stoneTexture) {
-        BlockModelBuilder model = models().getBuilder("block/loose_pebble_" + variant)
+    private ModelFile clusterModel(String blockPath, int variant, List<int[]> stones, ResourceLocation stoneTexture) {
+        BlockModelBuilder model = models().getBuilder("block/" + blockPath + "_" + variant)
                 .texture("particle", stoneTexture)
                 .texture(STONE_TEXTURE_KEY, stoneTexture);
         for (int[] stone : stones) {

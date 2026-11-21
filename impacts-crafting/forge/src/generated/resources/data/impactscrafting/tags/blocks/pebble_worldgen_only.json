@@ -1,6 +1,10 @@
 {
   "values": [
     "minecraft:calcite",
-    "minecraft:mossy_cobblestone"
+    "minecraft:mossy_cobblestone",
+    "minecraft:gravel",
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#minecraft:terracotta"
   ]
 }

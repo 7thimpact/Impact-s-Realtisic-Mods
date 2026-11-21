@@ -22,8 +22,11 @@ final class CraftingBlockTags extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookup) {
         tag(CraftingTags.PEBBLE_BASE).add(Blocks.STONE, Blocks.COBBLESTONE, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE,
-                Blocks.TUFF, Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE);
-        tag(CraftingTags.PEBBLE_WORLDGEN_ONLY).add(Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE);
+                Blocks.TUFF, Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE)
+                .addTags(BlockTags.DIRT, BlockTags.SAND, BlockTags.TERRACOTTA).add(Blocks.GRAVEL, Blocks.SANDSTONE, Blocks.RED_SANDSTONE);
+        // Natural ground pebbles lie on but that doesn't crumble into pebbles when broken.
+        tag(CraftingTags.PEBBLE_WORLDGEN_ONLY).add(Blocks.CALCITE, Blocks.MOSSY_COBBLESTONE, Blocks.GRAVEL)
+                .addTags(BlockTags.DIRT, BlockTags.SAND, BlockTags.TERRACOTTA);
         tag(CraftingTags.PEBBLE_GRAVEL).add(Blocks.GRAVEL);
         tag(BlockTags.MINEABLE_WITH_AXE).add(MakeshiftTable.WOODEN.block(), CraftingBlocks.dyeVat(), CraftingBlocks.bedFrame());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(MakeshiftTable.STONE.block());
