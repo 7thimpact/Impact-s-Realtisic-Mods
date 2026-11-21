@@ -80,12 +80,15 @@ public final class VitalityAmbientGameTests {
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
-    public static void standingInWaterIsColder(GameTestHelper helper) {
+    public static void waterPullsTowardItsOwnTemperature(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos center = helper.absolutePos(BlockPos.ZERO);
         double dry = AmbientTemperature.at(level, center, false).total();
         double soaked = AmbientTemperature.at(level, center, true).total();
-        assertClose(helper, soaked - dry, -20.0, "Water");
+        double waterTemperature = level.getBiome(center).value().coldEnoughToSnow(center) ? 35.0 : 60.0;
+        assertClose(helper, soaked, dry + (waterTemperature - dry) * 0.75, "Water pulls three quarters of the way to its own °F");
+        double desertSwim = AmbientTemperature.waterAdjustment(level, center, level.getBiome(center), 110.0);
+        helper.assertTrue(110.0 + desertSwim < 80.0, "A swim in 110°F air feels comfortable, not hot: " + (110.0 + desertSwim));
         helper.succeed();
     }
 

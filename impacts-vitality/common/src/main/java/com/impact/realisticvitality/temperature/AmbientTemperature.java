@@ -15,7 +15,8 @@ import java.util.OptionalDouble;
 
 /**
  * The ambient temperature at a spot, in °F: the biome, the dimension, height, time of day, weather and sun (with open
- * sky above), caves drifting toward their own steady warmth, nearby hot and cold blocks, and standing in water.
+ * sky above), caves drifting toward their own steady temperature (colder the deeper you go), nearby hot and cold blocks, and
+ * standing in water, which pulls toward the water's own temperature.
  */
 public final class AmbientTemperature {
     private static final double FULL_DAY = 2.0 * Math.PI;
@@ -26,12 +27,12 @@ public final class AmbientTemperature {
     public static AmbientReading at(Level level, BlockPos position, boolean isInWater) {
         VitalityServerConfig.TemperatureSettings settings = VitalityServerConfig.get().temperature;
         double blocks = BlockTemperatures.near(level, position);
-        double water = isInWater ? -settings.waterDrop.get() : 0.0;
+        Holder<Biome> biome = level.getBiome(position);
         OptionalDouble fixed = dimensionFixed(level.dimension());
         if (fixed.isPresent()) {
+            double water = isInWater ? waterAdjustment(level, position, biome, fixed.getAsDouble() + blocks) : 0.0;
             return new AmbientReading(0.0, fixed.getAsDouble(), 0.0, 0.0, 0.0, 0.0, 0.0, blocks, water);
         }
-        Holder<Biome> biome = level.getBiome(position);
         boolean hasOpenSky = level.canSeeSky(position);
         double biomeBase = biomeBase(biome);
         double dimension = dimensionOffset(level.dimension());
@@ -41,7 +42,19 @@ public final class AmbientTemperature {
         double sun = hasOpenSky ? sunAdjustment(level) : 0.0;
         double surface = biomeBase + dimension + height + time + weather + sun;
         double underground = hasOpenSky ? 0.0 : undergroundAdjustment(surface, position.getY());
+        double water = isInWater ? waterAdjustment(level, position, biome, surface + underground + blocks) : 0.0;
         return new AmbientReading(biomeBase, dimension, height, time, weather, sun, underground, blocks, water);
+    }
+
+    /**
+     * In water, the air's °F gives way to the water's: {@code waterPull} of the way to {@code waterTemperature}, or to
+     * {@code coldWaterTemperature} where it's cold enough to snow. A swim in a hot desert cools you down.
+     */
+    public static double waterAdjustment(Level level, BlockPos position, Holder<Biome> biome, double air) {
+        VitalityServerConfig.TemperatureSettings settings = VitalityServerConfig.get().temperature;
+        boolean isColdWater = biome.value().coldEnoughToSnow(position);
+        double water = isColdWater ? settings.coldWaterTemperature.get() : settings.waterTemperature.get();
+        return (water - air) * settings.waterPull.get();
     }
 
     /** {@code biomeBase + biomeScale x} the biome's vanilla temperature, unless the biome has an override. */
@@ -74,7 +87,8 @@ public final class AmbientTemperature {
 
     /**
      * With no sky above and below {@code undergroundBelowY}, the surface temperature gives way to the cave's: fully
-     * {@code undergroundBlendBlocks} lower. The cave's own temperature rises from 55°F at Y 0 to 75°F at the bottom.
+     * {@code undergroundBlendBlocks} lower. The cave's own temperature falls from 55°F at Y 0 to 35°F at the bottom, as
+     * the air thins and chills the deeper you go.
      */
     public static double undergroundAdjustment(double surface, int y) {
         VitalityServerConfig.TemperatureSettings settings = VitalityServerConfig.get().temperature;
