@@ -99,5 +99,5 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## Environment notes
 
-- JDK 17 is required. If `/usr/lib/jvm/java-17-openjdk-amd64` is missing, run `apt-get install -y openjdk-17-jdk-headless`.
+- JDK 17 is required. If `/usr/lib/jvm/java-17-openjdk-amd64` is missing, run `apt-get install -y openjdk-17-jdk-headless`. Without one, Gradle downloads a JDK 17 itself (the foojay resolver plugin in `settings.gradle`); keep toolchain auto-download on, since users' machines rely on it.
 - Gradle itself may run on Java 21. Toolchains compile and run Minecraft on 17.
