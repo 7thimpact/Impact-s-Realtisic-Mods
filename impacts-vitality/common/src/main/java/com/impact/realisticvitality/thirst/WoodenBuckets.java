@@ -7,6 +7,7 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
+import com.impact.realisticvitality.player.LookTarget;
 import com.impact.realisticvitality.player.VitalityState;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -23,9 +24,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
 
@@ -44,9 +42,6 @@ public final class WoodenBuckets {
     public static final int DRINK_TICKS = 32;
     private static final ImpactsLog LOG = ImpactsLog.of(VitalityMod.MOD_ID);
     private static final int POUR_SPLASH_PARTICLES = 12;
-    // Vanilla's reach, which is also how far Crafting looks for a block to pour onto.
-    private static final double SURVIVAL_REACH_BLOCKS = 4.5;
-    private static final double CREATIVE_REACH_BLOCKS = 5.0;
 
     private WoodenBuckets() {
     }
@@ -88,11 +83,7 @@ public final class WoodenBuckets {
 
     /** Whether a use click is aimed at the air (nothing Crafting would pour onto), where Vitality drinks or pours. */
     public static boolean isAimedAtAir(Level level, Player player) {
-        Vec3 eyes = player.getEyePosition();
-        double reachBlocks = player.getAbilities().instabuild ? CREATIVE_REACH_BLOCKS : SURVIVAL_REACH_BLOCKS;
-        Vec3 reach = eyes.add(player.getViewVector(1.0F).scale(reachBlocks));
-        BlockHitResult target = level.clip(new ClipContext(eyes, reach, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player));
-        return target.getType() == HitResult.Type.MISS;
+        return LookTarget.isAimedAtNothing(level, player, ClipContext.Fluid.NONE);
     }
 
     /**

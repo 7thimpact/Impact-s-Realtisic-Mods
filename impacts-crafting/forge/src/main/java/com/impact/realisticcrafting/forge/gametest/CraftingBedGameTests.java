@@ -107,6 +107,25 @@ public final class CraftingBedGameTests {
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void aBedSomeoneSleepsInIsntRecolored(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos head = helper.absolutePos(BlockPos.ZERO);
+        BlockState occupiedBed = Blocks.LIME_BED.defaultBlockState().setValue(BedBlock.PART, BedPart.HEAD).setValue(BedBlock.OCCUPIED, true);
+        level.setBlock(head, occupiedBed, QUIET);
+        ServerPlayer player = MockPlayers.joinWorld(level);
+        try {
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(CraftingItems.sheet(DyeColor.RED)));
+            InteractionResult result = BedLayering.onBedUsed(level, head, level.getBlockState(head), player, InteractionHand.MAIN_HAND);
+            helper.assertTrue(result == InteractionResult.PASS && level.getBlockState(head).is(Blocks.LIME_BED), "An occupied bed keeps its color");
+            helper.assertTrue(player.getMainHandItem().is(CraftingItems.sheet(DyeColor.RED)), "and the sheet stays in hand");
+        } finally {
+            MockPlayers.leaveWorld(player);
+            level.setBlock(head, Blocks.AIR.defaultBlockState(), QUIET);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void bedsDropTheirParts(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos head = helper.absolutePos(BlockPos.ZERO);

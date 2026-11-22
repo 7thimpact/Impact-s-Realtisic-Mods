@@ -13,6 +13,7 @@ import com.impact.realisticvitality.item.AirBladderItem;
 import com.impact.realisticvitality.item.AirTankItem;
 import com.impact.realisticvitality.item.BreathingMaskItem;
 import com.impact.realisticvitality.player.Headwear;
+import com.impact.realisticvitality.player.LookTarget;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,11 +21,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -35,6 +40,7 @@ import java.util.function.Consumer;
  * for a few bubbles back. Tanks and filters change once a second, so their items aren't re-sent every tick.
  */
 public final class BreathingGear {
+    private static final double DRAGONS_BREATH_REACH_BLOCKS = 2.0;
     private static final ImpactsLog LOG = ImpactsLog.of(VitalityMod.MOD_ID);
     private static final int TICKS_PER_SECOND = 20;
 
@@ -129,12 +135,22 @@ public final class BreathingGear {
         if (!held.is(Items.GLASS_BOTTLE) || !isOn || qualityFor(player) != AirQuality.GOOD) {
             return InteractionResult.PASS;
         }
+        // Aimed at a block (a beehive that isn't full) or a fluid, or beside the dragon's breath, the bottle does what vanilla's does.
+        if (!LookTarget.isAimedAtNothing(level, player, ClipContext.Fluid.ANY) || isNearDragonsBreath(level, player)) {
+            return InteractionResult.PASS;
+        }
         level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 0.6F, 1.6F);
         if (!level.isClientSide) {
             player.setItemInHand(hand, ItemUtils.createFilledResult(held, player, new ItemStack(VitalityItems.bottledAir())));
             logGear(player, "air bottled");
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    // Vanilla's glass bottle looks for the dragon's breath this far around the player.
+    private static boolean isNearDragonsBreath(Level level, Player player) {
+        AABB reach = player.getBoundingBox().inflate(DRAGONS_BREATH_REACH_BLOCKS);
+        return !level.getEntitiesOfClass(AreaEffectCloud.class, reach, cloud -> cloud.isAlive() && cloud.getOwner() instanceof EnderDragon).isEmpty();
     }
 
     private static void dryMask(ServerPlayer player, ItemStack head) {

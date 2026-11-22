@@ -89,6 +89,13 @@ public final class VitalityInsulationGameTests {
         helper.assertTrue(Linings.anvilResult(new ItemStack(Items.STICK), new ItemStack(Items.WHITE_WOOL, 3)).isEmpty(), "Only armor takes linings");
         helper.assertTrue(Linings.anvilResult(chestplate, new ItemStack(Items.RABBIT_HIDE, 4)).orElseThrow().lined()
                 .is(Items.IRON_CHESTPLATE), "4 rabbit hide make a Fur Lining");
+        ItemStack leatherTunic = new ItemStack(Items.LEATHER_CHESTPLATE);
+        helper.assertTrue(Linings.anvilResult(leatherTunic, new ItemStack(Items.LEATHER, 3)).isPresent(), "Undamaged leather armor takes a Leather Lining");
+        leatherTunic.setDamageValue(CHESTPLATE_DAMAGE);
+        helper.assertTrue(Linings.anvilResult(leatherTunic, new ItemStack(Items.LEATHER, 3)).isEmpty(),
+                "Damaged leather armor and leather are left to vanilla's repair");
+        helper.assertTrue(Linings.anvilResult(chestplate, new ItemStack(Items.LEATHER, 3)).isPresent(),
+                "Damaged iron armor still takes a Leather Lining (leather doesn't repair iron)");
         helper.succeed();
     }
 

@@ -47,7 +47,7 @@ public final class CraftingBlocks {
         for (PebbleKind kind : PebbleKind.values()) {
             LOOSE_PEBBLES.put(kind, registrar.register(Registries.BLOCK, kind.blockPath, () -> new LoosePebbleBlock(kind, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE).noCollission().instabreak().sound(SoundType.STONE).offsetType(BlockBehaviour.OffsetType.XZ)
-                    .pushReaction(PushReaction.DESTROY))));
+                    .replaceable().pushReaction(PushReaction.DESTROY))));
         }
         TABLES.put(MakeshiftTable.WOODEN, registrar.register(Registries.BLOCK, MakeshiftTable.WOODEN.path, () -> new MakeshiftTableBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(WOODEN_TABLE_STRENGTH).sound(SoundType.WOOD).noOcclusion()

@@ -157,6 +157,17 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [ ] All four + SRF (full version): needs the full SRF 4.1.6 jar, which hasn't been uploaded (only the "no tools" one)
 - [ ] Your playtest of the release candidate on 1.20.1 Forge, then NeoForge 1.20.1 (step 8)
 
+## Vanilla compatibility review (Nov 2026)
+
+Asked for after the release candidate, before porting: every mixin, event handler, data override, loot modifier and worldgen feature checked against vanilla behavior and other mods.
+
+- [x] No `@Redirect` left (Inventory's pickup notice and hotbar keys, Crafting's tier check): plain injections, which other mods' mixins can share
+- [x] Food: heated powder snow cauldrons boil nothing; styled foods stay out of other Impact mods' tags
+- [x] Vitality: vanilla anvil repair of leather armor; glass bottles aimed at blocks or beside the dragon's breath act as vanilla's
+- [x] Inventory: a swap never shortens an existing cooldown
+- [x] Crafting: loose pebbles replaceable (building, trees); occupied beds aren't recolored
+- [x] A GameTest for each, all family setups passing
+
 ## Playtest feedback (Nov 2026)
 
 Fixes from the user's first playtest, worked through before the remaining milestones.

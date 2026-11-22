@@ -54,8 +54,9 @@ public final class BedLayering {
     /** A sheet used on a finished vanilla bed of another color: the bed takes the new color and the old sheet drops. */
     public static InteractionResult onBedUsed(Level level, BlockPos position, BlockState bed, Player player, InteractionHand hand) {
         ItemStack held = player.getItemInHand(hand);
+        // A bed someone is sleeping in isn't remade under them.
         if (!CraftingFeature.BEDS.isOn() || !(held.getItem() instanceof SheetItem sheet) || !(bed.getBlock() instanceof BedBlock bedBlock)
-                || bedBlock.getColor() == sheet.color()) {
+                || bedBlock.getColor() == sheet.color() || bed.getValue(BedBlock.OCCUPIED)) {
             return InteractionResult.PASS;
         }
         if (level.isClientSide) {

@@ -45,7 +45,9 @@ public final class HandSwitch {
         ItemStack comingToMainHand = player.getOffhandItem();
         int recentSwitches = stateOf(player).recordSwitch(player.level().getGameTime(), RECENT_SWITCH_WINDOW_TICKS);
         int cooldownTicks = InventoryServerConfig.get().hotbar.swapCooldownTicks.get();
-        if (cooldownTicks > 0 && !comingToMainHand.isEmpty()) {
+        // An item already cooling down (a thrown ender pearl) keeps its own, possibly longer, cooldown.
+        boolean isAlreadyCooling = player.getCooldowns().isOnCooldown(comingToMainHand.getItem());
+        if (cooldownTicks > 0 && !comingToMainHand.isEmpty() && !isAlreadyCooling) {
             player.getCooldowns().addCooldown(comingToMainHand.getItem(), cooldownTicks);
         }
         InventoryTriggers.SLOT_SWITCHED.trigger(player, recentSwitches);

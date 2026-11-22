@@ -19,11 +19,14 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Styled foods join every item tag their base food is in (except Food's own), so "any cooked meat" recipes from other
- * mods still take them. Runs as item tags are built, at each data load.
+ * Styled foods join every item tag their base food is in, so "any cooked meat" recipes from other mods still take them.
+ * Tags of the Impact family are left out: Food's own, and the other Impact mods', which describe a food as it is (a
+ * moist melon slice isn't a moist dried melon slice). Runs as item tags are built, at each data load.
  */
 public final class StyledTagInheritance {
     private static final ImpactsLog LOG = ImpactsLog.of(FoodMod.MOD_ID);
+    // impactsfood, impactsvitality, impactscrafting ...
+    private static final String IMPACT_NAMESPACE_PREFIX = "impacts";
 
     private StyledTagInheritance() {
     }
@@ -34,7 +37,7 @@ public final class StyledTagInheritance {
         Map<Item, List<Holder<Item>>> styledByBase = styledFoodsByBase();
         int additions = 0;
         for (Map.Entry<ResourceLocation, Collection<T>> tag : itemTags.entrySet()) {
-            if (tag.getKey().getNamespace().equals(FoodMod.MOD_ID)) {
+            if (tag.getKey().getNamespace().startsWith(IMPACT_NAMESPACE_PREFIX)) {
                 continue;
             }
             List<Holder<Item>> inherited = new ArrayList<>();

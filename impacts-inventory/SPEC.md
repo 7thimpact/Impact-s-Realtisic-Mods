@@ -249,4 +249,6 @@ Changes made during implementation, following the handoff rule "follow the API a
   - **The Frame Pack's tier comes from its parts.** IRC gives a recipe the highest tier among its ingredients, and Iron Rods and Iron Rivets are in `#impactscrafting:tier/stone`, so the recipe needs the Makeshift Stone Table without a tag entry of IRI's own. The Frame Pack itself stays out of IRC's tier tags.
   - **Dyeing:** IRC's Dye Vat already dyes any `DyeableLeatherItem`, so packs dip like leather armor. Nothing new was needed.
   - **Checked by** `InventoryCraftingGameTests` (which recipe set loads, sewing, kept contents and dye, the Frame Pack's tier) in IRI's own run and in the new `crafting-and-inventory` setup, and by a screenshot of IRC's filling arrow in IRI's screen.
-
+- **Vanilla compatibility review (Nov 2026):**
+  - The "Pockets full" notice and the disabled hotbar number keys no longer use `@Redirect` (two mods redirecting the same call crash the game). The notice compares the stack's count just before and after vanilla's `Inventory.add` in `ItemEntity.playerTouch`; the number keys' presses are used up at the start of `Minecraft.handleKeybinds`, before vanilla reads them.
+  - With `hotbar.swapCooldownTicks` above 0, a swap never shortens a cooldown the item already has (a thrown ender pearl keeps its own).

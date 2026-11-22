@@ -22,6 +22,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 /**
  * A small flat cluster of stones on natural ground, river beds and cave floors, one block per pebble kind. No collision,
  * breaks instantly by hand into its pebble, sits in water, and pops off when the block under it goes. Only worldgen places it.
+ * Like a dead bush it's replaceable (a block placed there takes its spot) and trees grow through it.
  */
 public final class LoosePebbleBlock extends Block implements SimpleWaterloggedBlock {
     /** Which of the cluster models it shows. */

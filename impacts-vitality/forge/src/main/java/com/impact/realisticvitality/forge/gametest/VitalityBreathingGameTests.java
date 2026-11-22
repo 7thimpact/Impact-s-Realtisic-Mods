@@ -21,12 +21,18 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -36,6 +42,8 @@ import java.util.function.Consumer;
 @GameTestHolder(VitalityMod.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class VitalityBreathingGameTests {
+    private static final float STRAIGHT_UP_DEGREES = -90.0F;
+    private static final float STRAIGHT_DOWN_DEGREES = 90.0F;
     private static final String LIB_NAMESPACE = VitalitySkeletonGameTests.LIB_NAMESPACE;
     private static final String EMPTY_TEMPLATE = VitalitySkeletonGameTests.EMPTY_TEMPLATE;
 
@@ -144,6 +152,7 @@ public final class VitalityBreathingGameTests {
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
     public static void glassBottlesBottleGoodAir(GameTestHelper helper) {
         withPlayer(helper, player -> {
+            lookAtTheSkyAbove(helper, player);
             player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
             VitalityState.of(player).air.setQuality(AirQuality.THIN);
             BreathingGear.tryBottleAir(helper.getLevel(), player, InteractionHand.MAIN_HAND);
@@ -175,6 +184,38 @@ public final class VitalityBreathingGameTests {
             helper.assertTrue(AirTank.AIR_TANK.airIn(compressor.tank()) == AirTank.AIR_TANK.capacity(), "5 seconds of fuel fill the tank, even in thin air");
             helper.assertTrue(compressor.burnTicks() == 1500, "Only the time spent filling burns fuel");
         });
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void bottlesAimedAtABlockOrBesideDragonsBreathActAsVanilla(GameTestHelper helper) {
+        withPlayer(helper, player -> {
+            VitalityState.of(player).air.setQuality(AirQuality.GOOD);
+            player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE));
+            helper.setBlock(BlockPos.ZERO, Blocks.BEEHIVE);
+            standAndLook(player, Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO.above())), STRAIGHT_DOWN_DEGREES);
+            helper.assertTrue(BreathingGear.tryBottleAir(helper.getLevel(), player, InteractionHand.MAIN_HAND) == InteractionResult.PASS,
+                    "Aimed at a block (a beehive), the bottle is left to vanilla");
+            lookAtTheSkyAbove(helper, player);
+            AreaEffectCloud dragonsBreath = new AreaEffectCloud(helper.getLevel(), player.getX(), player.getY(), player.getZ());
+            EnderDragon dragon = EntityType.ENDER_DRAGON.create(helper.getLevel());
+            dragonsBreath.setOwner(dragon);
+            helper.getLevel().addFreshEntity(dragonsBreath);
+            try {
+                helper.assertTrue(BreathingGear.tryBottleAir(helper.getLevel(), player, InteractionHand.MAIN_HAND) == InteractionResult.PASS,
+                        "Beside the dragon's breath, the bottle fills with it as in vanilla");
+            } finally {
+                dragonsBreath.discard();
+            }
+        });
+    }
+
+    // Two blocks over the test floor, looking straight up into open air.
+    private static void lookAtTheSkyAbove(GameTestHelper helper, ServerPlayer player) {
+        standAndLook(player, Vec3.atBottomCenterOf(helper.absolutePos(BlockPos.ZERO.above(2))), STRAIGHT_UP_DEGREES);
+    }
+
+    private static void standAndLook(ServerPlayer player, Vec3 feet, float pitchDegrees) {
+        player.moveTo(feet.x, feet.y, feet.z, 0.0F, pitchDegrees);
     }
 
     private static void withPlayer(GameTestHelper helper, Consumer<ServerPlayer> test) {

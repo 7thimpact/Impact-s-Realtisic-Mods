@@ -1,7 +1,9 @@
 package com.impact.realisticinventory.forge.gametest;
 
+import com.impact.lib.gametest.ConfigOverrides;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
+import com.impact.realisticinventory.config.InventoryServerConfig;
 import com.impact.realisticinventory.hotbar.HandSwitch;
 import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.InventoryLocks;
@@ -9,6 +11,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.protocol.game.ServerboundSetCarriedItemPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -19,6 +22,8 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class InventoryHotbarGameTests {
     private static final int SOME_LOCKED_HOTBAR_INDEX = 5;
+    private static final int PEARL_COOLDOWN_TICKS = 100;
+    private static final int SHORT_SWAP_COOLDOWN_TICKS = 5;
 
     private InventoryHotbarGameTests() {
     }
@@ -37,6 +42,23 @@ public final class InventoryHotbarGameTests {
             HandSwitch.swapHands(player);
             helper.assertTrue(player.getMainHandItem().is(Items.IRON_SWORD), "Swapping again brings the sword back");
             helper.assertTrue(HandSwitch.stateOf(player).hasEverSwitched(), "The swap is recorded for the achievements");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
+    public static void aSwapNeverShortensAnItemsCooldown(GameTestHelper helper) {
+        ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
+        try {
+            player.getInventory().offhand.set(0, new ItemStack(Items.ENDER_PEARL));
+            player.getCooldowns().addCooldown(Items.ENDER_PEARL, PEARL_COOLDOWN_TICKS);
+            ConfigOverrides.withValue(InventoryServerConfig.get().hotbar.swapCooldownTicks, SHORT_SWAP_COOLDOWN_TICKS, () -> HandSwitch.onHandsSwapped(player));
+            for (int tick = 0; tick < SHORT_SWAP_COOLDOWN_TICKS * 2; tick++) {
+                player.getCooldowns().tick();
+            }
+            helper.assertTrue(player.getCooldowns().isOnCooldown(Items.ENDER_PEARL), "A thrown pearl's cooldown outlasts the shorter swap cooldown");
         } finally {
             MockPlayers.leaveWorld(player);
         }

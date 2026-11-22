@@ -27,11 +27,15 @@ public final class Linings {
         return VitalityFeatures.byConditionName(VitalityFeatures.LININGS).orElseThrow().getAsBoolean();
     }
 
-    /** The anvil's result for armor and a lining material, or nothing when the anvil should work as usual. */
+    /**
+     * The anvil's result for armor and a lining material, or nothing when the anvil should work as usual. Damaged armor
+     * with its own repair material (leather armor and leather) is repaired as in vanilla, not lined.
+     */
     public static Optional<AnvilLining> anvilResult(ItemStack armor, ItemStack material) {
         boolean isArmor = armor.getItem() instanceof ArmorItem;
+        boolean isVanillaRepair = armor.isDamaged() && armor.getItem().isValidRepairItem(armor, material);
         Optional<ArmorLining> lining = ArmorLining.ofMaterial(material);
-        if (!areOn() || ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID) || !isArmor || lining.isEmpty()) {
+        if (!areOn() || ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID) || !isArmor || isVanillaRepair || lining.isEmpty()) {
             return Optional.empty();
         }
         int needed = lining.get().materialCount();

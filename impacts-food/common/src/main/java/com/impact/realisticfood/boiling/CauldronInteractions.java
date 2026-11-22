@@ -81,7 +81,8 @@ public final class CauldronInteractions {
     /** An item entity in a cauldron's water: a hot pot takes every item it has a recipe and room for. */
     public static void onItemInWater(ServerLevel level, BlockPos position, BlockState state, ItemEntity itemEntity) {
         boolean isPopped = CauldronPotHost.POT_THROWER.equals(((ItemEntityAccessor) itemEntity).impactsfood$getThrower());
-        if (isPopped || !FoodFeature.BOILING.isOn() || !isBelowSurface(state, position, itemEntity)) {
+        // Powder snow cauldrons are layered cauldrons too, but hold no water.
+        if (isPopped || !CauldronPotHost.isWaterCauldron(state) || !FoodFeature.BOILING.isOn() || !isBelowSurface(state, position, itemEntity)) {
             return;
         }
         CauldronPotHost host = new CauldronPotHost(level, position);

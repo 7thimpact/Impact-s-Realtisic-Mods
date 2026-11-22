@@ -21,6 +21,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -53,6 +54,16 @@ public final class CraftingPebbleGameTests {
     private static final double NEVER = 0.0;
 
     private CraftingPebbleGameTests() {
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void loosePebblesAreBuiltOverLikeADeadBush(GameTestHelper helper) {
+        for (LoosePebbleBlock loosePebble : CraftingBlocks.loosePebbles()) {
+            BlockState state = loosePebble.defaultBlockState();
+            helper.assertTrue(state.canBeReplaced(), "A block placed on a loose " + loosePebble.kind() + " pebble takes its spot");
+            helper.assertTrue(state.is(BlockTags.REPLACEABLE_BY_TREES), "A tree grows through a loose " + loosePebble.kind() + " pebble");
+        }
+        helper.succeed();
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
