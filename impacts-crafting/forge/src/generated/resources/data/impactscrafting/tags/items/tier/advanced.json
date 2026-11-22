@@ -16,6 +16,118 @@
     "minecraft:shulker_shell",
     "minecraft:blaze_rod",
     "minecraft:blaze_powder",
-    "minecraft:ghast_tear"
+    "minecraft:ghast_tear",
+    {
+      "id": "realisticforgingores:rawgoldore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:purerawgoldore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldwithragoldore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldwithmeltedgold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:handlingmeltedgold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:shapedgold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedshapedgold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:meltedscrapsandgold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:meltedscrapsandgoldinmold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:roughdiamond",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:roughcutdiamond",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldeddiamond",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldeddiamond_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:diamondonanvil",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carveddiamondore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carveddiamondore_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carveddiamonddeepslate",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carveddiamonddeepslate_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:roughemerald",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:cutroughemerald",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:notpolishedemerald",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:polishedemerald",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carvedemeraldblock",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carvedemeraldblock_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carvedemeralddeepslate",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carvedeemeralddeepslate_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldwithnetheriteingot",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:diamond_sledge_hammerr",
+      "required": false
+    }
   ]
 }

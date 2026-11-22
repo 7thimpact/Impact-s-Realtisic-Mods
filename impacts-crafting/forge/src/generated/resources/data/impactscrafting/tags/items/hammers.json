@@ -1,6 +1,18 @@
 {
   "values": [
     "#impactscrafting:pebbles",
-    "impactscrafting:iron_hammer"
+    "impactscrafting:iron_hammer",
+    {
+      "id": "realisticforgingores:smithing_hammer",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:smithing_stone_hammer",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:smithing_wood_hammer",
+      "required": false
+    }
   ]
 }

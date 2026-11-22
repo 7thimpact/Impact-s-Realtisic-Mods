@@ -12,8 +12,8 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality and Crafting |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Done, with Food, Inventory and Crafting |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Done |
-| 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
-| 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
+| 6 | Salty's Realistic Forging pass for all four mods | M | Done with the "no tools" version; the full version waits for its jar |
+| 7 | All family test setups pass: 1.20.1 Forge release candidate | M | All 17 setups pass; waiting for the full SRF jar and your playtest |
 | 8 | NeoForge 1.20.1 | S | Planned |
 | 9 | Forge and NeoForge, Minecraft 1.20.2 up to 1.21, one version at a time | L | Planned |
 
@@ -148,12 +148,14 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 
 - [x] One read of SRF 4.1.6's source ("no tools" version), covering the checklist in each spec
 - [x] `docs/srf-notes.md` in each mod
-- [ ] Optional tag entries and a GameTest for each case, added with each mod
+- [x] Optional tag entries and a GameTest for each case, added with each mod: Crafting's hammers and tier tags list SRF's smithing hammers and metal items (`SrfTagEntries`), tested by `CraftingSrfGameTests`; Inventory, Food and Vitality need no tag entries and are checked by their `*-with-srf` setups
 - [x] Add SRF detection (`realisticforgingores`) to every startup log line (`StartupSummary.log`)
 
 ## 7. Family test setups
 
-- [ ] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF (full), all four + SRF ("no tools"). Every setup with IRI loads Curios too (IRI requires it).
+- [x] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF ("no tools"), plus each mod with SRF: 17 setups, every one passing its GameTests (358 in `all-four`) with no Impact warnings or errors. Every setup with IRI loads Curios too (IRI requires it).
+- [ ] All four + SRF (full version): needs the full SRF 4.1.6 jar, which hasn't been uploaded (only the "no tools" one)
+- [ ] Your playtest of the release candidate on 1.20.1 Forge, then NeoForge 1.20.1 (step 8)
 
 ## Playtest feedback (Nov 2026)
 

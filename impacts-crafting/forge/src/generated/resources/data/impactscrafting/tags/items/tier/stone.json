@@ -23,6 +23,146 @@
     "#forge:storage_blocks/raw_iron",
     "#forge:storage_blocks/raw_copper",
     "#forge:dusts/redstone",
-    "#forge:storage_blocks/redstone"
+    "#forge:storage_blocks/redstone",
+    {
+      "id": "realisticforgingores:raw_iron_ore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:cleanedironore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:hotrawironore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:ironoredust",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:rawironnugget",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:hotrawironnugget",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotrawiron",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotrawiron_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotrawiron_3",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotrawiron_4",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotrawiron_5",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotrawiron",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotrawiron_2",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotrawiron_3",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotrawiron_4",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotrawiron_5",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedhotironnugget",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:stickhotironnugget",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedironnugget",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedironiingot",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:copperore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:copperdust",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:panwithcopperore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:panwithcopperdust",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:panwithmeltedcopper",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pickedpanwithmeltedore",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:moldwithmeltedcopper",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:copperingotinmold",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:smithing_hammer",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:blacksmithstongs",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:carvinghammer",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:chisel",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:pan",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:bigpan",
+      "required": false
+    },
+    {
+      "id": "realisticforgingores:iron_sledgehammer",
+      "required": false
+    }
   ]
 }
