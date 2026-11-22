@@ -19,7 +19,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Crafting's item tags. The tier tags hold materials, not finished goods: iron, copper and redstone are stone tier,
- * every other ore material is advanced. Stone tier wins where both match (the resolver checks it first).
+ * every other ore material is advanced. Stone tier wins where both match (the resolver checks it first). Salty's Realistic
+ * Forging's hammers and metal items are optional entries ({@link SrfTagEntries}).
  */
 final class CraftingItemTags extends ItemTagsProvider {
     CraftingItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFiles) {
@@ -49,5 +50,8 @@ final class CraftingItemTags extends ItemTagsProvider {
                 // Nether and End materials: the endgame recipes made from them need the Crafting Table.
                 .add(Items.NETHER_STAR, Items.HEART_OF_THE_SEA, Items.ENDER_PEARL, Items.ENDER_EYE, Items.CRYING_OBSIDIAN, Items.POPPED_CHORUS_FRUIT,
                         Items.SHULKER_SHELL, Items.BLAZE_ROD, Items.BLAZE_POWDER, Items.GHAST_TEAR);
+        SrfTagEntries.HAMMERS.forEach(hammer -> tag(CraftingTags.HAMMERS).addOptional(hammer));
+        SrfTagEntries.STONE_TIER.forEach(item -> tag(CraftingTags.TIER_STONE).addOptional(item));
+        SrfTagEntries.ADVANCED_TIER.forEach(item -> tag(CraftingTags.TIER_ADVANCED).addOptional(item));
     }
 }

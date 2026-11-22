@@ -160,7 +160,7 @@ public final class CraftingAchievementGameTests {
                 && CraftingTranslations.ENGLISH.containsKey(CraftingHints.madeFromKey(hintName));
     }
 
-    private static void holdUse(ServerPlayer player) {
+    static void holdUse(ServerPlayer player) {
         player.getMainHandItem().getItem().use(player.level(), player, InteractionHand.MAIN_HAND);
         for (int tick = 0; tick < LONGEST_HOLD_TICKS && player.isUsingItem(); tick++) {
             ItemStack held = player.getUseItem();

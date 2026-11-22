@@ -47,6 +47,8 @@ public final class FoodStoneBoilingGameTests {
     private static final BlockPos POT = GROUND.above();
     private static final String OTHER_MOD_KEY = "othermod:mark";
     private static final int SPENT_USES = 2;
+    // The first slot above the hotbar, which Inventory keeps as its first pocket (it locks hotbar slots 1 to 8).
+    private static final int FIRST_POCKET_SLOT = 9;
     private static final int CLICK_GAP_TICKS = 4;
     private static final int SHORT_BOIL_TICKS = 5;
     private static final int SETTLE_TICKS = 15;
@@ -69,9 +71,9 @@ public final class FoodStoneBoilingGameTests {
             helper.assertTrue(cooled.is(Items.FLINT), "It cools back into the item it was heated from");
             helper.assertTrue(UsesDurability.usesSpent(cooled) == SPENT_USES && cooled.getTag().contains(OTHER_MOD_KEY),
                     "The pebble keeps its uses and other mods' NBT");
-            player.getInventory().setItem(1, new ItemStack(FoodItems.hotPebble()));
+            player.getInventory().setItem(FIRST_POCKET_SLOT, new ItemStack(FoodItems.hotPebble()));
             player.getInventory().tick();
-            helper.assertTrue(player.getInventory().getItem(1).is(FoodItems.hotPebble()), "A Hot Pebble from a command starts its cool-down");
+            helper.assertTrue(player.getInventory().getItem(FIRST_POCKET_SLOT).is(FoodItems.hotPebble()), "A Hot Pebble from a command starts its cool-down");
         } finally {
             MockPlayers.leaveWorld(player);
         }
