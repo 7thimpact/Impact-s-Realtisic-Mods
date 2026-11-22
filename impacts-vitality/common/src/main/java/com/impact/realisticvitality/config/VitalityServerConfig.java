@@ -106,6 +106,7 @@ public final class VitalityServerConfig {
         public final ConfigValue<Double> parchedExhaustionPerTick;
         public final ConfigValue<Integer> sipThirst;
         public final ConfigValue<Integer> sipCooldownTicks;
+        public final ConfigValue<Integer> woodenBucketDrinks;
         public final ConfigValue<Double> dehydrationDamage;
         public final ConfigValue<Integer> dehydrationIntervalTicks;
 
@@ -128,6 +129,8 @@ public final class VitalityServerConfig {
             sipThirst = builder.defineInteger("sipThirst", 1, 0, THIRST_BAR, "Thirst a sip from a water source restores.");
             sipCooldownTicks = builder.defineInteger("sipCooldownTicks", 20, 0, MAXIMUM_TICKS,
                     "Ticks between sips from a water source, so holding the button doesn't drink a lake in a second.");
+            woodenBucketDrinks = builder.defineInteger("woodenBucketDrinks", 4, 1, 64,
+                    "Drinks in a Water-filled Wooden Bucket (Impact's Realistic Crafting); drinking costs no bucket uses.");
             dehydrationDamage = builder.defineDouble("dehydrationDamage", 1.0, 0.0, 100.0, "Damage at 0 thirst, on vanilla's starvation rules.");
             dehydrationIntervalTicks = builder.defineInteger("dehydrationIntervalTicks", 80, 1, MAXIMUM_TICKS, "Ticks between dehydration damage.");
         }

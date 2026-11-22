@@ -2,14 +2,24 @@ package com.impact.realisticvitality.forge.gametest;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
+import com.impact.lib.event.ImpactsEvents;
+import com.impact.lib.event.WaterFilled;
 import com.impact.lib.gametest.CraftingGrids;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.lib.item.UsesDurability;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.air.AirTank;
 import com.impact.realisticvitality.config.VitalityGear;
+import com.impact.realisticvitality.player.ThirstState;
+import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.temperature.ArmorLining;
+import com.impact.realisticvitality.thirst.DrinkValues;
+import com.impact.realisticvitality.thirst.Drinking;
+import com.impact.realisticvitality.thirst.WaterPurity;
+import com.impact.realisticvitality.thirst.WaterSources;
+import com.impact.realisticvitality.thirst.WoodenBuckets;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -20,6 +30,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -49,6 +60,9 @@ public final class VitalityCraftingGameTests {
             VitalityGear.COPPER_STILL, VitalityGear.NETHERITE_REBREATHER, VitalityGear.SHULKER_AIR_TANK, VitalityGear.AIR_TANK);
     private static final int CHESTPLATE_DAMAGE = 40;
     private static final int LONGEST_HOLD_TICKS = 400;
+    private static final int BUCKET_DRINKS = 4;
+    private static final int SPENT_BUCKET_USES = 3;
+    private static final int LOW_THIRST = 5;
 
     private VitalityCraftingGameTests() {
     }
@@ -115,6 +129,80 @@ public final class VitalityCraftingGameTests {
             holdUse(player);
             helper.assertTrue(player.getMainHandItem().is(VitalityItems.tank(AirTank.AIR_TANK)), "Hammering the loose tank seals it into an Air Tank");
             helper.assertTrue(UsesDurability.usesSpent(player.getOffhandItem()) == 1, "The pebble wears by 1 use");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void aFilledWoodenBucketGetsItsPurity(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID)) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            BlockPos water = helper.absolutePos(BlockPos.ZERO);
+            ItemStack scooped = crafting("wooden_water_bucket");
+            ImpactsEvents.postWaterFilled(new WaterFilled(player, scooped, helper.getLevel(), water, false));
+            WaterPurity expected = WaterSources.isSalty(helper.getLevel().getBiome(water)) ? WaterPurity.SALT : WaterPurity.UNCLEAN;
+            helper.assertTrue(WoodenBuckets.purity(scooped) == expected, "Scooped water takes the place's purity");
+            helper.assertTrue(WoodenBuckets.drinksLeft(scooped) == BUCKET_DRINKS, "A filled bucket holds 4 drinks");
+            ItemStack boiled = crafting("wooden_water_bucket");
+            ImpactsEvents.postWaterFilled(new WaterFilled(player, boiled, helper.getLevel(), water, true));
+            helper.assertTrue(WoodenBuckets.purity(boiled) == WaterPurity.PURIFIED, "Water that boiled (Food's stone-boiling pot) is purified");
+            helper.assertTrue(DrinkValues.purityOf(boiled).orElseThrow() == WaterPurity.PURIFIED, "It drinks as Purified Water");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void aWoodenBucketGivesFourDrinksThenEmpties(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID)) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            ItemStack bucket = crafting("wooden_water_bucket");
+            bucket.getOrCreateTag().putInt(UsesDurability.USES_KEY, SPENT_BUCKET_USES);
+            ImpactsEvents.postWaterFilled(new WaterFilled(player, bucket, helper.getLevel(), helper.absolutePos(BlockPos.ZERO), true));
+            helper.assertTrue(bucket.getUseDuration() == WoodenBuckets.DRINK_TICKS && bucket.getUseAnimation() == UseAnim.DRINK,
+                    "The bucket drinks like a bottle");
+            ThirstState thirst = VitalityState.of(player).thirst;
+            thirst.setLevel(LOW_THIRST);
+            ItemStack drunk = bucket;
+            for (int drink = 1; drink < BUCKET_DRINKS; drink++) {
+                ItemStack before = drunk.copy();
+                drunk = drunk.finishUsingItem(helper.getLevel(), player);
+                Drinking.onUseFinished(player, before);
+                helper.assertTrue(WoodenBuckets.drinksLeft(drunk) == BUCKET_DRINKS - drink, "Drink " + drink + " leaves " + (BUCKET_DRINKS - drink));
+            }
+            helper.assertTrue(thirst.level() > LOW_THIRST, "Drinking from the bucket quenches thirst");
+            ItemStack emptied = drunk.finishUsingItem(helper.getLevel(), player);
+            helper.assertTrue(isCrafting(emptied, "wooden_bucket"), "After the 4th drink it's Crafting's empty Wooden Bucket");
+            helper.assertTrue(UsesDurability.usesSpent(emptied) == SPENT_BUCKET_USES, "Drinking cost no bucket uses");
+            helper.assertFalse(emptied.getTag().contains(WoodenBuckets.PURITY_KEY), "The water's purity leaves with the water");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void pouringTheBucketOverYourselfMakesYouWet(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CRAFTING_MOD_ID)) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            ItemStack poured = WoodenBuckets.pourOverSelf(helper.getLevel(), player, crafting("wooden_water_bucket"));
+            helper.assertTrue(VitalityState.of(player).temperature.isWet(), "Pouring the bucket over yourself makes you Wet");
+            helper.assertTrue(isCrafting(poured, "wooden_bucket"), "The bucket comes back empty");
         } finally {
             MockPlayers.leaveWorld(player);
         }

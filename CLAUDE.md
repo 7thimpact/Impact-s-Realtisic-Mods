@@ -83,12 +83,13 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## playerAnimator
 
-- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib uses it for hold-to-use animations (hammering, grinding, sewing, …) when it is installed, and falls back to vanilla arm swings when it isn't.
+- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib draws hold-to-use motions (hammering, grinding, sewing, …) through playerAnimator when it is installed, and through its own client mixins on the arm and held-item poses (`HoldMotionPoses`) when it isn't, so the motion shows either way.
 - Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
 
 ## Curios
 
 - Required by Impact's Realistic Inventory only (`curios`, Maven `top.theillusivec4.curios:curios-forge:<curios_version>` from https://maven.theillusivec4.top/). A mod opts in with `mod_requires_curios=true` in its `gradle.properties`: it then compiles against Curios's API jar, its runs load Curios, and every test setup that lists it loads Curios too.
+- Impact's Realistic Vitality uses Curios optionally (headwear in Curios's `head` slot), with `mod_uses_curios=true`: it compiles against the API, but its own runs leave Curios out. Its Curios code lives in `com.impact.realisticvitality.forge.compat.curios` and loads only when Curios is present.
 - IRI's back slot is Curios's `back` slot. IRI's data gives players that slot (`data/impactsinventory/curios/entities/player_back.json`, gated by `impactsinventory:back_slot_enabled`) and tags its packs `#curios:back`. Curios saves, syncs and drops it.
 - Code that imports Curios lives in IRI's `forge` module (`com.impact.realisticinventory.forge.curios`), behind `BackSlotBackend` in `common`.
 

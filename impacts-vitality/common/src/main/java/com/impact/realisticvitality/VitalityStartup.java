@@ -3,6 +3,7 @@ package com.impact.realisticvitality;
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.StartupSummary;
 import com.impact.lib.command.ImpactsCommands;
+import com.impact.lib.event.ImpactsEvents;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.advancement.VitalityTriggers;
 import com.impact.realisticvitality.command.VitalityCommand;
@@ -19,6 +20,7 @@ import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityRecipeSerializers;
 import com.impact.realisticvitality.registry.VitalitySounds;
 import com.impact.realisticvitality.thirst.BottleFilling;
+import com.impact.realisticvitality.thirst.WoodenBuckets;
 
 /** Vitality's startup steps that don't depend on the mod loader. */
 public final class VitalityStartup {
@@ -42,6 +44,7 @@ public final class VitalityStartup {
         VitalityRecipeSerializers.register();
         VitalityNetwork.create();
         ImpactsCommands.addSubcommand(VitalityCommand::build);
+        ImpactsEvents.onWaterFilled(WoodenBuckets::onWaterFilled);
         ImpactsLib.onModsReady(impactMods -> {
             BottleFilling.registerInteractions();
             VitalityTriggers.registerAll();

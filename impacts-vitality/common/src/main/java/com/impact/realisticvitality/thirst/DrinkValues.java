@@ -35,6 +35,9 @@ public final class DrinkValues {
         if (isVanillaWaterBottle(stack)) {
             return Optional.of(WaterPurity.UNCLEAN);
         }
+        if (WoodenBuckets.isWaterBucket(stack)) {
+            return Optional.of(WoodenBuckets.purity(stack));
+        }
         Optional<ContainerContents> contents = WaterContainers.containerOf(stack).map(container -> ContainerContents.read(stack));
         if (contents.isPresent()) {
             return contents.filter(held -> !held.isEmpty() && held.kind() != ContainerContents.Kind.SOUP).map(ContainerContents::purity);
@@ -46,10 +49,16 @@ public final class DrinkValues {
         return stack.is(Items.POTION) && PotionUtils.getPotion(stack) == Potions.WATER;
     }
 
-    /** What a drink counts as: a vanilla water bottle as Unclean Water, a container as a bottle of its water or its soup, anything else as itself. */
+    /**
+     * What a drink counts as: a vanilla water bottle as Unclean Water, a container (or Crafting's Water-filled Wooden
+     * Bucket) as a bottle of its water or its soup, anything else as itself.
+     */
     public static ItemStack asDrink(ItemStack stack) {
         if (isVanillaWaterBottle(stack)) {
             return VitalityItems.bottle(BottledWater.UNCLEAN);
+        }
+        if (WoodenBuckets.isWaterBucket(stack)) {
+            return VitalityItems.bottle(BottledWater.filledWith(WoodenBuckets.purity(stack)));
         }
         if (WaterContainers.containerOf(stack).isEmpty()) {
             return stack;

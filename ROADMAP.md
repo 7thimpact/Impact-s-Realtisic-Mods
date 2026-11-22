@@ -10,8 +10,8 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 1 | Impact's Lib core | M | Done |
 | 2 | Impact's Realistic Inventory (IRI) | M | Done, with Vitality and Crafting |
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality and Crafting |
-| 4 | Impact's Realistic Vitality (IRV) | L+ | Done on its own (milestone 10's IRC parts land in step 5) |
-| 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | In progress (milestone 1 done) |
+| 4 | Impact's Realistic Vitality (IRV) | L+ | Done, with Food, Inventory and Crafting |
+| 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Done |
 | 6 | Salty's Realistic Forging pass for all four mods | M | Source review done; each mod's SRF GameTests land with that mod |
 | 7 | All family test setups pass: 1.20.1 Forge release candidate | M | Planned |
 | 8 | NeoForge 1.20.1 | S | Planned |
@@ -115,14 +115,14 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] 7 Insulation: warm, cooling and conductive armor tags (leather, chainmail, iron), Wool, Fur and Leather Linings sewn at an anvil without Crafting (keeping the armor's NBT; the Bone Needle recipe comes with Crafting in step 5), lining tooltips, the Straw Hat (cooling in the sun), being Wet, and the Thermometer's ambient readout under the gauge
 - [x] 8 Air: Overworld height bands, the Nether (smoky) and End (thin) from `air_quality` data files any datapack can add to, lava and lava cauldrons fuming within 3 and 1 blocks, a bubble lost every so often with vanilla's refill held back, 2 damage every 2 seconds once out (`thin_air` or `fumes`, none on Peaceful), Water Breathing, Conduit Power and Respiration, and the cloud at the end of the bubble row
 - [x] 9 Breathing gear: the Cloth Mask (damp from water, halves smoke), Air Bladder, Bottled Air, Respirator and Charcoal Filters (fitted in a grid, worn down by smoke), Air Tank (thin air with a Respirator on, from the inventory or back slot, refilling in good air), Rebreather (filters and tanks last twice as long), Air Compressor (fuel fills a tank in 5 seconds), Netherite Rebreather (smithing; smoke never affects you) and Shulker Air Tank
-- [ ] 10 Integration. IRF and IRI parts done: bottles and containers fill from Food's campfire bucket through Lib's new water vessels (purified while it boils), Food's soups, boiled, toasted and dried foods in the drink and food-temperature tables, the Frame Pack (`#impactsvitality:heavy_packs`) adding 10% to exertion thirst, tanks and the Hydration Pack in Inventory's back slot, the HUD lined up with Inventory's two-slot hotbar, and the `food-and-vitality` and `inventory-and-vitality` setups. SRF: no heat entries needed (SRF "no tools" has no hot blocks), and the `vitality-with-srf` setup checks the cauldron. IRC parts in step 5
+- [x] 10 Integration. IRF and IRI parts done: bottles and containers fill from Food's campfire bucket through Lib's new water vessels (purified while it boils), Food's soups, boiled, toasted and dried foods in the drink and food-temperature tables, the Frame Pack (`#impactsvitality:heavy_packs`) adding 10% to exertion thirst, tanks and the Hydration Pack in Inventory's back slot, the HUD lined up with Inventory's two-slot hotbar, and the `food-and-vitality` and `inventory-and-vitality` setups. SRF: no heat entries needed (SRF "no tools" has no hot blocks), and the `vitality-with-srf` setup checks the cauldron. IRC parts done in step 5 (gear from Crafting's parts, needle-sewn linings, the loose Air Tank, drinking from the Wooden Bucket, the `crafting-and-vitality` setup)
 - [x] 11 Achievements: all 22 in the "Realistic Vitality" tab, Vitality's six triggers (`drank`, `temperature_state`, `air_lost`, `health_capped`, `dry_food_refused`, `gear_used`), and Lib counters behind "Well Watered" and "In Balance"
 - [x] 12 Polish: JEI info pages (water and purity, sipping, containers, water blocks, breathing gear, the Thermometer, the Straw Hat, linings), tooltips, English text for everything, and panting, shivering and coughing sounds with subtitles (client config `display.needSounds`)
 
 ## 5. Impact's Realistic Crafting, plus Lib's crafting systems
 
 - [x] **Lib systems for this step:** `WoodData`, and `/impacts dump held` and `/impacts dump block`
-- [ ] IRC milestones from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
+- [x] IRC milestones from `impacts-crafting/SPEC.md`. The SRF part of milestone 14 moves to step 6.
   - [x] 1 Skeleton: configs (with a worldgen dimension list and biome blacklist), debug categories, the Stone Pebble (64 unused, 1 once worn), loose pebbles in worldgen (surface and cave features, a biome modifier for Overworld biomes), pebbles from gravel and stone (a global loot modifier, plus a break handler for stone broken by hand), the `impactscrafting:overhaul_enabled` recipe condition, and the `crafting-alone` and `crafting-with-srf` setups
   - [x] 2 Makeshift Table and tiers: both makeshift tables (3×3 grid through vanilla's crafting menu, three wear stages, uses kept on the item, falling apart like an anvil), the tier tags and `TierResolver`, the tier check in every crafting grid (the 2×2 included) with a "Needs a ..." hint over the refused result, the vanilla Crafting Table recipe switched off
   - [x] 3 Tool crafting and starting parts: planks (1 by hand, 2 with a trimming tool) and sticks (vanilla's shape plus a trimming tool) replacing vanilla's, per-wood Trimmed Planks (tinted and named by wood), Trimmed Sticks, Shaped Stone, Stone Hinge, Twine, String Clump, Wood Scraps (a config count per craft, none from nether wood, fuel and compost), the Bone Needle and Flint Chisel; wooden parts burn
@@ -137,12 +137,12 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
   - [x] 12 Combat, leather, textiles: the Bow Stave (with a Wood Scrap), bow, arrows, crossbow, fishing rod and leads; the loose shield (hammered); the Leather Panel and leather armor, horse armor and books sewn with the Bone Needle; carpet cut with shears (Stone Table), 16 Banner Cloths (dyeable in the vat) and banners, candles, and wool from String Clumps; vanilla's recipes for all of these switched off
   - [x] 13 Polish: the 26-achievement "Realistic Crafting" tab (Crafting's triggers, Lib counters checked against the config, Lib's `hold_action` with an item predicate and a grind listener), JEI Hammering and Dye Vat categories with info pages, wood subtypes and every crafting recipe's table and time, next-step tooltips on every item, Crafting's own sound events with subtitles, and Dye Vat particles
   - [x] 14 Audit (the SRF part is in step 6): the in-game recipe audit labels every vanilla crafting recipe (0 unlabeled, 0 conflicts), the tree check GameTest, endgame materials in the advanced tier, and Crafting versions of the soul campfire, smooth stone slab and bamboo sticks
-- [ ] **"With IRC" features:**
+- [x] **"With IRC" features:**
   - [x] IRI milestone 8: pack recipes with IRC parts (the Satchel takes a second Twine so it doesn't match IRC's leather boots), IRC's crafting arrow in IRI's screen, packs in the Dye Vat, the `crafting-and-inventory` setup
   - [x] IRF milestone 10: recipe switching, stone boiling (Hot Pebbles, the stone-boiling pot), Stone Soup, the `crafting-and-food` setup
   - IRV:
     - [x] gear recipes from Crafting's parts (the Waterskin takes a Leather Strip so it doesn't match Crafting's leather boots), linings sewn with the Bone Needle, the loose Air Tank and its hammering, the `crafting-and-vitality` setup
-    - [ ] drinking from (and pouring out) the Water-filled Wooden Bucket
+    - [x] drinking from (and pouring out) the Water-filled Wooden Bucket, with its purity from Lib's water-filled event
 
 ## 6. Salty's Realistic Forging pass
 

@@ -25,6 +25,7 @@ import com.impact.realisticvitality.thirst.BottleFilling;
 import com.impact.realisticvitality.thirst.Drinking;
 import com.impact.realisticvitality.thirst.Sipping;
 import com.impact.realisticvitality.thirst.VesselFilling;
+import com.impact.realisticvitality.thirst.WoodenBuckets;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -153,11 +154,15 @@ final class VitalityForgeEvents {
         }
     }
 
-    // A glass bottle fills with water when it's aimed at water, and otherwise bottles good air.
+    // A glass bottle fills with water when it's aimed at water, and otherwise bottles good air. Crafting's Water-filled
+    // Wooden Bucket aimed at the air is drunk from, or poured over yourself when sneaking.
     private static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         InteractionResult result = BottleFilling.fillFromWorld(event.getLevel(), event.getEntity(), event.getHand());
         if (result == InteractionResult.PASS) {
             result = BreathingGear.tryBottleAir(event.getLevel(), event.getEntity(), event.getHand());
+        }
+        if (result == InteractionResult.PASS) {
+            result = WoodenBuckets.tryUseAtAir(event.getLevel(), event.getEntity(), event.getHand());
         }
         if (result != InteractionResult.PASS) {
             event.setCanceled(true);
