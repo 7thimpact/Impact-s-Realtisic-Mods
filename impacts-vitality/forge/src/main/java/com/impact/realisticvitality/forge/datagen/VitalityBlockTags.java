@@ -22,6 +22,8 @@ final class VitalityBlockTags extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider lookup) {
         tag(BlockTags.MINEABLE_WITH_AXE).add(VitalityBlocks.rainBarrel(), VitalityBlocks.waterFilter());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(VitalityBlocks.copperStill(), VitalityBlocks.airCompressor());
+        // Copper, like vanilla's copper blocks: a wooden pickaxe breaks them without a drop.
+        tag(BlockTags.NEEDS_STONE_TOOL).add(VitalityBlocks.copperStill(), VitalityBlocks.airCompressor());
         // Lib's tag holds fire, campfires, magma and lava; Vitality's heat table also warms you by lit furnaces and lava cauldrons.
         tag(HeatSources.HEAT_SOURCES).add(Blocks.FURNACE, Blocks.SMOKER, Blocks.BLAST_FURNACE, Blocks.LAVA_CAULDRON);
     }

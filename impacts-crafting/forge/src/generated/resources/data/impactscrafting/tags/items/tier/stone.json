@@ -24,6 +24,8 @@
     "#forge:storage_blocks/raw_copper",
     "#forge:dusts/redstone",
     "#forge:storage_blocks/redstone",
+    "#forge:plates/iron",
+    "#forge:rods/iron",
     {
       "id": "realisticforgingores:raw_iron_ore",
       "required": false

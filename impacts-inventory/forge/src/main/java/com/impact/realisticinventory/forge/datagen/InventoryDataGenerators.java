@@ -25,6 +25,7 @@ public final class InventoryDataGenerators {
         });
         generator.addProvider(event.includeClient(), new InventoryItemModels(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new InventoryBlockStates(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new InventoryBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new InventoryItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new InventoryRecipes(output));
         generator.addProvider(event.includeServer(), new InventoryAdvancementProvider(output));

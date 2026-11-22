@@ -1,5 +1,6 @@
 {
   "values": [
-    "impactscrafting:iron_plate"
+    "impactscrafting:iron_plate",
+    "#forge:plates/iron"
   ]
 }

@@ -4,13 +4,19 @@ import com.impact.lib.ResourceIds;
 import com.impact.realisticfood.FoodMod;
 import com.impact.realisticfood.boiling.CauldronInteractions;
 import com.impact.realisticfood.boiling.CauldronPots;
+import com.impact.realisticfood.bucket.CampfireBuckets;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FoodBase;
+import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.food.FoodStyle;
+import com.impact.realisticfood.item.KnifeMaterial;
 import com.impact.realisticfood.registry.FoodItems;
+import com.impact.realisticfood.stoneboiling.StoneBoilingPots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -20,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -59,5 +66,24 @@ public final class FoodVanillaGameTests {
         helper.assertFalse(new ItemStack(boiledBread).is(VITALITY_DRY_FOODS),
                 "Boiled Bread doesn't pick up Vitality's dry foods from bread (Vitality's tags list the styles they mean)");
         helper.succeed();
+    }
+
+    @GameTest(templateNamespace = FoodSkeletonGameTests.LIB_NAMESPACE, template = FoodSkeletonGameTests.EMPTY_TEMPLATE)
+    public static void foodsItemsAreInVanillasAndSharedTags(GameTestHelper helper) {
+        helper.assertTrue(new ItemStack(FoodItems.piece(FoodPiece.RAW_COD_FILLET)).is(ItemTags.FISHES)
+                && new ItemStack(FoodItems.piece(FoodPiece.COOKED_SALMON_FILLET)).is(ItemTags.FISHES), "Raw and cooked fillets are fish to vanilla");
+        helper.assertTrue(new ItemStack(FoodItems.piece(FoodPiece.COOKED_PORK_CUT)).is(ItemTags.PIGLIN_FOOD), "Piglins want pork cuts");
+        ItemStack flintKnife = new ItemStack(FoodItems.knife(KnifeMaterial.FLINT));
+        helper.assertTrue(flintKnife.is(ItemTags.TOOLS) && flintKnife.is(forgeTag("tools/knives")) && flintKnife.is(Tags.Items.TOOLS),
+                "Knives are tools to vanilla and knives to other mods");
+        helper.assertTrue(new ItemStack(FoodItems.bakingIngredient(BakingIngredient.FLOUR)).is(forgeTag("flour")), "Flour is in forge:flour");
+        helper.assertTrue(new ItemStack(FoodItems.bakingIngredient(BakingIngredient.DOUGH)).is(forgeTag("dough")), "Dough is in forge:dough");
+        helper.assertTrue(CampfireBuckets.block().defaultBlockState().is(BlockTags.MINEABLE_WITH_PICKAXE), "A pickaxe breaks the metal campfire bucket");
+        helper.assertTrue(StoneBoilingPots.block().defaultBlockState().is(BlockTags.MINEABLE_WITH_AXE), "An axe breaks the wooden stone-boiling pot");
+        helper.succeed();
+    }
+
+    private static TagKey<Item> forgeTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceIds.of("forge", path));
     }
 }

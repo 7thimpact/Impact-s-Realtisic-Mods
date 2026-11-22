@@ -14,6 +14,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +39,12 @@ public final class InventoryPlacedPackGameTests {
     private static final double DROP_SEARCH_BLOCKS = 2.0;
 
     private InventoryPlacedPackGameTests() {
+    }
+
+    @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
+    public static void piglinsGuardAPlacedPack(GameTestHelper helper) {
+        helper.assertTrue(PlacedPacks.block().defaultBlockState().is(BlockTags.GUARDED_BY_PIGLINS), "A placed pack is storage piglins guard, like a chest");
+        helper.succeed();
     }
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)

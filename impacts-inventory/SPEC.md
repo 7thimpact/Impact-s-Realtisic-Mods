@@ -252,3 +252,4 @@ Changes made during implementation, following the handoff rule "follow the API a
 - **Vanilla compatibility review (Nov 2026):**
   - The "Pockets full" notice and the disabled hotbar number keys no longer use `@Redirect` (two mods redirecting the same call crash the game). The notice compares the stack's count just before and after vanilla's `Inventory.add` in `ItemEntity.playerTouch`; the number keys' presses are used up at the start of `Minecraft.handleKeybinds`, before vanilla reads them.
   - With `hotbar.swapCooldownTicks` above 0, a swap never shortens a cooldown the item already has (a thrown ender pearl keeps its own).
+- **Vanilla tags (Nov 2026):** a placed pack is in `#minecraft:guarded_by_piglins`, like other storage.

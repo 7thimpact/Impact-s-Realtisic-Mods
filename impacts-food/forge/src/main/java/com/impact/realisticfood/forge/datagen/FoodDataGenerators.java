@@ -26,6 +26,7 @@ public final class FoodDataGenerators {
         generator.addProvider(event.includeClient(), new FoodItemModels(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new FoodBlockStates(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new FoodSoundDefinitions(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new FoodBlockTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new FoodItemTags(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new FoodRecipes(output));
         generator.addProvider(event.includeServer(), new FoodAdvancementProvider(output));

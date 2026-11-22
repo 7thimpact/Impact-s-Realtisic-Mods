@@ -430,3 +430,4 @@ Changes made during implementation, following the handoff rule "follow the API a
 - **Vanilla compatibility review (Nov 2026):**
   - The anvil leaves vanilla's repair alone: damaged armor with its own repair material (leather armor and leather) is repaired, not lined. Undamaged leather armor still takes a Leather Lining.
   - Bottling air happens only when the bottle is aimed at nothing (no block or fluid within reach) and no dragon's breath cloud is beside the player, as the spec says; otherwise vanilla's glass bottle acts (a beehive that isn't full, the dragon's breath). The aim check (`LookTarget`) is shared with the Wooden Bucket's drinking.
+- **Vanilla and shared tags (Nov 2026):** all headwear (the masks and the Straw Hat) is in `#forge:armors/helmets`, the wool Cloth Mask in `#minecraft:dampens_vibrations`, and the Copper Still and Air Compressor in `#minecraft:needs_stone_tool`, like vanilla's copper blocks (a wooden pickaxe breaks them without a drop).

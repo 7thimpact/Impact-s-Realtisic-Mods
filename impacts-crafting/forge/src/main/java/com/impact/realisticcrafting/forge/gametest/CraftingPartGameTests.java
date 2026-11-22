@@ -14,14 +14,19 @@ import com.impact.realisticcrafting.config.CraftingServerConfig;
 import com.impact.realisticcrafting.item.CraftingPart;
 import com.impact.realisticcrafting.item.CraftingTool;
 import com.impact.realisticcrafting.registry.CraftingItems;
+import com.impact.realisticcrafting.registry.CraftingTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -43,6 +48,24 @@ public final class CraftingPartGameTests {
     private static final ItemStack NO_ITEM = ItemStack.EMPTY;
 
     private CraftingPartGameTests() {
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void craftingsPartsAreInVanillasAndSharedTags(GameTestHelper helper) {
+        ItemStack ironPlate = new ItemStack(CraftingItems.part(CraftingPart.IRON_PLATE));
+        helper.assertTrue(ironPlate.is(forgeTag("plates/iron")) && ironPlate.is(CraftingTags.IRON_PLATES), "The Iron Plate is in forge:plates/iron");
+        ItemStack ironRod = new ItemStack(CraftingItems.part(CraftingPart.IRON_ROD));
+        helper.assertTrue(ironRod.is(forgeTag("rods/iron")) && ironRod.is(Tags.Items.RODS), "The Iron Rod is in forge:rods/iron");
+        helper.assertTrue(new ItemStack(CraftingItems.part(CraftingPart.TRIMMED_STICK)).is(Tags.Items.RODS_WOODEN), "A Trimmed Stick is a wooden rod");
+        for (CraftingTool tool : CraftingTool.values()) {
+            helper.assertTrue(new ItemStack(CraftingItems.tool(tool)).is(ItemTags.TOOLS), tool + " is a tool to vanilla");
+        }
+        helper.assertTrue(new ItemStack(CraftingItems.comforter()).is(ItemTags.DAMPENS_VIBRATIONS), "Cloth muffles vibrations like wool");
+        helper.succeed();
+    }
+
+    private static TagKey<Item> forgeTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceIds.of("forge", path));
     }
 
     @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)

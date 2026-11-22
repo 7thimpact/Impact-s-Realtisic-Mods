@@ -1,25 +1,42 @@
 package com.impact.realisticfood.forge.datagen;
 
+import com.impact.lib.ResourceIds;
 import com.impact.realisticfood.FoodMod;
+import com.impact.realisticfood.food.BakingIngredient;
 import com.impact.realisticfood.food.FixedFood;
 import com.impact.realisticfood.food.FoodPiece;
 import com.impact.realisticfood.food.FoodStyle;
 import com.impact.realisticfood.registry.FoodItems;
 import com.impact.realisticfood.registry.FoodTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
-/** Food's item tags: knives, meat cuts, fish fillets, the three styles, styled and finished foods, soups and bowls. */
+/**
+ * Food's item tags (knives, meat cuts, fish fillets, the three styles, styled and finished foods, soups and bowls), and its
+ * items in vanilla's and the shared Forge tags.
+ */
 final class FoodItemTags extends ItemTagsProvider {
+    private static final String FORGE_NAMESPACE = "forge";
+    // Not in Forge itself, but the names other mods (Farmer's Delight, Create) use.
+    private static final TagKey<Item> FORGE_KNIVES = forgeTag("tools/knives");
+    private static final TagKey<Item> FORGE_FLOUR = forgeTag("flour");
+    private static final TagKey<Item> FORGE_WHEAT_FLOUR = forgeTag("flour/wheat");
+    private static final TagKey<Item> FORGE_DOUGH = forgeTag("dough");
+    private static final TagKey<Item> FORGE_WHEAT_DOUGH = forgeTag("dough/wheat");
+
     FoodItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFiles) {
         super(output, lookupProvider, CompletableFuture.completedFuture(TagsProvider.TagLookup.empty()), FoodMod.MOD_ID, existingFiles);
     }
@@ -40,6 +57,26 @@ final class FoodItemTags extends ItemTagsProvider {
         tag(FoodTags.BOWLS).add(Items.BOWL);
         tag(FoodTags.RAW_RISKY).add(Items.BEEF, Items.PORKCHOP, Items.MUTTON, Items.RABBIT, Items.COD, Items.SALMON)
                 .add(piecesWhere(FoodPiece::isRawRisky));
+        sharedTags();
+    }
+
+    // Vanilla's tags and the tags mods share, so vanilla mobs and other mods treat Food's items like the ones they come from:
+    // fillets feed dolphins as fish do, piglins want pork cuts, and other mods' knife and flour recipes take Food's.
+    private void sharedTags() {
+        tag(ItemTags.FISHES).addTag(FoodTags.FISH_FILLETS)
+                .add(FoodItems.piece(FoodPiece.COOKED_COD_FILLET), FoodItems.piece(FoodPiece.COOKED_SALMON_FILLET));
+        tag(ItemTags.PIGLIN_FOOD).add(FoodItems.piece(FoodPiece.RAW_PORK_CUT), FoodItems.piece(FoodPiece.COOKED_PORK_CUT));
+        tag(ItemTags.TOOLS).addTag(FoodTags.KNIVES);
+        tag(FORGE_KNIVES).addTag(FoodTags.KNIVES);
+        tag(Tags.Items.TOOLS).addTag(FORGE_KNIVES);
+        tag(FORGE_WHEAT_FLOUR).add(FoodItems.bakingIngredient(BakingIngredient.FLOUR));
+        tag(FORGE_FLOUR).addTag(FORGE_WHEAT_FLOUR);
+        tag(FORGE_WHEAT_DOUGH).add(FoodItems.bakingIngredient(BakingIngredient.DOUGH));
+        tag(FORGE_DOUGH).addTag(FORGE_WHEAT_DOUGH);
+    }
+
+    private static TagKey<Item> forgeTag(String path) {
+        return TagKey.create(Registries.ITEM, ResourceIds.of(FORGE_NAMESPACE, path));
     }
 
     private static Item[] fixedFoods(FixedFood... foods) {

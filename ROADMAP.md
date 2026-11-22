@@ -167,6 +167,7 @@ Asked for after the release candidate, before porting: every mixin, event handle
 - [x] Inventory: a swap never shortens an existing cooldown
 - [x] Crafting: loose pebbles replaceable (building, trees); occupied beds aren't recolored
 - [x] A GameTest for each, all family setups passing
+- [x] Vanilla and shared Forge tags: every block in its tool tag (and copper in `needs_stone_tool`), Food's fillets and pork in `fishes` and `piglin_food`, tools in `minecraft:tools`, cloth in `dampens_vibrations`, the placed pack guarded by piglins, and the shared names other mods read (`forge:tools/knives`, `forge:flour`, `forge:dough`, `forge:plates/iron`, `forge:rods/iron`, `forge:rods/wooden`, `forge:armors/helmets`)
 
 ## Playtest feedback (Nov 2026)
 

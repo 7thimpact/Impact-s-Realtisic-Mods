@@ -4,6 +4,7 @@ import com.impact.lib.ResourceIds;
 import com.impact.lib.backslot.BackSlot;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.air.AirTank;
+import com.impact.realisticvitality.air.BreathingMask;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
 import com.impact.realisticvitality.thirst.WaterContainer;
@@ -12,9 +13,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
@@ -54,6 +57,9 @@ final class VitalityItemTags extends ItemTagsProvider {
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "soups"));
         // Curios's head slot takes Vitality's headwear (read only when Curios is installed).
         tag(TagKey.create(Registries.ITEM, ResourceIds.of("curios", "head"))).add(VitalityItems.headwear().toArray(Item[]::new));
+        // Every headwear piece is a helmet: Forge's shared armor tag lists it with the others, and the wool Cloth Mask muffles vibrations like wool.
+        tag(Tags.Items.ARMORS_HELMETS).add(VitalityItems.headwear().toArray(Item[]::new));
+        tag(ItemTags.DAMPENS_VIBRATIONS).add(VitalityItems.mask(BreathingMask.CLOTH_MASK));
         tag(VitalityTags.HEAVY_PACKS).addOptional(ResourceIds.of(INVENTORY_MOD_ID, "frame_pack"));
         tag(VitalityTags.JUICY_FOODS).add(Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.APPLE, Items.CARROT, Items.BEETROOT);
         tag(VitalityTags.WARM_ARMOR).add(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);

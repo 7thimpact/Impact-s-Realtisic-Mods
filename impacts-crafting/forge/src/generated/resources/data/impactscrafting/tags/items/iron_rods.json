@@ -1,5 +1,6 @@
 {
   "values": [
-    "impactscrafting:iron_rod"
+    "impactscrafting:iron_rod",
+    "#forge:rods/iron"
   ]
 }
