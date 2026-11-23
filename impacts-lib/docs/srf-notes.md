@@ -7,7 +7,7 @@ Read from a decompiled copy of **SRF 4.1.6 for Forge 1.20.1, "no tools" version*
 - Mod ID `realisticforgingores`, version 4.1.6, made with MCreator.
 - Optional dependency on playerAnimator (mod ID `playeranimator`). SRF's hammering code calls playerAnimator's classes directly on the client.
 - Its own network channel carries animation messages.
-- The full version wasn't provided, so every "SRF" test setup uses the "no tools" version.
+- **What the "no tools" jar holds (checked Nov 2026, after the user pointed out it may be complete):** its item registry (`RealisticforgingoresModItems`) registers 70 items: the ore chain (raw ores, dusts, pans, molds, ingots in molds, gems) and the smithing tools (three smithing hammers, tongs, carving hammer, point chisel, sledgehammers). It registers none of the tool and armor forging items (sword blades, pickaxe, axe, shovel and hoe heads, helmet and chestplate parts, armor molds), even though their textures, procedures and two "craft iron sword" advancements are packed in the jar: they're leftovers from the developer's full build that the game never loads. Its only vanilla recipe overrides are the ore smelting and blasting recipes and `minecraft:netherite_ingot`; vanilla tool and armor recipes are untouched. Every "SRF" test setup uses this jar, and it covers everything this version does in game.
 
 ## Content
 

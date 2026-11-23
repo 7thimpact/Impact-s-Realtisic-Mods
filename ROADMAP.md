@@ -12,8 +12,8 @@ Steps are ordered from least to most effort. The one exception is Impact's Lib, 
 | 3 | Impact's Realistic Food (IRF), plus Lib's food systems | L | Done, with Vitality and Crafting |
 | 4 | Impact's Realistic Vitality (IRV) | L+ | Done, with Food, Inventory and Crafting |
 | 5 | Impact's Realistic Crafting (IRC), plus Lib's crafting systems, then every mod's "with IRC" features | XL | Done |
-| 6 | Salty's Realistic Forging pass for all four mods | M | Done with the "no tools" version; the full version waits for its jar |
-| 7 | All family test setups pass: 1.20.1 Forge release candidate | M | All 17 setups pass; waiting for the full SRF jar and your playtest |
+| 6 | Salty's Realistic Forging pass for all four mods | M | Done (the uploaded jar is all of SRF that loads in game) |
+| 7 | All family test setups pass: 1.20.1 Forge release candidate | M | All 17 setups pass; waiting for your playtest |
 | 8 | NeoForge 1.20.1 | S | Planned |
 | 9 | Forge and NeoForge, Minecraft 1.20.2 up to 1.21, one version at a time | L | Planned |
 
@@ -154,7 +154,7 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 ## 7. Family test setups
 
 - [x] Lib alone, each mod alone, IRC+IRF, IRC+IRV, IRC+IRI, IRF+IRV, IRI+IRV, all four, all four + SRF ("no tools"), plus each mod with SRF: 17 setups, every one passing its GameTests (358 in `all-four`) with no Impact warnings or errors. Every setup with IRI loads Curios too (IRI requires it).
-- [ ] All four + SRF (full version): needs the full SRF 4.1.6 jar, which hasn't been uploaded (only the "no tools" one)
+- [x] All four + SRF: `all-four-with-srf` covers it. The uploaded jar, though named "no tools", is all of SRF that loads in game: its registry has no tool or armor forging items (only leftover textures), so there is no separate full version to test (see `impacts-lib/docs/srf-notes.md`). If a build that forges tools and armor turns up, it gets its own setup then.
 - [ ] Your playtest of the release candidate on 1.20.1 Forge, then NeoForge 1.20.1 (step 8)
 
 ## Vanilla compatibility review (Nov 2026)
@@ -193,4 +193,4 @@ Fixes from the user's first playtest, worked through before the remaining milest
 
 - Lib's `FuelHelper` is `FuelRegistry` plus `CompostRegistry` (clean-naming rule 6), as proposed in the approved plan.
 - Dedicated-server start checks: the user accepted the Minecraft EULA for test runs (Nov 2026). `eula=true` goes only into git-ignored run folders.
-- "All four + SRF (full)" needs the full SRF jar, which the user will upload later. Until then that setup reports the missing jar.
+- SRF: the uploaded jar registers no tool or armor forging items (leftover assets only), so the setups with SRF cover all of it. A build of SRF that forges vanilla tools and armor would need checking against Crafting's tool recipes.
