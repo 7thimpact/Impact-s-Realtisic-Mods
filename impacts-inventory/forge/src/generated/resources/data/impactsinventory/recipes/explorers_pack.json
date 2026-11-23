@@ -1,0 +1,35 @@
+{
+  "type": "impactsinventory:pack_upgrade",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "F": {
+      "item": "impactsinventory:frame_pack"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "M": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "pattern": [
+    "M M",
+    "LFL"
+  ],
+  "result": {
+    "item": "impactsinventory:explorers_pack"
+  },
+  "show_notification": true
+}

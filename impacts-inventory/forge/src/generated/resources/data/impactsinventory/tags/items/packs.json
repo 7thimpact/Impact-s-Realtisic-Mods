@@ -2,6 +2,10 @@
   "values": [
     "impactsinventory:satchel",
     "impactsinventory:backpack",
-    "impactsinventory:frame_pack"
+    "impactsinventory:frame_pack",
+    "impactsinventory:explorers_pack",
+    "impactsinventory:expedition_pack",
+    "impactsinventory:netherite_pack",
+    "impactsinventory:ender_pack"
   ]
 }

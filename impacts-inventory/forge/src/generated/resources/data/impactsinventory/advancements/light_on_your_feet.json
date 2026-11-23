@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:heavy_lifting",
+  "criteria": {
+    "wore_explorers_pack": {
+      "conditions": {
+        "pack": "explorers_pack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.light_on_your_feet.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:explorers_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.light_on_your_feet.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_explorers_pack"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

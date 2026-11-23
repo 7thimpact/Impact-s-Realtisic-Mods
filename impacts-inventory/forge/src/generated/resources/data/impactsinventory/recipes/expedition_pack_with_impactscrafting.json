@@ -1,0 +1,46 @@
+{
+  "type": "impactslib:tool_crafting",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:mod_loaded",
+      "modid": "impactscrafting"
+    }
+  ],
+  "copy_nbt_from": {
+    "item": "impactsinventory:explorers_pack"
+  },
+  "ingredients": [
+    {
+      "item": "impactsinventory:explorers_pack"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:leather_panel"
+    },
+    {
+      "item": "impactscrafting:twine"
+    }
+  ],
+  "result": {
+    "item": "impactsinventory:expedition_pack"
+  },
+  "tools": [
+    {
+      "item": "impactscrafting:bone_needle"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "type": "impactsinventory:pack_upgrade",
+  "category": "equipment",
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactscrafting"
+      }
+    }
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "impactsinventory:explorers_pack"
+    }
+  },
+  "pattern": [
+    "DGD",
+    "LPL"
+  ],
+  "result": {
+    "item": "impactsinventory:expedition_pack"
+  },
+  "show_notification": true
+}

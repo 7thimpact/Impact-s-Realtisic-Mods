@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.List;
 
-/** The "Realistic Inventory" advancement tab: 12 achievements. Goals mark big steps; challenges give 50 XP. */
+/** The "Realistic Inventory" advancement tab: 16 achievements. Goals mark big steps; challenges give 50 XP. */
 public final class InventoryAdvancements {
     public static final ResourceLocation HANDS_FULL = id("hands_full");
     public static final ResourceLocation QUICK_DRAW = id("quick_draw");
@@ -31,6 +31,10 @@ public final class InventoryAdvancements {
     public static final ResourceLocation HEAVY_LIFTING = id("heavy_lifting");
     public static final ResourceLocation HOME_AWAY_FROM_HOME = id("home_away_from_home");
     public static final ResourceLocation TRAVEL_LIGHT = id("travel_light");
+    public static final ResourceLocation LIGHT_ON_YOUR_FEET = id("light_on_your_feet");
+    public static final ResourceLocation INTO_THE_WILD = id("into_the_wild");
+    public static final ResourceLocation FIREPROOF_LUGGAGE = id("fireproof_luggage");
+    public static final ResourceLocation POCKET_DIMENSION = id("pocket_dimension");
     public static final int JUGGLER_SWITCHES = 10;
     public static final int SECOND_NATURE_SWITCHES = 1000;
     private static final ResourceLocation TAB_BACKGROUND = ResourceIds.of("minecraft", "textures/block/brown_wool.png");
@@ -61,6 +65,14 @@ public final class InventoryAdvancements {
                         .criterion("wore_backpack", PackWornTrigger.TriggerInstance.wearing(PackKind.BACKPACK)),
                 ImpactsAdvancementBuilder.of(HEAVY_LIFTING, InventoryItems.framePack()).parent(PACK_MULE).goal()
                         .criterion("wore_frame_pack", PackWornTrigger.TriggerInstance.wearing(PackKind.FRAME_PACK)),
+                ImpactsAdvancementBuilder.of(LIGHT_ON_YOUR_FEET, InventoryItems.pack(PackKind.EXPLORERS_PACK)).parent(HEAVY_LIFTING)
+                        .criterion("wore_explorers_pack", PackWornTrigger.TriggerInstance.wearing(PackKind.EXPLORERS_PACK)),
+                ImpactsAdvancementBuilder.of(INTO_THE_WILD, InventoryItems.pack(PackKind.EXPEDITION_PACK)).parent(LIGHT_ON_YOUR_FEET).goal()
+                        .criterion("wore_expedition_pack", PackWornTrigger.TriggerInstance.wearing(PackKind.EXPEDITION_PACK)),
+                ImpactsAdvancementBuilder.of(FIREPROOF_LUGGAGE, InventoryItems.pack(PackKind.NETHERITE_PACK)).parent(INTO_THE_WILD).challenge()
+                        .criterion("wore_netherite_pack", PackWornTrigger.TriggerInstance.wearing(PackKind.NETHERITE_PACK)),
+                ImpactsAdvancementBuilder.of(POCKET_DIMENSION, InventoryItems.pack(PackKind.ENDER_PACK)).parent(PACK_MULE).goal()
+                        .criterion("wore_ender_pack", PackWornTrigger.TriggerInstance.wearing(PackKind.ENDER_PACK)),
                 ImpactsAdvancementBuilder.of(HOME_AWAY_FROM_HOME, Items.CAMPFIRE).parent(PACKING_LIGHT)
                         .criterion("pack_placed", InventoryTriggers.PACK_PLACED.anyPlayer()),
                 ImpactsAdvancementBuilder.of(TRAVEL_LIGHT, Items.FEATHER).parent(HANDS_FULL).challenge()

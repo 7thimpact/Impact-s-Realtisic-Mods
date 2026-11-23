@@ -1,0 +1,35 @@
+{
+  "parent": "impactsinventory:into_the_wild",
+  "criteria": {
+    "wore_netherite_pack": {
+      "conditions": {
+        "pack": "netherite_pack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.fireproof_luggage.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:netherite_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.fireproof_luggage.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_netherite_pack"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": false
+}

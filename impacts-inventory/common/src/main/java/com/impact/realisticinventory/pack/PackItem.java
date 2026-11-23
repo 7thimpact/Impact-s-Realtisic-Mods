@@ -1,5 +1,7 @@
 package com.impact.realisticinventory.pack;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,21 +18,38 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * A satchel, backpack or frame pack. Its contents live in its own NBT ({@code Items}, like a shulker box), so it keeps
- * everything when dropped, moved or placed. It dyes like leather armor and stacks to 1.
+ * A pack (see {@link PackKind}). Its contents live in its own NBT ({@code Items}, like a shulker box), so it keeps
+ * everything when dropped, moved or placed; the Ender Pack holds nothing and opens its wearer's Ender Chest. Every pack
+ * dyes like leather armor and stacks to 1.
  */
 public final class PackItem extends Item implements DyeableLeatherItem {
     private static final int MAXIMUM_STACK_SIZE = 1;
+    // Where vanilla's DyeableLeatherItem keeps the dye.
+    private static final String DISPLAY_KEY = "display";
+    private static final String COLOR_KEY = "color";
 
     private final PackKind kind;
 
     public PackItem(PackKind kind) {
-        super(new Item.Properties().stacksTo(MAXIMUM_STACK_SIZE));
+        super(propertiesFor(kind));
         this.kind = kind;
+    }
+
+    // The Netherite Pack survives fire and lava, like netherite gear: dropped in lava on death, it can be fished out.
+    private static Item.Properties propertiesFor(PackKind kind) {
+        Item.Properties properties = new Item.Properties().stacksTo(MAXIMUM_STACK_SIZE);
+        return kind.isFireproof() ? properties.fireResistant() : properties;
     }
 
     public PackKind kind() {
         return kind;
+    }
+
+    /** The dye color, or this kind's own default color while undyed. */
+    @Override
+    public int getColor(ItemStack stack) {
+        CompoundTag display = stack.getTagElement(DISPLAY_KEY);
+        return display != null && display.contains(COLOR_KEY, Tag.TAG_ANY_NUMERIC) ? display.getInt(COLOR_KEY) : kind.defaultColor();
     }
 
     @Override

@@ -40,7 +40,7 @@ public final class PackMenus {
         return packMenuType.get();
     }
 
-    /** Server: opens the worn pack in its own screen. Nothing happens without a worn pack. */
+    /** Server: opens the worn pack in its own screen (an Ender Pack opens the Ender Chest). Nothing happens without a worn pack. */
     public static void openWornPack(ServerPlayer player) {
         Optional<ItemStack> wornPack = WornPack.of(player);
         if (wornPack.isEmpty() || !WornPack.arePacksEnabled()) {
@@ -49,6 +49,10 @@ public final class PackMenus {
             return;
         }
         ItemStack pack = wornPack.get();
+        if (((PackItem) pack.getItem()).kind().opensEnderChest()) {
+            EnderPacks.openEnderChest(player, player.blockPosition(), "worn");
+            return;
+        }
         int slotCount = WornPack.slotCount(pack);
         handOutItemsBeyondSize(player, pack, slotCount);
         NonNullList<ItemStack> slots = PackContents.read(pack, slotCount, new ArrayList<>());
@@ -60,10 +64,14 @@ public final class PackMenus {
                 "item", ResourceIds.itemId(pack.getItem()), "slots", slotCount, "stacks", PackContents.stacksIn(pack).size());
     }
 
-    /** Server: opens a placed pack, like a small chest. */
+    /** Server: opens a placed pack, like a small chest (a placed Ender Pack, like an ender chest). */
     public static void openPlacedPack(ServerPlayer player, PlacedPackBlockEntity placedPack) {
         ItemStack pack = placedPack.pack();
         if (pack.isEmpty()) {
+            return;
+        }
+        if (((PackItem) pack.getItem()).kind().opensEnderChest()) {
+            EnderPacks.openEnderChest(player, placedPack.getBlockPos(), "placed");
             return;
         }
         int slotCount = placedPack.getContainerSize();

@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:light_on_your_feet",
+  "criteria": {
+    "wore_expedition_pack": {
+      "conditions": {
+        "pack": "expedition_pack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.into_the_wild.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:expedition_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.into_the_wild.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_expedition_pack"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -90,6 +90,9 @@ public final class InventoryServerConfig {
         private static final int DEFAULT_SATCHEL_SLOTS = 3;
         private static final int DEFAULT_BACKPACK_SLOTS = 9;
         private static final int DEFAULT_FRAME_PACK_SLOTS = 18;
+        private static final int DEFAULT_EXPLORERS_PACK_SLOTS = 18;
+        private static final int DEFAULT_EXPEDITION_PACK_SLOTS = 27;
+        private static final int DEFAULT_NETHERITE_PACK_SLOTS = 36;
         private static final int MINIMUM_PACK_SLOTS = 1;
         private static final int MAXIMUM_PACK_SLOTS = 54;
         private static final double DEFAULT_FRAME_PACK_SLOWNESS = 0.1;
@@ -99,6 +102,9 @@ public final class InventoryServerConfig {
         public final ConfigValue<Integer> satchelSlots;
         public final ConfigValue<Integer> backpackSlots;
         public final ConfigValue<Integer> framePackSlots;
+        public final ConfigValue<Integer> explorersPackSlots;
+        public final ConfigValue<Integer> expeditionPackSlots;
+        public final ConfigValue<Integer> netheritePackSlots;
         public final ConfigValue<List<String>> nestingBlacklist;
 
         private PackSettings(ConfigSpecBuilder builder) {
@@ -108,6 +114,12 @@ public final class InventoryServerConfig {
             satchelSlots = builder.defineInteger("satchelSlots", DEFAULT_SATCHEL_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS, "Slots in a Satchel.");
             backpackSlots = builder.defineInteger("backpackSlots", DEFAULT_BACKPACK_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS, "Slots in a Backpack.");
             framePackSlots = builder.defineInteger("framePackSlots", DEFAULT_FRAME_PACK_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS, "Slots in a Frame Pack.");
+            explorersPackSlots = builder.defineInteger("explorersPackSlots", DEFAULT_EXPLORERS_PACK_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS,
+                    "Slots in an Explorer's Pack.");
+            expeditionPackSlots = builder.defineInteger("expeditionPackSlots", DEFAULT_EXPEDITION_PACK_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS,
+                    "Slots in an Expedition Pack.");
+            netheritePackSlots = builder.defineInteger("netheritePackSlots", DEFAULT_NETHERITE_PACK_SLOTS, MINIMUM_PACK_SLOTS, MAXIMUM_PACK_SLOTS,
+                    "Slots in a Netherite Pack.");
             nestingBlacklist = builder.defineStringList("nestingBlacklist", List.of("#impactsinventory:packs"),
                     "Items that can't go inside a pack, as item IDs or #tags. Shulker boxes follow allowShulkers.");
         }

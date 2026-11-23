@@ -92,6 +92,10 @@ The 2×2 crafting grid stays, separate from the pockets, so early crafting (and 
 | Satchel | 3 (1 row) | 3 leather + 2 string | 2 Leather Panels + Twine + (Bone Needle) | None |
 | Backpack | 9 (3×3) | Satchel + 4 leather + chest | Satchel + 2 Leather Panels + Chest Top + Twine + (Bone Needle) | None |
 | Frame Pack | 18 (two 3×3 grids) | Backpack + 4 iron ingots + 2 sticks | Backpack + Wooden Frame + 2 Iron Rods + Iron Rivets, at the Makeshift Stone Table | 10% slower walking while worn |
+| Explorer's Pack | 18 (two 3×3 grids) | Frame Pack + 2 phantom membranes + 2 leather | Frame Pack + 2 phantom membranes + 2 Leather Panels + Twine + (Bone Needle) | None: the membranes lighten the frame |
+| Expedition Pack | 27 (three 3×3 grids) | Explorer's Pack + 2 diamonds + gold ingot + 2 leather | Explorer's Pack + 2 diamonds + gold ingot + 2 Leather Panels + Twine + (Bone Needle), at the Crafting Table | None |
+| Netherite Pack | 36 (four 3×3 grids) | Smithing table: Expedition Pack + Netherite Upgrade + netherite ingot | Same | None, and it survives fire and lava like netherite gear |
+| Ender Pack | Opens your Ender Chest (27, shared with every ender chest) | Ender chest + 2 shulker shells + 3 leather | Ender chest + 2 shulker shells + 2 Leather Panels + Twine + (Bone Needle), at the Crafting Table | Holds nothing itself; pickups don't go into it |
 
 **Using packs**
 
@@ -137,7 +141,7 @@ The 2×2 crafting grid stays, separate from the pockets, so early crafting (and 
 
 ## Achievements
 
-IRI's advancement tab, "Realistic Inventory", has 12 achievements. **Goals** mark big steps; **challenges** give 50 XP.
+IRI's advancement tab, "Realistic Inventory", has 16 achievements. **Goals** mark big steps; **challenges** give 50 XP.
 
 | Achievement | How to get it | Unlocks after | Type |
 | --- | --- | --- | --- |
@@ -151,6 +155,10 @@ IRI's advancement tab, "Realistic Inventory", has 12 achievements. **Goals** mar
 | Packing Light | Wear a Satchel | Pocket Space | task |
 | Pack Mule | Wear a Backpack | Packing Light | task |
 | Heavy Lifting | Wear a Frame Pack | Pack Mule | goal |
+| Light on Your Feet | Wear an Explorer's Pack | Heavy Lifting | task |
+| Into the Wild | Wear an Expedition Pack | Light on Your Feet | goal |
+| Fireproof Luggage | Wear a Netherite Pack | Into the Wild | challenge |
+| Pocket Dimension | Wear an Ender Pack | Pack Mule | goal |
 | Home Away From Home | Set a pack down as a block | Packing Light | task |
 | Travel Light | Enter the Nether with empty pockets and no pack | Hands Full | challenge |
 
@@ -253,3 +261,14 @@ Changes made during implementation, following the handoff rule "follow the API a
   - The "Pockets full" notice and the disabled hotbar number keys no longer use `@Redirect` (two mods redirecting the same call crash the game). The notice compares the stack's count just before and after vanilla's `Inventory.add` in `ItemEntity.playerTouch`; the number keys' presses are used up at the start of `Minecraft.handleKeybinds`, before vanilla reads them.
   - With `hotbar.swapCooldownTicks` above 0, a swap never shortens a cooldown the item already has (a thrown ender pearl keeps its own).
 - **Vanilla tags (Nov 2026):** a placed pack is in `#minecraft:guarded_by_piglins`, like other storage.
+- **More packs (requested by the user, Nov 2026):** the user found three packs too few, with the last one only slowing you down. Four more, each a plain gain:
+  - **Explorer's Pack** (`explorers_pack`, 18 slots): the Frame Pack's room without its slowdown.
+  - **Expedition Pack** (`expedition_pack`, 27 slots).
+  - **Netherite Pack** (`netherite_pack`, 36 slots): fire resistant like netherite gear, so a pack dropped in lava on death can be fished out. Made at the smithing table, as netherite gear is; vanilla's smithing keeps the pack's contents and dye. The same recipe with or without Crafting.
+  - **Ender Pack** (`ender_pack`): holds nothing itself. Worn (B or the button) or set down, it opens the Ender Chest of whoever opens it, as an ender chest block does. It isn't an upgrade, so no pack's contents go into it, and pickups never go into the Ender Chest.
+  - Each holding pack upgrades the last and keeps its contents and dye (`impactsinventory:pack_upgrade` without Crafting, `copy_nbt_from` with it). Slot counts are `packs.explorersPackSlots` (18), `packs.expeditionPackSlots` (27) and `packs.netheritePackSlots` (36). Only the Frame Pack slows walking (`PackKind.slowsWalking`), and only it is in Vitality's `#impactsvitality:heavy_packs`.
+  - Undyed, each later pack has its own color (olive canvas, slate-blue canvas, netherite gray, ender purple) instead of leather brown, so the tiers read apart; dye replaces it as before.
+  - Each has its own worn model: the Explorer's Pack on light posts under a bedroll, the Expedition and Netherite Packs deep with three pockets and a bedroll, the Ender Pack a backpack under a shulker-shell lid. Placed, they use the same models.
+  - Four achievements follow the ladder: Light on Your Feet, Into the Wild (goal), Fireproof Luggage (challenge), Pocket Dimension (goal).
+  - **Checked by** `InventoryPackTierGameTests`: the sizes and no slowdown, the contents and dye kept from the Frame Pack through the smithing upgrade, the Netherite Pack in lava, and the Ender Pack worn and placed.
+

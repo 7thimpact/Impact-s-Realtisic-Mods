@@ -157,6 +157,13 @@ These are the milestones from `impacts-vitality/SPEC.md`. The IRF and IRI parts 
 - [x] All four + SRF: `all-four-with-srf` covers it. The uploaded jar, though named "no tools", is all of SRF that loads in game: its registry has no tool or armor forging items (only leftover textures), so there is no separate full version to test (see `impacts-lib/docs/srf-notes.md`). If a build that forges tools and armor turns up, it gets its own setup then.
 - [ ] Your playtest of the release candidate on 1.20.1 Forge, then NeoForge 1.20.1 (step 8)
 
+## More packs (Nov 2026)
+
+Asked for by the user: more pack tiers, each a net gain past the Frame Pack.
+
+- [x] Explorer's Pack (18 slots, no slowdown; phantom membranes), Expedition Pack (27; diamonds and gold), Netherite Pack (36, fireproof; smithing upgrade), and the Ender Pack (opens your Ender Chest, worn or placed)
+- [x] Recipes without and with Crafting, models, textures, four achievements, GameTests
+
 ## Vanilla compatibility review (Nov 2026)
 
 Asked for after the release candidate, before porting: every mixin, event handler, data override, loot modifier and worldgen feature checked against vanilla behavior and other mods.

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "impactsinventory:expedition_pack"
+  },
+  "conditions": [
+    {
+      "type": "impactsinventory:packs_enabled"
+    }
+  ],
+  "result": {
+    "item": "impactsinventory:netherite_pack"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

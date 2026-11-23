@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsinventory:item/ender_pack",
+    "layer1": "impactsinventory:item/ender_pack_overlay"
+  }
+}

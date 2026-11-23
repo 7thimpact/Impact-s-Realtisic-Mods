@@ -9,12 +9,15 @@ import com.impact.lib.forge.datagen.ForeignRecipeBuilder;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.forge.condition.PacksEnabledCondition;
 import com.impact.realisticinventory.pack.InventoryItems;
+import com.impact.realisticinventory.pack.PackItem;
+import com.impact.realisticinventory.pack.PackKind;
 import com.impact.realisticinventory.pack.PackRecipes;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -24,9 +27,10 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import java.util.function.Consumer;
 
 /**
- * Inventory's pack recipes: one set without Crafting installed (leather, string, chests, iron) and one with it
- * (Crafting's parts, sewn with its Bone Needle). Every pack recipe also needs {@code packs.enabled}. The two bigger
- * packs are upgrades that keep the smaller pack's contents and color. Crafting's items are named by ID, since Crafting
+ * Inventory's pack recipes: one set without Crafting installed (leather, string, chests, iron, phantom membranes,
+ * diamonds) and one with it (Crafting's parts, sewn with its Bone Needle), plus the Netherite Pack's smithing upgrade,
+ * the same either way. Every pack recipe also needs {@code packs.enabled}. Each pack past the Satchel is an upgrade that
+ * keeps the smaller pack's contents and color, except the Ender Pack, which holds nothing. Crafting's items are named by ID, since Crafting
  * isn't loaded while Inventory generates its data.
  */
 final class InventoryRecipes extends RecipeProvider {
@@ -78,6 +82,47 @@ final class InventoryRecipes extends RecipeProvider {
                 .define('P', InventoryItems.backpack())
                 .unlockedBy("has_backpack", has(InventoryItems.backpack()))
                 .save(recipe -> conditionalOutput.accept(new PackUpgradeType(recipe)));
+        // Phantom membranes lighten the frame: as roomy, no slowdown.
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pack(PackKind.EXPLORERS_PACK))
+                .pattern("M M")
+                .pattern("LFL")
+                .define('M', Items.PHANTOM_MEMBRANE)
+                .define('L', Items.LEATHER)
+                .define('F', InventoryItems.framePack())
+                .unlockedBy("has_frame_pack", has(InventoryItems.framePack()))
+                .save(recipe -> conditionalOutput.accept(new PackUpgradeType(recipe)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pack(PackKind.EXPEDITION_PACK))
+                .pattern("DGD")
+                .pattern("LPL")
+                .define('D', Items.DIAMOND)
+                .define('G', Items.GOLD_INGOT)
+                .define('L', Items.LEATHER)
+                .define('P', pack(PackKind.EXPLORERS_PACK))
+                .unlockedBy("has_explorers_pack", has(pack(PackKind.EXPLORERS_PACK)))
+                .save(recipe -> conditionalOutput.accept(new PackUpgradeType(recipe)));
+        // Not an upgrade: the Ender Pack holds nothing, so no pack (and none of its contents) goes into it.
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, pack(PackKind.ENDER_PACK))
+                .pattern("SLS")
+                .pattern("LEL")
+                .define('S', Items.SHULKER_SHELL)
+                .define('L', Items.LEATHER)
+                .define('E', Items.ENDER_CHEST)
+                .unlockedBy("has_shulker_shell", has(Items.SHULKER_SHELL))
+                .save(conditionalOutput);
+        netheriteUpgrade(output);
+    }
+
+    // The same with or without Crafting: a smithing table upgrade, as for netherite gear. Smithing keeps the pack's NBT.
+    private void netheriteUpgrade(Consumer<FinishedRecipe> output) {
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(pack(PackKind.EXPEDITION_PACK)),
+                        Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, pack(PackKind.NETHERITE_PACK))
+                .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
+                .save(recipe -> output.accept(ConditionalRecipes.withConditions(recipe, PacksEnabledCondition.INSTANCE)),
+                        ResourceIds.of(InventoryMod.MOD_ID, "netherite_pack_smithing"));
+    }
+
+    private static PackItem pack(PackKind kind) {
+        return InventoryItems.pack(kind);
     }
 
     // The Frame Pack's Iron Rods and Iron Rivets are stone-tier parts, so Crafting asks for the Makeshift Stone Table on its own.
@@ -110,6 +155,36 @@ final class InventoryRecipes extends RecipeProvider {
                 .result(ResourceIds.itemId(InventoryItems.framePack()).toString(), 1)
                 .field(COPY_NBT_FROM_FIELD, backpack)
                 .save(conditionalOutput, craftingRecipeId("frame_pack"));
+        JsonElement framePack = ForeignRecipeBuilder.ingredient(Ingredient.of(InventoryItems.framePack()));
+        ForeignRecipeBuilder.of(ToolCrafting.serializer())
+                .ingredient(framePack)
+                .ingredient(ForeignRecipeBuilder.ingredient(Ingredient.of(Items.PHANTOM_MEMBRANE)), 2)
+                .ingredient(LEATHER_PANEL, 2)
+                .ingredient(TWINE)
+                .tool(BONE_NEEDLE)
+                .result(ResourceIds.itemId(pack(PackKind.EXPLORERS_PACK)).toString(), 1)
+                .field(COPY_NBT_FROM_FIELD, framePack)
+                .save(conditionalOutput, craftingRecipeId("explorers_pack"));
+        JsonElement explorersPack = ForeignRecipeBuilder.ingredient(Ingredient.of(pack(PackKind.EXPLORERS_PACK)));
+        // Diamonds and gold are advanced-tier materials, so Crafting asks for the Crafting Table.
+        ForeignRecipeBuilder.of(ToolCrafting.serializer())
+                .ingredient(explorersPack)
+                .ingredient(ForeignRecipeBuilder.ingredient(Ingredient.of(Items.DIAMOND)), 2)
+                .ingredient(ForeignRecipeBuilder.ingredient(Ingredient.of(Items.GOLD_INGOT)))
+                .ingredient(LEATHER_PANEL, 2)
+                .ingredient(TWINE)
+                .tool(BONE_NEEDLE)
+                .result(ResourceIds.itemId(pack(PackKind.EXPEDITION_PACK)).toString(), 1)
+                .field(COPY_NBT_FROM_FIELD, explorersPack)
+                .save(conditionalOutput, craftingRecipeId("expedition_pack"));
+        ForeignRecipeBuilder.of(ToolCrafting.serializer())
+                .ingredient(ForeignRecipeBuilder.ingredient(Ingredient.of(Items.ENDER_CHEST)))
+                .ingredient(ForeignRecipeBuilder.ingredient(Ingredient.of(Items.SHULKER_SHELL)), 2)
+                .ingredient(LEATHER_PANEL, 2)
+                .ingredient(TWINE)
+                .tool(BONE_NEEDLE)
+                .result(ResourceIds.itemId(pack(PackKind.ENDER_PACK)).toString(), 1)
+                .save(conditionalOutput, craftingRecipeId("ender_pack"));
     }
 
     // Named like ConditionalRecipes.pair's recipes: satchel_with_impactscrafting.

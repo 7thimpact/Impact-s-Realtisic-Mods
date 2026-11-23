@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "impactsinventory:item/explorers_pack",
+    "layer1": "impactsinventory:item/explorers_pack_overlay"
+  }
+}

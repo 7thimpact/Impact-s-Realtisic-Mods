@@ -32,7 +32,7 @@ import java.util.Optional;
 @PrefixGameTestTemplate(false)
 public final class InventoryCraftingGameTests {
     static final String CRAFTING_MOD_ID = "impactscrafting";
-    private static final List<String> PACK_NAMES = List.of("satchel", "backpack", "frame_pack");
+    private static final List<String> PACK_NAMES = List.of("satchel", "backpack", "frame_pack", "explorers_pack", "expedition_pack", "ender_pack");
     private static final String WITH_CRAFTING_SUFFIX = "_with_" + CRAFTING_MOD_ID;
     private static final TagKey<Item> STONE_TIER = TagKey.create(Registries.ITEM, ResourceIds.of(CRAFTING_MOD_ID, "tier/stone"));
 

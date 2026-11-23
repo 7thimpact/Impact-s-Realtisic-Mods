@@ -47,11 +47,19 @@ public final class PlacedPackBlock extends BaseEntityBlock implements SimpleWate
     private static final Map<PackKind, VoxelShape> SOUTH_FACING_SHAPES = new EnumMap<>(Map.of(
             PackKind.SATCHEL, Block.box(5, 0, 7, 11, 5, 9),
             PackKind.BACKPACK, Block.box(4, 0, 5.5, 12, 10, 10.5),
-            PackKind.FRAME_PACK, Block.box(3, 0, 6, 13, 16, 10)));
+            PackKind.FRAME_PACK, Block.box(3, 0, 6, 13, 16, 10),
+            PackKind.EXPLORERS_PACK, Block.box(3, 0, 5.5, 13, 15, 10.5),
+            PackKind.EXPEDITION_PACK, Block.box(2, 0, 5, 14, 16, 11),
+            PackKind.NETHERITE_PACK, Block.box(2, 0, 5, 14, 16, 11),
+            PackKind.ENDER_PACK, Block.box(3.5, 0, 5.5, 12.5, 12, 10.5)));
     private static final Map<PackKind, VoxelShape> EAST_FACING_SHAPES = new EnumMap<>(Map.of(
             PackKind.SATCHEL, Block.box(7, 0, 5, 9, 5, 11),
             PackKind.BACKPACK, Block.box(5.5, 0, 4, 10.5, 10, 12),
-            PackKind.FRAME_PACK, Block.box(6, 0, 3, 10, 16, 13)));
+            PackKind.FRAME_PACK, Block.box(6, 0, 3, 10, 16, 13),
+            PackKind.EXPLORERS_PACK, Block.box(5.5, 0, 3, 10.5, 15, 13),
+            PackKind.EXPEDITION_PACK, Block.box(5, 0, 2, 11, 16, 14),
+            PackKind.NETHERITE_PACK, Block.box(5, 0, 2, 11, 16, 14),
+            PackKind.ENDER_PACK, Block.box(5.5, 0, 3.5, 10.5, 12, 12.5)));
 
     public PlacedPackBlock(Properties properties) {
         super(properties);

@@ -17,6 +17,8 @@ public final class InventorySkeletonGameTests {
     private static final int SPEC_SATCHEL_SLOTS = 3;
     private static final int SPEC_BACKPACK_SLOTS = 9;
     private static final int SPEC_FRAME_PACK_SLOTS = 18;
+    private static final int SPEC_EXPEDITION_PACK_SLOTS = 27;
+    private static final int SPEC_NETHERITE_PACK_SLOTS = 36;
     private static final double SPEC_FRAME_PACK_SLOWNESS = 0.1;
 
     private InventorySkeletonGameTests() {
@@ -39,6 +41,9 @@ public final class InventorySkeletonGameTests {
         helper.assertTrue(config.packs.satchelSlots.defaultValue() == SPEC_SATCHEL_SLOTS, "Satchels hold 3");
         helper.assertTrue(config.packs.backpackSlots.defaultValue() == SPEC_BACKPACK_SLOTS, "Backpacks hold 9");
         helper.assertTrue(config.packs.framePackSlots.defaultValue() == SPEC_FRAME_PACK_SLOTS, "Frame Packs hold 18");
+        helper.assertTrue(config.packs.explorersPackSlots.defaultValue() == SPEC_FRAME_PACK_SLOTS, "Explorer's Packs hold 18, like the Frame Pack");
+        helper.assertTrue(config.packs.expeditionPackSlots.defaultValue() == SPEC_EXPEDITION_PACK_SLOTS, "Expedition Packs hold 27");
+        helper.assertTrue(config.packs.netheritePackSlots.defaultValue() == SPEC_NETHERITE_PACK_SLOTS, "Netherite Packs hold 36");
         helper.assertTrue(config.firstJoin.overflow.defaultValue() == InventoryServerConfig.OverflowTarget.CHEST, "firstJoin.overflow should default to chest");
         helper.succeed();
     }

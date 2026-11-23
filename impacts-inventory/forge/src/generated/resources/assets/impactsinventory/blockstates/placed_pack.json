@@ -6,10 +6,34 @@
     "facing=east,kind=backpack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
+    "facing=east,kind=ender_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=ender_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=expedition_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=expedition_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=explorers_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=explorers_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
     "facing=east,kind=frame_pack,waterlogged=false": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=east,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=netherite_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=east,kind=netherite_pack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=east,kind=satchel,waterlogged=false": {
@@ -24,10 +48,34 @@
     "facing=north,kind=backpack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
+    "facing=north,kind=ender_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=ender_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=expedition_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=expedition_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=explorers_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=explorers_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
     "facing=north,kind=frame_pack,waterlogged=false": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=north,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=netherite_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=north,kind=netherite_pack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=north,kind=satchel,waterlogged=false": {
@@ -42,10 +90,34 @@
     "facing=south,kind=backpack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
+    "facing=south,kind=ender_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=ender_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=expedition_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=expedition_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=explorers_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=explorers_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
     "facing=south,kind=frame_pack,waterlogged=false": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=south,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=netherite_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=south,kind=netherite_pack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=south,kind=satchel,waterlogged=false": {
@@ -60,10 +132,34 @@
     "facing=west,kind=backpack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
+    "facing=west,kind=ender_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=ender_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=expedition_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=expedition_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=explorers_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=explorers_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
     "facing=west,kind=frame_pack,waterlogged=false": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=west,kind=frame_pack,waterlogged=true": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=netherite_pack,waterlogged=false": {
+      "model": "impactsinventory:block/placed_pack"
+    },
+    "facing=west,kind=netherite_pack,waterlogged=true": {
       "model": "impactsinventory:block/placed_pack"
     },
     "facing=west,kind=satchel,waterlogged=false": {

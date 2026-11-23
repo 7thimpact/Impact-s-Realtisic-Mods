@@ -55,7 +55,7 @@ public final class InventoryPackGameTests {
 
     @GameTest(templateNamespace = InventorySkeletonGameTests.LIB_NAMESPACE, template = InventorySkeletonGameTests.EMPTY_TEMPLATE)
     public static void packsStackToOneAndFitTheBackSlot(GameTestHelper helper) {
-        for (ItemStack pack : List.of(new ItemStack(InventoryItems.satchel()), new ItemStack(InventoryItems.backpack()), new ItemStack(InventoryItems.framePack()))) {
+        for (ItemStack pack : InventoryItems.packs().stream().map(ItemStack::new).toList()) {
             helper.assertTrue(pack.getMaxStackSize() == 1, "Packs stack to 1");
             helper.assertTrue(BackSlot.accepts(pack), "Every pack fits the back slot");
             helper.assertFalse(PackRules.canGoInPack(pack), "Packs can't go inside packs");

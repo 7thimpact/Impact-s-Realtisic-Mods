@@ -8,7 +8,10 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-/** A pack's tooltip: how full it is, its first few stacks (like a shulker box), the frame pack's slowdown, and how to use it. */
+/**
+ * A pack's tooltip: how full it is, its first few stacks (like a shulker box), the Frame Pack's slowdown, the Netherite
+ * Pack's fireproofing, and how to use it. An Ender Pack says what it opens instead.
+ */
 final class PackTooltip {
     private static final int LISTED_STACKS = 5;
     private static final double PERCENT = 100.0;
@@ -17,6 +20,11 @@ final class PackTooltip {
     }
 
     static void append(ItemStack pack, PackKind kind, List<Component> lines) {
+        if (kind.opensEnderChest()) {
+            lines.add(Component.translatable(InventoryTranslations.ENDER_PACK_TOOLTIP).withStyle(ChatFormatting.DARK_PURPLE));
+            lines.add(Component.translatable(InventoryTranslations.PACK_HINT_TOOLTIP).withStyle(ChatFormatting.DARK_GRAY));
+            return;
+        }
         List<ItemStack> contents = PackContents.stacksIn(pack);
         lines.add(Component.translatable(InventoryTranslations.SLOTS_USED_TOOLTIP, contents.size(), kind.slotCount()).withStyle(ChatFormatting.GRAY));
         contents.stream().limit(LISTED_STACKS).forEach(stack ->
@@ -26,7 +34,10 @@ final class PackTooltip {
             lines.add(Component.translatable(InventoryTranslations.MORE_STACKS_TOOLTIP, unlistedStacks).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         double slowness = InventoryServerConfig.get().packs.framePackSlowness.get();
-        if (kind == PackKind.FRAME_PACK && slowness > 0) {
+        if (kind.isFireproof()) {
+            lines.add(Component.translatable(InventoryTranslations.FIREPROOF_TOOLTIP).withStyle(ChatFormatting.BLUE));
+        }
+        if (kind.slowsWalking() && slowness > 0) {
             long slownessPercent = Math.round(slowness * PERCENT);
             lines.add(Component.translatable(InventoryTranslations.FRAME_PACK_SLOWNESS_TOOLTIP, slownessPercent).withStyle(ChatFormatting.BLUE));
         }

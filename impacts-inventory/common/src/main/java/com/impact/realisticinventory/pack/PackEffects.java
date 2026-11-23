@@ -23,7 +23,7 @@ public final class PackEffects {
             return;
         }
         double slowness = InventoryServerConfig.get().packs.framePackSlowness.get();
-        boolean isSlowed = slowness > 0 && WornPack.kindOf(player).filter(kind -> kind == PackKind.FRAME_PACK).isPresent();
+        boolean isSlowed = slowness > 0 && WornPack.kindOf(player).filter(PackKind::slowsWalking).isPresent();
         AttributeModifier current = movementSpeed.getModifier(FRAME_PACK_SLOWNESS_ID);
         boolean isUpToDate = isSlowed ? current != null && current.getAmount() == -slowness : current == null;
         if (isUpToDate) {

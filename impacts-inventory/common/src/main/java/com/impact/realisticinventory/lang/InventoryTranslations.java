@@ -4,6 +4,7 @@ import com.impact.lib.advancement.ImpactsAdvancementBuilder;
 import com.impact.lib.registry.CreativeTabs;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.advancement.InventoryAdvancements;
+import com.impact.realisticinventory.pack.PackKind;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
@@ -23,6 +24,8 @@ public final class InventoryTranslations {
     public static final String STACK_TOOLTIP = "tooltip.impactsinventory.stack";
     public static final String MORE_STACKS_TOOLTIP = "tooltip.impactsinventory.more_stacks";
     public static final String FRAME_PACK_SLOWNESS_TOOLTIP = "tooltip.impactsinventory.frame_pack_slowness";
+    public static final String FIREPROOF_TOOLTIP = "tooltip.impactsinventory.fireproof";
+    public static final String ENDER_PACK_TOOLTIP = "tooltip.impactsinventory.ender_pack";
     public static final String PACK_HINT_TOOLTIP = "tooltip.impactsinventory.pack_hint";
     /** Minecraft names a tab after its root; this key is for tools that list tabs by mod. */
     public static final String ADVANCEMENT_TAB = "advancements.impactsinventory.tab";
@@ -39,6 +42,10 @@ public final class InventoryTranslations {
     private InventoryTranslations() {
     }
 
+    public static String packName(PackKind kind) {
+        return "item." + InventoryMod.MOD_ID + "." + kind.itemPath();
+    }
+
     private static Map<String, String> englishText() {
         Map<String, String> english = new LinkedHashMap<>();
         english.put(POCKETS_FULL, "Pockets full");
@@ -48,11 +55,17 @@ public final class InventoryTranslations {
         english.put(SATCHEL, "Satchel");
         english.put(BACKPACK, "Backpack");
         english.put(FRAME_PACK, "Frame Pack");
+        english.put(packName(PackKind.EXPLORERS_PACK), "Explorer's Pack");
+        english.put(packName(PackKind.EXPEDITION_PACK), "Expedition Pack");
+        english.put(packName(PackKind.NETHERITE_PACK), "Netherite Pack");
+        english.put(packName(PackKind.ENDER_PACK), "Ender Pack");
         english.put(PLACED_PACK, "Placed Pack");
         english.put(SLOTS_USED_TOOLTIP, "%s/%s slots used");
         english.put(STACK_TOOLTIP, "%s x%s");
         english.put(MORE_STACKS_TOOLTIP, "and %s more...");
         english.put(FRAME_PACK_SLOWNESS_TOOLTIP, "Walking %s%% slower while worn");
+        english.put(FIREPROOF_TOOLTIP, "Survives fire and lava");
+        english.put(ENDER_PACK_TOOLTIP, "Opens your Ender Chest");
         english.put(PACK_HINT_TOOLTIP, "Right-click to wear, sneak-right-click a block to set down");
         english.put(FIRST_JOIN, "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.");
         english.put(SLOTS_LOCKED, "Survival mode: you carry two hands and nine pockets again.");
@@ -71,6 +84,10 @@ public final class InventoryTranslations {
         addAdvancement(english, InventoryAdvancements.PACKING_LIGHT, "Packing Light", "Wear a Satchel");
         addAdvancement(english, InventoryAdvancements.PACK_MULE, "Pack Mule", "Wear a Backpack");
         addAdvancement(english, InventoryAdvancements.HEAVY_LIFTING, "Heavy Lifting", "Wear a Frame Pack");
+        addAdvancement(english, InventoryAdvancements.LIGHT_ON_YOUR_FEET, "Light on Your Feet", "Wear an Explorer's Pack");
+        addAdvancement(english, InventoryAdvancements.INTO_THE_WILD, "Into the Wild", "Wear an Expedition Pack");
+        addAdvancement(english, InventoryAdvancements.FIREPROOF_LUGGAGE, "Fireproof Luggage", "Wear a Netherite Pack");
+        addAdvancement(english, InventoryAdvancements.POCKET_DIMENSION, "Pocket Dimension", "Wear an Ender Pack");
         addAdvancement(english, InventoryAdvancements.HOME_AWAY_FROM_HOME, "Home Away From Home", "Set a pack down as a block");
         addAdvancement(english, InventoryAdvancements.TRAVEL_LIGHT, "Travel Light", "Enter the Nether with empty pockets and no pack");
         return Collections.unmodifiableMap(english);

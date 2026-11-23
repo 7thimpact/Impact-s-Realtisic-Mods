@@ -1,0 +1,32 @@
+{
+  "parent": "impactsinventory:pack_mule",
+  "criteria": {
+    "wore_ender_pack": {
+      "conditions": {
+        "pack": "ender_pack"
+      },
+      "trigger": "impactsinventory:pack_worn"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.impactsinventory.pocket_dimension.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "impactsinventory:ender_pack"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.impactsinventory.pocket_dimension.title"
+    }
+  },
+  "requirements": [
+    [
+      "wore_ender_pack"
+    ]
+  ],
+  "sends_telemetry_event": false
+}
