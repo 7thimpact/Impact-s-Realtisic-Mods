@@ -59,6 +59,7 @@ public final class FoodSpitGameTests {
 
     @GameTest(templateNamespace = FoodSkeletonGameTests.LIB_NAMESPACE, template = FoodSkeletonGameTests.EMPTY_TEMPLATE)
     public static void spitFoodCooksFasterAndFasterWhenTurned(GameTestHelper helper) {
+        StrayItems.clearAround(helper, CAMPFIRE);
         CampfireBlockEntity campfire = litCampfire(helper);
         Spit spit = mountSpit(campfire);
         BlockPos position = helper.absolutePos(CAMPFIRE);

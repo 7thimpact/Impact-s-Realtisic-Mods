@@ -100,6 +100,7 @@ public final class FoodBoilingGameTests {
 
     @GameTest(templateNamespace = FoodSkeletonGameTests.LIB_NAMESPACE, template = FoodSkeletonGameTests.EMPTY_TEMPLATE, timeoutTicks = 400)
     public static void droppedEggBecomesBoiledEgg(GameTestHelper helper) {
+        StrayItems.clearAround(helper, CAULDRON);
         BlockPos cauldron = placeCauldronOverCampfire(helper, FULL);
         boilNow(helper, cauldron);
         helper.spawnItem(Items.EGG, 0.5F, 1.5F, 0.5F);
