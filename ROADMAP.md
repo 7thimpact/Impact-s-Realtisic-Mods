@@ -180,6 +180,7 @@ Asked for after the release candidate, before porting: every mixin, event handle
 
 - [x] playerAnimator: Lib's layer through playerAnimator's factory, with bent elbows, a torso lean into each blow, and eased fades in, between and out (first person stays vanilla's view: playerAnimator's first-person model filled the screen with the held item)
 - [x] A crafting motion while a timed craft runs, seen by everyone nearby (Lib's synced work motions, shown by Crafting)
+- [x] Curios: Vitality's Air Tanks and Hydration Pack show on the player's back in the back slot, and Vitality's gear plays its own equip sound in Curios slots
 
 ## Playtest feedback (Nov 2026)
 

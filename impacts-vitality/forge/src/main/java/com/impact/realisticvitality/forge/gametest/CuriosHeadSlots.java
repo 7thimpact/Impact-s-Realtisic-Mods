@@ -1,14 +1,23 @@
 package com.impact.realisticvitality.forge.gametest;
 
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
-/** For tests run with Curios installed: puts an item in the player's Curios head slot. Touched only when Curios is loaded. */
+import java.util.Optional;
+
+/**
+ * For tests run with Curios installed: puts an item in the player's Curios head slot, and reads the sound Curios plays
+ * when an item is equipped. Touched only when Curios is loaded.
+ */
 final class CuriosHeadSlots {
     private static final String HEAD_SLOT_TYPE = "head";
     private static final int FIRST_SLOT = 0;
+    private static final boolean IS_COSMETIC = false;
+    private static final boolean IS_VISIBLE = true;
 
     private CuriosHeadSlots() {
     }
@@ -24,5 +33,11 @@ final class CuriosHeadSlots {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    /** The sound Curios plays when the item is equipped in the given slot type, if Curios knows the item as a curio. */
+    static Optional<SoundEvent> equipSound(Player player, String slotType, ItemStack stack) {
+        SlotContext slot = new SlotContext(slotType, player, FIRST_SLOT, IS_COSMETIC, IS_VISIBLE);
+        return CuriosApi.getCurio(stack).resolve().map(curio -> curio.getEquipSound(slot).soundEvent());
     }
 }

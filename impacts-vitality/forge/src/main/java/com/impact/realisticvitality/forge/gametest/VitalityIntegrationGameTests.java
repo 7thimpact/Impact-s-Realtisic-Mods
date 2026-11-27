@@ -23,6 +23,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -196,6 +197,29 @@ public final class VitalityIntegrationGameTests {
             helper.assertTrue(hasHeadSlot, "With Curios, Vitality gives players a head slot");
             helper.assertTrue(BreathingGear.wornMask(player).equals(Optional.of(BreathingMask.RESPIRATOR)), "A Respirator in the head slot is worn");
             helper.assertTrue(player.getItemBySlot(EquipmentSlot.HEAD).isEmpty(), "while the helmet slot stays free");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
+    public static void curiosEquipSoundsMatchTheGear(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded("curios")) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            ItemStack strawHat = new ItemStack(VitalityItems.strawHat());
+            ItemStack airTank = new ItemStack(VitalityItems.tank(AirTank.AIR_TANK));
+            ItemStack hydrationPack = new ItemStack(VitalityItems.container(WaterContainer.HYDRATION_PACK));
+            helper.assertTrue(CuriosHeadSlots.equipSound(player, "head", strawHat).equals(Optional.of(VitalityItems.strawHat().getMaterial().getEquipSound())),
+                    "Headwear sounds like its armor material in Curios's head slot");
+            helper.assertTrue(CuriosHeadSlots.equipSound(player, "back", airTank).equals(Optional.of(SoundEvents.ARMOR_EQUIP_IRON)),
+                    "An Air Tank sounds like iron in the back slot");
+            helper.assertTrue(CuriosHeadSlots.equipSound(player, "back", hydrationPack).equals(Optional.of(SoundEvents.ARMOR_EQUIP_LEATHER)),
+                    "The Hydration Pack sounds like leather");
         } finally {
             MockPlayers.leaveWorld(player);
         }
