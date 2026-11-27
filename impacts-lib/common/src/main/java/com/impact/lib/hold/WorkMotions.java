@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * seconds while it lasts, for players who walk up later), and every client draws it like a hold motion.
  */
 public final class WorkMotions {
-    static final int RESEND_INTERVAL_TICKS = 40;
+    private static final int REPEAT_INTERVAL_TICKS = 40;
     private static final int NO_MOTION = -1;
     private static final ImpactsLog LOG = ImpactsLog.of(ImpactsLib.MOD_ID);
     private static final Map<UUID, HoldMotion> SHOWN_ON_SERVER = new ConcurrentHashMap<>();
@@ -58,7 +58,7 @@ public final class WorkMotions {
     public static void show(ServerPlayer player, Optional<HoldMotion> motion) {
         HoldMotion previous = motion.isPresent() ? SHOWN_ON_SERVER.put(player.getUUID(), motion.get()) : SHOWN_ON_SERVER.remove(player.getUUID());
         boolean hasChanged = !Objects.equals(previous, motion.orElse(null));
-        boolean isRepeatDue = motion.isPresent() && player.tickCount % RESEND_INTERVAL_TICKS == 0;
+        boolean isRepeatDue = motion.isPresent() && player.tickCount % REPEAT_INTERVAL_TICKS == 0;
         if (!hasChanged && !isRepeatDue) {
             return;
         }
