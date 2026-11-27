@@ -41,7 +41,7 @@ public final class AchievementChecks {
     /** "Travel Light": arriving in the Nether with empty pockets and no pack. */
     public static void onChangedDimension(ServerPlayer player, ResourceKey<Level> destination) {
         boolean isTravelingLight = destination == Level.NETHER && InventoryLocks.isActiveFor(player)
-                && countFilledPockets(player.getInventory()) == 0 && WornPack.of(player).isEmpty();
+                && countFilledPockets(player.getInventory()) == 0 && WornPack.worn(player).isEmpty();
         if (isTravelingLight) {
             InventoryTriggers.TRAVEL_LIGHT.trigger(player);
         }

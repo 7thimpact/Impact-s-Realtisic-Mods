@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
-/** A worn Frame Pack slows walking by {@code packs.framePackSlowness} (10% by default). */
+/** A worn Frame Pack, on the back or the chest, slows walking by {@code packs.framePackSlowness} (10% by default; two don't add up). */
 public final class PackEffects {
     private static final UUID FRAME_PACK_SLOWNESS_ID = UUID.fromString("7d0f2b8e-3c5a-4e61-9b1f-5a8c2d4e6f10");
     private static final String FRAME_PACK_SLOWNESS_NAME = "impactsinventory:frame_pack_slowness";
@@ -23,7 +23,7 @@ public final class PackEffects {
             return;
         }
         double slowness = InventoryServerConfig.get().packs.framePackSlowness.get();
-        boolean isSlowed = slowness > 0 && WornPack.kindOf(player).filter(PackKind::slowsWalking).isPresent();
+        boolean isSlowed = slowness > 0 && WornPack.wornKinds(player).stream().anyMatch(PackKind::slowsWalking);
         AttributeModifier current = movementSpeed.getModifier(FRAME_PACK_SLOWNESS_ID);
         boolean isUpToDate = isSlowed ? current != null && current.getAmount() == -slowness : current == null;
         if (isUpToDate) {

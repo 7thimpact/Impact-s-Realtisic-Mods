@@ -6,10 +6,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** The pack a player wears in the back slot, and putting items into it. Server side for every change. */
+/**
+ * The packs a player wears, one on the back and one on the chest, and putting items into them (the back pack first).
+ * Server side for every change.
+ */
 public final class WornPack {
     private WornPack() {
     }
@@ -19,32 +23,42 @@ public final class WornPack {
         return InventoryCommonConfig.get().features.arePacksEnabled.get();
     }
 
-    /** The worn pack, when the back slot holds one of Inventory's packs. */
-    public static Optional<ItemStack> of(Player player) {
-        ItemStack worn = BackSlotStorage.get(player);
+    /** The pack worn there, when that slot holds one of Inventory's packs. */
+    public static Optional<ItemStack> of(Player player, WornOn place) {
+        ItemStack worn = WornSlots.get(player, place);
         return PackRules.isPack(worn) ? Optional.of(worn) : Optional.empty();
     }
 
-    public static Optional<PackKind> kindOf(Player player) {
-        return of(player).map(pack -> ((PackItem) pack.getItem()).kind());
+    public static Optional<PackKind> kindOf(Player player, WornOn place) {
+        return of(player, place).map(pack -> ((PackItem) pack.getItem()).kind());
+    }
+
+    /** Every pack worn, the back one first. */
+    public static List<ItemStack> worn(Player player) {
+        return Arrays.stream(WornOn.values()).flatMap(place -> of(player, place).stream()).toList();
+    }
+
+    /** The kinds of every pack worn, the back one first. */
+    public static List<PackKind> wornKinds(Player player) {
+        return worn(player).stream().map(pack -> ((PackItem) pack.getItem()).kind()).toList();
     }
 
     public static int slotCount(ItemStack pack) {
         return ((PackItem) pack.getItem()).kind().slotCount();
     }
 
-    /** Adds the stack onto matching stacks already in the worn pack. Returns how many items moved. */
+    /** Adds the stack onto matching stacks already in the worn packs (the back one first). Returns how many items moved. */
     public static int stackOntoMatching(Player player, ItemStack stack) {
-        return changeContents(player, stack, true);
+        return Arrays.stream(WornOn.values()).mapToInt(place -> changeContents(player, place, stack, true)).sum();
     }
 
-    /** Puts the stack into the worn pack's empty slots. Returns how many items moved. */
+    /** Puts the stack into the worn packs' empty slots (the back one first). Returns how many items moved. */
     public static int placeInEmptySlots(Player player, ItemStack stack) {
-        return changeContents(player, stack, false);
+        return Arrays.stream(WornOn.values()).mapToInt(place -> changeContents(player, place, stack, false)).sum();
     }
 
-    private static int changeContents(Player player, ItemStack stack, boolean isStackingOnly) {
-        Optional<ItemStack> pack = of(player);
+    private static int changeContents(Player player, WornOn place, ItemStack stack, boolean isStackingOnly) {
+        Optional<ItemStack> pack = of(player, place);
         boolean canGoIn = pack.isPresent() && !stack.isEmpty() && arePacksEnabled() && PackRules.canGoInPack(stack);
         if (!canGoIn || player.level().isClientSide()) {
             return 0;

@@ -90,8 +90,8 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 - Required by Impact's Realistic Inventory only (`curios`, Maven `top.theillusivec4.curios:curios-forge:<curios_version>` from https://maven.theillusivec4.top/). A mod opts in with `mod_requires_curios=true` in its `gradle.properties`: it then compiles against Curios's API jar, its runs load Curios, and every test setup that lists it loads Curios too.
 - Impact's Realistic Vitality uses Curios optionally (headwear in Curios's `head` slot; its Air Tanks and Hydration Pack drawn on the back in the `back` slot; its own equip sounds), with `mod_uses_curios=true`: it compiles against the API, but its own runs leave Curios out. Its Curios code lives in `com.impact.realisticvitality.forge.compat.curios` and loads only when Curios is present.
-- IRI's back slot is Curios's `back` slot. IRI's data gives players that slot (`data/impactsinventory/curios/entities/player_back.json`, gated by `impactsinventory:back_slot_enabled`) and tags its packs `#curios:back`. Curios saves, syncs and drops it.
-- Code that imports Curios lives in IRI's `forge` module (`com.impact.realisticinventory.forge.curios`), behind `BackSlotBackend` in `common`.
+- IRI's back slot is Curios's `back` slot, and a second pack can be worn on the chest in Curios's `body` slot. IRI's data gives players both slots (`data/impactsinventory/curios/entities/player_back.json` and `player_body.json`, gated by `impactsinventory:back_slot_enabled` and `impactsinventory:chest_slot_enabled`) and tags its packs `#curios:back` and `#curios:body`. Curios saves, syncs and drops them.
+- Code that imports Curios lives in IRI's `forge` module (`com.impact.realisticinventory.forge.curios`), behind `WornSlotBackend` in `common` (`WornSlots`, with `WornOn.BACK` and `WornOn.CHEST`).
 
 ## AI notice
 

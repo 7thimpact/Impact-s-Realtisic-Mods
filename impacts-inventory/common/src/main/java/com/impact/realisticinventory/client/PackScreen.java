@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
-/** The open pack: its slots in 3 by 3 grids above the pockets and hands. B (or the inventory key) closes it. */
+/** The open pack: its slots in 3 by 3 grids above the pockets and hands. B or N (or the inventory key) closes it. */
 public final class PackScreen extends AbstractContainerScreen<PackMenu> {
     private static final int LABEL_ABOVE_POCKETS = 11;
     private static final int LABEL_COLOR = 0x404040;
@@ -56,7 +56,7 @@ public final class PackScreen extends AbstractContainerScreen<PackMenu> {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (InventoryKeys.isOpenPackKey(keyCode, scanCode)) {
+        if (InventoryKeys.placeOpenedBy(keyCode, scanCode).isPresent()) {
             onClose();
             return true;
         }

@@ -8,12 +8,12 @@ import net.minecraft.world.item.ItemStack;
 public final class InventoryBackSlotProvider implements BackSlotProvider {
     @Override
     public ItemStack get(Player player) {
-        return BackSlotStorage.get(player);
+        return WornSlots.get(player, WornOn.BACK);
     }
 
     @Override
     public boolean set(Player player, ItemStack stack) {
-        return BackSlotStorage.set(player, stack);
+        return WornSlots.set(player, WornOn.BACK, stack);
     }
 
     @Override
@@ -23,6 +23,6 @@ public final class InventoryBackSlotProvider implements BackSlotProvider {
 
     @Override
     public boolean isEnabled() {
-        return BackSlotStorage.isEnabled();
+        return WornSlots.isEnabled(WornOn.BACK);
     }
 }

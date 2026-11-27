@@ -18,10 +18,11 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-/** The pack menu's type, and opening the worn pack (the B key, or the button beside the back slot). */
+/** The pack menu's type, and opening a worn pack (B for the back one, N for the chest one, or the buttons by the main hand). */
 public final class PackMenus {
     private static final int MINIMUM_SLOTS = 1;
     private static final ImpactsLog LOG = ImpactsLog.of(InventoryMod.MOD_ID);
@@ -40,27 +41,31 @@ public final class PackMenus {
         return packMenuType.get();
     }
 
-    /** Server: opens the worn pack in its own screen (an Ender Pack opens the Ender Chest). Nothing happens without a worn pack. */
-    public static void openWornPack(ServerPlayer player) {
-        Optional<ItemStack> wornPack = WornPack.of(player);
+    /**
+     * Server: opens the pack worn there in its own screen (an Ender Pack opens the Ender Chest). Nothing happens without
+     * a pack worn there.
+     */
+    public static void openWornPack(ServerPlayer player, WornOn place) {
+        Optional<ItemStack> wornPack = WornPack.of(player, place);
+        String placeName = place.name().toLowerCase(Locale.ROOT);
         if (wornPack.isEmpty() || !WornPack.arePacksEnabled()) {
-            LOG.debug(InventoryLogCategories.PACKS, "pack open refused", "player", player.getGameProfile().getName(),
+            LOG.debug(InventoryLogCategories.PACKS, "pack open refused", "player", player.getGameProfile().getName(), "on", placeName,
                     "reason", wornPack.isEmpty() ? "no pack worn" : "packs disabled");
             return;
         }
         ItemStack pack = wornPack.get();
         if (((PackItem) pack.getItem()).kind().opensEnderChest()) {
-            EnderPacks.openEnderChest(player, player.blockPosition(), "worn");
+            EnderPacks.openEnderChest(player, player.blockPosition(), "worn on " + placeName);
             return;
         }
         int slotCount = WornPack.slotCount(pack);
         handOutItemsBeyondSize(player, pack, slotCount);
         NonNullList<ItemStack> slots = PackContents.read(pack, slotCount, new ArrayList<>());
-        PackContainer container = new PackContainer(player, pack, slots);
+        PackContainer container = new PackContainer(player, place, pack, slots);
         SimpleMenuProvider menuProvider = new SimpleMenuProvider((containerId, playerInventory, menuPlayer) ->
                 new PackMenu(containerId, playerInventory, container), pack.getHoverName());
         LoaderPlatform.current().openMenuWithData(player, menuProvider, buffer -> buffer.writeVarInt(slotCount));
-        LOG.debug(InventoryLogCategories.PACKS, "pack opened", "player", player.getGameProfile().getName(),
+        LOG.debug(InventoryLogCategories.PACKS, "pack opened", "player", player.getGameProfile().getName(), "on", placeName,
                 "item", ResourceIds.itemId(pack.getItem()), "slots", slotCount, "stacks", PackContents.stacksIn(pack).size());
     }
 

@@ -11,6 +11,7 @@ import com.impact.realisticinventory.inventory.InventoryLayout;
 import com.impact.realisticinventory.inventory.PickupRefusal;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackWearing;
+import com.impact.realisticinventory.pack.WornOn;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -54,12 +55,12 @@ public final class InventoryAchievementGameTests {
     public static void wearingEachPackEarnsItsAchievement(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            PackWearing.onWornItemChanged(player, ItemStack.EMPTY, new ItemStack(InventoryItems.satchel()));
+            PackWearing.onWornItemChanged(player, WornOn.BACK, ItemStack.EMPTY, new ItemStack(InventoryItems.satchel()));
             helper.assertTrue(isDone(player, InventoryAdvancements.PACKING_LIGHT), "A satchel earns Packing Light");
             helper.assertFalse(isDone(player, InventoryAdvancements.PACK_MULE), "A satchel isn't a backpack");
-            PackWearing.onWornItemChanged(player, new ItemStack(InventoryItems.satchel()), new ItemStack(InventoryItems.backpack()));
+            PackWearing.onWornItemChanged(player, WornOn.BACK, new ItemStack(InventoryItems.satchel()), new ItemStack(InventoryItems.backpack()));
             helper.assertTrue(isDone(player, InventoryAdvancements.PACK_MULE), "A backpack earns Pack Mule");
-            PackWearing.onWornItemChanged(player, new ItemStack(InventoryItems.backpack()), new ItemStack(InventoryItems.framePack()));
+            PackWearing.onWornItemChanged(player, WornOn.BACK, new ItemStack(InventoryItems.backpack()), new ItemStack(InventoryItems.framePack()));
             helper.assertTrue(isDone(player, InventoryAdvancements.HEAVY_LIFTING), "A frame pack earns Heavy Lifting");
         } finally {
             MockPlayers.leaveWorld(player);

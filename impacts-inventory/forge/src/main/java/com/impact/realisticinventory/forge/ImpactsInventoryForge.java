@@ -5,6 +5,7 @@ import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.InventoryStartup;
 import com.impact.realisticinventory.forge.client.InventoryForgeClient;
 import com.impact.realisticinventory.forge.condition.BackSlotEnabledCondition;
+import com.impact.realisticinventory.forge.condition.ChestSlotEnabledCondition;
 import com.impact.realisticinventory.forge.condition.PacksEnabledCondition;
 import com.impact.realisticinventory.forge.curios.InventoryCurios;
 import com.impact.realisticinventory.forge.datagen.InventoryDataGenerators;
@@ -36,6 +37,7 @@ public final class ImpactsInventoryForge {
         if (event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) {
             CraftingHelper.register(PacksEnabledCondition.Serializer.INSTANCE);
             CraftingHelper.register(BackSlotEnabledCondition.Serializer.INSTANCE);
+            CraftingHelper.register(ChestSlotEnabledCondition.Serializer.INSTANCE);
         }
     }
 }

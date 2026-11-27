@@ -1,0 +1,13 @@
+{
+  "conditions": [
+    {
+      "type": "impactsinventory:chest_slot_enabled"
+    }
+  ],
+  "entities": [
+    "minecraft:player"
+  ],
+  "slots": [
+    "body"
+  ]
+}

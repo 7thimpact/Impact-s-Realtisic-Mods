@@ -40,11 +40,13 @@ public final class InventoryCommonConfig {
         public final ConfigValue<Boolean> arePacksEnabled;
         public final ConfigValue<Boolean> arePlacedPacksEnabled;
         public final ConfigValue<Boolean> isBackSlotEnabled;
+        public final ConfigValue<Boolean> isChestSlotEnabled;
 
         private FeatureSettings(ConfigSpecBuilder builder) {
             arePacksEnabled = builder.defineBoolean("enabled", true, "Satchels, backpacks and frame packs, and their recipes.");
             arePlacedPacksEnabled = builder.defineBoolean("placedPacks", true, "Setting a pack down as a block.");
-            isBackSlotEnabled = builder.defineBoolean("backSlot", true, "The back slot. Without it, packs can't be worn.");
+            isBackSlotEnabled = builder.defineBoolean("backSlot", true, "The back slot. Without it, packs can't be worn on the back.");
+            isChestSlotEnabled = builder.defineBoolean("chestSlot", true, "The chest slot (Curios's body slot): a second pack worn on the chest.");
         }
     }
 }

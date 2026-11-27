@@ -3,13 +3,17 @@ package com.impact.realisticinventory.client;
 import com.impact.lib.ResourceIds;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.lang.InventoryTranslations;
+import com.impact.realisticinventory.pack.WornOn;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
-/** The small button above the back slot that opens the worn pack, the same as pressing B. Shown only while a pack is worn. */
+/**
+ * A small button by the main hand that opens a worn pack, the same as its key: right of the hand for the pack on the
+ * back (B), left of it for the pack on the chest (N). Shown only while a pack is worn there.
+ */
 final class OpenPackButton extends Button {
     static final int WIDTH = 14;
     static final int HEIGHT = 12;
@@ -17,9 +21,17 @@ final class OpenPackButton extends Button {
     private static final int ICON_SIZE = 8;
     private static final int ICON_TEXTURE_SIZE = 8;
 
-    OpenPackButton(int x, int y) {
-        super(x, y, WIDTH, HEIGHT, Component.empty(), button -> InventoryKeys.requestOpenPack(), DEFAULT_NARRATION);
-        setTooltip(Tooltip.create(Component.translatable(InventoryTranslations.OPEN_PACK_BUTTON, InventoryKeys.OPEN_PACK.getTranslatedKeyMessage())));
+    private final WornOn place;
+
+    OpenPackButton(int x, int y, WornOn place) {
+        super(x, y, WIDTH, HEIGHT, Component.empty(), button -> InventoryKeys.requestOpenPack(place), DEFAULT_NARRATION);
+        this.place = place;
+        String tooltipKey = place == WornOn.BACK ? InventoryTranslations.OPEN_PACK_BUTTON : InventoryTranslations.OPEN_CHEST_PACK_BUTTON;
+        setTooltip(Tooltip.create(Component.translatable(tooltipKey, InventoryKeys.keyFor(place).getTranslatedKeyMessage())));
+    }
+
+    WornOn place() {
+        return place;
     }
 
     @Override

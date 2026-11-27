@@ -38,8 +38,8 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 /**
  * Inventory's client side on Forge: the two-slot hotbar and the inventory screen in place of vanilla's, the pack
- * screen, the open-pack key, dyed pack items and the pack on the player's back (drawn through Curios). Loaded only on
- * the client.
+ * screen, the open-pack keys, dyed pack items and the packs on the player's back and chest (drawn through Curios).
+ * Loaded only on the client.
  */
 public final class InventoryForgeClient {
     private InventoryForgeClient() {
@@ -67,6 +67,7 @@ public final class InventoryForgeClient {
 
     private static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(InventoryKeys.OPEN_PACK);
+        event.register(InventoryKeys.OPEN_CHEST_PACK);
     }
 
     private static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {

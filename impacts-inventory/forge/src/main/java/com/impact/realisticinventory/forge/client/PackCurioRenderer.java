@@ -1,7 +1,10 @@
 package com.impact.realisticinventory.forge.client;
 
 import com.impact.realisticinventory.client.WornPackRenderer;
+import com.impact.realisticinventory.forge.curios.CuriosWornSlots;
+import com.impact.realisticinventory.pack.WornOn;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,8 +14,13 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
-/** Curios draws worn packs through this: it follows the wearer's torso, then Inventory's renderer draws the pack. */
+/**
+ * Curios draws worn packs through this: it follows the wearer's torso, then Inventory's renderer draws the pack, on the
+ * back or (turned around to face forward) on the chest.
+ */
 final class PackCurioRenderer implements ICurioRenderer {
+    private static final float HALF_TURN_DEGREES = 180.0F;
+
     private final WornPackRenderer packRenderer = new WornPackRenderer();
 
     @Override
@@ -25,6 +33,10 @@ final class PackCurioRenderer implements ICurioRenderer {
         }
         poseStack.pushPose();
         wearerModel.body.translateAndRotate(poseStack);
+        boolean isOnChest = CuriosWornSlots.placeOf(slotContext.identifier()).filter(place -> place == WornOn.CHEST).isPresent();
+        if (isOnChest) {
+            poseStack.mulPose(Axis.YP.rotationDegrees(HALF_TURN_DEGREES));
+        }
         packRenderer.render(poseStack, buffers, light, slotContext.entity(), stack);
         poseStack.popPose();
     }

@@ -9,14 +9,15 @@ import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.config.InventoryServerConfig;
 import com.impact.realisticinventory.inventory.InventoryLayout;
-import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackContents;
 import com.impact.realisticinventory.pack.PackEffects;
 import com.impact.realisticinventory.pack.PackMenu;
 import com.impact.realisticinventory.pack.PackMenus;
 import com.impact.realisticinventory.pack.PackRules;
+import com.impact.realisticinventory.pack.WornOn;
 import com.impact.realisticinventory.pack.WornPack;
+import com.impact.realisticinventory.pack.WornSlots;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -68,10 +69,10 @@ public final class InventoryPackGameTests {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
             useInMainHand(player, new ItemStack(InventoryItems.satchel()));
-            helper.assertTrue(BackSlotStorage.get(player).is(InventoryItems.satchel()), "Right-click puts the satchel on");
+            helper.assertTrue(WornSlots.get(player, WornOn.BACK).is(InventoryItems.satchel()), "Right-click puts the satchel on");
             helper.assertTrue(player.getMainHandItem().isEmpty(), "The hand is empty after putting the satchel on");
             useInMainHand(player, new ItemStack(InventoryItems.backpack()));
-            helper.assertTrue(BackSlotStorage.get(player).is(InventoryItems.backpack()), "The backpack goes on");
+            helper.assertTrue(WornSlots.get(player, WornOn.BACK).is(InventoryItems.backpack()), "The backpack goes on");
             helper.assertTrue(player.getMainHandItem().is(InventoryItems.satchel()), "The satchel comes back to the hand");
         } finally {
             MockPlayers.leaveWorld(player);
@@ -83,11 +84,11 @@ public final class InventoryPackGameTests {
     public static void pickupsGoIntoTheWornPackWhenPocketsAreFull(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.backpack()));
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.backpack()));
             fillHandsAndPocketsWithSwords(player.getInventory());
             ItemStack stone = new ItemStack(Items.STONE, STONE_COUNT);
             helper.assertTrue(player.getInventory().add(stone), "The stone is picked up");
-            List<ItemStack> packed = PackContents.stacksIn(BackSlotStorage.get(player));
+            List<ItemStack> packed = PackContents.stacksIn(WornSlots.get(player, WornOn.BACK));
             helper.assertTrue(packed.size() == 1 && packed.get(0).is(Items.STONE) && packed.get(0).getCount() == STONE_COUNT,
                     "The stone lands in the worn backpack");
             helper.assertFalse(player.getInventory().add(new ItemStack(InventoryItems.satchel())), "A pack can't be picked up into a pack");
@@ -101,10 +102,10 @@ public final class InventoryPackGameTests {
     public static void giveItemToPlayerFillsTheWornPack(GameTestHelper helper) {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.satchel()));
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.satchel()));
             fillHandsAndPocketsWithSwords(player.getInventory());
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.APPLE, STONE_COUNT));
-            List<ItemStack> packed = PackContents.stacksIn(BackSlotStorage.get(player));
+            List<ItemStack> packed = PackContents.stacksIn(WornSlots.get(player, WornOn.BACK));
             helper.assertTrue(packed.stream().anyMatch(stack -> stack.is(Items.APPLE) && stack.getCount() == STONE_COUNT),
                     "Forge's giveItemToPlayer puts the apples in the worn satchel");
         } finally {
@@ -130,8 +131,8 @@ public final class InventoryPackGameTests {
         try {
             ItemStack backpack = new ItemStack(InventoryItems.backpack());
             PackContents.write(backpack, packSlotsWith(new ItemStack(Items.APPLE, STONE_COUNT)));
-            BackSlotStorage.set(player, backpack);
-            PackMenus.openWornPack(player);
+            WornSlots.set(player, WornOn.BACK, backpack);
+            PackMenus.openWornPack(player, WornOn.BACK);
             helper.assertTrue(player.containerMenu instanceof PackMenu, "B opens the pack menu");
             PackMenu menu = (PackMenu) player.containerMenu;
             helper.assertTrue(menu.packSlotCount() == WornPack.slotCount(backpack), "The menu has the backpack's 9 slots");
@@ -151,9 +152,9 @@ public final class InventoryPackGameTests {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
             ItemStack backpack = new ItemStack(InventoryItems.backpack());
-            BackSlotStorage.set(player, backpack);
+            WornSlots.set(player, WornOn.BACK, backpack);
             fillHandsAndPocketsWithSwords(player.getInventory());
-            PackMenus.openWornPack(player);
+            PackMenus.openWornPack(player, WornOn.BACK);
             player.getInventory().add(new ItemStack(Items.STONE, STONE_COUNT));
             PackMenu menu = (PackMenu) player.containerMenu;
             menu.slots.get(1).setByPlayer(new ItemStack(Items.APPLE));
@@ -192,11 +193,11 @@ public final class InventoryPackGameTests {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         try {
             double normalSpeed = player.getAttributeValue(Attributes.MOVEMENT_SPEED);
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.framePack()));
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.framePack()));
             PackEffects.tick(player);
             double slowedSpeed = player.getAttributeValue(Attributes.MOVEMENT_SPEED);
             helper.assertTrue(Math.abs(slowedSpeed - normalSpeed * FRAME_PACK_SPEED_FACTOR) < SPEED_TOLERANCE, "A frame pack slows walking by 10%");
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.backpack()));
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.backpack()));
             PackEffects.tick(player);
             helper.assertTrue(Math.abs(player.getAttributeValue(Attributes.MOVEMENT_SPEED) - normalSpeed) < SPEED_TOLERANCE, "Other packs don't slow you");
         } finally {

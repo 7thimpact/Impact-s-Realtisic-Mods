@@ -1,7 +1,7 @@
 package com.impact.realisticinventory.forge.curios;
 
-import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.WornPack;
+import com.impact.realisticinventory.pack.WornSlots;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
@@ -9,8 +9,9 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 /**
- * How Curios treats Inventory's packs: they fit the back slot while packs and the back slot are switched on, and
- * sound like leather. Right-click wearing stays Inventory's own (it swaps with the worn pack), so Curios's is off.
+ * How Curios treats Inventory's packs: they fit the back slot and the chest (Curios's body slot) while packs and that
+ * slot are switched on, and sound like leather. Right-click wearing stays Inventory's own (it swaps with the pack worn
+ * there), so Curios's is off.
  */
 public final class PackCurio implements ICurioItem {
     private static final float EQUIP_VOLUME = 1.0F;
@@ -18,7 +19,7 @@ public final class PackCurio implements ICurioItem {
 
     @Override
     public boolean canEquip(SlotContext slotContext, ItemStack stack) {
-        return CuriosBackSlot.SLOT_TYPE.equals(slotContext.identifier()) && BackSlotStorage.isEnabled() && WornPack.arePacksEnabled();
+        return CuriosWornSlots.placeOf(slotContext.identifier()).filter(WornSlots::isEnabled).isPresent() && WornPack.arePacksEnabled();
     }
 
     @Override

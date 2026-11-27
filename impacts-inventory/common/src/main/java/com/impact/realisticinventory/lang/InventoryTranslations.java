@@ -16,6 +16,9 @@ public final class InventoryTranslations {
     public static final String POCKETS_FULL = "message.impactsinventory.pockets_full";
     public static final String OPEN_PACK_KEY = "key.impactsinventory.open_pack";
     public static final String OPEN_PACK_BUTTON = "button.impactsinventory.open_pack";
+    public static final String OPEN_CHEST_PACK_KEY = "key.impactsinventory.open_chest_pack";
+    public static final String OPEN_CHEST_PACK_BUTTON = "button.impactsinventory.open_chest_pack";
+    public static final String CHEST_PACK_HINT_TOOLTIP = "tooltip.impactsinventory.chest_pack_hint";
     public static final String SATCHEL = "item.impactsinventory.satchel";
     public static final String BACKPACK = "item.impactsinventory.backpack";
     public static final String FRAME_PACK = "item.impactsinventory.frame_pack";
@@ -49,8 +52,10 @@ public final class InventoryTranslations {
     private static Map<String, String> englishText() {
         Map<String, String> english = new LinkedHashMap<>();
         english.put(POCKETS_FULL, "Pockets full");
-        english.put(OPEN_PACK_KEY, "Open Pack");
-        english.put(OPEN_PACK_BUTTON, "Open pack (%s)");
+        english.put(OPEN_PACK_KEY, "Open Back Pack");
+        english.put(OPEN_PACK_BUTTON, "Open back pack (%s)");
+        english.put(OPEN_CHEST_PACK_KEY, "Open Chest Pack");
+        english.put(OPEN_CHEST_PACK_BUTTON, "Open chest pack (%s)");
         english.put(CREATIVE_TAB, "Impact's Realistic Inventory");
         english.put(SATCHEL, "Satchel");
         english.put(BACKPACK, "Backpack");
@@ -67,6 +72,7 @@ public final class InventoryTranslations {
         english.put(FIREPROOF_TOOLTIP, "Survives fire and lava");
         english.put(ENDER_PACK_TOOLTIP, "Opens your Ender Chest");
         english.put(PACK_HINT_TOOLTIP, "Right-click to wear, sneak-right-click a block to set down");
+        english.put(CHEST_PACK_HINT_TOOLTIP, "Sneak-right-click the air to wear on your chest");
         english.put(FIRST_JOIN, "Impact's Realistic Inventory: you now carry two hands and nine pockets. The other inventory slots are locked.");
         english.put(SLOTS_LOCKED, "Survival mode: you carry two hands and nine pockets again.");
         english.put(MOVED_TO_POCKETS, "Items from the locked slots went into your pockets.");

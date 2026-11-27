@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * A pack's tooltip: how full it is, its first few stacks (like a shulker box), the Frame Pack's slowdown, the Netherite
- * Pack's fireproofing, and how to use it. An Ender Pack says what it opens instead.
+ * Pack's fireproofing, and how to use it (on the back or the chest). An Ender Pack says what it opens instead.
  */
 final class PackTooltip {
     private static final int LISTED_STACKS = 5;
@@ -22,7 +22,7 @@ final class PackTooltip {
     static void append(ItemStack pack, PackKind kind, List<Component> lines) {
         if (kind.opensEnderChest()) {
             lines.add(Component.translatable(InventoryTranslations.ENDER_PACK_TOOLTIP).withStyle(ChatFormatting.DARK_PURPLE));
-            lines.add(Component.translatable(InventoryTranslations.PACK_HINT_TOOLTIP).withStyle(ChatFormatting.DARK_GRAY));
+            appendHints(lines);
             return;
         }
         List<ItemStack> contents = PackContents.stacksIn(pack);
@@ -41,6 +41,13 @@ final class PackTooltip {
             long slownessPercent = Math.round(slowness * PERCENT);
             lines.add(Component.translatable(InventoryTranslations.FRAME_PACK_SLOWNESS_TOOLTIP, slownessPercent).withStyle(ChatFormatting.BLUE));
         }
+        appendHints(lines);
+    }
+
+    private static void appendHints(List<Component> lines) {
         lines.add(Component.translatable(InventoryTranslations.PACK_HINT_TOOLTIP).withStyle(ChatFormatting.DARK_GRAY));
+        if (WornSlots.isEnabled(WornOn.CHEST)) {
+            lines.add(Component.translatable(InventoryTranslations.CHEST_PACK_HINT_TOOLTIP).withStyle(ChatFormatting.DARK_GRAY));
+        }
     }
 }

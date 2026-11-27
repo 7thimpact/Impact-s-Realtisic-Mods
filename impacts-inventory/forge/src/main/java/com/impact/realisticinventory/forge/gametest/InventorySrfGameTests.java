@@ -4,9 +4,10 @@ import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
 import com.impact.realisticinventory.hotbar.HandSwitch;
 import com.impact.realisticinventory.inventory.InventoryLayout;
-import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackContents;
+import com.impact.realisticinventory.pack.WornOn;
+import com.impact.realisticinventory.pack.WornSlots;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
@@ -45,9 +46,9 @@ public final class InventorySrfGameTests {
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.RAW_IRON, GIVEN_COUNT));
             helper.assertTrue(DroppedItems.countNewNear(player, Items.RAW_IRON, itemsAlreadyNearby) == GIVEN_COUNT,
                     "With full pockets and no pack, SRF's give drops at the player's feet");
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.satchel()));
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.satchel()));
             ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(Items.RAW_IRON, GIVEN_COUNT));
-            helper.assertTrue(PackContents.stacksIn(BackSlotStorage.get(player)).stream().anyMatch(stack -> stack.is(Items.RAW_IRON)),
+            helper.assertTrue(PackContents.stacksIn(WornSlots.get(player, WornOn.BACK)).stream().anyMatch(stack -> stack.is(Items.RAW_IRON)),
                     "With a worn pack, SRF's give lands in the pack");
             helper.assertTrue(countLockedStacks(player.getInventory()) == 0, "Nothing ever lands in a locked slot");
         } finally {

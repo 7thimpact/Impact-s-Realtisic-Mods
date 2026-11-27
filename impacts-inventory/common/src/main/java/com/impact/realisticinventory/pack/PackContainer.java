@@ -12,19 +12,22 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * The worn pack's slots as a container, for the pack menu on the server. Every change is written straight back into
- * the pack's NBT, so the pack item always holds its contents. The menu stays open only while that same pack is worn.
+ * A worn pack's slots as a container, for the pack menu on the server. Every change is written straight back into
+ * the pack's NBT, so the pack item always holds its contents. The menu stays open only while that same pack is worn
+ * in the same place (back or chest).
  * While it's open, other changes to that pack (pickups) go through this container, so nothing is overwritten.
  */
 public final class PackContainer implements Container {
     private static final Map<ItemStack, PackContainer> OPEN_CONTAINERS_BY_PACK = Collections.synchronizedMap(new IdentityHashMap<>());
 
     private final Player wearer;
+    private final WornOn place;
     private final ItemStack pack;
     private final NonNullList<ItemStack> slots;
 
-    public PackContainer(Player wearer, ItemStack pack, NonNullList<ItemStack> slots) {
+    public PackContainer(Player wearer, WornOn place, ItemStack pack, NonNullList<ItemStack> slots) {
         this.wearer = wearer;
+        this.place = place;
         this.pack = pack;
         this.slots = slots;
     }
@@ -103,7 +106,7 @@ public final class PackContainer implements Container {
 
     @Override
     public boolean stillValid(Player player) {
-        return BackSlotStorage.get(wearer) == pack;
+        return WornSlots.get(wearer, place) == pack;
     }
 
     @Override

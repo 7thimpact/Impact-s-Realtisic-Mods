@@ -3,7 +3,8 @@ package com.impact.realisticinventory.forge.condition;
 import com.google.gson.JsonObject;
 import com.impact.lib.ResourceIds;
 import com.impact.realisticinventory.InventoryMod;
-import com.impact.realisticinventory.pack.BackSlotStorage;
+import com.impact.realisticinventory.pack.WornOn;
+import com.impact.realisticinventory.pack.WornSlots;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
@@ -26,7 +27,7 @@ public final class BackSlotEnabledCondition implements ICondition {
 
     @Override
     public boolean test(IContext context) {
-        return BackSlotStorage.isEnabled();
+        return WornSlots.isEnabled(WornOn.BACK);
     }
 
     /** Reads and writes the condition. It has no fields, so the JSON is only its type. */

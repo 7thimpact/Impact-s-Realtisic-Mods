@@ -4,7 +4,6 @@ import com.impact.lib.ImpactsLib;
 import com.impact.lib.ResourceIds;
 import com.impact.lib.gametest.MockPlayers;
 import com.impact.realisticinventory.InventoryMod;
-import com.impact.realisticinventory.pack.BackSlotStorage;
 import com.impact.realisticinventory.pack.InventoryItems;
 import com.impact.realisticinventory.pack.PackContents;
 import com.impact.realisticinventory.pack.PackEffects;
@@ -14,7 +13,9 @@ import com.impact.realisticinventory.pack.PackMenus;
 import com.impact.realisticinventory.pack.PackRules;
 import com.impact.realisticinventory.pack.PlacedPackBlockEntity;
 import com.impact.realisticinventory.pack.PlacedPacks;
+import com.impact.realisticinventory.pack.WornOn;
 import com.impact.realisticinventory.pack.WornPack;
+import com.impact.realisticinventory.pack.WornSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -66,12 +67,12 @@ public final class InventoryPackTierGameTests {
         try {
             double normalSpeed = player.getAttributeValue(Attributes.MOVEMENT_SPEED);
             for (PackKind kind : TIERS_PAST_THE_FRAME_PACK) {
-                BackSlotStorage.set(player, new ItemStack(InventoryItems.pack(kind)));
+                WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.pack(kind)));
                 PackEffects.tick(player);
                 helper.assertTrue(Math.abs(player.getAttributeValue(Attributes.MOVEMENT_SPEED) - normalSpeed) < SPEED_TOLERANCE, kind + " doesn't slow walking");
             }
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.pack(PackKind.NETHERITE_PACK)));
-            PackMenus.openWornPack(player);
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.pack(PackKind.NETHERITE_PACK)));
+            PackMenus.openWornPack(player, WornOn.BACK);
             helper.assertTrue(player.containerMenu instanceof PackMenu menu && menu.packSlotCount() == PackKind.NETHERITE_PACK.slotCount(),
                     "The worn Netherite Pack opens with all 36 slots");
             player.closeContainer();
@@ -128,8 +129,8 @@ public final class InventoryPackTierGameTests {
         ServerPlayer player = InventoryTestPlayers.joinInSurvival(helper);
         BlockPos placedAt = helper.absolutePos(BlockPos.ZERO.above());
         try {
-            BackSlotStorage.set(player, new ItemStack(InventoryItems.pack(PackKind.ENDER_PACK)));
-            PackMenus.openWornPack(player);
+            WornSlots.set(player, WornOn.BACK, new ItemStack(InventoryItems.pack(PackKind.ENDER_PACK)));
+            PackMenus.openWornPack(player, WornOn.BACK);
             helper.assertTrue(isEnderChestOpen(player), "The worn Ender Pack opens the wearer's Ender Chest");
             player.closeContainer();
             helper.assertTrue(WornPack.placeInEmptySlots(player, new ItemStack(Items.APPLE)) == 0, "Pickups don't go into the Ender Chest");

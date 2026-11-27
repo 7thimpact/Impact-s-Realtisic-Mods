@@ -181,6 +181,10 @@ Asked for after the release candidate, before porting: every mixin, event handle
 - [x] playerAnimator: Lib's layer through playerAnimator's factory, with bent elbows, a torso lean into each blow, and eased fades in, between and out (first person stays vanilla's view: playerAnimator's first-person model filled the screen with the held item)
 - [x] A crafting motion while a timed craft runs, seen by everyone nearby (Lib's synced work motions, shown by Crafting)
 - [x] Curios: Vitality's Air Tanks and Hydration Pack show on the player's back in the back slot, and Vitality's gear plays its own equip sound in Curios slots
+- [x] Inventory: a second pack on the chest (Curios's body slot): sneak-right-click to wear it, N or a button to open it
+- [ ] Vitality's back gear in Curios's back slot without Inventory (Lib's Curios-backed back slot)
+- [ ] Vitality: the Thermometer works from Curios's charm slot
+- [ ] Vitality gestures: shivering when freezing, wiping the brow when overheating, cupped-hand sips
 
 ## Playtest feedback (Nov 2026)
 
