@@ -176,6 +176,11 @@ Asked for after the release candidate, before porting: every mixin, event handle
 - [x] A GameTest for each, all family setups passing
 - [x] Vanilla and shared Forge tags: every block in its tool tag (and copper in `needs_stone_tool`), Food's fillets and pork in `fishes` and `piglin_food`, tools in `minecraft:tools`, cloth in `dampens_vibrations`, the placed pack guarded by piglins, and the shared names other mods read (`forge:tools/knives`, `forge:flour`, `forge:dough`, `forge:plates/iron`, `forge:rods/iron`, `forge:rods/wooden`, `forge:armors/helmets`)
 
+## playerAnimator and Curios review (Nov 2026)
+
+- [x] playerAnimator: Lib's layer through playerAnimator's factory, with bent elbows, a torso lean into each blow, and eased fades in, between and out (first person stays vanilla's view: playerAnimator's first-person model filled the screen with the held item)
+- [x] A crafting motion while a timed craft runs, seen by everyone nearby (Lib's synced work motions, shown by Crafting)
+
 ## Playtest feedback (Nov 2026)
 
 Fixes from the user's first playtest, worked through before the remaining milestones.

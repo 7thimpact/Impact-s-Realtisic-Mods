@@ -1,6 +1,8 @@
 package com.impact.realisticcrafting.timing;
 
 import com.impact.lib.crafting.CraftingProgress;
+import com.impact.lib.hold.HoldMotion;
+import com.impact.lib.hold.WorkMotions;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.advancement.CraftingAchievements;
@@ -55,8 +57,17 @@ public final class CraftTimers {
                 "ticks", ticks);
     }
 
-    /** Server, every tick: the open grid's craft runs; a queued repeat takes each finished craft. */
+    /**
+     * Server, every tick: the open grid's craft runs, and a queued repeat takes each finished craft. While a craft runs,
+     * everyone nearby sees the player working at it (Lib's crafting motion).
+     */
     public static void tick(ServerPlayer player) {
+        runOpenGrid(player);
+        boolean isCrafting = isOutputLocked(player.containerMenu);
+        WorkMotions.show(player, isCrafting ? Optional.of(HoldMotion.CRAFT) : Optional.empty());
+    }
+
+    private static void runOpenGrid(ServerPlayer player) {
         AbstractContainerMenu menu = player.containerMenu;
         Optional<CraftTimer> timer = timerOf(menu);
         if (timer.isEmpty()) {

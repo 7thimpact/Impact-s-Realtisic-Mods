@@ -13,6 +13,7 @@ import com.impact.lib.forge.datagen.LibDataGenerators;
 import com.impact.lib.forge.event.ImpactsModsReadyEvent;
 import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.fuel.FuelRegistry;
+import com.impact.lib.hold.WorkMotions;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.LibNetwork;
 import net.minecraft.server.level.ServerPlayer;
@@ -48,6 +49,7 @@ public final class ImpactsLibForge {
         }
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onRegisterCommands);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onPlayerLoggedIn);
+        MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onPlayerLoggedOut);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerTick);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onClientTick);
         MinecraftForge.EVENT_BUS.addListener(ImpactsLibForge::onServerStopped);
@@ -102,6 +104,10 @@ public final class ImpactsLibForge {
             return;
         }
         LoneLibAchievement.grantOnLogin(player);
+    }
+
+    private static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        WorkMotions.forget(event.getEntity());
     }
 
     private static void onServerTick(TickEvent.ServerTickEvent event) {

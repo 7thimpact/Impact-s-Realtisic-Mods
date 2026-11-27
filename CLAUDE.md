@@ -83,7 +83,7 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## playerAnimator
 
-- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib draws hold-to-use motions (hammering, grinding, sewing, …) through playerAnimator when it is installed, and through its own client mixins on the arm and held-item poses (`HoldMotionPoses`) when it isn't, so the motion shows either way.
+- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib draws hold-to-use motions (hammering, grinding, …) and work motions (`WorkMotions`: crafting at a table) through playerAnimator when it is installed (with elbow bends, a torso lean and fades), and through its own client mixins on the arm and held-item poses (`HoldMotionPoses`) when it isn't, so the motion shows either way. First person always uses Lib's own hand motion.
 - Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
 
 ## Curios

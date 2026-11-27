@@ -8,7 +8,9 @@ import com.impact.lib.grinding.GrinderTier;
 import com.impact.lib.grinding.Grinding;
 import com.impact.lib.grinding.GrindingRecipe;
 import com.impact.lib.hold.HoldAction;
+import com.impact.lib.hold.HoldMotion;
 import com.impact.lib.hold.HoldToUse;
+import com.impact.lib.hold.WorkMotions;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -24,9 +26,10 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Lib's food slice: grinder bowls, grinding recipes and hold-to-use cycles. */
+/** Lib's food slice: grinder bowls, grinding recipes, hold-to-use cycles, and the work motions mods show. */
 @GameTestHolder(ImpactsLib.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class LibGrindingGameTests {
@@ -87,6 +90,25 @@ public final class LibGrindingGameTests {
             helper.assertTrue(finishedCycles.get() == 1, "Letting go loses the cycle in progress");
         } finally {
             Grinding.registerHoldActions();
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = EMPTY_TEMPLATE)
+    public static void workMotionsFollowWhatTheServerShows(GameTestHelper helper) {
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "A player shows no work motion at first");
+            WorkMotions.show(player, Optional.of(HoldMotion.CRAFT));
+            WorkMotions.show(player, Optional.of(HoldMotion.CRAFT));
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.CRAFT)), "A mod shows the crafting motion");
+            WorkMotions.show(player, Optional.empty());
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "and stops it");
+            WorkMotions.show(player, Optional.of(HoldMotion.TURN));
+            WorkMotions.forget(player);
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "A player who leaves is forgotten");
+        } finally {
             MockPlayers.leaveWorld(player);
         }
         helper.succeed();

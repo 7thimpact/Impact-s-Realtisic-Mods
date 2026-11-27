@@ -1,6 +1,5 @@
 package com.impact.lib.mixin.client;
 
-import com.impact.lib.hold.HoldMotion;
 import com.impact.lib.hold.HoldMotionPoses;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -18,8 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 /**
- * First person: during a hold-to-use action the working hand moves with the motion (the hammer lifts back and comes
- * down on each blow, the grinding stick circles), so hammering looks like hammering and not like holding right-click.
+ * First person: during a hold-to-use action, or work a mod shows (a craft at a table), the working hand moves with the
+ * motion (the hammer lifts back and comes down on each blow, the grinding stick circles), so hammering looks like
+ * hammering and not like holding right-click. This runs with or without playerAnimator.
  */
 @Mixin(ItemInHandRenderer.class)
 public abstract class ItemInHandRendererHoldMotionMixin {
@@ -31,12 +31,12 @@ public abstract class ItemInHandRendererHoldMotionMixin {
                                            ItemStack stack, float equipProgress, PoseStack poseStack, MultiBufferSource buffers, int light,
                                            CallbackInfo callback) {
         impactslib$isHandMoved = false;
-        Optional<HoldMotion> motion = HoldMotionPoses.currentMotion(player);
-        if (motion.isEmpty()) {
+        Optional<HoldMotionPoses.ActiveMotion> active = HoldMotionPoses.activeMotion(player, partialTick);
+        if (active.isEmpty()) {
             return;
         }
-        Optional<HoldMotionPoses.HandOffset> offset = HoldMotionPoses.handOffset(motion.get(), hand == InteractionHand.MAIN_HAND,
-                HoldMotionPoses.holdTime(player, partialTick));
+        Optional<HoldMotionPoses.HandOffset> offset = HoldMotionPoses.handOffset(active.get().motion(), hand == InteractionHand.MAIN_HAND,
+                active.get().time());
         if (offset.isEmpty()) {
             return;
         }

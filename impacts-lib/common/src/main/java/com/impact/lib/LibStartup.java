@@ -14,6 +14,7 @@ import com.impact.lib.dump.LibItemDumpSection;
 import com.impact.lib.dump.LibPlayerDumpSection;
 import com.impact.lib.fuel.CompostRegistry;
 import com.impact.lib.grinding.Grinding;
+import com.impact.lib.hold.WorkMotions;
 import com.impact.lib.log.DebugLogFile;
 import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.LibNetwork;
@@ -38,7 +39,7 @@ public final class LibStartup {
         LibCommonConfig commonConfig = LibCommonConfig.register();
         LibServerConfig.register();
         LibClientConfig.register();
-        LibNetwork.create();
+        WorkMotions.register(LibNetwork.create());
         ToolCrafting.register();
         Grinding.register();
         PlayerAttachments.register(ImpactsCounters.COUNTERS);

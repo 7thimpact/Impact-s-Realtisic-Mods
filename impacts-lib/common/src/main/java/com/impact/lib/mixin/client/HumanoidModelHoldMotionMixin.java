@@ -20,8 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Optional;
 
 /**
- * Third person, without playerAnimator: during a hold-to-use action the arms take the motion's pose (the off arm
- * swings the hammer down, the main arm stirs the bowl...). With playerAnimator installed, its layer does this instead.
+ * Third person, without playerAnimator: during a hold-to-use action, or work a mod shows (a craft at a table), the arms
+ * take the motion's pose (the off arm swings the hammer down, the main arm stirs the bowl...). With playerAnimator
+ * installed, its layer does this instead, with elbow bends and fades.
  */
 @Mixin(HumanoidModel.class)
 public abstract class HumanoidModelHoldMotionMixin<T extends LivingEntity> {
@@ -38,14 +39,13 @@ public abstract class HumanoidModelHoldMotionMixin<T extends LivingEntity> {
         if (!(entity instanceof Player player) || ImpactsLib.isLoaded(StartupSummary.PLAYER_ANIMATOR_MOD_ID)) {
             return;
         }
-        Optional<HoldMotion> motion = HoldMotionPoses.currentMotion(player);
-        if (motion.isEmpty()) {
+        Optional<HoldMotionPoses.ActiveMotion> active = HoldMotionPoses.activeMotion(player, Minecraft.getInstance().getFrameTime());
+        if (active.isEmpty()) {
             return;
         }
-        float time = HoldMotionPoses.holdTime(player, Minecraft.getInstance().getFrameTime());
         boolean isRightArmMain = player.getMainArm() == HumanoidArm.RIGHT;
-        pose(rightArm, motion.get(), isRightArmMain, false, time);
-        pose(leftArm, motion.get(), !isRightArmMain, true, time);
+        pose(rightArm, active.get().motion(), isRightArmMain, false, active.get().time());
+        pose(leftArm, active.get().motion(), !isRightArmMain, true, active.get().time());
     }
 
     private static void pose(ModelPart arm, HoldMotion motion, boolean isMainArm, boolean isLeftArm, float time) {

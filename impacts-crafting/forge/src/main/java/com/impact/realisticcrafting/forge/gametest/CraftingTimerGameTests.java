@@ -6,6 +6,8 @@ import com.impact.lib.dump.DumpSection;
 import com.impact.lib.dump.ImpactsDump;
 import com.impact.lib.gametest.ConfigOverrides;
 import com.impact.lib.gametest.MockPlayers;
+import com.impact.lib.hold.HoldMotion;
+import com.impact.lib.hold.WorkMotions;
 import com.impact.lib.wood.WoodData;
 import com.impact.realisticcrafting.CraftingMod;
 import com.impact.realisticcrafting.block.MakeshiftTable;
@@ -94,6 +96,20 @@ public final class CraftingTimerGameTests {
             table.clicked(RESULT_SLOT, 0, ClickType.PICKUP, player);
             helper.assertTrue(table.getCarried().is(Items.OAK_PLANKS), "and then it can be taken");
             table.setCarried(ItemStack.EMPTY);
+        });
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void aRunningCraftShowsTheCraftingMotion(GameTestHelper helper) {
+        atTable(helper, MakeshiftTable.WOODEN, (player, table) -> {
+            runTicks(player, 1);
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "An empty grid shows no crafting motion");
+            table.grid().setItem(0, new ItemStack(Items.OAK_LOG));
+            runTicks(player, 1);
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.CRAFT)), "A running craft shows Lib's crafting motion");
+            runTicks(player, PLANKS_TICKS);
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "and it stops when the craft is done");
         });
         helper.succeed();
     }
