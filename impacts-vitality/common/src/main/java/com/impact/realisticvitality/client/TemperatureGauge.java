@@ -6,6 +6,7 @@ import com.impact.realisticvitality.config.TemperatureUnit;
 import com.impact.realisticvitality.config.VitalityClientConfig;
 import com.impact.realisticvitality.config.VitalityNeed;
 import com.impact.realisticvitality.config.VitalityServerConfig;
+import com.impact.realisticvitality.player.CarriedItems;
 import com.impact.realisticvitality.player.TemperatureState;
 import com.impact.realisticvitality.player.VitalityExemptions;
 import com.impact.realisticvitality.registry.VitalityItems;
@@ -67,7 +68,7 @@ public final class TemperatureGauge {
         HudBounds hotbar = HudLayout.hotbarBounds(screenWidth, screenHeight);
         int dialLeft = hotbar.left() + hotbar.width() / 2 - DIAL_SIZE / 2;
         int levelRoom = player.experienceLevel > 0 ? LEVEL_NUMBER_HEIGHT : 0;
-        boolean hasThermometer = player.getInventory().hasAnyMatching(stack -> stack.is(VitalityItems.thermometer()));
+        boolean hasThermometer = CarriedItems.isCarried(player, VitalityItems.thermometer());
         float readoutScale = VitalityClientConfig.get().display.readoutScale.get().floatValue();
         int readoutRoom = hasThermometer ? Mth.ceil(Minecraft.getInstance().font.lineHeight * readoutScale) : 0;
         int dialTop = hotbar.top() - EXPERIENCE_BAR_GAP - levelRoom - readoutRoom - DIAL_SIZE;

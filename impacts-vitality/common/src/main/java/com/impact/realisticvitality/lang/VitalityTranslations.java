@@ -42,6 +42,7 @@ public final class VitalityTranslations {
     public static final String CHARCOAL_FILTER_TOOLTIP = "tooltip.impactsvitality.charcoal_filter";
     public static final String STRAW_HAT_TOOLTIP = "tooltip.impactsvitality.straw_hat";
     public static final String THERMOMETER_TOOLTIP = "tooltip.impactsvitality.thermometer";
+    public static final String THERMOMETER_CHARM_TOOLTIP = "tooltip.impactsvitality.thermometer_charm";
     public static final String BOTTLED_AIR_TOOLTIP = "tooltip.impactsvitality.bottled_air";
     private static final String SUBTITLE_PREFIX = "subtitles.impactsvitality.";
     private static final String JEI_INFO_PREFIX = "jei.impactsvitality.info.";
@@ -208,6 +209,7 @@ public final class VitalityTranslations {
         english.put(CHARCOAL_FILTER_TOOLTIP, "Fits a Respirator, Rebreather or Water Filter");
         english.put(STRAW_HAT_TOOLTIP, "Shade: cooler in the sun");
         english.put(THERMOMETER_TOOLTIP, "Carry it to see the temperature");
+        english.put(THERMOMETER_CHARM_TOOLTIP, "Works from a charm slot too");
         english.put(BOTTLED_AIR_TOOLTIP, "Breathe it in for 5 bubbles");
         SUBTITLES.forEach((soundPath, text) -> english.put(subtitle(soundPath), text));
         JEI_PAGES.forEach((page, text) -> english.put(jeiInfo(page), text));

@@ -8,6 +8,7 @@ import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.air.AirTank;
 import com.impact.realisticvitality.air.BreathingGear;
 import com.impact.realisticvitality.air.BreathingMask;
+import com.impact.realisticvitality.player.CarriedItems;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.registry.VitalityTags;
@@ -188,7 +189,7 @@ public final class VitalityIntegrationGameTests {
 
     @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
     public static void headwearWorksFromCuriosHeadSlot(GameTestHelper helper) {
-        if (!ImpactsLib.isLoaded("curios")) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CURIOS_MOD_ID)) {
             helper.succeed();
             return;
         }
@@ -206,7 +207,7 @@ public final class VitalityIntegrationGameTests {
 
     @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
     public static void withCuriosAloneTheBackSlotIsCuriosBackSlot(GameTestHelper helper) {
-        boolean isCuriosWithoutInventory = ImpactsLib.isLoaded("curios") && !ImpactsLib.isLoaded(VitalityMod.INVENTORY_MOD_ID);
+        boolean isCuriosWithoutInventory = ImpactsLib.isLoaded(VitalityMod.CURIOS_MOD_ID) && !ImpactsLib.isLoaded(VitalityMod.INVENTORY_MOD_ID);
         if (!isCuriosWithoutInventory) {
             helper.succeed();
             return;
@@ -229,8 +230,27 @@ public final class VitalityIntegrationGameTests {
     }
 
     @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
+    public static void theThermometerWorksFromCuriosCharmSlot(GameTestHelper helper) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CURIOS_MOD_ID)) {
+            helper.succeed();
+            return;
+        }
+        ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        try {
+            helper.assertFalse(CarriedItems.isCarried(player, VitalityItems.thermometer()), "No Thermometer carried at first");
+            boolean hasCharmSlot = CuriosTestSlots.putIn(player, "charm", new ItemStack(VitalityItems.thermometer()));
+            helper.assertTrue(hasCharmSlot, "With Curios, Vitality gives players a charm slot");
+            helper.assertTrue(CarriedItems.isCarried(player, VitalityItems.thermometer()), "A Thermometer in the charm slot counts as carried");
+            helper.assertTrue(player.getInventory().isEmpty(), "without taking an inventory slot");
+        } finally {
+            MockPlayers.leaveWorld(player);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = VitalitySkeletonGameTests.LIB_NAMESPACE, template = VitalitySkeletonGameTests.EMPTY_TEMPLATE)
     public static void curiosEquipSoundsMatchTheGear(GameTestHelper helper) {
-        if (!ImpactsLib.isLoaded("curios")) {
+        if (!ImpactsLib.isLoaded(VitalityMod.CURIOS_MOD_ID)) {
             helper.succeed();
             return;
         }

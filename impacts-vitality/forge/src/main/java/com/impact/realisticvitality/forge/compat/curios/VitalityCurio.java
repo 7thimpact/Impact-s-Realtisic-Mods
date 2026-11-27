@@ -1,6 +1,7 @@
 package com.impact.realisticvitality.forge.compat.curios;
 
 import com.impact.realisticvitality.item.AirTankItem;
+import com.impact.realisticvitality.item.HydrationPackItem;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
@@ -11,7 +12,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 /**
  * How Curios treats Vitality's gear in its slots: equipping sounds like the gear (a mask or hat like its armor
- * material, a tank like iron, the Hydration Pack like leather). Right-clicking an Air Tank straps it into an empty back
+ * material, a tank like iron, the Hydration Pack like leather, the Thermometer like any other gear). Right-clicking an Air Tank straps it into an empty back
  * slot; everything else keeps its own right-click (drinking, wearing on the head), so Curios's right-click equip stays
  * off for it.
  */
@@ -33,6 +34,9 @@ final class VitalityCurio implements ICurioItem {
         if (stack.getItem() instanceof ArmorItem armorItem) {
             return armorItem.getMaterial().getEquipSound();
         }
-        return stack.getItem() instanceof AirTankItem ? SoundEvents.ARMOR_EQUIP_IRON : SoundEvents.ARMOR_EQUIP_LEATHER;
+        if (stack.getItem() instanceof AirTankItem) {
+            return SoundEvents.ARMOR_EQUIP_IRON;
+        }
+        return stack.getItem() instanceof HydrationPackItem ? SoundEvents.ARMOR_EQUIP_LEATHER : SoundEvents.ARMOR_EQUIP_GENERIC;
     }
 }

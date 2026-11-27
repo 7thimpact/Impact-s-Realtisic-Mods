@@ -1,5 +1,7 @@
 package com.impact.realisticvitality.client;
 
+import com.impact.lib.ImpactsLib;
+import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.config.VitalityServerConfig;
 import com.impact.realisticvitality.lang.VitalityTranslations;
 import com.impact.realisticvitality.registry.VitalityItems;
@@ -29,6 +31,9 @@ public final class VitalityTooltips {
         }
         if (stack.is(VitalityItems.thermometer())) {
             lines.add(gray(VitalityTranslations.THERMOMETER_TOOLTIP));
+        }
+        if (stack.is(VitalityItems.thermometer()) && ImpactsLib.isLoaded(VitalityMod.CURIOS_MOD_ID)) {
+            lines.add(gray(VitalityTranslations.THERMOMETER_CHARM_TOOLTIP));
         }
         if (stack.is(VitalityItems.bottledAir())) {
             lines.add(gray(VitalityTranslations.BOTTLED_AIR_TOOLTIP));

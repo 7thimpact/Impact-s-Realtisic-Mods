@@ -4,6 +4,7 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.air.AirTank;
 import com.impact.realisticvitality.debug.VitalityLogCategories;
+import com.impact.realisticvitality.player.CarriedItems;
 import com.impact.realisticvitality.player.Headwear;
 import com.impact.realisticvitality.registry.VitalityItems;
 import com.impact.realisticvitality.thirst.WaterContainer;
@@ -22,12 +23,13 @@ import java.util.List;
 
 /**
  * Optional Curios support: Vitality's masks and the Straw Hat also fit Curios's {@code head} slot, which Vitality's
- * data gives every player; the Air Tanks and the Hydration Pack show on the player's back in the back slot; and all of
- * them sound like themselves when equipped. Loaded only when Curios is installed; Vitality runs the same without it.
+ * data gives every player; the Air Tanks and the Hydration Pack go in the back slot and show on the player's back; the
+ * Thermometer works from the {@code charm} slot; and all of them sound like themselves when equipped. Loaded only
+ * when Curios is installed; Vitality runs the same without it.
  */
 public final class VitalityCurios {
-    public static final String MOD_ID = "curios";
     private static final String HEAD_SLOT_TYPE = "head";
+    private static final String CHARM_SLOT_TYPE = "charm";
     private static final ImpactsLog LOG = ImpactsLog.of(VitalityMod.MOD_ID);
     private static final VitalityCurio CURIO = new VitalityCurio();
 
@@ -36,12 +38,13 @@ public final class VitalityCurios {
 
     public static void register(IEventBus modEventBus) {
         Headwear.useExtraSlots(VitalityCurios::wornOnHead);
+        CarriedItems.useExtraSlots(VitalityCurios::carriedAsCharms);
         modEventBus.addListener(VitalityCurios::onCommonSetup);
         if (FMLEnvironment.dist.isClient()) {
             modEventBus.addListener(VitalityCurioRendering::onRegisterLayers);
             modEventBus.addListener(VitalityCurioRendering::onClientSetup);
         }
-        LOG.debug(VitalityLogCategories.STARTUP, "curios support on", "headSlot", true, "backGearShown", true, "equipSounds", true);
+        LOG.debug(VitalityLogCategories.STARTUP, "curios support on", "headSlot", true, "backGearShown", true, "charmSlot", true, "equipSounds", true);
     }
 
     /** Curios's behavior for the headwear and the back gear (Air Tanks and the Hydration Pack, worn in the back slot). */
@@ -52,6 +55,7 @@ public final class VitalityCurios {
     static List<Item> curioItems() {
         List<Item> items = new ArrayList<>(VitalityItems.headwear());
         items.addAll(backGear());
+        items.add(VitalityItems.thermometer());
         return items;
     }
 
@@ -61,8 +65,16 @@ public final class VitalityCurios {
     }
 
     private static List<ItemStack> wornOnHead(Player player) {
+        return stacksIn(player, HEAD_SLOT_TYPE);
+    }
+
+    private static List<ItemStack> carriedAsCharms(Player player) {
+        return stacksIn(player, CHARM_SLOT_TYPE);
+    }
+
+    private static List<ItemStack> stacksIn(Player player, String slotType) {
         return CuriosApi.getCuriosInventory(player).resolve()
-                .flatMap(curios -> curios.getStacksHandler(HEAD_SLOT_TYPE))
+                .flatMap(curios -> curios.getStacksHandler(slotType))
                 .map(ICurioStacksHandler::getStacks)
                 .map(VitalityCurios::stacksOf)
                 .orElse(List.of());

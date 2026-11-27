@@ -130,6 +130,7 @@
   "tooltip.impactsvitality.tank.air": "Air: %s of %s seconds",
   "tooltip.impactsvitality.tank.needs_respirator": "Supplies thin air while you wear a Respirator or Rebreather",
   "tooltip.impactsvitality.thermometer": "Carry it to see the temperature",
+  "tooltip.impactsvitality.thermometer_charm": "Works from a charm slot too",
   "tooltip.impactsvitality.water.cold_water": "Purified and chilled: cools you right down",
   "tooltip.impactsvitality.water.purified_water": "Clean drinking water. Brews like a water bottle",
   "tooltip.impactsvitality.water.salt_water": "Makes thirst worse. Boil or smelt it to purify it",

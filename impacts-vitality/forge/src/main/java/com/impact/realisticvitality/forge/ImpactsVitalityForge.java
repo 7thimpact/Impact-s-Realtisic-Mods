@@ -26,7 +26,7 @@ public final class ImpactsVitalityForge {
         context.getModEventBus().addListener(ImpactsVitalityForge::onRegister);
         context.getModEventBus().addListener(ImpactsVitalityForge::onCommonSetup);
         VitalityForgeEvents.register();
-        if (ModList.get().isLoaded(VitalityCurios.MOD_ID)) {
+        if (ModList.get().isLoaded(VitalityMod.CURIOS_MOD_ID)) {
             VitalityCurios.register(context.getModEventBus());
         }
         if (FMLEnvironment.dist.isClient()) {

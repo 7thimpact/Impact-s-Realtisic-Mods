@@ -9,6 +9,8 @@ public final class VitalityMod {
     public static final String FOOD_MOD_ID = "impactsfood";
     /** Impact's Realistic Inventory: its Frame Pack makes exertion thirstier, and tanks and the Hydration Pack fit its back slot. */
     public static final String INVENTORY_MOD_ID = "impactsinventory";
+    /** Curios (optional): head, back and charm slots for Vitality's gear. */
+    public static final String CURIOS_MOD_ID = "curios";
 
     private VitalityMod() {
     }
