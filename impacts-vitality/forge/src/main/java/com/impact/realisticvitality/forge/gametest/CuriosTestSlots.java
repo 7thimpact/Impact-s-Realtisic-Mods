@@ -10,16 +10,16 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import java.util.Optional;
 
 /**
- * For tests run with Curios installed: puts an item in the player's Curios head slot, and reads the sound Curios plays
- * when an item is equipped. Touched only when Curios is loaded.
+ * For tests run with Curios installed: puts an item in the player's Curios head slot, reads what's in a slot type, and
+ * reads the sound Curios plays when an item is equipped. Touched only when Curios is loaded.
  */
-final class CuriosHeadSlots {
+final class CuriosTestSlots {
     private static final String HEAD_SLOT_TYPE = "head";
     private static final int FIRST_SLOT = 0;
     private static final boolean IS_COSMETIC = false;
     private static final boolean IS_VISIBLE = true;
 
-    private CuriosHeadSlots() {
+    private CuriosTestSlots() {
     }
 
     /** Returns whether the player had a head slot to put it in. */
@@ -33,6 +33,15 @@ final class CuriosHeadSlots {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    /** The first item in a Curios slot type, or nothing when the player doesn't have that slot. */
+    static Optional<ItemStack> firstIn(Player player, String slotType) {
+        return CuriosApi.getCuriosInventory(player).resolve()
+                .flatMap(curios -> curios.getStacksHandler(slotType))
+                .map(ICurioStacksHandler::getStacks)
+                .filter(stacks -> stacks.getSlots() > FIRST_SLOT)
+                .map(stacks -> stacks.getStackInSlot(FIRST_SLOT));
     }
 
     /** The sound Curios plays when the item is equipped in the given slot type, if Curios knows the item as a curio. */

@@ -1,10 +1,11 @@
 // Shared setup for a family test setup (Lib's spec, "Family compatibility and testing"): a GameTest server that
-// loads exactly the listed Impact mods, plus Salty's Realistic Forging and playerAnimator when the setup asks for
-// them (and Curios whenever a listed mod requires it), then fails if any Impact mod logged a warning or an error.
+// loads exactly the listed Impact mods, plus Salty's Realistic Forging, playerAnimator and Curios when the setup asks
+// for them (and Curios whenever a listed mod requires it), then fails if any Impact mod logged a warning or an error.
 // Configure it in the setup's gradle.properties:
 //   setup_mods=impacts-lib,impacts-inventory   (project folders)
 //   setup_srf=true                             (needs libs/realisticforgingores-4.1.6.jar, git-ignored)
 //   setup_player_animator=true
+//   setup_curios=true                          (for mods that use Curios optionally, like Vitality)
 
 def setupModProjects = setup_mods.split(',').collect { it.trim() }.findAll { !it.isEmpty() }.collect { project(":${it}:forge") }
 setupModProjects.each { modProject -> evaluationDependsOn(modProject.path) }
@@ -20,8 +21,9 @@ def setupMixinConfigs = setupModProjects.collectMany { modProject ->
 }
 def isUsingSrf = (findProperty('setup_srf') ?: 'false').toBoolean()
 def isUsingPlayerAnimator = (findProperty('setup_player_animator') ?: 'false').toBoolean()
-// Curios comes along whenever a listed mod requires it (Inventory).
-def isUsingCurios = setupModProjects.any { modProject -> (modProject.findProperty('mod_requires_curios') ?: 'false').toBoolean() }
+// Curios comes along whenever a listed mod requires it (Inventory), or the setup asks for it.
+def isAskingForCurios = (findProperty('setup_curios') ?: 'false').toBoolean()
+def isUsingCurios = isAskingForCurios || setupModProjects.any { modProject -> (modProject.findProperty('mod_requires_curios') ?: 'false').toBoolean() }
 def srfJar = rootProject.file("libs/realisticforgingores-${srf_version}.jar")
 
 java {

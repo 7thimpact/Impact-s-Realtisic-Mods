@@ -2,10 +2,12 @@ package com.impact.lib.forge;
 
 import com.impact.lib.ImpactsLib;
 import com.impact.lib.LibStartup;
+import com.impact.lib.StartupSummary;
 import com.impact.lib.advancement.LoneLibAchievement;
 import com.impact.lib.audit.RecipeChecks;
 import com.impact.lib.command.ImpactsCommands;
 import com.impact.lib.forge.client.LibForgeClient;
+import com.impact.lib.forge.compat.curios.LibCurios;
 import com.impact.lib.forge.condition.NoImpactModsCondition;
 import com.impact.lib.forge.config.ServerConfigResync;
 import com.impact.lib.forge.crafting.WaterBottleIngredient;
@@ -27,6 +29,7 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -64,6 +67,10 @@ public final class ImpactsLibForge {
     }
 
     private static void announceModsReady() {
+        // The Curios class is only touched when Curios is present, so Lib never needs it.
+        if (ModList.get().isLoaded(StartupSummary.CURIOS_MOD_ID)) {
+            LibCurios.provideBackSlotIfNoneDoes();
+        }
         LibStartup.onModsReady();
         MinecraftForge.EVENT_BUS.post(new ImpactsModsReadyEvent(ImpactsLib.registeredImpactMods()));
     }

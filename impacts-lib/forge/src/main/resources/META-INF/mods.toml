@@ -33,6 +33,14 @@ Made with AI: written in large part by Claude Code (Anthropic). Forks must discl
     ordering="NONE"
     side="BOTH"
 
+# Optional: without Impact's Realistic Inventory, Lib's shared back slot is Curios's back slot.
+[[dependencies.${mod_id}]]
+    modId="curios"
+    mandatory=false
+    versionRange="${curios_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
 # Optional: the shared Tool Crafting and Grinding pages.
 [[dependencies.${mod_id}]]
     modId="jei"

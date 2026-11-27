@@ -12,6 +12,7 @@ public final class StartupSummary {
     /** Salty's Realistic Forging, the family's main companion mod (see impacts-lib/docs/srf-notes.md). */
     public static final String SALTYS_REALISTIC_FORGING_MOD_ID = "realisticforgingores";
     public static final String PLAYER_ANIMATOR_MOD_ID = "playeranimator";
+    public static final String CURIOS_MOD_ID = "curios";
     private static final String ABSENT = "absent";
 
     private StartupSummary() {
@@ -29,7 +30,8 @@ public final class StartupSummary {
         log.debug(ImpactsLog.STARTUP_CATEGORY, "mods found",
                 "impactMods", ImpactsLib.registeredImpactMods(),
                 "srf", versionOf(SALTYS_REALISTIC_FORGING_MOD_ID),
-                "playerAnimator", versionOf(PLAYER_ANIMATOR_MOD_ID));
+                "playerAnimator", versionOf(PLAYER_ANIMATOR_MOD_ID),
+                "curios", versionOf(CURIOS_MOD_ID));
     }
 
     private static String versionOf(String modId) {

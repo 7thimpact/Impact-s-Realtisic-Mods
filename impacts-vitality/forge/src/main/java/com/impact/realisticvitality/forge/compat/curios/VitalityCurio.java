@@ -11,8 +11,9 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 /**
  * How Curios treats Vitality's gear in its slots: equipping sounds like the gear (a mask or hat like its armor
- * material, a tank like iron, the Hydration Pack like leather). Right-click keeps its own use (drinking, wearing on
- * the head), so Curios's right-click equip stays off.
+ * material, a tank like iron, the Hydration Pack like leather). Right-clicking an Air Tank straps it into an empty back
+ * slot; everything else keeps its own right-click (drinking, wearing on the head), so Curios's right-click equip stays
+ * off for it.
  */
 final class VitalityCurio implements ICurioItem {
     private static final float EQUIP_VOLUME = 1.0F;
@@ -25,7 +26,7 @@ final class VitalityCurio implements ICurioItem {
 
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        return false;
+        return stack.getItem() instanceof AirTankItem;
     }
 
     private static SoundEvent equipSoundOf(ItemStack stack) {

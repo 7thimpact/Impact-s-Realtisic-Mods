@@ -55,8 +55,10 @@ final class VitalityItemTags extends ItemTagsProvider {
                 .addOptional(ResourceIds.of(FOOD_MOD_ID, "boiled_melon_slice"));
         tag(VitalityTags.SOUPS).add(Items.MUSHROOM_STEW, Items.RABBIT_STEW, Items.BEETROOT_SOUP, Items.SUSPICIOUS_STEW)
                 .addOptionalTag(ResourceIds.of(FOOD_MOD_ID, "soups"));
-        // Curios's head slot takes Vitality's headwear (read only when Curios is installed).
+        // Curios's head slot takes Vitality's headwear, and its back slot the Air Tanks and Hydration Pack (read only when Curios is installed).
         tag(TagKey.create(Registries.ITEM, ResourceIds.of("curios", "head"))).add(VitalityItems.headwear().toArray(Item[]::new));
+        tag(TagKey.create(Registries.ITEM, ResourceIds.of("curios", "back"))).add(VitalityItems.tank(AirTank.AIR_TANK),
+                VitalityItems.tank(AirTank.SHULKER_AIR_TANK), VitalityItems.container(WaterContainer.HYDRATION_PACK));
         // Every headwear piece is a helmet: Forge's shared armor tag lists it with the others, and the wool Cloth Mask muffles vibrations like wool.
         tag(Tags.Items.ARMORS_HELMETS).add(VitalityItems.headwear().toArray(Item[]::new));
         tag(ItemTags.DAMPENS_VIBRATIONS).add(VitalityItems.mask(BreathingMask.CLOTH_MASK));

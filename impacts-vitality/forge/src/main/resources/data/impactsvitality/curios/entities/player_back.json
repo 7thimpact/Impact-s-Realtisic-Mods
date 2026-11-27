@@ -1,0 +1,17 @@
+{
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "impactsinventory"
+      }
+    }
+  ],
+  "entities": [
+    "player"
+  ],
+  "slots": [
+    "back"
+  ]
+}

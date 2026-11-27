@@ -11,9 +11,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * The player's back slot. Impact's Realistic Inventory provides it; other mods read and write it only through
- * this class. Without a provider, {@link #isAvailable()} is false, {@link #get} returns an empty stack and
- * {@link #set} changes nothing.
+ * The player's back slot. Impact's Realistic Inventory provides it; without Inventory, Lib uses Curios's back slot when
+ * Curios is installed. Other mods read and write it only through this class. Without a provider,
+ * {@link #isAvailable()} is false, {@link #get} returns an empty stack and {@link #set} changes nothing.
  */
 public final class BackSlot {
     /** Items that may go in the back slot besides the provider's own (for example Vitality's Air Tanks). */
@@ -35,6 +35,11 @@ public final class BackSlot {
         provider = newProvider;
         providerModId = modId;
         LOG.debug(LibLogCategories.PROVIDERS, "back slot provider registered", "mod", modId);
+    }
+
+    /** Whether a mod registered a back-slot provider (switched on or not). */
+    public static boolean hasProvider() {
+        return provider != null;
     }
 
     /** Whether a mod provides the back slot and has it switched on. */
