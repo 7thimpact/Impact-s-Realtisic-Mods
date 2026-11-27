@@ -96,16 +96,22 @@ public final class LibGrindingGameTests {
     }
 
     @GameTest(template = EMPTY_TEMPLATE)
-    public static void workMotionsFollowWhatTheServerShows(GameTestHelper helper) {
+    public static void workMotionsShowTheStrongestOfEveryModsMotion(GameTestHelper helper) {
         ServerPlayer player = MockPlayers.joinWorld(helper.getLevel());
+        ResourceLocation crafting = ResourceIds.of(ImpactsLib.MOD_ID, "test_crafting");
+        ResourceLocation feelings = ResourceIds.of(ImpactsLib.MOD_ID, "test_feelings");
         try {
             helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "A player shows no work motion at first");
-            WorkMotions.show(player, Optional.of(HoldMotion.CRAFT));
-            WorkMotions.show(player, Optional.of(HoldMotion.CRAFT));
-            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.CRAFT)), "A mod shows the crafting motion");
-            WorkMotions.show(player, Optional.empty());
-            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "and stops it");
-            WorkMotions.show(player, Optional.of(HoldMotion.TURN));
+            WorkMotions.show(player, feelings, Optional.of(HoldMotion.SHIVER));
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.SHIVER)), "A mod shows a shiver");
+            WorkMotions.show(player, crafting, Optional.of(HoldMotion.CRAFT));
+            WorkMotions.show(player, feelings, Optional.of(HoldMotion.SHIVER));
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.CRAFT)), "Crafting outranks shivering");
+            WorkMotions.show(player, crafting, Optional.empty());
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.SHIVER)), "and the shiver shows again after the craft");
+            WorkMotions.show(player, feelings, Optional.empty());
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "Nothing shows once every mod stopped");
+            WorkMotions.show(player, feelings, Optional.of(HoldMotion.SIP));
             WorkMotions.forget(player);
             helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "A player who leaves is forgotten");
         } finally {

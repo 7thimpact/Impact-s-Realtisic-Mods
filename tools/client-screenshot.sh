@@ -4,7 +4,8 @@
 # saves a screenshot and stops the client. A step is a chat command, "key:<xdotool key name>" for a key press,
 # "click:<x>,<y>" (left), "rclick:<x>,<y>" (right) or "move:<x>,<y>" (hover) at game-window pixels (the window is
 # 854x480 at GUI scale 2, so double the GUI coordinates), "rdown" / "rup" to hold and let go of the right mouse button
-# (hold-to-use actions), "wait:<seconds>" to let the game run, or "shot:<file.png>"
+# (hold-to-use actions), "keydown:<key>" / "keyup:<key>" to hold and let go of a key (Shift_L to sneak),
+# "wait:<seconds>" to let the game run, or "shot:<file.png>"
 # for an extra screenshot along the way.
 #
 #   tools/client-screenshot.sh <mod folder> <output.png> [step ...]
@@ -92,6 +93,12 @@ for step in "$@"; do
       ;;
     rup)
       xdotool mouseup --window "$GAME_WINDOW" 3
+      ;;
+    keydown:*)
+      xdotool keydown --window "$GAME_WINDOW" "${step#keydown:}"
+      ;;
+    keyup:*)
+      xdotool keyup --window "$GAME_WINDOW" "${step#keyup:}"
       ;;
     wait:*)
       sleep "${step#wait:}"

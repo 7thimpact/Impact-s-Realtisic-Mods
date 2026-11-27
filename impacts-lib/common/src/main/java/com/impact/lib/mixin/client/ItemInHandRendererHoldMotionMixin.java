@@ -7,6 +7,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -35,8 +36,9 @@ public abstract class ItemInHandRendererHoldMotionMixin {
         if (active.isEmpty()) {
             return;
         }
-        Optional<HoldMotionPoses.HandOffset> offset = HoldMotionPoses.handOffset(active.get().motion(), hand == InteractionHand.MAIN_HAND,
-                active.get().time());
+        boolean isMainHand = hand == InteractionHand.MAIN_HAND;
+        boolean isRightSide = isMainHand == (player.getMainArm() == HumanoidArm.RIGHT);
+        Optional<HoldMotionPoses.HandOffset> offset = HoldMotionPoses.handOffset(active.get().motion(), isMainHand, isRightSide, active.get().time());
         if (offset.isEmpty()) {
             return;
         }

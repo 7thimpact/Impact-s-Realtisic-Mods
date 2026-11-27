@@ -31,7 +31,7 @@ Read this file first in every session, then [ROADMAP.md](ROADMAP.md) (what comes
 - `./gradlew :<mod>:forge:runData` whenever generated data changes. Never hand-edit files under `src/generated/`.
 - `./gradlew :<mod>:forge:runGameTestServer`, which must exit with code 0. Each GameTest run deletes the run folder's Impact config files first (`run/config/impactslib`, `run/world/serverconfig/impactslib`), so tests always check the default values.
 - `./gradlew runFamilyTestSetups` before finishing a mod: every family setup in `test-setups/` must pass. Setups with SRF need `libs/realisticforgingores-4.1.6.jar`.
-- HUD and screen work: take screenshots with `tools/client-screenshot.sh <mod folder or test-setups/<name>> <output.png> [steps]` (a setup's folder starts a client with exactly that setup's mods). It starts the mod's Quick Play client on a virtual display in a copy of the GameTest world with cheats on, then runs the steps: chat commands, `key:<name>` presses, `click:`/`rclick:`/`move:<x>,<y>` mouse steps, `rdown`/`rup` to hold the right button, `wait:<seconds>`, and `shot:<file>` extra screenshots. It needs `xdotool` and ImageMagick (`apt-get install -y xdotool imagemagick`).
+- HUD and screen work: take screenshots with `tools/client-screenshot.sh <mod folder or test-setups/<name>> <output.png> [steps]` (a setup's folder starts a client with exactly that setup's mods). It starts the mod's Quick Play client on a virtual display in a copy of the GameTest world with cheats on, then runs the steps: chat commands, `key:<name>` presses, `click:`/`rclick:`/`move:<x>,<y>` mouse steps, `rdown`/`rup` to hold the right button, `keydown:`/`keyup:<key>` to hold a key (`Shift_L` to sneak), `wait:<seconds>`, and `shot:<file>` extra screenshots. It needs `xdotool` and ImageMagick (`apt-get install -y xdotool imagemagick`).
 
 ## Code rules
 
@@ -83,7 +83,7 @@ These come from `impacts-lib/SPEC.md` ("Integration API and rules").
 
 ## playerAnimator
 
-- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib draws hold-to-use motions (hammering, grinding, …) and work motions (`WorkMotions`: crafting at a table) through playerAnimator when it is installed (with elbow bends, a torso lean and fades), and through its own client mixins on the arm and held-item poses (`HoldMotionPoses`) when it isn't, so the motion shows either way. First person always uses Lib's own hand motion.
+- Optional dependency (`playeranimator`, Maven `dev.kosmx.player-anim:player-animation-lib-forge`). Lib draws hold-to-use motions (hammering, grinding, …) and work motions (`WorkMotions`: crafting at a table, Vitality's gestures) through playerAnimator when it is installed (with elbow bends, a torso lean and fades), and through its own client mixins on the arm and held-item poses (`HoldMotionPoses`) when it isn't, so the motion shows either way. First person always uses Lib's own hand motion.
 - Code that touches playerAnimator classes lives in its own Forge client classes, which load only when the mod is present.
 
 ## Curios

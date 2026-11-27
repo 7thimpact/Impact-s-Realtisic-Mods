@@ -184,7 +184,7 @@ Asked for after the release candidate, before porting: every mixin, event handle
 - [x] Inventory: a second pack on the chest (Curios's body slot): sneak-right-click to wear it, N or a button to open it
 - [x] Vitality's back gear in Curios's back slot without Inventory (Lib's Curios-backed back slot; new `vitality-with-curios` setup)
 - [x] Vitality: the Thermometer works from Curios's charm slot
-- [ ] Vitality gestures: shivering when freezing, wiping the brow when overheating, cupped-hand sips
+- [x] Vitality gestures: shivering when freezing, wiping the brow when overheating, cupped-hand sips (Lib's work motions from several mods, strongest shown)
 
 ## Playtest feedback (Nov 2026)
 

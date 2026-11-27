@@ -2,9 +2,12 @@ package com.impact.realisticvitality.forge.gametest;
 
 import com.impact.lib.ResourceIds;
 import com.impact.lib.gametest.MockPlayers;
+import com.impact.lib.hold.HoldMotion;
+import com.impact.lib.hold.WorkMotions;
 import com.impact.realisticvitality.VitalityMod;
 import com.impact.realisticvitality.player.TemperatureState;
 import com.impact.realisticvitality.player.VitalityExemptions;
+import com.impact.realisticvitality.player.VitalityGestures;
 import com.impact.realisticvitality.player.VitalityPlayerTicks;
 import com.impact.realisticvitality.player.VitalityState;
 import com.impact.realisticvitality.registry.VitalityItems;
@@ -42,6 +45,8 @@ public final class VitalityBodyTemperatureGameTests {
     private static final String EMPTY_TEMPLATE = VitalitySkeletonGameTests.EMPTY_TEMPLATE;
     private static final float COMFORTABLE_AMBIENT = 65.0F;
     private static final float TOLERANCE = 0.001F;
+    private static final float VERY_COLD_BODY = -90.0F;
+    private static final float VERY_HOT_BODY = 90.0F;
 
     private VitalityBodyTemperatureGameTests() {
     }
@@ -153,6 +158,27 @@ public final class VitalityBodyTemperatureGameTests {
             helper.assertTrue(VitalityState.of(player).temperature.body() == hotBody, "and their temperature doesn't tick");
             player.setGameMode(GameType.SPECTATOR);
             helper.assertTrue(VitalityExemptions.isExempt(player), "nor does a spectator's");
+        });
+    }
+
+    @GameTest(templateNamespace = LIB_NAMESPACE, template = EMPTY_TEMPLATE)
+    public static void gesturesFollowSippingAndBodyTemperature(GameTestHelper helper) {
+        withPlayer(helper, player -> {
+            VitalityState state = VitalityState.of(player);
+            state.temperature.setBody(VERY_COLD_BODY);
+            VitalityPlayerTicks.tick(player);
+            helper.assertTrue(WorkMotions.shownMotion(player).equals(Optional.of(HoldMotion.SHIVER)), "A Very Cold player shivers for everyone to see");
+            state.temperature.setBody(VERY_HOT_BODY);
+            helper.assertTrue(VitalityGestures.gestureOf(player).equals(Optional.of(HoldMotion.WIPE_BROW)), "A Very Hot one wipes the brow");
+            state.thirst.setLastSipGameTime(player.level().getGameTime());
+            helper.assertTrue(VitalityGestures.gestureOf(player).equals(Optional.of(HoldMotion.SIP)), "A fresh sip by hand shows cupped hands first");
+            state.thirst.setLastSipGameTime(player.level().getGameTime() - VitalityGestures.SIP_GESTURE_TICKS);
+            state.temperature.setBody(0.0F);
+            helper.assertTrue(VitalityGestures.gestureOf(player).isEmpty(), "A comfortable player who isn't drinking shows nothing");
+            state.temperature.setBody(VERY_COLD_BODY);
+            player.setGameMode(GameType.CREATIVE);
+            VitalityPlayerTicks.tick(player);
+            helper.assertTrue(WorkMotions.shownMotion(player).isEmpty(), "A creative player's gesture stops with Vitality's needs");
         });
     }
 

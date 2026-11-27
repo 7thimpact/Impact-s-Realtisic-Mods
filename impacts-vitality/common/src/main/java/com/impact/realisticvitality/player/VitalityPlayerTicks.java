@@ -12,11 +12,13 @@ public final class VitalityPlayerTicks {
 
     public static void tick(ServerPlayer player) {
         if (VitalityExemptions.isExempt(player)) {
+            VitalityGestures.stop(player);
             return;
         }
         ThirstDrain.tick(player);
         TemperatureTicks.tick(player);
         AirTicks.tick(player);
+        VitalityGestures.tick(player);
         VitalitySync.sendIfChanged(player);
     }
 }

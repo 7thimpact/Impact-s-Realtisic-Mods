@@ -1,5 +1,6 @@
 package com.impact.realisticcrafting.timing;
 
+import com.impact.lib.ResourceIds;
 import com.impact.lib.crafting.CraftingProgress;
 import com.impact.lib.hold.HoldMotion;
 import com.impact.lib.hold.WorkMotions;
@@ -9,6 +10,7 @@ import com.impact.realisticcrafting.advancement.CraftingAchievements;
 import com.impact.realisticcrafting.debug.CraftingLogCategories;
 import com.impact.realisticcrafting.menu.CraftingStation;
 import com.impact.realisticcrafting.registry.CraftingSounds;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -30,6 +32,7 @@ public final class CraftTimers {
     private static final float FINISH_VOLUME = 0.3F;
     private static final float FINISH_PITCH = 1.4F;
     private static final ImpactsLog LOG = ImpactsLog.of(CraftingMod.MOD_ID);
+    private static final ResourceLocation MOTION_SOURCE = ResourceIds.of(CraftingMod.MOD_ID, "crafting");
 
     private CraftTimers() {
     }
@@ -64,7 +67,7 @@ public final class CraftTimers {
     public static void tick(ServerPlayer player) {
         runOpenGrid(player);
         boolean isCrafting = isOutputLocked(player.containerMenu);
-        WorkMotions.show(player, isCrafting ? Optional.of(HoldMotion.CRAFT) : Optional.empty());
+        WorkMotions.show(player, MOTION_SOURCE, isCrafting ? Optional.of(HoldMotion.CRAFT) : Optional.empty());
     }
 
     private static void runOpenGrid(ServerPlayer player) {

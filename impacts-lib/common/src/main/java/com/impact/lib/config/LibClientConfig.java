@@ -2,11 +2,13 @@ package com.impact.lib.config;
 
 import com.impact.lib.ImpactsLib;
 
+import java.util.List;
+
 /** Lib's own CLIENT file: {@code config/impactslib/impactslib-client.toml}. */
 public final class LibClientConfig {
     private static volatile LibClientConfig registered;
 
-    /** holdToUse.*: the progress shown while holding right-click. */
+    /** holdToUse.*: the progress shown while holding right-click, and which motions this client draws. */
     public final HoldToUseSettings holdToUse;
     /** hud.*: offsets for every Impact HUD row. */
     public final HudSettings hud;
@@ -37,10 +39,13 @@ public final class LibClientConfig {
 
     public static final class HoldToUseSettings {
         public final ConfigValue<Boolean> isProgressBarShown;
+        public final ConfigValue<List<String>> hiddenWorkMotions;
 
         private HoldToUseSettings(ConfigSpecBuilder builder) {
             isProgressBarShown = builder.defineBoolean("showProgressBar", true,
                     "Show a progress bar under the crosshair while holding right-click on a hold-to-use action.");
+            hiddenWorkMotions = builder.defineStringList("hiddenWorkMotions", List.of(),
+                    "Motions mods show on players that this client doesn't draw, on anyone: craft (Crafting's timed crafts), sip, wipe_brow and shiver (Vitality's gestures).");
         }
     }
 

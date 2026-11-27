@@ -7,28 +7,30 @@ import com.impact.lib.log.ImpactsLog;
 import com.impact.lib.network.MessageCodec;
 import com.impact.lib.network.NetworkChannel;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Collections;
-import java.util.Locale;
+import java.util.Comparator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Motions a mod shows on a player for work that isn't an item's hold-to-use, like Crafting's timed crafts. The server
- * says what each player is doing; Lib sends each change to everyone who can see the player (and again every couple of
- * seconds while it lasts, for players who walk up later), and every client draws it like a hold motion.
+ * Motions mods show on a player for what they're doing beyond an item's hold-to-use: Crafting's timed crafts, Vitality's
+ * gestures (shivering, wiping the brow, sipping). Each mod shows its own motion under its own source; the player shows
+ * the one with the highest {@link HoldMotion.Priority}. The server says what each player is doing; Lib sends each change
+ * to everyone who can see the player (and again every couple of seconds while it lasts, for players who walk up later),
+ * and every client draws it like a hold motion.
  */
 public final class WorkMotions {
     private static final int REPEAT_INTERVAL_TICKS = 40;
     private static final int NO_MOTION = -1;
     private static final ImpactsLog LOG = ImpactsLog.of(ImpactsLib.MOD_ID);
-    private static final Map<UUID, HoldMotion> SHOWN_ON_SERVER = new ConcurrentHashMap<>();
+    private static final Map<UUID, ShownMotions> SHOWN_ON_SERVER = new ConcurrentHashMap<>();
     // Keyed by the client's player object: a player who leaves and comes back is a new object, so nothing goes stale.
     private static final Map<Player, ClientWork> SHOWN_ON_CLIENT = Collections.synchronizedMap(new WeakHashMap<>());
     private static volatile NetworkChannel channel;
@@ -52,29 +54,38 @@ public final class WorkMotions {
     }
 
     /**
-     * Server, as often as every tick: the motion this player's work shows now, or none. Only changes go out (plus the
-     * repeats for players who come into view), so a mod can call this from its player tick.
+     * Server, as often as every tick: the motion a mod (the source, such as {@code impactscrafting:crafting}) shows on
+     * this player now, or none. Only changes of what the player shows go out (plus the repeats for players who come into
+     * view), so a mod can call this from its player tick.
      */
-    public static void show(ServerPlayer player, Optional<HoldMotion> motion) {
-        HoldMotion previous = motion.isPresent() ? SHOWN_ON_SERVER.put(player.getUUID(), motion.get()) : SHOWN_ON_SERVER.remove(player.getUUID());
-        boolean hasChanged = !Objects.equals(previous, motion.orElse(null));
-        boolean isRepeatDue = motion.isPresent() && player.tickCount % REPEAT_INTERVAL_TICKS == 0;
+    public static void show(ServerPlayer player, ResourceLocation source, Optional<HoldMotion> motion) {
+        ShownMotions shown = SHOWN_ON_SERVER.computeIfAbsent(player.getUUID(), playerId -> new ShownMotions());
+        motion.ifPresentOrElse(newMotion -> shown.bySource.put(source, newMotion), () -> shown.bySource.remove(source));
+        Optional<Map.Entry<ResourceLocation, HoldMotion>> strongest = shown.strongest();
+        Optional<HoldMotion> strongestMotion = strongest.map(Map.Entry::getValue);
+        boolean hasChanged = !strongestMotion.equals(shown.lastSent);
+        boolean isRepeatDue = strongest.isPresent() && player.tickCount - shown.lastSentTick >= REPEAT_INTERVAL_TICKS;
         if (!hasChanged && !isRepeatDue) {
             return;
         }
         if (channel != null) {
-            channel.sendToTrackingAndSelf(player, new WorkMotionMessage(player.getId(), motion));
+            channel.sendToTrackingAndSelf(player, new WorkMotionMessage(player.getId(), strongestMotion));
         }
         if (hasChanged) {
-            String loggedMotion = motion.or(() -> Optional.ofNullable(previous)).map(shown -> shown.name().toLowerCase(Locale.ROOT)).orElse("none");
-            LOG.debug(LibLogCategories.HOLD_TO_USE, motion.isPresent() ? "work motion started" : "work motion stopped",
-                    "player", player.getGameProfile().getName(), "motion", loggedMotion);
+            String playerName = player.getGameProfile().getName();
+            strongest.ifPresentOrElse(
+                    entry -> LOG.debug(LibLogCategories.HOLD_TO_USE, "work motion started", "player", playerName,
+                            "motion", entry.getValue().serializedName(), "source", entry.getKey()),
+                    () -> LOG.debug(LibLogCategories.HOLD_TO_USE, "work motion stopped", "player", playerName,
+                            "motion", shown.lastSent.map(HoldMotion::serializedName).orElse("none"), "source", source));
         }
+        shown.lastSent = strongestMotion;
+        shown.lastSentTick = player.tickCount;
     }
 
-    /** Server: what this player's work shows right now. */
+    /** Server: what this player shows right now, the strongest of every mod's motion. */
     public static Optional<HoldMotion> shownMotion(Player player) {
-        return Optional.ofNullable(SHOWN_ON_SERVER.get(player.getUUID()));
+        return Optional.ofNullable(SHOWN_ON_SERVER.get(player.getUUID())).flatMap(ShownMotions::strongest).map(Map.Entry::getValue);
     }
 
     /** Server: the player left, so their motion is forgotten (a client that still shows it drops it with the player). */
@@ -97,6 +108,17 @@ public final class WorkMotions {
     /** Client: the work motion this player shows, if any. */
     public static Optional<ClientWork> clientWork(Player player) {
         return Optional.ofNullable(SHOWN_ON_CLIENT.get(player));
+    }
+
+    // One player's motions by source on the server, and what their watchers were last told.
+    private static final class ShownMotions {
+        private final Map<ResourceLocation, HoldMotion> bySource = new ConcurrentHashMap<>();
+        private Optional<HoldMotion> lastSent = Optional.empty();
+        private int lastSentTick;
+
+        private Optional<Map.Entry<ResourceLocation, HoldMotion>> strongest() {
+            return bySource.entrySet().stream().max(Comparator.comparing(entry -> entry.getValue().priority));
+        }
     }
 
     private static final class Codec implements MessageCodec<WorkMotionMessage> {
